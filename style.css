@@ -1,0 +1,25 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0rem;
+    padding: 0rem;
+}
+
+main {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 95%;
+    height: 95%;
+}
+
+canvas {
+    border: 2px solid black;
+}

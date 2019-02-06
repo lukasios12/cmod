@@ -1,0 +1,8 @@
+/// <reference path='./drawing.ts'/>
+/// <reference path='./hittable-drawing.ts'/>
+/// <reference path='./state-drawing.ts'/>
+/// <reference path='./edge-drawing.ts'/>
+/// <reference path='./graph-drawing.ts'/>
+/// <reference path='./graph-drawing-options.ts'/>
+
+/// <reference path='../shapes/index.ts'/>
