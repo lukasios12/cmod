@@ -33,16 +33,6 @@ class Modeller {
         transitions.add("t4");
         this.petrinet = new Petrinet(places, transitions);
 
-        let a = Matrix.identity(3);
-        a.set(0,2,-2);
-        a.set(1,2,-1);
-        let b = new Matrix(3, 1);
-        b.set(0,0,17);
-        b.set(1,0,10);
-        b.set(2,0,1);
-        let r = Matrix.mult(a, b);
-        console.log(r);
-
         this.graph = new Graph();
         this.graphDrawing = new GraphDrawing();
         this.graphDrawingOptions = new GraphDrawingOptions();
@@ -95,6 +85,7 @@ class Modeller {
         canvas.addEventListener("click", (event) => {
             let point = new Point2D(event.clientX, event.clientY);
             let tpoint = this.drawer.globalToLocal(point);
+            console.log(this.graphDrawing.getStateDrawing(tpoint, context));
             context.fillRect(tpoint.x, tpoint.y, 10, 10);
         });
     }

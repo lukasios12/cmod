@@ -93,6 +93,7 @@ class Drawer {
         if(this.drawingCache) {
             this.draw(this.drawingCache);
         }
+        this.setTransform(Matrix.identity(3));
     }
 
     public shift(h: number = 0, v: number = 0): void {

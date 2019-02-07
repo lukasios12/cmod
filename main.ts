@@ -10,22 +10,12 @@ class Main {
         let modeller = new Modeller(canvas);
 
         let m = Matrix.identity(3);
-        m.set(0, 0, 3);
-        m.set(1, 1, 3);
-        m.set(2, 2, 3);
-        console.log(m, m.inverse());
-        // m.set(0, 0, -5);
-        // m.set(0, 1, 0);
-        // m.set(0, 2, -1);
-        // m.set(1, 0, 1);
-        // m.set(1, 1, 2);
-        // m.set(1, 2, -1);
-        // m.set(2, 0, -3);
-        // m.set(2, 1, 4);
-        // m.set(2, 2, 1);
-        // let d = m.determinant();
-        // console.log(m, d);
-        // let places = new HashSet<string>();
+        m.set(0, 2, 280);
+        m.set(1, 2, 240);
+        console.log(m, m.transpose());
+        console.log(m.inverse());
+
+       // let places = new HashSet<string>();
         // places.add("p1");
         // places.add("p2");
         // places.add("p3");

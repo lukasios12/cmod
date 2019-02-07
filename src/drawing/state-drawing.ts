@@ -35,7 +35,7 @@ class StateDrawing implements HittableDrawing {
     public hit(point: Point2D, context: CanvasRenderingContext2D) {
         console.log(point);
         let height = this.getHeight(context);
-        let width = this.getHeight(context);
+        let width = this.getWidth(context);
         console.log(this.position, width, height);
         return (point.x >= this.position.x && point.x <= this.position.x + width &&
                 point.y >= this.position.y && point.y <= this.position.y + height)
