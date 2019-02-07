@@ -22,10 +22,10 @@ class Drawer {
         // Matrix3D.setTransform(this.currentTransform, context);
         if(drawing) {
             drawing.draw(context);
+            this.drawingCache = drawing;
         } else if(this.drawingCache) {
             this.drawingCache.draw(context);
         }
-        this.drawingCache = drawing;
     }
 
     public clear(): void {

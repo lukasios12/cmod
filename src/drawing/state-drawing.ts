@@ -2,7 +2,7 @@
 /// <reference path='../stylemanager/index.ts'/>
 /// <reference path='../utils/canvas-rendering-context-2d-utils.ts'/>
 
-class StateDrawing implements HittableDrawing {
+class StateDrawing implements HittableDrawing, Draggable {
     public state: State;
     public position: Point2D;
 

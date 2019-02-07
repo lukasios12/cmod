@@ -16,6 +16,8 @@ class Modeller {
     public graphDrawing: GraphDrawing;
     public graphDrawingOptions: GraphDrawingOptions;
 
+    public selection: Drawing;
+
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet = null) {
         this.drawer = new Drawer(canvas);
         this.actionManager = new ActionManager();
@@ -73,6 +75,12 @@ class Modeller {
         this.graphDrawing.options = this.graphDrawingOptions;
     }
 
+    public select(pos: Point2D, context: CanvasRenderingContext2D) {
+        let tpos = this.drawer.globalToLocal(pos);
+        this.selection = this.graphDrawing.getStateDrawing(tpos, context);
+        console.log(this.selection);
+    }
+
     protected registerEvents() {
         this.drawer.registerEvents();
 
@@ -82,11 +90,45 @@ class Modeller {
 
         let canvas = this.drawer.canvas;
         let context = canvas.getContext("2d");
-        canvas.addEventListener("click", (event) => {
-            let point = new Point2D(event.clientX, event.clientY);
-            let tpoint = this.drawer.globalToLocal(point);
-            console.log(this.graphDrawing.getStateDrawing(tpoint, context));
-            context.fillRect(tpoint.x, tpoint.y, 10, 10);
+
+        let mouseDownLeft= false;
+        let mouseDownMiddle = false;
+
+        canvas.addEventListener("mousedown", (event) => {
+            if(event.buttons == 1) {
+                this.select(new Point2D(event.clientX, event.clientY), context);
+                mouseDownLeft= true;
+            }
+            if(event.buttons == 4) {
+                mouseDownMiddle = true;
+            }
         });
+
+        canvas.addEventListener("mousemove", (event) => {
+            if(mouseDownLeft && this.selection && isDraggable(this.selection)) {
+                let pos = this.drawer.globalToLocal(
+                    new Point2D(event.clientX, event.clientY)
+                );
+                this.selection.drag(pos, context);
+                this.drawer.draw();
+            }
+            else if(mouseDownMiddle) {
+                let m = Matrix.identity(3);
+                m.set(0, 2, event.movementX);
+                m.set(1, 2, -event.movementY);
+                this.drawer.transform(m);
+            }
+        });
+
+        canvas.addEventListener("mouseup", (event) => {
+            mouseDownLeft = false;
+            mouseDownMiddle = false;
+        });
+        // canvas.addEventListener("click", (event) => {
+        //     let point = new Point2D(event.clientX, event.clientY);
+        //     let tpoint = this.drawer.globalToLocal(point);
+        //     console.log(this.graphDrawing.getStateDrawing(tpoint, context));
+        //     context.fillRect(tpoint.x, tpoint.y, 10, 10);
+        // });
     }
 }
