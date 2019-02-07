@@ -76,7 +76,14 @@ class Matrix {
             console.error("Could not compute inverse of matrix with data: ", this.data,
                         "Matrix is not square");
         }
-
+        let i = Matrix.identity(this.rows());
+        let d = this.determinant();
+        for(let r = 0; r < this.rows(); r++) {
+            for(let c = 0; c < this.cols(); c++) {
+                i.set(r, c, this.minor(r, c).determinant() / d);
+            }
+        }
+        return i;
     }
 
     public static add(lhs: Matrix, rhs: Matrix) {
