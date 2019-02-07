@@ -80,8 +80,9 @@ class Drawer {
         this.currentTransform = mat;
         let context = this.canvas.getContext("2d");
         context.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
-                             mat.get(1,1), mat.get(0,2), mat.get(1,2));
+                             mat.get(1,1), mat.get(0,2), -mat.get(1,2));
         this.draw(this.drawingCache);
+        console.log(this.currentTransform);
     }
 
     public resize(): void {
@@ -114,10 +115,10 @@ class Drawer {
         let vector = new Matrix(3, 1);
         vector.set(0, 0, point.x);
         vector.set(1, 0, point.y);
-        vector.set(2, 0, -1);
-        let mat = this.currentTransform;
+        vector.set(2, 0, 1);
+        let mat = this.currentTransform.inverse();
         let normalized = Matrix.mult(mat, vector);
-        console.log(vector, mat, normalized);
+        // console.log(vector, mat, normalized);
         return new Point2D(normalized.get(0,0), normalized.get(1,0));
     }
 
