@@ -17,7 +17,7 @@ class StyleManager {
 
     public static setStateTextStyle(context: CanvasRenderingContext2D) {
         context.fillStyle = "black";
-        context.font = "24px mono";
+        context.font = "16px mono";
         context.textBaseline = "middle";
         context.textAlign = "center";
     }
@@ -30,7 +30,7 @@ class StyleManager {
 
     public static setEdgeTextStyle(context: CanvasRenderingContext2D) {
         context.fillStyle = "black";
-        context.font = "24px mono";
+        context.font = "16px mono";
         context.textBaseline = "middle";
         context.textAlign = "center";
     }
@@ -42,37 +42,32 @@ class StyleManager {
         }
         c = new HashTable<FeedbackCode, StyleManagerAction>();
         for(let code in FeedbackCode) {
-            if(Number(code)) {
-                let fcode  = Number(code) as FeedbackCode;
-                let fclass = fcode >= FeedbackClass.CORRECT &&
-                             fcode < FeedbackClass.WARNING ? FeedbackClass.CORRECT :
-                             fcode >= FeedbackClass.WARNING &&
-                             fcode < FeedbackClass.INCORRECT ? FeedbackClass.WARNING :
-                             FeedbackClass.INCORRECT;
-                let fdigs = Number(code.slice(1));
-                let fitem = fdigs >= FeedbackItem.INITIAL &&
-                            fdigs < FeedbackItem.STATE ? FeedbackItem.INITIAL :
-                            fdigs >= FeedbackItem.STATE &&
-                            fdigs < FeedbackItem.EDGE ? FeedbackItem.STATE :
-                            FeedbackItem.EDGE;
-                if(fclass === FeedbackClass.CORRECT) {
-                    if(fitem === FeedbackItem.STATE) {
-                        c.put(fcode, new CorrectStateStyle());
-                    } else if (fitem === FeedbackItem.EDGE) {
-                        c.put(fcode, new CorrectEdgeStyle());
-                    }
-                } else if(fclass === FeedbackClass.WARNING) {
-                    if(fitem === FeedbackItem.STATE) {
-                        c.put(fcode, new WarningStateStyle());
-                    } else if(fitem === FeedbackItem.EDGE) {
-                        c.put(fcode, new WarningEdgeStyle());
-                    }
-                } else {
-                    if(fitem === FeedbackItem.STATE) {
-                        c.put(fcode, new IncorrectStateStyle());
-                    } else if(fitem === FeedbackItem.EDGE) {
-                        c.put(fcode, new IncorrectEdgeStyle());
-                    }
+            let fcode = Number(code) as FeedbackCode;
+            let h = Math.floor(fcode / 100);
+            let t = Math.floor((fcode - h * 100) / 10);
+            if(Number(h)) {
+                switch(h) {
+                    case 2:
+                        if (t == 2 || t == 3) {
+                            c.add(fcode, new CorrectStateStyle());
+                        } else if (t == 4 || t == 5) {
+                            c.add(fcode, new CorrectEdgeStyle());
+                        }
+                        break;
+                    case 3:
+                        if (t == 2 || t == 3) {
+                            c.add(fcode, new WarningStateStyle());
+                        } else if (t == 4 || t == 5) {
+                            c.add(fcode, new WarningEdgeStyle());
+                        }
+                        break;
+                    case 4:
+                        if (t == 2 || t == 3) {
+                            c.add(fcode, new IncorrectStateStyle());
+                        } else if (t == 4 || t == 5) {
+                            c.add(fcode, new IncorrectEdgeStyle());
+                        }
+                        break;
                 }
             }
         }

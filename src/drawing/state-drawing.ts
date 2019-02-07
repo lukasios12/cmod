@@ -49,7 +49,7 @@ class StateDrawing implements HittableDrawing {
     }
 
     protected getHeight(context: CanvasRenderingContext2D) {
-        return 2 * CanvasRenderingContext2DUtils.getFontSize(context);
+        return 1.5 * CanvasRenderingContext2DUtils.getFontSize(context);
     }
 
     protected getWidth(context: CanvasRenderingContext2D) {

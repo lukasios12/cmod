@@ -27,9 +27,61 @@ class Matrix {
         return this.rows() > 0 ? this.data[0].length : 0;
     }
 
+    public minor(row: number, col: number) {
+        if(this.rows() <= 1 || this.cols() <= 1) {
+            console.error("Could not compute minor of matrix.");
+        }
+        let m = new Matrix(this.rows() - 1, this.cols() - 1);
+        for(let r = 0; r < this.rows(); r++) {
+            for (let c = 0; c < this.cols(); c++) {
+                if(r == row || c == col) {
+                    continue;
+                }
+                let roffset = 0;
+                let coffset = 0;
+                if(r > row) roffset = 1;
+                if(c > col) coffset = 1;
+                m.set(r - roffset, c - coffset, this.get(r, c));
+            }
+        }
+        return m;
+    }
+
+    public cofactor(row: number, col: number) {
+        if (this.rows() != this.cols()) {
+            console.error("Could not cofactor for non-square matrix");
+        }
+        if (this.rows() == 1) {
+            return Math.pow(-1, row + col) * this.get(0, 0);
+        }
+        return Math.pow(-1, row + col) * this.minor(row, col).determinant();
+    }
+
+    public determinant() {
+        if(this.rows() != this.cols()) {
+            console.error("Could not compute determinant for non-square matrix");
+        }
+        if(this.rows() == 1) {
+            return this.get(0, 0);
+        }
+        let s = 0;
+        for(let i = 0; i < this.rows(); i++) {
+            s += this.get(0,i) * this.cofactor(0, i);
+        }
+        return s;
+    }
+
+    public inverse() {
+        if(this.rows() != this.cols()) {
+            console.error("Could not compute inverse of matrix with data: ", this.data,
+                        "Matrix is not square");
+        }
+
+    }
+
     public static add(lhs: Matrix, rhs: Matrix) {
         if(!(lhs.cols() == rhs.cols() && lhs.rows() == rhs.rows())) {
-            console.log("invalid matrix addition: unequal sizes");
+            console.error("invalid matrix addition: unequal sizes");
             return null;
         }
         let result = new Matrix(lhs.rows(), rhs.rows());

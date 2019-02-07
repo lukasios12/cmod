@@ -48,7 +48,6 @@ class Drawer {
         let movementSpeed = 40;
         let zoomAmount = 1.2;
         canvas.addEventListener("keydown", (event) => {
-            console.log(event);
             switch(event.keyCode) {
                 case 38: // up
                     this.shift(0, -movementSpeed);
@@ -63,9 +62,7 @@ class Drawer {
                     this.shift(-movementSpeed);
                     break;
                 case 61: // +
-                    if(event.shiftKey) {
-                        this.zoom(zoomAmount);
-                    }
+                    this.zoom(zoomAmount);
                     break;
                 case 173:
                     this.zoom(1 / zoomAmount);
@@ -99,8 +96,8 @@ class Drawer {
 
     public shift(h: number = 0, v: number = 0): void {
         let mat = new Matrix(3, 3);
-        mat.set(0, 2, -h);
-        mat.set(1, 2, -v);
+        mat.set(0, 2, h);
+        mat.set(1, 2, v);
         let r = Matrix.add(mat, this.currentTransform);
         this.setTransform(r);
     }
@@ -117,9 +114,10 @@ class Drawer {
         let vector = new Matrix(3, 1);
         vector.set(0, 0, point.x);
         vector.set(1, 0, point.y);
-        vector.set(2, 0, 1);
+        vector.set(2, 0, -1);
         let mat = this.currentTransform;
         let normalized = Matrix.mult(mat, vector);
+        console.log(vector, mat, normalized);
         return new Point2D(normalized.get(0,0), normalized.get(1,0));
     }
 
