@@ -18,6 +18,7 @@ class Modeller {
     public graphDrawingOptions: GraphDrawingOptions;
 
     public selection: Drawing;
+    public selectionId: number;
 
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet = null) {
         this.drawer = new Drawer(canvas);
@@ -43,7 +44,7 @@ class Modeller {
         this.graphDrawing = new GraphDrawing();
         this.graphDrawingOptions = new GraphDrawingOptions();
         let feedback = new Feedback();
-        feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 0);
+        feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
         this.setFeedback(feedback);
 
         let s = new Marking(this.petrinet);
@@ -65,8 +66,8 @@ class Modeller {
     }
 
     public delState(id: number) {
-        this.graph.delState(id);
-        this.graphDrawing.delState(id);
+        let a = new DeleteState(id, this.graph, this.graphDrawing);
+        this.actionManager.exec(a);
     }
 
     public delEdge(id: number) {
@@ -76,9 +77,11 @@ class Modeller {
 
     public select(pos: Point2D, context: CanvasRenderingContext2D) {
         let tpos = this.drawer.globalToLocal(pos);
-        let id  = this.graphDrawing.getDrawingAt(tpos, context);
-        this.selection = id !== null ? this.graphDrawing.getStateDrawing(id) : null;
-        this.graphDrawingOptions.selected = id;
+        this.selectionId  = this.graphDrawing.getDrawingAt(tpos, context);
+        this.selection = this.selectionId !== null ?
+            this.graphDrawing.getStateDrawing(this.selectionId) :
+            null;
+        this.graphDrawingOptions.selected = this.selectionId;
     }
 
     public setFeedback(feedback: Feedback) {
@@ -100,12 +103,15 @@ class Modeller {
         // key events
         canvas.addEventListener("keydown", (event) => {
             switch(event.keyCode) {
-                case 89:
+                case 46: // delete
+                    this.delState(this.selectionId);
+                    break;
+                case 89: // y
                     if(event.ctrlKey) {
                         this.actionManager.redo();
                     }
                     break;
-                case 90:
+                case 90: // z
                     if(event.ctrlKey && !event.shiftKey) {
                         this.actionManager.undo();
                     } else if(event.ctrlKey && event.shiftKey) {

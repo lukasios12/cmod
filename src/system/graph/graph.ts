@@ -15,17 +15,24 @@ class Graph {
         this.counter = 0;
     }
 
-    public addState(state: State): number {
-        return this.counter++;
+    public addState(state: State, id = null): number {
+        if(id !== null) {
+            this.states.add(id, state);
+            return id;
+        } else {
+            this.states.add(this.counter++, state);
+            return this.counter;
+        }
+        console.log(this);
     }
 
     public addEdge(edge: Edge): number {
-        console.log(`adding edge: ${edge}`);
         return this.counter++;
     }
 
     public delState(id: number): void {
-        console.log(`removing state with id: ${id}`);
+        this.states.remove(id);
+        console.log(this);
     }
 
     public delEdge(id: number): void {
@@ -38,5 +45,9 @@ class Graph {
 
     public getInitial(): number {
         return this.initial;
+    }
+
+    public getState(id: number): State {
+        return this.states.get(id);
     }
 }

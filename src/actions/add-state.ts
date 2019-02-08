@@ -31,14 +31,14 @@ class AddState implements UndoableAction {
     }
 
     public undo() {
-        console.log(`Undoing state addition: ${this.state}`);
+        console.log(`Undoing state addition: ${this.state}. ID: ${this.id}`);
         this.graph.delState(this.id);
         this.graphDrawing.delState(this.id);
     }
 
     public redo() {
         console.log(`Redoing state addition: ${this.state}`);
-        this.id = this.graph.addState(this.state);
+        this.graph.addState(this.state, this.id);
         this.graphDrawing.addStateDrawing(
             this.id,
             this.stateDrawing
