@@ -47,22 +47,27 @@ class Modeller {
         feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
         this.setFeedback(feedback);
 
-        let s = new Marking(this.petrinet);
-        s.set("p1", new IntegerTokenCount(1));
+        let a = new Marking(this.petrinet);
+        a.set("p1", new IntegerTokenCount(1));
+        let b = new Marking(this.petrinet);
+        b.set("p2", new IntegerTokenCount(2));
 
-        this.addState(s);
+        let ab = new Edge(1, 2, "t1");
+
+        this.addState(a);
+        this.addState(b);
+        this.addEdge(ab);
         this.drawer.draw(this.graphDrawing);
     }
 
     public addState(state: State, position: Point2D = null) {
         let a = new AddState(state, this.graph, this.graphDrawing, position);
         this.actionManager.exec(a);
-        console.log(this.actionManager);
     }
 
     public addEdge(edge: Edge) {
-        let id = this.graph.addEdge(edge);
-        this.graphDrawing.addEdge(id, edge);
+        let a = new AddEdge(edge, this.graph, this.graphDrawing);
+        this.actionManager.exec(a);
     }
 
     public delState(id: number) {

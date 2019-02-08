@@ -23,16 +23,20 @@ class Graph {
             this.states.add(this.counter++, state);
             return this.counter;
         }
-        console.log(this);
     }
 
-    public addEdge(edge: Edge): number {
-        return this.counter++;
+    public addEdge(edge: Edge, id = null): number {
+        if (id !== null) {
+            this.edges.add(id, edge);
+            return id;
+        } else {
+            this.edges.add(this.counter++, edge);
+            return this.counter;
+        }
     }
 
     public delState(id: number): void {
         this.states.remove(id);
-        console.log(this);
     }
 
     public delEdge(id: number): void {
