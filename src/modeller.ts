@@ -92,15 +92,11 @@ class Modeller {
         let context = canvas.getContext("2d");
 
         let mouseDownLeft= false;
-        let mouseDownMiddle = false;
 
         canvas.addEventListener("mousedown", (event) => {
             if(event.buttons == 1) {
                 this.select(new Point2D(event.clientX, event.clientY), context);
                 mouseDownLeft= true;
-            }
-            if(event.buttons == 4) {
-                mouseDownMiddle = true;
             }
         });
 
@@ -112,17 +108,10 @@ class Modeller {
                 this.selection.drag(pos, context);
                 this.drawer.draw();
             }
-            else if(mouseDownMiddle) {
-                let m = Matrix.identity(3);
-                m.set(0, 2, event.movementX);
-                m.set(1, 2, -event.movementY);
-                this.drawer.transform(m);
-            }
         });
 
         canvas.addEventListener("mouseup", (event) => {
             mouseDownLeft = false;
-            mouseDownMiddle = false;
         });
         // canvas.addEventListener("click", (event) => {
         //     let point = new Point2D(event.clientX, event.clientY);

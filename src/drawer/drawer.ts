@@ -43,6 +43,7 @@ class Drawer {
             this.resize();
         });
 
+        // register key events
         let canvas = this.canvas;
         let context = canvas.getContext("2d");
         let movementSpeed = 40;
@@ -69,6 +70,27 @@ class Drawer {
                     break;
             }
         });
+
+        // register mouse events
+        let mouseDownMiddle = false;
+        canvas.addEventListener("mousedown", (event) => {
+            if(event.buttons == 4) {
+                mouseDownMiddle = true;
+            }
+        });
+
+        canvas.addEventListener("mousemove", (event) => {
+            if(mouseDownMiddle) {
+                let m = Matrix.identity(3);
+                m.set(0, 2, event.movementX);
+                m.set(1, 2, -event.movementY);
+                this.transform(m);
+            }
+        });
+
+        canvas.addEventListener("mouseup", (event) => {
+            mouseDownMiddle = false;
+        });
     }
 
     public transform(mat: Matrix): void {
@@ -82,7 +104,6 @@ class Drawer {
         context.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
                              mat.get(1,1), mat.get(0,2), -mat.get(1,2));
         this.draw(this.drawingCache);
-        console.log(this.currentTransform);
     }
 
     public resize(): void {
