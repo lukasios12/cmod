@@ -36,7 +36,7 @@ class ActionManager {
         if(this.pointer < this.history.length - 1) {
             this.pointer = Math.min(this.pointer + 1, this.history.length - 1);
             let action = this.history[this.pointer];
-            action.exec()
+            action.redo()
         }
         this.execHooks();
     }

@@ -15,6 +15,12 @@ class StyleManager {
         context.lineWidth = 2;
     }
 
+    public static setStateSelectedStyle(context: CanvasRenderingContext2D) {
+        context.strokeStyle = "blue";
+        context.fillStyle = "white";
+        context.lineWidth = 20;
+    }
+
     public static setStateTextStyle(context: CanvasRenderingContext2D) {
         context.fillStyle = "black";
         context.font = "16px mono";

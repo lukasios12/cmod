@@ -76,7 +76,9 @@ class Modeller {
 
     public select(pos: Point2D, context: CanvasRenderingContext2D) {
         let tpos = this.drawer.globalToLocal(pos);
-        this.selection = this.graphDrawing.getStateDrawing(tpos, context);
+        let id  = this.graphDrawing.getDrawingAt(tpos, context);
+        this.selection = id !== null ? this.graphDrawing.getStateDrawing(id) : null;
+        this.graphDrawingOptions.selected = id;
     }
 
     public setFeedback(feedback: Feedback) {
@@ -97,7 +99,6 @@ class Modeller {
 
         // key events
         canvas.addEventListener("keydown", (event) => {
-            console.log(event);
             switch(event.keyCode) {
                 case 89:
                     if(event.ctrlKey) {
@@ -133,6 +134,7 @@ class Modeller {
         });
         canvas.addEventListener("mouseup", (event) => {
             mouseDownLeft = false;
+            this.drawer.draw();
         });
     }
 }

@@ -27,6 +27,11 @@ class GraphDrawing implements Drawing {
                 StyleManager.setStyle(codeArray[0], context);
                 state.draw(context);
             }
+
+            if (this.options.selected === stateIds[i]) {
+                StyleManager.setStateSelectedStyle(context);
+                state.draw(context);
+            }
             StyleManager.setStateStandardStyle(context);
             state.draw(context);
         }
@@ -35,11 +40,13 @@ class GraphDrawing implements Drawing {
     public addState(id: number, state: State, position: Point2D = null) {
         let drawing = new StateDrawing(state, position);
         this.states.put(id, drawing);
+        return drawing;
     }
 
     public addEdge(id: number, edge: Edge) {
         let drawing = new EdgeDrawing(edge);
         this.edges.put(id, drawing);
+        return drawing;
     }
 
     public delState(id: number) {
@@ -50,11 +57,28 @@ class GraphDrawing implements Drawing {
         this.edges.remove(id);
     }
 
-    public getStateDrawing(pos: Point2D, context: CanvasRenderingContext2D) {
+    public addStateDrawing(id: number, drawing: StateDrawing) {
+        this.states.put(id, drawing);
+        return drawing;
+    }
+
+    public addEdgeDrawing(id: number, drawing: EdgeDrawing) {
+        this.edges.put(id, drawing);
+        return drawing;
+    }
+
+    public getStateDrawing(id: number) {
+        if(this.states.hasKey(id)) {
+            return this.states.get(id);
+        }
+        return null;
+    }
+
+    public getDrawingAt(pos: Point2D, context: CanvasRenderingContext2D) {
         let keys = this.states.keys();
         for(let i = 0; i < keys.length; i++) {
             if(this.states.get(keys[i]).hit(pos, context)) {
-                return this.states.get(keys[i]);
+                return keys[i];
             }
         }
         return null;
