@@ -16,7 +16,6 @@ class Graph {
     }
 
     public addState(state: State): number {
-        console.log(`adding state: ${state}`);
         return this.counter++;
     }
 

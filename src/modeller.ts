@@ -1,3 +1,4 @@
+/// <reference path='./actions/index.ts'/>
 /// <reference path='./drawer/index.ts'/>
 /// <reference path='./drawing/index.ts'/>
 /// <reference path='./system/index.ts'/>
@@ -21,6 +22,9 @@ class Modeller {
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet = null) {
         this.drawer = new Drawer(canvas);
         this.actionManager = new ActionManager();
+        this.actionManager.addHook( () => {
+            this.drawer.draw();
+        });
         this.registerEvents();
 
         let places = new HashSet<string>();
@@ -50,8 +54,9 @@ class Modeller {
     }
 
     public addState(state: State, position: Point2D = null) {
-        let id = this.graph.addState(state);
-        this.graphDrawing.addState(id, state, position);
+        let a = new AddState(state, this.graph, this.graphDrawing, position);
+        this.actionManager.exec(a);
+        console.log(this.actionManager);
     }
 
     public addEdge(edge: Edge) {
@@ -69,16 +74,15 @@ class Modeller {
         this.graphDrawing.delEdge(id);
     }
 
+    public select(pos: Point2D, context: CanvasRenderingContext2D) {
+        let tpos = this.drawer.globalToLocal(pos);
+        this.selection = this.graphDrawing.getStateDrawing(tpos, context);
+    }
+
     public setFeedback(feedback: Feedback) {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
         this.graphDrawing.options = this.graphDrawingOptions;
-    }
-
-    public select(pos: Point2D, context: CanvasRenderingContext2D) {
-        let tpos = this.drawer.globalToLocal(pos);
-        this.selection = this.graphDrawing.getStateDrawing(tpos, context);
-        console.log(this.selection);
     }
 
     protected registerEvents() {
@@ -91,15 +95,33 @@ class Modeller {
         let canvas = this.drawer.canvas;
         let context = canvas.getContext("2d");
 
-        let mouseDownLeft= false;
+        // key events
+        canvas.addEventListener("keydown", (event) => {
+            console.log(event);
+            switch(event.keyCode) {
+                case 89:
+                    if(event.ctrlKey) {
+                        this.actionManager.redo();
+                    }
+                    break;
+                case 90:
+                    if(event.ctrlKey && !event.shiftKey) {
+                        this.actionManager.undo();
+                    } else if(event.ctrlKey && event.shiftKey) {
+                        this.actionManager.redo();
+                    }
+                    break;
+            }
+        });
 
+        // mouse events
+        let mouseDownLeft= false;
         canvas.addEventListener("mousedown", (event) => {
             if(event.buttons == 1) {
                 this.select(new Point2D(event.clientX, event.clientY), context);
                 mouseDownLeft= true;
             }
         });
-
         canvas.addEventListener("mousemove", (event) => {
             if(mouseDownLeft && this.selection && isDraggable(this.selection)) {
                 let pos = this.drawer.globalToLocal(
@@ -109,15 +131,8 @@ class Modeller {
                 this.drawer.draw();
             }
         });
-
         canvas.addEventListener("mouseup", (event) => {
             mouseDownLeft = false;
         });
-        // canvas.addEventListener("click", (event) => {
-        //     let point = new Point2D(event.clientX, event.clientY);
-        //     let tpoint = this.drawer.globalToLocal(point);
-        //     console.log(this.graphDrawing.getStateDrawing(tpoint, context));
-        //     context.fillRect(tpoint.x, tpoint.y, 10, 10);
-        // });
     }
 }
