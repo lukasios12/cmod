@@ -3,6 +3,7 @@
 /// <reference path='./drawing/index.ts'/>
 /// <reference path='./system/index.ts'/>
 /// <reference path='./feedback/index.ts'/>
+/// <reference path='./shapes/index.ts'/>
 
 /// <reference path='../lib/action-manager/index.ts'/>
 /// <reference path='../lib/matrix/matrix.ts'/>
@@ -58,6 +59,11 @@ class Modeller {
         this.addState(b);
         this.addEdge(ab);
         this.drawer.draw(this.graphDrawing);
+
+        // let circle = new Circle(100, 100, 50);
+        // let context = this.drawer.canvas.getContext("2d");
+        // let result = circle.hit(new Point2D(80, 80), context);
+        // console.log(result);
     }
 
     public addState(state: State, position: Point2D = null) {

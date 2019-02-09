@@ -25,5 +25,6 @@ class Line implements Shape2D {
         context.beginPath();
         context.moveTo(this.source.x, this.source.y);
         context.lineTo(this.target.x, this.target.y);
+        context.closePath();
     }
 }
