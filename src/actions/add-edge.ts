@@ -1,7 +1,7 @@
 class AddEdge implements UndoableAction {
     protected id: number;
     protected edge: Edge;
-    protected edgeDrawing: LinearEdgeDrawing | SelfLoopDrawing;
+    protected edgeDrawing: EdgeDrawing;
     protected graph: Graph;
     protected graphDrawing: GraphDrawing;
 
@@ -28,6 +28,11 @@ class AddEdge implements UndoableAction {
             );
         }
         this.graphDrawing.addEdge(this.id, drawing);
+        if(this.graphDrawing.options.selected == this.id) {
+            this.graphDrawing.options.selected = undefined;
+        }
+
+        this.edgeDrawing = drawing;
     }
 
     public undo() {
@@ -40,5 +45,6 @@ class AddEdge implements UndoableAction {
         console.log(`Readding edge (${this.edge.from},${this.edge.to}, ${this.edge.label})`);
         this.graph.addEdge(this.edge, this.id);
         this.graphDrawing.addEdge(this.id, this.edgeDrawing);
+        console.log(this.graphDrawing);
     }
 }
