@@ -1,13 +1,15 @@
 class GraphDrawing implements Drawing {
     public initial: number;
     public states: HashTable<number, StateDrawing>;
-    public edges: HashTable<number, EdgeDrawing>;
+    public edges: HashTable<number, LinearEdgeDrawing>;
+    public selfLoops: HashTable<number, SelfLoopDrawing>;
 
     public options: GraphDrawingOptions;
 
     public constructor(options: GraphDrawingOptions = null) {
         this.states = new HashTable<number, StateDrawing>();
-        this.edges = new HashTable<number, EdgeDrawing>();
+        this.edges = new HashTable<number, LinearEdgeDrawing>();
+        this.selfLoops = new HashTable<number, SelfLoopDrawing>();
         this.initial = null;
         this.options = options;
     }
@@ -35,6 +37,11 @@ class GraphDrawing implements Drawing {
             StyleManager.setStateStandardStyle(context);
             state.draw(context);
         }
+
+        for(let i = 0; i < edgeIds.length; i++) {
+            let edge = edges.get(edgeIds[i]);
+            edge.draw(context);
+        }
     }
 
     public addState(id: number, drawing: StateDrawing) {
@@ -42,10 +49,12 @@ class GraphDrawing implements Drawing {
         return drawing;
     }
 
-    public addEdge(id: number, edge: Edge) {
-        let drawing = new EdgeDrawing(edge);
-        this.edges.put(id, drawing);
-        return drawing;
+    public addEdge(id: number, edge: LinearEdgeDrawing | SelfLoopDrawing) {
+        if(edge instanceof LinearEdgeDrawing) {
+            this.edges.put(id, edge);
+        } else {
+            this.selfLoops.put(id, edge);
+        }
     }
 
     public delState(id: number) {
@@ -54,11 +63,6 @@ class GraphDrawing implements Drawing {
 
     public delEdge(id: number) {
         this.edges.remove(id);
-    }
-
-    public addEdgeDrawing(id: number, drawing: EdgeDrawing) {
-        this.edges.put(id, drawing);
-        return drawing;
     }
 
     public getStateDrawing(id: number) {

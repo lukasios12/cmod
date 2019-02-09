@@ -5,6 +5,8 @@
 
 /// <reference path='./state-drawing.ts'/>
 /// <reference path='./edge-drawing.ts'/>
+/// <reference path='./linear-edge-drawing.ts'/>
+/// <reference path='./self-loop-drawing.ts'/>
 /// <reference path='./graph-drawing.ts'/>
 /// <reference path='./graph-drawing-options.ts'/>
 

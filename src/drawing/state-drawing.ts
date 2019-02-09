@@ -46,6 +46,12 @@ class StateDrawing implements HittableDrawing, Draggable {
         this.position = newPos;
     }
 
+    public center(context:CanvasRenderingContext2D) {
+        let vector = new Vector2D(this.position.x(), this.position.y());
+        let wh = new Vector2D(this.getWidth(context) / 2, this.getHeight(context) / 2);
+        return Vector2D.add(vector, wh);
+    }
+
     protected getHeight(context: CanvasRenderingContext2D) {
         return 1.5 * CanvasRenderingContext2DUtils.getFontSize(context);
     }
