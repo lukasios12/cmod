@@ -26,7 +26,7 @@ class DeleteState implements UndoableAction {
     public undo() {
         console.log(`Undoing state removal with id: ${this.id}`);
         this.graph.addState(this.state, this.id);
-        this.graphDrawing.addStateDrawing(this.id, this.stateDrawing);
+        this.graphDrawing.addState(this.id, this.stateDrawing);
     }
 
     public redo() {

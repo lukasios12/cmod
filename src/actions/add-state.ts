@@ -24,7 +24,7 @@ class AddState implements UndoableAction {
         console.log(`Adding state: ${this.state}`);
         this.id = this.graph.addState(this.state);
         this.stateDrawing = new StateDrawing(this.state, this.position);
-        this.graphDrawing.addStateDrawing(this.id, this.stateDrawing);
+        this.graphDrawing.addState(this.id, this.stateDrawing);
     }
 
     public undo() {
@@ -36,7 +36,7 @@ class AddState implements UndoableAction {
     public redo() {
         console.log(`Redoing state addition: ${this.state}`);
         this.graph.addState(this.state, this.id);
-        this.graphDrawing.addStateDrawing(
+        this.graphDrawing.addState(
             this.id,
             this.stateDrawing
         );

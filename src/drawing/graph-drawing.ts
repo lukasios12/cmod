@@ -37,8 +37,7 @@ class GraphDrawing implements Drawing {
         }
     }
 
-    public addState(id: number, state: State, position: Vector2D = null) {
-        let drawing = new StateDrawing(state, position);
+    public addState(id: number, drawing: StateDrawing) {
         this.states.put(id, drawing);
         return drawing;
     }
@@ -55,11 +54,6 @@ class GraphDrawing implements Drawing {
 
     public delEdge(id: number) {
         this.edges.remove(id);
-    }
-
-    public addStateDrawing(id: number, drawing: StateDrawing) {
-        this.states.put(id, drawing);
-        return drawing;
     }
 
     public addEdgeDrawing(id: number, drawing: EdgeDrawing) {
