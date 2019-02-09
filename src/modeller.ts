@@ -66,7 +66,7 @@ class Modeller {
         // console.log(result);
     }
 
-    public addState(state: State, position: Point2D = null) {
+    public addState(state: State, position: Vector2D = null) {
         let a = new AddState(state, this.graph, this.graphDrawing, position);
         this.actionManager.exec(a);
     }
@@ -86,7 +86,7 @@ class Modeller {
         this.graphDrawing.delEdge(id);
     }
 
-    public select(pos: Point2D, context: CanvasRenderingContext2D) {
+    public select(pos: Vector2D, context: CanvasRenderingContext2D) {
         let tpos = this.drawer.globalToLocal(pos);
         this.selectionId  = this.graphDrawing.getDrawingAt(tpos, context);
         this.selection = this.selectionId !== null ?
@@ -136,14 +136,14 @@ class Modeller {
         let mouseDownLeft= false;
         canvas.addEventListener("mousedown", (event) => {
             if(event.buttons == 1) {
-                this.select(new Point2D(event.clientX, event.clientY), context);
+                this.select(new Vector2D(event.clientX, event.clientY), context);
                 mouseDownLeft= true;
             }
         });
         canvas.addEventListener("mousemove", (event) => {
             if(mouseDownLeft && this.selection && isDraggable(this.selection)) {
                 let pos = this.drawer.globalToLocal(
-                    new Point2D(event.clientX, event.clientY)
+                    new Vector2D(event.clientX, event.clientY)
                 );
                 this.selection.drag(pos, context);
                 this.drawer.draw();

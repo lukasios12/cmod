@@ -4,30 +4,27 @@ class AddState implements UndoableAction {
     protected stateDrawing: StateDrawing;
     protected graph: Graph;
     protected graphDrawing: GraphDrawing;
-    protected position: Point2D;
+    protected position: Vector2D;
 
     public constructor(
         state: State,
         graph: Graph,
         graphDrawing: GraphDrawing,
-        pos: Point2D
+        pos: Vector2D
     ) {
-        this.id = undefined;
-        this.state = state;
+        this.id           = undefined;
+        this.state        = state;
         this.stateDrawing = undefined;
-        this.graph = graph;
+        this.graph        = graph;
         this.graphDrawing = graphDrawing;
-        this.position = pos;
+        this.position     = pos;
     }
 
     public exec() {
         console.log(`Adding state: ${this.state}`);
         this.id = this.graph.addState(this.state);
-        this.stateDrawing = this.graphDrawing.addState(
-            this.id,
-            this.state,
-            this.position
-        );
+        this.stateDrawing = new StateDrawing(this.state, this.position);
+        this.graphDrawing.addStateDrawing(this.id, this.stateDrawing);
     }
 
     public undo() {

@@ -37,7 +37,7 @@ class GraphDrawing implements Drawing {
         }
     }
 
-    public addState(id: number, state: State, position: Point2D = null) {
+    public addState(id: number, state: State, position: Vector2D = null) {
         let drawing = new StateDrawing(state, position);
         this.states.put(id, drawing);
         return drawing;
@@ -74,7 +74,7 @@ class GraphDrawing implements Drawing {
         return null;
     }
 
-    public getDrawingAt(pos: Point2D, context: CanvasRenderingContext2D) {
+    public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D) {
         let keys = this.states.keys();
         for(let i = 0; i < keys.length; i++) {
             if(this.states.get(keys[i]).hit(pos, context)) {
@@ -84,11 +84,11 @@ class GraphDrawing implements Drawing {
         return null;
     }
 
-    public getEdgeDrawing(pos: Point2D, context: CanvasRenderingContext2D) {
+    public getEdgeDrawing(pos: Vector2D, context: CanvasRenderingContext2D) {
 
     }
 
-    public getSelfloopDrawing(pos: Point2D, context: CanvasRenderingContext2D) {
+    public getSelfloopDrawing(pos: Vector2D, context: CanvasRenderingContext2D) {
 
     }
 }

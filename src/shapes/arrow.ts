@@ -10,8 +10,8 @@ class Arrow extends Line {
 
     protected preparePath(context: CanvasRenderingContext2D) {
         context.beginPath();
-        context.moveTo(this.source.x, this.source.y);
-        context.lineTo(this.target.x, this.target.y);
+        context.moveTo(this.source.x(), this.source.y());
+        context.lineTo(this.target.x(), this.target.y());
         context.closePath();
     }
 }

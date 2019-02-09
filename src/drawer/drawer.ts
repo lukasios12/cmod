@@ -132,16 +132,16 @@ class Drawer {
         this.transform(mat);
     }
 
-    public globalToLocal(point: Point2D) {
+    public globalToLocal(point: Vector2D) {
         let context = this.canvas.getContext("2d");
         let vector = new Matrix(3, 1);
-        vector.set(0, 0, point.x);
-        vector.set(1, 0, point.y);
+        vector.set(0, 0, point.x());
+        vector.set(1, 0, point.y());
         vector.set(2, 0, 1);
         let mat = this.currentTransform.inverse();
         let normalized = Matrix.mult(mat, vector);
         // console.log(vector, mat, normalized);
-        return new Point2D(normalized.get(0,0), normalized.get(1,0));
+        return new Vector2D(normalized.get(0,0), normalized.get(1,0));
     }
 
     protected drawGrid(): void {

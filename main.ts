@@ -10,12 +10,6 @@ class Main {
         let canvas = document.getElementById("canvas") as HTMLCanvasElement;
         let modeller = new Modeller(canvas);
 
-        let a = new Vector(2);
-        let b = new Vector(2);
-        b.set(0, 6);
-        b.set(1, 1);
-        console.log(Vector.norm(b));
-
        // let places = new HashSet<string>();
         // places.add("p1");
         // places.add("p2");

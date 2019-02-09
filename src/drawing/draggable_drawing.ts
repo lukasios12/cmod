@@ -1,5 +1,5 @@
 interface Draggable {
-    drag(point: Point2D, context: CanvasRenderingContext2D);
+    drag(point: Vector2D, context: CanvasRenderingContext2D);
 }
 
 function isDraggable(object: any): object is Draggable {

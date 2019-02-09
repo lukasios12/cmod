@@ -4,14 +4,14 @@
 
 class StateDrawing implements HittableDrawing, Draggable {
     public state: State;
-    public position: Point2D;
+    public position: Vector2D;
 
-    public constructor(state: State, position: Point2D = null) {
+    public constructor(state: State, position: Vector2D = null) {
         this.state = state;
         if(position) {
             this.position = position;
         } else {
-            this.position = new Point2D(0, 0);
+            this.position = new Vector2D(0, 0);
         }
     }
 
@@ -21,28 +21,28 @@ class StateDrawing implements HittableDrawing, Draggable {
         let text = this.state.toString();
         let width = this.getWidth(context);
         let height = this.getHeight(context);
-        let box = new Rectangle(this.position.x,
-                                this.position.y,
+        let box = new Rectangle(this.position.x(),
+                                this.position.y(),
                                 width,
                                 height);
         context.restore();
         box.fill(context);
         box.stroke(context);
         StyleManager.setStateTextStyle(context);
-        context.fillText(text, this.position.x + width / 2, this.position.y + height / 2);
+        context.fillText(text, this.position.x() + width / 2, this.position.y() + height / 2);
     }
 
-    public hit(point: Point2D, context: CanvasRenderingContext2D) {
+    public hit(point: Vector2D, context: CanvasRenderingContext2D) {
         let height = this.getHeight(context);
         let width = this.getWidth(context);
-        return (point.x >= this.position.x && point.x <= this.position.x + width &&
-                point.y >= this.position.y && point.y <= this.position.y + height)
+        return (point.x() >= this.position.x() && point.x() <= this.position.x() + width &&
+                point.y() >= this.position.y() && point.y() <= this.position.y() + height)
     }
 
-    public drag(point: Point2D, context: CanvasRenderingContext2D) {
+    public drag(point: Vector2D, context: CanvasRenderingContext2D) {
         let width = this.getWidth(context);
         let height = this.getHeight(context);
-        let newPos = new Point2D(point.x - (width / 2), point.y - (height / 2));
+        let newPos = new Vector2D(point.x() - (width / 2), point.y() - (height / 2));
         this.position = newPos;
     }
 
