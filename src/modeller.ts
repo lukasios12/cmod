@@ -60,6 +60,8 @@ class Modeller {
         this.addEdge(ab);
         this.drawer.draw(this.graphDrawing);
 
+        this.setInitial(1);
+
         // let circle = new Circle(100, 100, 50);
         // let context = this.drawer.canvas.getContext("2d");
         // let result = circle.hit(new Point2D(80, 80), context);
@@ -84,6 +86,11 @@ class Modeller {
     public delEdge(id: number) {
         this.graph.delEdge(id);
         this.graphDrawing.delEdge(id);
+    }
+
+    public setInitial(id: number) {
+        let a = new AddInitial(id, this.graph, this.graphDrawing);
+        this.actionManager.exec(a);
     }
 
     public select(pos: Vector2D, context: CanvasRenderingContext2D) {

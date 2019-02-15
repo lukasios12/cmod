@@ -41,19 +41,19 @@ class Graph {
         for(let i = 0; i < edgeIds.length; i++) {
             let edge = this.edges.get(edgeIds[i]);
             if(edge.to == id) {
-                result.append(edge);
+                result.push(edge);
             }
         }
         return result;
     }
 
-    let postset(id: number): Edge[] {
+    public postset(id: number): Edge[] {
         let result = new Array<Edge>();
         let edgeIds = this.edges.keys();
         for(let i = 0; i < edgeIds.length; i++) {
             let edge = this.edges.get(edgeIds[i]);
             if(edge.from == id) {
-                result.append(edge);
+                result.push(edge);
             }
         }
         return result;
