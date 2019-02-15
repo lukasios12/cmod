@@ -73,6 +73,13 @@ class GraphDrawing implements Drawing {
         return null;
     }
 
+    public getEdgeDrawing(id: number) {
+        if(this.edges.hasKey(id)) {
+            return this.edges.get(id);
+        }
+        return null;
+    }
+
     public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D) {
         let keys = this.states.keys();
         for(let i = 0; i < keys.length; i++) {
@@ -81,10 +88,6 @@ class GraphDrawing implements Drawing {
             }
         }
         return null;
-    }
-
-    public getEdgeDrawing(pos: Vector2D, context: CanvasRenderingContext2D) {
-
     }
 
     public getSelfloopDrawing(pos: Vector2D, context: CanvasRenderingContext2D) {

@@ -58,15 +58,12 @@ class Modeller {
         this.addState(a);
         this.addState(b);
         this.addEdge(ab);
+        this.delEdge(3);
+
+        console.log(this.graph);
+        console.log(this.graphDrawing);
+
         this.drawer.draw(this.graphDrawing);
-
-        this.setInitial(1);
-        this.unsetInitial(1);
-
-        // let circle = new Circle(100, 100, 50);
-        // let context = this.drawer.canvas.getContext("2d");
-        // let result = circle.hit(new Point2D(80, 80), context);
-        // console.log(result);
     }
 
     public addState(state: State, position: Vector2D = null) {
@@ -85,8 +82,10 @@ class Modeller {
     }
 
     public delEdge(id: number) {
-        this.graph.delEdge(id);
-        this.graphDrawing.delEdge(id);
+        // this.graph.delEdge(id);
+        // this.graphDrawing.delEdge(id);
+        let a = new DeleteEdge(id, this.graph, this.graphDrawing);
+        this.actionManager.exec(a);
     }
 
     public setInitial(id: number) {

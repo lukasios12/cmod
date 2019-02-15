@@ -12,7 +12,7 @@ class Graph {
         this.edges = new HashTable<number, Edge>();
         this.initial = null;
 
-        this.counter = 0;
+        this.counter = 1;
     }
 
     public addState(state: State, id = null): number {
@@ -20,8 +20,9 @@ class Graph {
             this.states.add(id, state);
             return id;
         } else {
+            let result = this.counter;
             this.states.add(this.counter++, state);
-            return this.counter;
+            return result;
         }
     }
 
@@ -30,8 +31,9 @@ class Graph {
             this.edges.add(id, edge);
             return id;
         } else {
+            let result = this.counter;
             this.edges.add(this.counter++, edge);
-            return this.counter;
+            return result;
         }
     }
 
@@ -64,7 +66,7 @@ class Graph {
     }
 
     public delEdge(id: number): void {
-        console.log(`removing edge with id: ${id}`);
+        this.edges.remove(id);
     }
 
     public setInitial(id: number): void {
@@ -77,5 +79,9 @@ class Graph {
 
     public getState(id: number): State {
         return this.states.get(id);
+    }
+
+    public getEdge(id: number): Edge {
+        return this.edges.get(id);
     }
 }
