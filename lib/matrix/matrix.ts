@@ -96,6 +96,16 @@ class Matrix {
         return m;
     }
 
+    public static scale(m: Matrix, f: number) {
+        let v = new Matrix(m.rows(), m.cols());
+        for(let r = 0; r < m.rows(); r++) {
+            for(let c = 0; c < m.cols(); c++) {
+                v.set(r, c, m.get(r, c) * f);
+            }
+        }
+        return v;
+    }
+
     public static add(lhs: Matrix, rhs: Matrix) {
         if(!(lhs.cols() == rhs.cols() && lhs.rows() == rhs.rows())) {
             console.error("invalid matrix addition: unequal sizes");

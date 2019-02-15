@@ -40,6 +40,12 @@ class GraphDrawing implements Drawing {
             let edge = edges.get(edgeIds[i]);
             edge.draw(context);
         }
+
+        let initial = this.initial;
+        if(initial != null) {
+            // draw initial state pointer
+        }
+
     }
 
     public addState(id: number, drawing: StateDrawing) {
@@ -57,7 +63,6 @@ class GraphDrawing implements Drawing {
     }
 
     public delEdge(id: number) {
-        console.log("graph drawing: deleting edge with id:", id);
         this.edges.remove(id);
     }
 

@@ -10,6 +10,9 @@ class SelfLoopDrawing implements Drawing {
     }
 
     public draw(context: CanvasRenderingContext2D) {
-
+        context.save();
+        let cir = new Circle(this.state.position.x(), this.state.position.y(), 40);
+        cir.stroke(context);
+        context.restore();
     }
 }

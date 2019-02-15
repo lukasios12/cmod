@@ -53,6 +53,6 @@ class Vector {
 
     public static unit(v: Vector) {
         let norm = Vector.norm(v);
-        return Vector.scale(v, norm);
+        return Vector.scale(v, 1 / norm);
     }
 }

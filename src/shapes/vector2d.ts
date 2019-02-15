@@ -36,6 +36,6 @@ class Vector2D {
 
     public static unit(v: Vector2D) {
         let norm = Vector2D.norm(v);
-        return Vector2D.scale(v, norm);
+        return Vector2D.scale(v, 1 / norm);
     }
 }
