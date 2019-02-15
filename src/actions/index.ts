@@ -4,3 +4,4 @@
 /// <reference path='./add-edge.ts'/>
 
 /// <reference path='./add-initial.ts'/>
+/// <reference path='./del-initial.ts'/>

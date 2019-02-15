@@ -61,6 +61,7 @@ class Modeller {
         this.drawer.draw(this.graphDrawing);
 
         this.setInitial(1);
+        this.unsetInitial(1);
 
         // let circle = new Circle(100, 100, 50);
         // let context = this.drawer.canvas.getContext("2d");
@@ -90,6 +91,11 @@ class Modeller {
 
     public setInitial(id: number) {
         let a = new AddInitial(id, this.graph, this.graphDrawing);
+        this.actionManager.exec(a);
+    }
+
+    public unsetInitial(id: number) {
+        let a = new DeleteInitial(id, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 

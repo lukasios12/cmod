@@ -1,6 +1,7 @@
 class Line implements Shape2D {
     public source: Vector2D;
     public target: Vector2D;
+    public bend: number;
 
     public constructor(x1, y1, x2, y2) {
         this.source = new Vector2D(x1, y1);
