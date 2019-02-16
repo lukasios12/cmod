@@ -17,7 +17,7 @@ class Drawer {
 
     public draw(drawing: Drawing = null, feedback: Feedback = null): void {
         this.clear();
-        // this.drawGrid();
+        this.drawGrid();
         let context = this.canvas.getContext("2d");
         // Matrix3D.setTransform(this.currentTransform, context);
         if(drawing) {
@@ -26,6 +26,9 @@ class Drawer {
         } else if(this.drawingCache) {
             this.drawingCache.draw(context);
         }
+        context.beginPath();
+        context.arc(-30, -30, 5, 0, 2 * Math.PI);
+        context.fill();
     }
 
     public clear(): void {
@@ -148,29 +151,38 @@ class Drawer {
         let context = this.canvas.getContext("2d");
         let width = this.canvas.width;
         let height = this.canvas.height;
-        let amount = 50;
 
-        let h = Math.round(amount);
-        let v = Math.round(amount);
+        let hdist = 50;
+        let vdist = 50;
 
-        context.strokeStyle = "rgba(255, 100, 100, .8)";
-        context.lineWidth = 1;
-        let th = this.currentTransform.get(0, 2);
-        let tv = this.currentTransform.get(1, 2);
-        for(let i = 0; i < amount; i++) {
+        let transform = this.currentTransform;
+        let hoffset = transform.get(0, 2);
+        let voffset = transform.get(1, 2);
+
+        let xmin = -(Math.ceil(hoffset / hdist) * hdist);
+        let xmax = Math.ceil((xmin + (width / transform.get(0, 0))) / hdist) * hdist;
+
+        let ymin = (Math.floor(voffset / vdist) * vdist);
+        let ymax = Math.ceil((ymin + (height / transform.get(1, 1))) / vdist) * vdist;
+
+
+        console.log(xmin, xmax, ymin, ymax);
+        context.save();
+        context.strokeStyle = "rgb(220, 220, 220)";
+        context.lineWidth = 1; // px
+        for(let x = xmin; x <= xmax; x += hdist) {
             context.beginPath();
-            context.moveTo(-th, i * v - tv);
-            context.lineTo(width - th, i * v - tv);
-            context.closePath();
+            context.moveTo(x, ymin);
+            context.lineTo(x, ymax);
             context.stroke();
         }
 
-        for(let i = 0; i < amount; i++) {
+        for(let y = ymin; y <= ymax; y += vdist) {
             context.beginPath();
-            context.moveTo(i * h, -th);
-            context.lineTo(i * h, height);
-            context.closePath();
+            context.moveTo(xmin, y);
+            context.lineTo(xmax, y);
             context.stroke();
         }
+        context.restore();
     }
 }

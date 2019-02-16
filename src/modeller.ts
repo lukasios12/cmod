@@ -82,8 +82,6 @@ class Modeller {
     }
 
     public delEdge(id: number) {
-        // this.graph.delEdge(id);
-        // this.graphDrawing.delEdge(id);
         let a = new DeleteEdge(id, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
