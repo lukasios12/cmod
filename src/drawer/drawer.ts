@@ -152,21 +152,19 @@ class Drawer {
         let width = this.canvas.width;
         let height = this.canvas.height;
 
-        let hdist = 50;
-        let vdist = 50;
+        let hdist = 30;
+        let vdist = 30;
 
         let transform = this.currentTransform;
         let hoffset = transform.get(0, 2);
         let voffset = transform.get(1, 2);
 
-        let xmin = -(Math.ceil(hoffset / hdist) * hdist);
-        let xmax = Math.ceil((xmin + (width / transform.get(0, 0))) / hdist) * hdist;
+        let xmin = -(Math.ceil((hoffset / hdist) / transform.get(0, 0)) * hdist);
+        let xmax = Math.ceil((width / transform.get(0,0)) / hdist) * hdist + xmin;
 
-        let ymin = (Math.floor(voffset / vdist) * vdist);
-        let ymax = Math.ceil((ymin + (height / transform.get(1, 1))) / vdist) * vdist;
+        let ymin = Math.floor((voffset / vdist) / transform.get(1,1)) * vdist;
+        let ymax = Math.ceil((height / transform.get(1,1)) / vdist) * vdist + ymin + vdist;
 
-
-        console.log(xmin, xmax, ymin, ymax);
         context.save();
         context.strokeStyle = "rgb(220, 220, 220)";
         context.lineWidth = 1; // px
