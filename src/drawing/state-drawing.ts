@@ -17,14 +17,10 @@ class StateDrawing implements HittableDrawing, Draggable {
 
     public draw(context: CanvasRenderingContext2D) {
         context.save();
-        StyleManager.setStateTextStyle(context);
         let text = this.state.toString();
+        let box = this.getBox(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
-        let box = new Rectangle(this.position.x(),
-                                this.position.y(),
-                                width,
-                                height);
         context.restore();
         box.fill(context);
         box.stroke(context);
@@ -37,10 +33,13 @@ class StateDrawing implements HittableDrawing, Draggable {
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
-        let height = this.getHeight(context);
-        let width = this.getWidth(context);
-        return (point.x() >= this.position.x() && point.x() <= this.position.x() + width &&
-                point.y() >= this.position.y() && point.y() <= this.position.y() + height)
+        context.save();
+        let box = this.getBox(context);
+        console.log(box);
+        box.setPath(context);
+        let result = context.isPointInPath(point.x(), point.y());
+        context.restore();
+        return result;
     }
 
     public drag(point: Vector2D, context: CanvasRenderingContext2D) {
@@ -54,6 +53,19 @@ class StateDrawing implements HittableDrawing, Draggable {
         let vector = new Vector2D(this.position.x(), this.position.y());
         let wh = new Vector2D(this.getWidth(context) / 2, this.getHeight(context) / 2);
         return Vector2D.add(vector, wh);
+    }
+
+    protected getBox(context: CanvasRenderingContext2D) {
+        StyleManager.setStateTextStyle(context);
+        let text = this.state.toString();
+        let width = this.getWidth(context);
+        let height = this.getHeight(context);
+        let box = new Rectangle(this.position.x(),
+                                this.position.y(),
+                                width,
+                                height);
+
+        return box;
     }
 
     protected getHeight(context: CanvasRenderingContext2D) {

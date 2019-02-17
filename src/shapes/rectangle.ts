@@ -20,4 +20,8 @@ class Rectangle implements Shape2D {
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
         return false;
     }
+
+    public setPath(context: CanvasRenderingContext2D) {
+        context.rect(this.source.x(), this.source.y(), this.width, this.height);
+    }
 }

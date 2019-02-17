@@ -14,7 +14,10 @@ class LinearEdgeDrawing extends EdgeDrawing {
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
+        context.save();
+        context.setTransform(1, 0, 0, 1, 0, 0);
         let arrow = this.getArrow(context);
+        context.restore();
         return arrow.hit(point, context);
     }
 

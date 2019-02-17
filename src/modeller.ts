@@ -98,8 +98,7 @@ class Modeller {
     }
 
     public select(pos: Vector2D, context: CanvasRenderingContext2D) {
-        let tpos = this.drawer.globalToLocal(pos);
-        this.selectionId  = this.graphDrawing.getDrawingAt(tpos, context);
+        this.selectionId  = this.graphDrawing.getDrawingAt(pos, context);
         this.selection = this.selectionId !== null ?
             this.graphDrawing.getStateDrawing(this.selectionId) :
             null;
