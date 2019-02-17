@@ -14,8 +14,7 @@ class Line implements Shape2D {
     }
 
     public fill(context: CanvasRenderingContext2D) {
-        this.preparePath(context);
-        context.fill();
+        this.stroke(context);
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {

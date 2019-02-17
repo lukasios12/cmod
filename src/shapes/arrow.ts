@@ -8,6 +8,12 @@ class Arrow extends Line {
         this.height = h;
     }
 
+    public fill(context: CanvasRenderingContext2D) {
+        this.preparePath(context);
+        context.stroke();
+        context.fill();
+    }
+
     protected preparePath(context: CanvasRenderingContext2D) {
         context.beginPath();
         context.moveTo(this.source.x(), this.source.y());
@@ -45,7 +51,6 @@ class Arrow extends Line {
         );
 
         context.lineTo(this.target.x(), this.target.y());
-
         context.closePath();
     }
 }
