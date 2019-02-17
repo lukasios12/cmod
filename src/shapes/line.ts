@@ -22,17 +22,29 @@ class Line implements Shape2D {
         return false;
     }
 
+    public getControlPoint() {
+        let vec = Vector2D.sub(this.target, this.source);
+        let len = Vector2D.norm(vec);
+        let unit = Vector2D.unit(vec);
+        let perp = new Vector2D(unit.y(), -unit.x());
+        let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / 2));
+        let result = Vector2D.add(
+            middle,
+            Vector2D.scale(perp, this.bend / (0.5 * Math.PI))
+        );
+        return result;
+    }
+
     protected preparePath(context: CanvasRenderingContext2D) {
         context.beginPath();
         let vec = Vector2D.sub(this.target, this.source);
         let len = Vector2D.norm(vec);
         let unit = Vector2D.unit(vec);
         let perp = new Vector2D(unit.y(), -unit.x());
-        let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / 2));
+        let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / Math.PI));
 
-        let cx = middle.x() + Vector2D.scale(perp, this.bend).x();
-        let cy = middle.y() + Vector2D.scale(perp, this.bend).y();
+        let c = Vector2D.add(middle, Vector2D.scale(perp, this.bend));
         context.moveTo(this.source.x(), this.source.y());
-        context.quadraticCurveTo(cx, cy, this.target.x(), this.target.y());
+        context.quadraticCurveTo(c.x(), c.y(), this.target.x(), this.target.y());
     }
 }
