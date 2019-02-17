@@ -104,6 +104,7 @@ class Modeller {
             this.graphDrawing.getStateDrawing(this.selectionId) :
             null;
         this.graphDrawingOptions.selected = this.selectionId;
+        console.log(this.selectionId);
     }
 
     public setFeedback(feedback: Feedback) {

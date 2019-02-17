@@ -19,7 +19,12 @@ class Line implements Shape2D {
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
-        return false;
+        context.save();
+        context.lineWidth = 20;
+        this.preparePath(context);
+        let result = context.isPointInStroke(point.x(), point.y());
+        context.restore();
+        return result;
     }
 
     public getControlPoint() {

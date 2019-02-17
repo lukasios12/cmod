@@ -38,6 +38,11 @@ class GraphDrawing implements Drawing {
 
         for(let i = 0; i < edgeIds.length; i++) {
             let edge = edges.get(edgeIds[i]);
+            if (this.options.selected === edgeIds[i]) {
+                StyleManager.setEdgeSelectedStyle(context);
+                edge.draw(context);
+            }
+            StyleManager.setEdgeStandardStyle(context);
             edge.draw(context);
         }
 
@@ -88,6 +93,12 @@ class GraphDrawing implements Drawing {
         let keys = this.states.keys();
         for(let i = 0; i < keys.length; i++) {
             if(this.states.get(keys[i]).hit(pos, context)) {
+                return keys[i];
+            }
+        }
+        keys = this.edges.keys();
+        for(let i = 0; i < keys.length; i++) {
+            if(this.edges.get(keys[i]).hit(pos, context)) {
                 return keys[i];
             }
         }

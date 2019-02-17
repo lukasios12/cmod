@@ -30,8 +30,13 @@ class StyleManager {
 
     public static setEdgeStandardStyle(context: CanvasRenderingContext2D) {
         context.strokeStyle = "black";
-        context.fillStyle = "white";
+        context.fillStyle = "black";
         context.lineWidth = 2;
+    }
+
+    public static setEdgeSelectedStyle(context: CanvasRenderingContext2D) {
+        context.strokeStyle = "blue";
+        context.lineWidth = 10;
     }
 
     public static setEdgeTextStyle(context: CanvasRenderingContext2D) {

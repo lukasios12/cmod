@@ -1,4 +1,4 @@
-abstract class EdgeDrawing implements Drawing {
+abstract class EdgeDrawing implements HittableDrawing {
     public source: StateDrawing;
     public label: string;
 
@@ -8,4 +8,6 @@ abstract class EdgeDrawing implements Drawing {
     }
 
     public abstract draw(context:CanvasRenderingContext2D);
+
+    public abstract hit(point: Vector2D, context: CanvasRenderingContext2D);
 }

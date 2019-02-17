@@ -29,7 +29,11 @@ class StateDrawing implements HittableDrawing, Draggable {
         box.fill(context);
         box.stroke(context);
         StyleManager.setStateTextStyle(context);
-        context.fillText(text, this.position.x() + width / 2, this.position.y() + height / 2);
+        context.fillText(
+            text,
+            this.position.x() + width / 2,
+            this.position.y() + height / 2
+        );
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {

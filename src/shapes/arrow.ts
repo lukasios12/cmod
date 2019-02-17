@@ -2,7 +2,7 @@ class Arrow extends Line {
     public width: number;
     public height; number;
 
-    public constructor(x1, y1, x2, y2, b = 0, w = 15, h = 15) {
+    public constructor(x1, y1, x2, y2, b = 0, w = 10, h = 15) {
         super(x1, y1, x2, y2, b);
         this.width = w;
         this.height = h;
