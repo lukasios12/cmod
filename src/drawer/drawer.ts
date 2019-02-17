@@ -19,7 +19,6 @@ class Drawer {
         this.clear();
         this.drawGrid();
         let context = this.canvas.getContext("2d");
-        // Matrix3D.setTransform(this.currentTransform, context);
         if(drawing) {
             drawing.draw(context);
             this.drawingCache = drawing;
@@ -27,7 +26,6 @@ class Drawer {
             this.drawingCache.draw(context);
         }
         context.beginPath();
-        context.arc(-30, -30, 5, 0, 2 * Math.PI);
         context.fill();
     }
 
@@ -143,7 +141,6 @@ class Drawer {
         vector.set(2, 0, 1);
         let mat = this.currentTransform.inverse();
         let normalized = Matrix.mult(mat, vector);
-        // console.log(vector, mat, normalized);
         return new Vector2D(normalized.get(0,0), normalized.get(1,0));
     }
 

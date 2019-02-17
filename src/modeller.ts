@@ -59,6 +59,7 @@ class Modeller {
         this.addState(b);
         this.addEdge(ab);
         this.delEdge(3);
+        this.setInitial(1);
 
         console.log(this.graph);
         console.log(this.graphDrawing);

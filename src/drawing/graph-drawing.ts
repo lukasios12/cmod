@@ -44,6 +44,11 @@ class GraphDrawing implements Drawing {
         let initial = this.initial;
         if(initial != null) {
             // draw initial state pointer
+            let state = this.getStateDrawing(initial);
+            let pos = state.position;
+            let arrow = new Arrow(pos.x() - 30, pos.y() - 30, pos.x(), pos.y());
+            arrow.stroke(context);
+            arrow.fill(context);
         }
 
     }
