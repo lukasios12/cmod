@@ -38,4 +38,16 @@ class Vector2D {
         let norm = Vector2D.norm(v);
         return Vector2D.scale(v, 1 / norm);
     }
+
+    public static angle(a: Vector2D, b: Vector2D) {
+        let vec = Vector2D.sub(b, a);
+        let ratio = -vec.y() / vec.x();
+        let angle = Math.atan(ratio);
+        if(a.x() > b.x()) {
+            angle += Math.PI;
+        } else if(a.y() < b.y() && a.x() < b.x()) {
+            angle = 2 * Math.PI + angle;
+        }
+        return angle;
+    }
 }

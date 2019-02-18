@@ -24,7 +24,57 @@ class LinearEdgeDrawing extends EdgeDrawing {
     protected getArrow(context: CanvasRenderingContext2D) {
         let c1 = this.source.center(context);
         let c2 = this.target.center(context);
-        let arrow = new Arrow(c1.x(), c1.y(), c2.x(), c2.y(), 30);
+        let angle = Vector2D.angle(c1, c2);
+
+        // determine start (source) point
+        let tl = Vector2D.angle(c1, this.source.position);
+        let br = tl + Math.PI;
+        let tr = Math.PI - tl;
+        let bl = Math.PI + tr;
+        let w, k, l = 0;
+        if (Math.abs(angle) != 0.5 * Math.PI) {
+            if (angle >= tr && angle <= tl ||
+                angle >= bl && angle <= br) {
+                k = this.source.getHeight(context) / 2;
+                w = k / Math.tan(angle);
+            } else {
+                k = this.source.getWidth(context) / 2;
+                w = k * Math.tan(angle);
+            }
+            l = Math.sqrt(k * k + w * w);
+        } else {
+            l = this.source.getHeight(context) / 2;
+        }
+
+        let vec = Vector2D.sub(c2, c1);
+        let unit = Vector2D.unit(vec);
+        let p1 = Vector2D.add(c1, Vector2D.scale(unit, l));
+
+        // determine end (target) point
+        tl = Vector2D.angle(c2, this.target.position);
+        br = tl + Math.PI;
+        tr = Math.PI - tl;
+        bl = Math.PI + tr;
+        angle = Vector2D.angle(c2, c1);
+        if (Math.abs(angle) != 0.5 * Math.PI) {
+            if (angle >= tr && angle <= tl ||
+                angle >= bl && angle <= br) {
+                k = this.target.getHeight(context) / 2;
+                w = k / Math.tan(angle);
+            } else {
+                k = this.target.getWidth(context) / 2;
+                w = k * Math.tan(angle);
+            }
+            l = Math.sqrt(k * k + w * w);
+        } else {
+            l = this.target.getHeight(context) / 2;
+        }
+
+        vec = Vector2D.sub(c1, c2);
+        unit = Vector2D.unit(vec);
+        let p2 = Vector2D.add(c2, Vector2D.scale(unit, l));
+
+        let arrow = new Arrow(p1.x(), p1.y(), p2.x(), p2.y(), this.offset);
         return arrow;
     }
 }
