@@ -159,10 +159,12 @@ class Drawer {
         let voffset = transform.get(1, 2);
 
         let xmin = -(Math.ceil((hoffset / hdist) / transform.get(0, 0)) * hdist);
-        let xmax = Math.ceil((width / transform.get(0,0)) / hdist) * hdist + xmin;
+        let xmax = Math.ceil((width / transform.get(0,0)) / hdist) *
+                   hdist + xmin + hdist;
 
         let ymin = Math.floor((voffset / vdist) / transform.get(1,1)) * vdist;
-        let ymax = Math.ceil((height / transform.get(1,1)) / vdist) * vdist + ymin + vdist;
+        let ymax = Math.ceil((height / transform.get(1,1)) / vdist) *
+                   vdist + ymin + vdist;
 
         context.save();
         context.strokeStyle = "rgb(220, 220, 220)";
