@@ -14,14 +14,16 @@ class LinearEdgeDrawing extends EdgeDrawing {
         arrow.fill(context);
         // draw label
         let point = arrow.getControlPoint();
-        let lwidth = context.measureText(this.label).width;
-        let lheight = CanvasRenderingContext2DUtils.getFontSize(context) * 1.25;
-        context.strokeRect(point.x() - lwidth / 2, point.y() - lheight / 2, lwidth, lheight);
+        let lwidth = context.measureText(this.label).width + 5;
+        let lheight = CanvasRenderingContext2DUtils.getFontSize(context) * 1.5;
+        context.save();
+        StyleManager.setEdgeTextStyle(context);
+        context.clearRect(point.x() - lwidth / 2, point.y() - lheight / 2,
+                          lwidth, lheight);
+        // context.strokeRect(point.x() - lwidth / 2, point.y() - lheight / 2,
+        //                   lwidth, lheight);
         context.fillText(this.label, point.x(), point.y());
-        context.beginPath();
-        context.arc(point.x(), point.y(), 10, 0, 2 * Math.PI);
-        context.fill();
-        context.closePath();
+        context.restore();
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
