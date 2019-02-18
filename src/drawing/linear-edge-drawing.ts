@@ -9,8 +9,19 @@ class LinearEdgeDrawing extends EdgeDrawing {
     }
 
     public draw(context: CanvasRenderingContext2D) {
+        // draw arrow
         let arrow = this.getArrow(context);
         arrow.fill(context);
+        // draw label
+        let point = arrow.getControlPoint();
+        let lwidth = context.measureText(this.label).width;
+        let lheight = CanvasRenderingContext2DUtils.getFontSize(context) * 1.25;
+        context.strokeRect(point.x() - lwidth / 2, point.y() - lheight / 2, lwidth, lheight);
+        context.fillText(this.label, point.x(), point.y());
+        context.beginPath();
+        context.arc(point.x(), point.y(), 10, 0, 2 * Math.PI);
+        context.fill();
+        context.closePath();
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
@@ -74,7 +85,7 @@ class LinearEdgeDrawing extends EdgeDrawing {
         unit = Vector2D.unit(vec);
         let p2 = Vector2D.add(c2, Vector2D.scale(unit, l));
 
-        let arrow = new Arrow(p1.x(), p1.y(), p2.x(), p2.y(), this.offset);
+        let arrow = new Arrow(p1.x(), p1.y(), p2.x(), p2.y(), 50 + this.offset);
         return arrow;
     }
 }

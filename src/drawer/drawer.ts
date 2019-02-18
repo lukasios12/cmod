@@ -25,8 +25,6 @@ class Drawer {
         } else if(this.drawingCache) {
             this.drawingCache.draw(context);
         }
-        context.beginPath();
-        context.fill();
     }
 
     public clear(): void {

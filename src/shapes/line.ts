@@ -46,7 +46,7 @@ class Line implements Shape2D {
         let len = Vector2D.norm(vec);
         let unit = Vector2D.unit(vec);
         let perp = new Vector2D(unit.y(), -unit.x());
-        let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / Math.PI));
+        let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / 2));
 
         let c = Vector2D.add(middle, Vector2D.scale(perp, this.bend));
         context.moveTo(this.source.x(), this.source.y());
