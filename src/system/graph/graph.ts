@@ -37,25 +37,25 @@ class Graph {
         }
     }
 
-    public preset(id: number): Edge[] {
-        let result = new Array<Edge>();
+    public preset(id: number): HashTable<number, Edge> {
+        let result = new HashTable<number, Edge>();
         let edgeIds = this.edges.keys();
         for(let i = 0; i < edgeIds.length; i++) {
             let edge = this.edges.get(edgeIds[i]);
             if(edge.to == id) {
-                result.push(edge);
+                result.put(edgeIds[i], edge);
             }
         }
         return result;
     }
 
-    public postset(id: number): Edge[] {
-        let result = new Array<Edge>();
+    public postset(id: number): HashTable<number, Edge> {
+        let result = new HashTable<number, Edge>();
         let edgeIds = this.edges.keys();
         for(let i = 0; i < edgeIds.length; i++) {
             let edge = this.edges.get(edgeIds[i]);
             if(edge.from == id) {
-                result.push(edge);
+                result.put(edgeIds[i], edge);
             }
         }
         return result;
@@ -69,7 +69,7 @@ class Graph {
         this.edges.remove(id);
     }
 
-    public setInitial(id: number): void {
+    public setInitial(id: number | null): void {
         this.initial = id;
     }
 

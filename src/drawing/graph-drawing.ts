@@ -1,7 +1,7 @@
 class GraphDrawing implements Drawing {
-    public initial: number;
     public states: HashTable<number, StateDrawing>;
     public edges: HashTable<number, EdgeDrawing>;
+    public initial: number | null;
 
     public options: GraphDrawingOptions;
 
