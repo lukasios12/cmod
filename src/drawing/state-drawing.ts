@@ -60,7 +60,8 @@ class StateDrawing implements HittableDrawing, Draggable {
         return Vector2D.add(vector, wh);
     }
 
-    public getBox(context: CanvasRenderingContext2D) {
+    protected getBox(context: CanvasRenderingContext2D) {
+        context.save();
         StyleManager.setStateTextStyle(context);
         let text = this.state.toString();
         let width = this.getWidth(context);
@@ -69,6 +70,7 @@ class StateDrawing implements HittableDrawing, Draggable {
                                 this.position.y(),
                                 width,
                                 height);
+        context.restore();
         return box;
     }
 
