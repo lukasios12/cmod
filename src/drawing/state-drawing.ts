@@ -36,6 +36,7 @@ class StateDrawing implements HittableDrawing, Draggable {
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
         context.save();
+        context.setTransform(1, 0, 0, 1, 0, 0);
         let box = this.getBox(context);
         box.setPath(context);
         let result = context.isPointInPath(point.x(), point.y());
@@ -69,6 +70,50 @@ class StateDrawing implements HittableDrawing, Draggable {
                                 width,
                                 height);
         return box;
+    }
+
+    public getIntersection(p: Vector2D, context: CanvasRenderingContext2D) {
+        context.save();
+        StyleManager.setStateStandardStyle(context);
+        let center = this.center(context);
+        let angle = Vector2D.angle(center, p);
+        let result = this.getIntersectionAt(angle, context);
+        context.restore();
+        return result;
+    }
+
+    public getIntersectionAt(angle: number, context: CanvasRenderingContext2D) {
+        context.save();
+        StyleManager.setStateStandardStyle(context);
+        let center = this.center(context);
+        // determine the angles for the four corners
+        let tl = Vector2D.angle(center, this.position);
+        let br = tl + Math.PI;
+        let tr = Math.PI - tl;
+        let bl = Math.PI + tr;
+        let l = 0, w = 0, h = 0;
+        if (Math.abs(angle) != 0.5 * Math.PI) {
+            if (angle >= tr && angle <= tl ||
+                angle >= bl && angle <= br) {
+                h = this.getHeight(context) / 2;
+                w = h / Math.tan(angle);
+            } else {
+                w = this.getWidth(context) / 2;
+                h = w * Math.tan(angle);
+            }
+            l = Math.sqrt(w * w + h * h);
+        } else {
+            l = this.getHeight(context) / 2;
+        }
+        if (angle >= Math.PI) {
+            h = -h;
+            w = -w;
+        }
+        let origin = center;
+        let vector = Vector2D.unit(new Vector2D(w, -h));
+        let result = new Intersection(origin, vector, l);
+        context.restore();
+        return result;
     }
 
     public getHeight(context: CanvasRenderingContext2D) {

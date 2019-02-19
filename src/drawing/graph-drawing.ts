@@ -50,6 +50,16 @@ class GraphDrawing implements Drawing {
                     }
                 }
             }
+            let loops = edgeIds.filter( (edgeId) => {
+                let edge = this.edges.get(edgeId);
+                // console.log(edge);
+                return edge instanceof SelfLoopDrawing &&
+                            edge.source == sdrawing;
+            });
+            for (let i = 0; i < loops.length; i++) {
+                let edrawing = this.edges.get(loops[i]);
+                edrawing.draw(context);
+            }
         }
         context.restore();
         // draw states

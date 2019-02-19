@@ -61,6 +61,7 @@ class Modeller {
         this.addState(b);
         this.addState(c);
         this.addEdge(new Edge(1, 2, "t1"));
+        this.addEdge(new Edge(1, 1, "t4"));
         this.addEdge(new Edge(1, 2, "t2"));
         this.addEdge(new Edge(1, 3, "t3"));
         this.setInitial(1);
