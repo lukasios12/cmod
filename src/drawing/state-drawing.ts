@@ -17,6 +17,7 @@ class StateDrawing implements HittableDrawing, Draggable {
 
     public draw(context: CanvasRenderingContext2D) {
         context.save();
+        context.save();
         let text = this.state.toString();
         let box = this.getBox(context);
         let width = this.getWidth(context);
@@ -30,12 +31,12 @@ class StateDrawing implements HittableDrawing, Draggable {
             this.position.x() + width / 2,
             this.position.y() + height / 2
         );
+        context.restore();
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
         context.save();
         let box = this.getBox(context);
-        console.log(box);
         box.setPath(context);
         let result = context.isPointInPath(point.x(), point.y());
         context.restore();
@@ -43,10 +44,13 @@ class StateDrawing implements HittableDrawing, Draggable {
     }
 
     public drag(point: Vector2D, context: CanvasRenderingContext2D) {
+        context.save();
+        StyleManager.setStateStandardStyle(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
         let newPos = new Vector2D(point.x() - (width / 2), point.y() - (height / 2));
         this.position = newPos;
+        context.restore();
     }
 
     public center(context:CanvasRenderingContext2D) {
@@ -68,7 +72,8 @@ class StateDrawing implements HittableDrawing, Draggable {
     }
 
     public getHeight(context: CanvasRenderingContext2D) {
-        return 1.5 * CanvasRenderingContext2DUtils.getFontSize(context);
+        let fontsize = CanvasRenderingContext2DUtils.getFontSize(context);
+        return 1.5 * fontsize;
     }
 
     public getWidth(context: CanvasRenderingContext2D) {

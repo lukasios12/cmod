@@ -52,17 +52,18 @@ class Modeller {
         a.set("p1", new IntegerTokenCount(1));
         let b = new Marking(this.petrinet);
         b.set("p2", new IntegerTokenCount(2));
-
-        let ab = new Edge(1, 2, "t1");
+        let c = new Marking(this.petrinet);
+        c.set("p3", new OmegaTokenCount());
+        let d = new Marking(this.petrinet);
+        d.set("p1", new IntegerTokenCount(3));
 
         this.addState(a);
         this.addState(b);
-        this.addEdge(ab);
-        this.delEdge(3);
+        this.addState(c);
+        this.addEdge(new Edge(1, 2, "t1"));
+        this.addEdge(new Edge(1, 2, "t2"));
+        this.addEdge(new Edge(1, 3, "t3"));
         this.setInitial(1);
-
-        console.log(this.graph);
-        console.log(this.graphDrawing);
 
         this.drawer.draw(this.graphDrawing);
     }

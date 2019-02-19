@@ -35,6 +35,8 @@ class LinearEdgeDrawing extends EdgeDrawing {
     }
 
     protected getArrow(context: CanvasRenderingContext2D) {
+        context.save();
+        StyleManager.setStateStandardStyle(context);
         let c1 = this.source.center(context);
         let c2 = this.target.center(context);
         let angle = Vector2D.angle(c1, c2);
@@ -87,7 +89,9 @@ class LinearEdgeDrawing extends EdgeDrawing {
         unit = Vector2D.unit(vec);
         let p2 = Vector2D.add(c2, Vector2D.scale(unit, l));
 
-        let arrow = new Arrow(p1.x(), p1.y(), p2.x(), p2.y(), 50 + this.offset);
+        context.restore();
+
+        let arrow = new Arrow(p1.x(), p1.y(), p2.x(), p2.y(), this.offset);
         return arrow;
     }
 }

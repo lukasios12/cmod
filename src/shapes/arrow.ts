@@ -9,15 +9,19 @@ class Arrow extends Line {
     }
 
     public stroke(context: CanvasRenderingContext2D) {
+        context.save();
         super.stroke(context);
         let tip = this.getTip();
         tip.stroke(context);
+        context.restore();
     }
 
     public fill(context: CanvasRenderingContext2D) {
+        context.save();
         super.fill(context);
         let tip = this.getTip();
         tip.fill(context);
+        context.restore();
     }
 
     protected getTip() {

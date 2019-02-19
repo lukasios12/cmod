@@ -13,48 +13,75 @@ class GraphDrawing implements Drawing {
     }
 
     public draw(context: CanvasRenderingContext2D) {
-        let states = this.states;
-        let edges = this.edges;
-        let stateIds = states.keys();
-        let edgeIds = edges.keys();
-
-        for(let i = 0; i < stateIds.length; i++) {
-            let state = states.get(stateIds[i]);
-            let codes = this.options.feedback.get(stateIds[i]);
-            if(codes !== null) {
-                let codeArray = codes.toArray();
-                codeArray.sort().reverse();
-                StyleManager.setStyle(codeArray[0], context);
-                state.draw(context);
+        let stateIds = this.states.keys();
+        let edgeIds = this.edges.keys();
+        let drawn = new HashTable<number, boolean>();
+        // draw edges
+        context.save();
+        let seperation = 80;
+        for (let i = 0; i < stateIds.length; i++) {
+            let sdrawing = this.states.get(stateIds[i]);
+            for (let j = 0; j < stateIds.length; j++) {
+                let osdrawing = this.states.get(stateIds[j]);
+                let shared = this.edges.keys().filter( (edgeId) => {
+                    let edge = this.edges.get(edgeId);
+                    return edge instanceof LinearEdgeDrawing && (
+                        edge.source == sdrawing && edge.target == osdrawing ||
+                        edge.source == osdrawing && edge.target == sdrawing);
+                });
+                for (let k = 0; k < shared.length; k++) {
+                    if(!drawn.get(shared[k])) {
+                        let edge = <LinearEdgeDrawing>this.edges.get(shared[k]);
+                        let c = 0;
+                        if (shared.length > 1) {
+                            c = (k * seperation) - ((seperation * (shared.length - 1)) / 2);
+                        }
+                        if (edge.source == sdrawing) {
+                            c = -c;
+                        }
+                        edge.offset = c;
+                        if (this.options.selected == shared[k]) {
+                            StyleManager.setEdgeSelectedStyle(context);
+                            edge.draw(context);
+                        }
+                        StyleManager.setEdgeStandardStyle(context);
+                        edge.draw(context);
+                        drawn.put(shared[k], true);
+                    }
+                }
             }
-
-            if (this.options.selected === stateIds[i]) {
+        }
+        context.restore();
+        // draw states
+        context.save();
+        for(let i = 0; i < stateIds.length; i++) {
+            let sdrawing = this.states.get(stateIds[i]);
+            let codes = this.options.feedback.get(stateIds[i]);
+            if (codes !== null) {
+                let code = codes.toArray().sort()[0];
+                StyleManager.setStyle(code, context);
+                sdrawing.draw(context);
+            }
+            if (this.options.selected == stateIds[i]) {
                 StyleManager.setStateSelectedStyle(context);
-                state.draw(context);
+                sdrawing.draw(context);
             }
             StyleManager.setStateStandardStyle(context);
-            state.draw(context);
+            sdrawing.draw(context);
         }
-
-        for(let i = 0; i < edgeIds.length; i++) {
-            let edge = edges.get(edgeIds[i]);
-            if (this.options.selected === edgeIds[i]) {
-                StyleManager.setEdgeSelectedStyle(context);
-                edge.draw(context);
-            }
-            StyleManager.setEdgeStandardStyle(context);
-            edge.draw(context);
-        }
-
-        let initial = this.initial;
-        if(initial != null) {
-            // draw initial state pointer
-            let state = this.getStateDrawing(initial);
+        context.restore();
+        // draw initial state pointer
+        if (this.initial != null) {
+            context.save();
+            context.fillStyle = "black";
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            let state = this.getStateDrawing(this.initial);
             let pos = state.position;
             let arrow = new Arrow(pos.x() - 30, pos.y() - 30, pos.x(), pos.y());
             arrow.fill(context);
+            context.restore();
         }
-
     }
 
     public addState(id: number, drawing: StateDrawing) {

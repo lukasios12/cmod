@@ -19,12 +19,14 @@ class Drawer {
         this.clear();
         this.drawGrid();
         let context = this.canvas.getContext("2d");
+        context.save();
         if(drawing) {
             drawing.draw(context);
             this.drawingCache = drawing;
         } else if(this.drawingCache) {
             this.drawingCache.draw(context);
         }
+        context.restore();
     }
 
     public clear(): void {
@@ -41,10 +43,8 @@ class Drawer {
         window.addEventListener('resize', (event) => {
             this.resize();
         });
-
         // register key events
         let canvas = this.canvas;
-        let context = canvas.getContext("2d");
         let movementSpeed = 40;
         let zoomAmount = 1.2;
         canvas.addEventListener("keydown", (event) => {
@@ -64,7 +64,7 @@ class Drawer {
                 case 61: // +
                     this.zoom(zoomAmount);
                     break;
-                case 173:
+                case 173: // -
                     this.zoom(1 / zoomAmount);
                     break;
             }
@@ -173,6 +173,7 @@ class Drawer {
             context.lineTo(x, ymax);
             context.stroke();
         }
+        context.closePath();
 
         for(let y = ymin; y <= ymax; y += vdist) {
             context.beginPath();
@@ -180,6 +181,8 @@ class Drawer {
             context.lineTo(xmax, y);
             context.stroke();
         }
+        context.closePath();
+
         context.restore();
     }
 }
