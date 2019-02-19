@@ -84,4 +84,12 @@ class Graph {
     public getEdge(id: number): Edge {
         return this.edges.get(id);
     }
+
+    public hasState(id: number): boolean {
+        return this.states.hasKey(id);
+    }
+
+    public hasEdge(id: number): boolean {
+        return this.edges.hasKey(id);
+    }
 }

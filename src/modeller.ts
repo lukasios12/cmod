@@ -127,7 +127,12 @@ class Modeller {
         canvas.addEventListener("keydown", (event) => {
             switch(event.keyCode) {
                 case 46: // delete
-                    this.delState(this.selectionId);
+                    let graph = this.graph;
+                    if (graph.hasState(this.selectionId)) {
+                        this.delState(this.selectionId);
+                    } else if (graph.hasEdge(this.selectionId)) {
+                        this.delEdge(this.selectionId);
+                    }
                     break;
                 case 89: // y
                     if(event.ctrlKey) {
