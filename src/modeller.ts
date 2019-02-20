@@ -60,7 +60,7 @@ class Modeller {
         this.addState(a, new Vector2D(50, 100));
         this.addState(b, new Vector2D(420, 100));
         this.addEdge(new Edge(1, 2, "t3"));
-        this.addEdge(new Edge(1, 2, "t2"));
+        this.addEdge(new Edge(1, 1, "t2"));
         this.setInitial(1);
 
         this.drawer.draw(this.graphDrawing);

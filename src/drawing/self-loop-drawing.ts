@@ -6,7 +6,7 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         state: StateDrawing,
         label: string,
         angle: number = 0,
-        radius: number = 30
+        radius: number = 20
     ) {
         super(state, label);
         this.angle = angle;
@@ -17,9 +17,18 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         console.log("drawing selfloop");
         context.save();
         context.beginPath();
-        let cir = new Circle(this.source.position.x(), this.source.position.y(), this.radius);
-        cir.stroke(context);
+        let state = this.source;
+        let i = state.getIntersectionAt(0.001 * Math.PI, context);
+        let p = Vector2D.add(i.origin, Vector2D.scale(i.vector, i.length + this.radius / 2));
+        context.arc(p.x(), p.y(), this.radius, 0, 2 * Math.PI);
+        context.stroke();
         context.closePath();
+        StyleManager.setEdgeTextStyle(context);
+        let fh = CanvasRenderingContext2DUtils.getFontSize(context) + 5;
+        let fw = context.measureText(this.label).width + 5;
+        p = Vector2D.add(i.origin, Vector2D.scale(i.vector, i.length + this.radius + fh / 2));
+        context.clearRect(p.x() - fw / 2, p.y() - fh / 2, fw, fh);
+        context.fillText(this.label, p.x(), p.y());
         context.restore();
     }
 
