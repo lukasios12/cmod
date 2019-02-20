@@ -18,7 +18,7 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         context.save();
         context.beginPath();
         let state = this.source;
-        let i = state.getIntersectionAt(0.001 * Math.PI, context);
+        let i = state.getIntersectionAt(this.angle, context);
         let p = Vector2D.add(i.origin, Vector2D.scale(i.vector, i.length + this.radius / 2));
         context.arc(p.x(), p.y(), this.radius, 0, 2 * Math.PI);
         context.stroke();
@@ -33,7 +33,14 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D) {
-        let center;
+        context.save();
+        let state = this.source;
+        let i = state.getIntersectionAt(this.angle, context);
+        let p = Vector2D.add(i.origin, Vector2D.scale(i.vector, i.length + this.radius / 2));
+        let v = Vector2D.sub(point, p);
+        let result = Vector2D.norm(v) <= this.radius + 10;
+        context.restore();
+        return result;
     }
 
     public drag(point: Vector2D, context: CanvasRenderingContext2D) {
