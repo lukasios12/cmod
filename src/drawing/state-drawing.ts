@@ -61,7 +61,6 @@ class StateDrawing implements HittableDrawing, Draggable {
     }
 
     protected getBox(context: CanvasRenderingContext2D) {
-        context.save();
         StyleManager.setStateTextStyle(context);
         let text = this.state.toString();
         let width = this.getWidth(context);
@@ -70,7 +69,6 @@ class StateDrawing implements HittableDrawing, Draggable {
                                 this.position.y(),
                                 width,
                                 height);
-        context.restore();
         return box;
     }
 
@@ -93,24 +91,34 @@ class StateDrawing implements HittableDrawing, Draggable {
         let br = tl + Math.PI;
         let tr = Math.PI - tl;
         let bl = Math.PI + tr;
-        let l = 0, w = 0, h = 0;
-        if (Math.abs(angle) != 0.5 * Math.PI) {
-            if (angle >= tr && angle <= tl ||
-                angle >= bl && angle <= br) {
+        let w = 0, h = 0;
+        let aangle = Math.abs(angle);
+        if (aangle == 0.5 * Math.PI || aangle == 1.5 * Math.PI) { // vert
+            h = this.getHeight(context) / 2;
+            if (angle > Math.PI) {
+                h = -h;
+            }
+        } else if (aangle == Math.PI || aangle == 0) { // hori
+            w = this.getWidth(context) / 2;
+            if (angle == 0) {
+                w = -w;
+            }
+        } else {
+            if (angle >= tr && angle <= tl) {
                 h = this.getHeight(context) / 2;
                 w = h / Math.tan(angle);
-            } else {
+            } else if (angle >= bl && angle <= br) {
+                h = -(this.getHeight(context) / 2);
+                w = h / Math.tan(angle);
+            } else if (angle >= tl && angle <= bl) {
+                w = -this.getWidth(context) / 2;
+                h = (w * Math.tan(angle));
+            } else if (angle >= br || angle <= tr) {
                 w = this.getWidth(context) / 2;
                 h = w * Math.tan(angle);
             }
-            l = Math.sqrt(w * w + h * h);
-        } else {
-            l = this.getHeight(context) / 2;
         }
-        if (angle >= Math.PI) {
-            h = -h;
-            w = -w;
-        }
+        let l = Math.sqrt(w * w + h * h);
         let origin = center;
         let vector = Vector2D.unit(new Vector2D(w, -h));
         let result = new Intersection(origin, vector, l);

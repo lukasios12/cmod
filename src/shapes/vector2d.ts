@@ -43,10 +43,14 @@ class Vector2D {
         let vec = Vector2D.sub(b, a);
         let ratio = -vec.y() / vec.x();
         let angle = Math.atan(ratio);
-        if(a.x() > b.x()) {
+        if (angle == 0 && a.x() < b.x()) {
+            angle = Math.PI;
+        }
+        if (angle < 0) {
+            angle = Math.PI + angle;
+        }
+        if (a.y() < b.y()) {
             angle += Math.PI;
-        } else if(a.y() < b.y() && a.x() < b.x()) {
-            angle = 2 * Math.PI + angle;
         }
         return angle;
     }

@@ -42,7 +42,7 @@ class LinearEdgeDrawing extends EdgeDrawing {
         let angle = Vector2D.angle(c1, c2);
         // determine start (source) point
         let intersection = this.source.getIntersection(c2, context);
-        let p1 = Vector2D.add(c1, Vector2D.scale(intersection.vector, intersection.length));
+        let p1 = Vector2D.add(c1,Vector2D.scale(intersection.vector, intersection.length));
         // determine end (target) point
         intersection = this.target.getIntersection(c1, context);
         let p2 = Vector2D.add(c2, Vector2D.scale(intersection.vector, intersection.length));

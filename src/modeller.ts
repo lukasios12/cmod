@@ -45,7 +45,7 @@ class Modeller {
         this.graphDrawing = new GraphDrawing();
         this.graphDrawingOptions = new GraphDrawingOptions();
         let feedback = new Feedback();
-        feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
+        // feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
         this.setFeedback(feedback);
 
         let a = new Marking(this.petrinet);
@@ -57,13 +57,10 @@ class Modeller {
         let d = new Marking(this.petrinet);
         d.set("p1", new IntegerTokenCount(3));
 
-        this.addState(a);
-        this.addState(b);
-        this.addState(c);
-        this.addEdge(new Edge(1, 2, "t1"));
-        this.addEdge(new Edge(1, 1, "t4"));
+        this.addState(a, new Vector2D(50, 100));
+        this.addState(b, new Vector2D(420, 100));
+        this.addEdge(new Edge(1, 2, "t3"));
         this.addEdge(new Edge(1, 2, "t2"));
-        this.addEdge(new Edge(1, 3, "t3"));
         this.setInitial(1);
 
         this.drawer.draw(this.graphDrawing);
