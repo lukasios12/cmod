@@ -39,7 +39,6 @@ class LinearEdgeDrawing extends EdgeDrawing {
         StyleManager.setStateStandardStyle(context);
         let c1 = this.source.center(context);
         let c2 = this.target.center(context);
-        let angle = Vector2D.angle(c1, c2);
         // determine start (source) point
         let intersection = this.source.getIntersection(c2, context);
         let p1 = Vector2D.add(c1,Vector2D.scale(intersection.vector, intersection.length));
