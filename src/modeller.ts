@@ -64,6 +64,7 @@ class Modeller {
         this.setInitial(1);
 
         this.editEdge(4, "test");
+        this.editState(1, c);
 
         this.drawer.draw(this.graphDrawing);
     }
@@ -85,6 +86,11 @@ class Modeller {
 
     public delEdge(id: number) {
         let a = new DeleteEdge(id, this.graph, this.graphDrawing);
+        this.actionManager.exec(a);
+    }
+
+    public editState(id: number, state: State) {
+        let a = new EditState(id, state, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
