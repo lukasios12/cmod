@@ -52,12 +52,17 @@ class GraphDrawing implements Drawing {
             }
             let loops = edgeIds.filter( (edgeId) => {
                 let edge = this.edges.get(edgeId);
-                // console.log(edge);
                 return edge instanceof SelfLoopDrawing &&
                             edge.source == sdrawing;
             });
+            StyleManager.setEdgeStandardStyle(context);
             for (let i = 0; i < loops.length; i++) {
                 let edrawing = this.edges.get(loops[i]);
+                if (this.options.selected == loops[i]) {
+                    context.save();
+                    StyleManager.setEdgeSelectedStyle(context);
+                    context.restore();
+                }
                 edrawing.draw(context);
             }
         }
@@ -112,6 +117,14 @@ class GraphDrawing implements Drawing {
         this.edges.remove(id);
     }
 
+    public getDrawing(id: number) {
+        let sd = this.getStateDrawing(id);
+        if (sd) return sd;
+        let ed = this.getEdgeDrawing(id);
+        if (ed) return ed;
+        return null;
+    }
+
     public getStateDrawing(id: number) {
         if(this.states.hasKey(id)) {
             return this.states.get(id);
@@ -140,9 +153,5 @@ class GraphDrawing implements Drawing {
             }
         }
         return null;
-    }
-
-    public getSelfloopDrawing(pos: Vector2D, context: CanvasRenderingContext2D) {
-
     }
 }

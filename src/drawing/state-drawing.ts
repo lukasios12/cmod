@@ -90,7 +90,7 @@ class StateDrawing implements HittableDrawing, Draggable {
         let tl = Vector2D.angle(center, this.position);
         let br = tl + Math.PI;
         let tr = Math.PI - tl;
-        let bl = Math.PI + tr;
+        let bl = tr + Math.PI;
         let w = 0, h = 0;
         let aangle = Math.abs(angle);
         if (aangle == 0.5 * Math.PI || aangle == 1.5 * Math.PI) { // vert
@@ -100,7 +100,7 @@ class StateDrawing implements HittableDrawing, Draggable {
             }
         } else if (aangle == Math.PI || aangle == 0) { // hori
             w = this.getWidth(context) / 2;
-            if (angle == 0) {
+            if (angle == Math.PI) {
                 w = -w;
             }
         } else {
