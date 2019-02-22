@@ -61,6 +61,7 @@ class GraphDrawing implements Drawing {
                 if (this.options.selected == loops[i]) {
                     context.save();
                     StyleManager.setEdgeSelectedStyle(context);
+                    edrawing.draw(context);
                     context.restore();
                 }
                 edrawing.draw(context);

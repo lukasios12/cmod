@@ -28,7 +28,6 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         // draw text
         let fh = CanvasRenderingContext2DUtils.getFontSize(context) + 5;
         let fw = context.measureText(this.label).width + 5;
-        // vec = Vector2D.scale(i.vector, i.length + this.radius + fh / 2);
         let a = this.angle < Math.PI ? -1 : 1;
         vec = Vector2D.scale(new Vector2D(0, a), this.radius / 2 + fh / 2);
         p = Vector2D.add(p, vec);
