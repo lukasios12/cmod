@@ -33,6 +33,8 @@ class DeleteState implements UndoableAction {
         console.log(`Removing state with id: ${this.id}`);
         this.preset = this.graph.preset(this.id);
         this.postset = this.graph.postset(this.id);
+        console.log(this.preset);
+        console.log(this.postset);
         let presetIds = this.preset.keys();
         let postsetIds = this.postset.keys();
         for (let i = 0; i < presetIds.length; i++) {

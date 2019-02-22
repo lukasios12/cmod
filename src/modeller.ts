@@ -61,6 +61,7 @@ class Modeller {
         this.addState(b, new Vector2D(420, 100));
         this.addEdge(new Edge(1, 2, "t3"));
         this.addEdge(new Edge(1, 1, "t2"));
+        this.addEdge(new Edge(1, 2, "t1"));
         this.setInitial(1);
 
         this.editEdge(4, "test");

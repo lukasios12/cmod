@@ -54,7 +54,7 @@ class Graph {
         let edgeIds = this.edges.keys();
         for(let i = 0; i < edgeIds.length; i++) {
             let edge = this.edges.get(edgeIds[i]);
-            if(edge.from == id) {
+            if(edge.from == id && edge.to != id) {
                 result.put(edgeIds[i], edge);
             }
         }
