@@ -139,10 +139,12 @@ class Modeller {
             switch(event.keyCode) {
                 case 46: // delete
                     let graph = this.graph;
-                    if (graph.hasState(this.selectionId)) {
-                        this.delState(this.selectionId);
-                    } else if (graph.hasEdge(this.selectionId)) {
-                        this.delEdge(this.selectionId);
+                    if (this.selectionId != null) {
+                        if (graph.hasState(this.selectionId)) {
+                            this.delState(this.selectionId);
+                        } else if (graph.hasEdge(this.selectionId)) {
+                            this.delEdge(this.selectionId);
+                        }
                     }
                     break;
                 case 89: // y
