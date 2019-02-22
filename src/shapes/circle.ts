@@ -20,11 +20,16 @@ class Circle implements Shape2D {
     }
 
     public hit(pos: Vector2D, context: CanvasRenderingContext2D) {
-        let dist = Vector2D.sub(pos, this.center);
-        return Math.abs(Vector2D.norm(dist)) <= this.radius;
+        context.save();
+        context.lineWidth = 20;
+        this.preparePath(context);
+        let result = context.isPointInPath(pos.x(), pos.y());
+        context.restore();
+        return result;
     }
 
     protected preparePath(context: CanvasRenderingContext2D) {
+        context.beginPath();
         context.arc(this.center.x(),
                     this.center.y(),
                     this.radius,
