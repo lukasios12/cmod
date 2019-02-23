@@ -17,12 +17,10 @@ class StateDrawing implements HittableDrawing, Draggable {
 
     public draw(context: CanvasRenderingContext2D) {
         context.save();
-        context.save();
         let text = this.state.toString();
         let box = this.getBox(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
-        context.restore();
         box.fill(context);
         box.stroke(context);
         StyleManager.setStateTextStyle(context);
@@ -53,14 +51,17 @@ class StateDrawing implements HittableDrawing, Draggable {
     }
 
     public center(context:CanvasRenderingContext2D) {
+        context.save();
+        StyleManager.setStateStandardStyle(context);
         let vector = new Vector2D(this.position.x(), this.position.y());
         let wh = new Vector2D(this.getWidth(context) / 2, this.getHeight(context) / 2);
+        context.restore();
         return Vector2D.add(vector, wh);
     }
 
     protected getBox(context: CanvasRenderingContext2D) {
         context.save();
-        StyleManager.setStateTextStyle(context);
+        StyleManager.setStateStandardStyle(context);
         let text = this.state.toString();
         let width = this.getWidth(context);
         let height = this.getHeight(context);

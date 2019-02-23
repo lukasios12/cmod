@@ -209,7 +209,6 @@ class Drawer {
             context.stroke();
         }
         context.closePath();
-
         context.restore();
     }
 }

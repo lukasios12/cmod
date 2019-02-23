@@ -13,25 +13,19 @@ class StyleManager {
         context.strokeStyle = "black";
         context.fillStyle = "white";
         context.lineWidth = 2;
-        context.font = "16px mono";
+        context.font = "16px monospace";
         context.textBaseline = "middle";
         context.textAlign = "center";
     }
 
     public static setStateSelectedStyle(context: CanvasRenderingContext2D) {
-        context.strokeStyle = "blue";
+        context.strokeStyle = "rgba(50, 193, 229, 0.6)";
         context.fillStyle = "white";
-        context.lineWidth = 20;
-        context.font = "16px mono";
-        context.textBaseline = "middle";
-        context.textAlign = "center";
+        context.lineWidth = 15;
     }
 
     public static setStateTextStyle(context: CanvasRenderingContext2D) {
         context.fillStyle = "black";
-        context.font = "16px mono";
-        context.textBaseline = "middle";
-        context.textAlign = "center";
     }
 
     public static setEdgeStandardStyle(context: CanvasRenderingContext2D) {
@@ -44,18 +38,12 @@ class StyleManager {
     }
 
     public static setEdgeSelectedStyle(context: CanvasRenderingContext2D) {
-        context.strokeStyle = "blue";
-        context.lineWidth = 10;
-        context.font = "16px mono";
-        context.textBaseline = "middle";
-        context.textAlign = "center";
+        context.strokeStyle = "rgba(50, 193, 229, 0.6)";
+        context.lineWidth = 15;
     }
 
     public static setEdgeTextStyle(context: CanvasRenderingContext2D) {
         context.fillStyle = "black";
-        context.font = "16px mono";
-        context.textBaseline = "middle";
-        context.textAlign = "center";
     }
 
     protected static fillCallbacks() {

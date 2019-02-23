@@ -18,6 +18,7 @@ class GraphDrawing implements Drawing {
         let drawn = new HashTable<number, boolean>();
         // draw edges
         context.save();
+        StyleManager.setEdgeStandardStyle(context);
         let seperation = 80;
         for (let i = 0; i < stateIds.length; i++) {
             let sdrawing = this.states.get(stateIds[i]);
@@ -41,10 +42,11 @@ class GraphDrawing implements Drawing {
                         }
                         edge.offset = c;
                         if (this.options.selected == shared[k]) {
+                            context.save();
                             StyleManager.setEdgeSelectedStyle(context);
                             edge.draw(context);
+                            context.restore();
                         }
-                        StyleManager.setEdgeStandardStyle(context);
                         edge.draw(context);
                         drawn.put(shared[k], true);
                     }
@@ -55,7 +57,6 @@ class GraphDrawing implements Drawing {
                 return edge instanceof SelfLoopDrawing &&
                             edge.source == sdrawing;
             });
-            StyleManager.setEdgeStandardStyle(context);
             for (let i = 0; i < loops.length; i++) {
                 let edrawing = this.edges.get(loops[i]);
                 if (this.options.selected == loops[i]) {
@@ -67,9 +68,8 @@ class GraphDrawing implements Drawing {
                 edrawing.draw(context);
             }
         }
-        context.restore();
         // draw states
-        context.save();
+        StyleManager.setStateStandardStyle(context);
         for(let i = 0; i < stateIds.length; i++) {
             let sdrawing = this.states.get(stateIds[i]);
             let codes = this.options.feedback.get(stateIds[i]);
@@ -79,10 +79,11 @@ class GraphDrawing implements Drawing {
                 sdrawing.draw(context);
             }
             if (this.options.selected == stateIds[i]) {
+                context.save();
                 StyleManager.setStateSelectedStyle(context);
                 sdrawing.draw(context);
+                context.restore();
             }
-            StyleManager.setStateStandardStyle(context);
             sdrawing.draw(context);
         }
         context.restore();
