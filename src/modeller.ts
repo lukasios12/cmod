@@ -22,7 +22,11 @@ class Modeller {
     public selectionId: number;
 
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet = null) {
-        this.drawer = new Drawer(canvas);
+        this.drawer = new Drawer(canvas, {
+            minZoom: 1, maxZoom: 10,
+            minX: -20, maxX: 20,
+            minY: -200, maxY: 200
+        });
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
             this.drawer.draw();

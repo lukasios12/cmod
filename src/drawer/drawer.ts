@@ -1,18 +1,27 @@
 /// <reference path='../feedback/index.ts'/>
 /// <reference path='../stylemanager/index.ts'/>
 
+/// <reference path='../../lib/math/math.ts'/>
 /// <reference path='../../lib/matrix/matrix.ts'/>
 
 class Drawer {
     public canvas: HTMLCanvasElement;
     protected currentTransform: Matrix;
     protected drawingCache: Drawing | null;
+    protected options: DrawerOptions;
 
-    public constructor(canvas: HTMLCanvasElement) {
+    protected initialWidth: number;
+    protected initialHeight: number;
+
+    public constructor(canvas: HTMLCanvasElement, options: DrawerOptions) {
+        this.options = options;
         this.canvas = canvas;
         this.resize();
         this.drawingCache = null;
         this.currentTransform = Matrix.identity(3);
+
+        this.initialWidth = canvas.width;
+        this.initialHeight = canvas.height;
     }
 
     public draw(drawing: Drawing = null, feedback: Feedback = null): void {
@@ -98,10 +107,28 @@ class Drawer {
     }
 
     public setTransform(mat: Matrix): void {
-        this.currentTransform = mat;
         let context = this.canvas.getContext("2d");
+        let options = this.options;
+
+        let hscale = mat.get(0, 0);
+        let vscale = mat.get(1, 1);
+        let htrans = mat.get(0, 2);
+        let vtrans = mat.get(1, 2);
+
+        mat.set(0, 0, Math.clamp(hscale, options.minZoom, options.maxZoom));
+        mat.set(1, 1, Math.clamp(vscale, options.minZoom, options.maxZoom));
+        hscale = mat.get(0, 0);
+        vscale = mat.get(1, 1);
+        let minx = options.minX - ((this.initialWidth - this.canvas.width) / 2);
+        let maxx = options.maxX + ((this.initialWidth - this.canvas.width) / 2);
+        mat.set(0, 2, htrans);
+        mat.set(1, 2, vtrans);
+
+        this.currentTransform = mat;
         context.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
                              mat.get(1,1), mat.get(0,2), -mat.get(1,2));
+
+        // console.log(this.initialWidth, this.canvas.width, mat);
         this.draw(this.drawingCache);
     }
 
