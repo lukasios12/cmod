@@ -26,16 +26,18 @@ class Drawer {
 
     public draw(drawing: Drawing = null): void {
         this.clear();
-        this.drawGrid();
+        if(this.options.gridOptions.drawGrid) {
+            this.drawGrid();
+        }
         let context = this.canvas.getContext("2d");
         context.save();
         if(!drawing) {
             drawing = this.drawingCache;
         }
         if(drawing) {
-            if(isSnappable(drawing)) {
-                drawing.snap(this.options.horizontalGridSeperation,
-                             this.options.verticalGridSeperation);
+            if(this.options.gridOptions.snapGrid && isSnappable(drawing)) {
+                drawing.snap(this.options.gridOptions.horizontalGridSeperation,
+                             this.options.gridOptions.verticalGridSeperation);
             }
             drawing.draw(context);
             this.drawingCache = drawing;
@@ -181,8 +183,8 @@ class Drawer {
         let width = this.canvas.width;
         let height = this.canvas.height;
 
-        let hdist = this.options.horizontalGridSeperation;
-        let vdist = this.options.verticalGridSeperation;
+        let hdist = this.options.gridOptions.horizontalGridSeperation;
+        let vdist = this.options.gridOptions.verticalGridSeperation;
 
         let transform = this.currentTransform;
         let hoffset = transform.get(0, 2);

@@ -26,8 +26,12 @@ class Modeller {
             minZoom: 1, maxZoom: 10,
             minX: -20, maxX: 20,
             minY: -200, maxY: 200,
-            horizontalGridSeperation: 50,
-            verticalGridSeperation: 50,
+            gridOptions: {
+                drawGrid: true,
+                snapGrid: true,
+                horizontalGridSeperation: 50,
+                verticalGridSeperation: 50
+            }
         });
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
@@ -67,6 +71,7 @@ class Modeller {
         this.addState(b, new Vector2D(420, 100));
         this.addEdge(new Edge(1, 2, "t3"));
         this.addEdge(new Edge(1, 1, "t2"));
+        this.addEdge(new Edge(1, 2, "t1"));
         this.addEdge(new Edge(1, 2, "t1"));
         this.setInitial(1);
 
