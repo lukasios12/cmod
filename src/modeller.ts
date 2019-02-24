@@ -25,7 +25,9 @@ class Modeller {
         this.drawer = new Drawer(canvas, {
             minZoom: 1, maxZoom: 10,
             minX: -20, maxX: 20,
-            minY: -200, maxY: 200
+            minY: -200, maxY: 200,
+            horizontalGridSeperation: 50,
+            verticalGridSeperation: 50,
         });
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {

@@ -85,6 +85,9 @@ class Drawer {
             if(event.buttons == 4) {
                 mouseDownMiddle = true;
             }
+            let context = canvas.getContext("2d");
+            let p = this.snapToGrid(new Vector2D(event.clientX, event.clientY));
+            context.fillRect(p.x(), p.y(), 10, 10);
         });
 
         canvas.addEventListener("mousemove", (event) => {
@@ -158,6 +161,14 @@ class Drawer {
         this.transform(mat);
     }
 
+    public snapToGrid(point: Vector2D) {
+        let hdist = this.options.horizontalGridSeperation;
+        let vdist = this.options.verticalGridSeperation;
+        let x = Math.round(point.x() / hdist) * hdist;
+        let y = Math.round(point.y() / vdist) * vdist;
+        return new Vector2D(x, y);
+    }
+
     public globalToLocal(point: Vector2D) {
         let context = this.canvas.getContext("2d");
         let vector = new Matrix(3, 1);
@@ -176,8 +187,8 @@ class Drawer {
         let width = this.canvas.width;
         let height = this.canvas.height;
 
-        let hdist = 30;
-        let vdist = 30;
+        let hdist = this.options.horizontalGridSeperation;
+        let vdist = this.options.verticalGridSeperation;
 
         let transform = this.currentTransform;
         let hoffset = transform.get(0, 2);
