@@ -2,6 +2,7 @@
 
 /// <reference path='./hittable-drawing.ts'/>
 /// <reference path='./draggable_drawing.ts'/>
+/// <reference path='./snappable-drawing.ts'/>
 
 /// <reference path='./state-drawing.ts'/>
 /// <reference path='./edge-drawing.ts'/>

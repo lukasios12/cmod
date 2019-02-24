@@ -2,7 +2,7 @@
 /// <reference path='../stylemanager/index.ts'/>
 /// <reference path='../utils/canvas-rendering-context-2d-utils.ts'/>
 
-class StateDrawing implements HittableDrawing, Draggable {
+class StateDrawing implements HittableDrawing, Draggable, Snappable {
     public state: State;
     public position: Vector2D;
 
@@ -48,6 +48,12 @@ class StateDrawing implements HittableDrawing, Draggable {
         let newPos = new Vector2D(point.x() - (width / 2), point.y() - (height / 2));
         this.position = newPos;
         context.restore();
+    }
+
+    public snap(hgrid: number, vgrid: number) {
+        let x = Math.round(this.position.x() / hgrid) * hgrid;
+        let y = Math.round(this.position.y() / vgrid) * vgrid;
+        this.position = new Vector2D(x, y);
     }
 
     public center(context:CanvasRenderingContext2D) {

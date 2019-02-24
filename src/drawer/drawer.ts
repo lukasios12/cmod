@@ -24,16 +24,21 @@ class Drawer {
         this.initialHeight = canvas.height;
     }
 
-    public draw(drawing: Drawing = null, feedback: Feedback = null): void {
+    public draw(drawing: Drawing = null): void {
         this.clear();
         this.drawGrid();
         let context = this.canvas.getContext("2d");
         context.save();
+        if(!drawing) {
+            drawing = this.drawingCache;
+        }
         if(drawing) {
+            if(isSnappable(drawing)) {
+                drawing.snap(this.options.horizontalGridSeperation,
+                             this.options.verticalGridSeperation);
+            }
             drawing.draw(context);
             this.drawingCache = drawing;
-        } else if(this.drawingCache) {
-            this.drawingCache.draw(context);
         }
         context.restore();
     }
@@ -85,9 +90,6 @@ class Drawer {
             if(event.buttons == 4) {
                 mouseDownMiddle = true;
             }
-            let context = canvas.getContext("2d");
-            let p = this.snapToGrid(new Vector2D(event.clientX, event.clientY));
-            context.fillRect(p.x(), p.y(), 10, 10);
         });
 
         canvas.addEventListener("mousemove", (event) => {
@@ -159,14 +161,6 @@ class Drawer {
         mat.set(0,0, amount);
         mat.set(1,1, amount);
         this.transform(mat);
-    }
-
-    public snapToGrid(point: Vector2D) {
-        let hdist = this.options.horizontalGridSeperation;
-        let vdist = this.options.verticalGridSeperation;
-        let x = Math.round(point.x() / hdist) * hdist;
-        let y = Math.round(point.y() / vdist) * vdist;
-        return new Vector2D(x, y);
     }
 
     public globalToLocal(point: Vector2D) {

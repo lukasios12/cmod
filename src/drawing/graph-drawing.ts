@@ -1,4 +1,4 @@
-class GraphDrawing implements Drawing {
+class GraphDrawing implements Drawing, Snappable {
     public states: HashTable<number, StateDrawing>;
     public edges: HashTable<number, EdgeDrawing>;
     public initial: number | null;
@@ -155,5 +155,13 @@ class GraphDrawing implements Drawing {
             }
         }
         return null;
+    }
+
+    public snap(hgrid: number, vgrid: number) {
+        let keys = this.states.keys();
+        for(let i = 0; i < keys.length; i++) {
+            let state = this.states.get(keys[i]);
+            state.snap(hgrid, vgrid);
+        }
     }
 }
