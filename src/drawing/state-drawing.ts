@@ -2,7 +2,7 @@
 /// <reference path='../stylemanager/index.ts'/>
 /// <reference path='../utils/canvas-rendering-context-2d-utils.ts'/>
 
-class StateDrawing implements HittableDrawing, Draggable, Snappable {
+class StateDrawing implements Hittable, Draggable, Snappable {
     public state: State;
     public position: Vector2D;
 

@@ -1,4 +1,4 @@
-abstract class EdgeDrawing implements HittableDrawing {
+abstract class EdgeDrawing implements Hittable {
     public source: StateDrawing;
     public label: string;
 
