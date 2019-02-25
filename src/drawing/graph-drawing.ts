@@ -44,7 +44,7 @@ class GraphDrawing implements Drawing, Snappable {
                         let codes = this.options.feedback.get(shared[k]);
                         if (codes !== null) {
                             context.save();
-                            let code = codes.toArray().sort()[0];
+                            let code = codes.toArray().sort()[codes.length() - 1];
                             StyleManager.setStyle(code, context);
                             edge.draw(context);
                             context.restore();
@@ -70,7 +70,7 @@ class GraphDrawing implements Drawing, Snappable {
                 let codes = this.options.feedback.get(loops[i]);
                 if (codes !== null) {
                     context.save();
-                    let code = codes.toArray().sort()[0];
+                    let code = codes.toArray().sort()[codes.length() - 1];
                     StyleManager.setStyle(code, context);
                     edrawing.draw(context);
                     context.restore();
@@ -91,7 +91,7 @@ class GraphDrawing implements Drawing, Snappable {
             let codes = this.options.feedback.get(stateIds[i]);
             if (codes !== null) {
                 context.save();
-                let code = codes.toArray().sort()[0];
+                let code = codes.toArray().sort()[codes.length() - 1];
                 StyleManager.setStyle(code, context);
                 sdrawing.draw(context);
                 context.restore();
