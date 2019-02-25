@@ -55,7 +55,7 @@ class Modeller {
         this.graphDrawing = new GraphDrawing();
         this.graphDrawingOptions = new GraphDrawingOptions();
         let feedback = new Feedback();
-        // feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
+        feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
         this.setFeedback(feedback);
 
         let a = new Marking(this.petrinet);

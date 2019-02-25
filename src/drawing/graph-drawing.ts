@@ -74,9 +74,11 @@ class GraphDrawing implements Drawing, Snappable {
             let sdrawing = this.states.get(stateIds[i]);
             let codes = this.options.feedback.get(stateIds[i]);
             if (codes !== null) {
+                context.save();
                 let code = codes.toArray().sort()[0];
                 StyleManager.setStyle(code, context);
                 sdrawing.draw(context);
+                context.restore();
             }
             if (this.options.selected == stateIds[i]) {
                 context.save();
