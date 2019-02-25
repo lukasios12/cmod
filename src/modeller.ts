@@ -58,6 +58,7 @@ class Modeller {
         feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
         feedback.add(FeedbackCode.DUPLICATE_STATE, 2);
         feedback.add(FeedbackCode.DISABLED, 3);
+        feedback.add(FeedbackCode.DUPLICATE_EDGE, 4);
         feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
         feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
         this.setFeedback(feedback);

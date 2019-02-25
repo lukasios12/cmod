@@ -67,6 +67,14 @@ class GraphDrawing implements Drawing, Snappable {
             });
             for (let i = 0; i < loops.length; i++) {
                 let edrawing = this.edges.get(loops[i]);
+                let codes = this.options.feedback.get(loops[i]);
+                if (codes !== null) {
+                    context.save();
+                    let code = codes.toArray().sort()[0];
+                    StyleManager.setStyle(code, context);
+                    edrawing.draw(context);
+                    context.restore();
+                }
                 if (this.options.selected == loops[i]) {
                     context.save();
                     StyleManager.setEdgeSelectedStyle(context);
