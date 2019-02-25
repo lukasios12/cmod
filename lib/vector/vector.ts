@@ -43,7 +43,6 @@ class Vector {
     }
 
     public static norm(v: Vector) {
-        let result = new Vector(v.dimensions());
         let sum = 0;
         for(let i = 0; i < v.dimensions(); i++) {
             sum += v.get(i) * v.get(i);

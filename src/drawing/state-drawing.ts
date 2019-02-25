@@ -68,7 +68,6 @@ class StateDrawing implements Hittable, Draggable, Snappable {
     protected getBox(context: CanvasRenderingContext2D) {
         context.save();
         StyleManager.setStateStandardStyle(context);
-        let text = this.state.toString();
         let width = this.getWidth(context);
         let height = this.getHeight(context);
         let box = new Rectangle(this.position.x(),

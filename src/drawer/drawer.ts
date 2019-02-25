@@ -126,8 +126,8 @@ class Drawer {
         mat.set(1, 1, Math.clamp(vscale, options.minZoom, options.maxZoom));
         hscale = mat.get(0, 0);
         vscale = mat.get(1, 1);
-        let minx = options.minX - ((this.initialWidth - this.canvas.width) / 2);
-        let maxx = options.maxX + ((this.initialWidth - this.canvas.width) / 2);
+        // let minx = options.minX - ((this.initialWidth - this.canvas.width) / 2);
+        // let maxx = options.maxX + ((this.initialWidth - this.canvas.width) / 2);
         mat.set(0, 2, htrans);
         mat.set(1, 2, vtrans);
 
