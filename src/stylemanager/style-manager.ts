@@ -19,9 +19,9 @@ class StyleManager {
     }
 
     public static setStateSelectedStyle(context: CanvasRenderingContext2D) {
-        context.strokeStyle = "rgba(50, 193, 229, 0.6)";
+        context.strokeStyle = Colors.blue;
         context.fillStyle = "white";
-        context.lineWidth = 15;
+        context.lineWidth = 20;
     }
 
     public static setStateTextStyle(context: CanvasRenderingContext2D) {
@@ -38,7 +38,7 @@ class StyleManager {
     }
 
     public static setEdgeSelectedStyle(context: CanvasRenderingContext2D) {
-        context.strokeStyle = "rgba(50, 193, 229, 0.6)";
+        context.strokeStyle = Colors.blue;
         context.lineWidth = 15;
     }
 
