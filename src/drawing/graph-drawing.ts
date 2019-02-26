@@ -55,6 +55,11 @@ class GraphDrawing implements Drawing, Snappable {
                             edge.draw(context);
                             context.restore();
                         }
+                    }
+                }
+                for (let k = 0; k < shared.length; k++) {
+                    let edge = <LinearEdgeDrawing>this.edges.get(shared[k]);
+                    if(!drawn.get(shared[k])) {
                         edge.draw(context);
                         drawn.put(shared[k], true);
                     }

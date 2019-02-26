@@ -61,7 +61,7 @@ class Modeller {
         feedback.add(FeedbackCode.DUPLICATE_EDGE, 4);
         feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 4);
         feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
-        feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
+        // feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
         this.setFeedback(feedback);
 
         let a = new Marking(this.petrinet);
@@ -77,8 +77,8 @@ class Modeller {
         this.addState(b, new Vector2D(420, 100));
         this.addEdge(new Edge(1, 2, "t3"));
         this.addEdge(new Edge(1, 1, "t2"));
-        this.addEdge(new Edge(1, 2, "t1"));
-        this.addEdge(new Edge(1, 2, "t1"));
+        // this.addEdge(new Edge(1, 2, "t1"));
+        this.addEdge(new Edge(2, 1, "t1"));
         this.setInitial(1);
 
         this.editEdge(4, "test");
