@@ -37,6 +37,21 @@ class GraphDrawing implements Drawing, Snappable {
         let stateIds = this.states.keys();
         let edgeIds = this.edges.keys();
         let drawn = new HashTable<number, boolean>(hashNumber, eqNumbers);
+        
+        // draw feedback borders for states
+        for(let i = 0; i < stateIds.length; i++) {
+            let sdrawing = this.states.get(stateIds[i]);
+            if (this.options.feedback) {
+                let codes = this.options.feedback.get(stateIds[i]);
+                if (codes !== null) {
+                    context.save();
+                    let code = codes.toArray().sort()[codes.length() - 1];
+                    StyleManager.setStyle(code, context);
+                    sdrawing!.draw(context);
+                    context.restore();
+                }
+            }
+        }
         // draw edges
         context.save();
         StyleManager.setEdgeStandardStyle(context);
@@ -118,16 +133,6 @@ class GraphDrawing implements Drawing, Snappable {
         StyleManager.setStateStandardStyle(context);
         for(let i = 0; i < stateIds.length; i++) {
             let sdrawing = this.states.get(stateIds[i]);
-            if (this.options.feedback) {
-                let codes = this.options.feedback.get(stateIds[i]);
-                if (codes !== null) {
-                    context.save();
-                    let code = codes.toArray().sort()[codes.length() - 1];
-                    StyleManager.setStyle(code, context);
-                    sdrawing!.draw(context);
-                    context.restore();
-                }
-            }
             if (this.options.selected == stateIds[i]) {
                 context.save();
                 StyleManager.setStateSelectedStyle(context);
