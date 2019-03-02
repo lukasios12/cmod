@@ -1,3 +1,12 @@
+import { EdgeDrawing } from "./edge-drawing";
+import { StateDrawing } from "./state-drawing";
+
+import { Vector2D } from "src/shapes/vector2d";
+import { Arrow } from "src/shapes/arrow";
+
+import { StyleManager } from "src/stylemanager/style-manager";
+import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-context-2d-utils";
+
 class LinearEdgeDrawing extends EdgeDrawing {
     public target: StateDrawing;
     public offset: number;
@@ -8,7 +17,7 @@ class LinearEdgeDrawing extends EdgeDrawing {
         this.offset = 0;
     }
 
-    public draw(context: CanvasRenderingContext2D) {
+    public draw(context: CanvasRenderingContext2D): void {
         // draw arrow
         let arrow = this.getArrow(context);
         arrow.fill(context);
@@ -26,7 +35,7 @@ class LinearEdgeDrawing extends EdgeDrawing {
         context.restore();
     }
 
-    public hit(point: Vector2D, context: CanvasRenderingContext2D) {
+    public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {
         context.save();
         context.setTransform(1, 0, 0, 1, 0, 0);
         let arrow = this.getArrow(context);
@@ -34,7 +43,7 @@ class LinearEdgeDrawing extends EdgeDrawing {
         return arrow.hit(point, context);
     }
 
-    protected getArrow(context: CanvasRenderingContext2D) {
+    protected getArrow(context: CanvasRenderingContext2D): Arrow {
         context.save();
         StyleManager.setStateStandardStyle(context);
         let c1 = this.source.center(context);
@@ -51,3 +60,5 @@ class LinearEdgeDrawing extends EdgeDrawing {
         return arrow;
     }
 }
+
+export { LinearEdgeDrawing }

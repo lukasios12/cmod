@@ -1,7 +1,7 @@
-interface Snappable {
+export interface Snappable {
     snap(hgrid: number, vgrid: number): void;
 }
 
-function isSnappable(object: any): object is Snappable {
+export function isSnappable(object: any): object is Snappable {
     return 'snap' in object;
 }

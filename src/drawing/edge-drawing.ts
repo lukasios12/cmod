@@ -1,3 +1,8 @@
+import { StateDrawing } from "./state-drawing";
+import { Hittable } from "./hittable-drawing";
+
+import { Vector2D } from "src/shapes/vector2d";
+
 abstract class EdgeDrawing implements Hittable {
     public source: StateDrawing;
     public label: string;
@@ -7,7 +12,9 @@ abstract class EdgeDrawing implements Hittable {
         this.source = source;
     }
 
-    public abstract draw(context:CanvasRenderingContext2D);
+    public abstract draw(context:CanvasRenderingContext2D): void;
 
-    public abstract hit(point: Vector2D, context: CanvasRenderingContext2D);
+    public abstract hit(point: Vector2D, context: CanvasRenderingContext2D): boolean;
 }
+
+export { EdgeDrawing };

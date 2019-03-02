@@ -1,16 +1,18 @@
-class DrawerOptions {
-    public minZoom: number;
-    public maxZoom: number;
-    public minX: number;
-    public maxX: number;
-    public minY: number;
-    public maxY: number;
-    public gridOptions: GridOptions;
+interface DrawerOptions {
+    minZoom: number;
+    maxZoom: number;
+    minX: number;
+    maxX: number;
+    minY: number;
+    maxY: number;
+    gridOptions: GridOptions;
 }
 
-class GridOptions {
-    public drawGrid: boolean;
-    public snapGrid: boolean;
-    public horizontalGridSeperation: number;
-    public verticalGridSeperation: number;
+interface GridOptions {
+    drawGrid: boolean;
+    snapGrid: boolean;
+    horizontalGridSeperation: number;
+    verticalGridSeperation: number;
 }
+
+export { DrawerOptions, GridOptions };

@@ -1,24 +1,27 @@
+import { Shape2D } from "./shape2d";
+import { Vector2D } from "./vector2d";
+
 class Line implements Shape2D {
     public source: Vector2D;
     public target: Vector2D;
     public bend: number;
 
-    public constructor(x1, y1, x2, y2, bend = 0) {
+    public constructor(x1: number, y1: number, x2: number, y2: number, bend: number = 0) {
         this.source = new Vector2D(x1, y1);
         this.target = new Vector2D(x2, y2);
         this.bend = bend;
     }
 
-    public stroke(context: CanvasRenderingContext2D) {
+    public stroke(context: CanvasRenderingContext2D): void {
         this.preparePath(context);
         context.stroke();
     }
 
-    public fill(context: CanvasRenderingContext2D) {
+    public fill(context: CanvasRenderingContext2D): void {
         this.stroke(context);
     }
 
-    public hit(point: Vector2D, context: CanvasRenderingContext2D) {
+    public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {
         context.save();
         context.lineWidth = 20;
         this.preparePath(context);
@@ -27,7 +30,7 @@ class Line implements Shape2D {
         return result;
     }
 
-    public getControlPoint() {
+    public getControlPoint(): Vector2D {
         let vec = Vector2D.sub(this.target, this.source);
         let len = Vector2D.norm(vec);
         let unit = Vector2D.unit(vec);
@@ -40,7 +43,7 @@ class Line implements Shape2D {
         return result;
     }
 
-    protected preparePath(context: CanvasRenderingContext2D) {
+    protected preparePath(context: CanvasRenderingContext2D): void {
         context.beginPath();
         let vec = Vector2D.sub(this.target, this.source);
         let len = Vector2D.norm(vec);
@@ -53,3 +56,5 @@ class Line implements Shape2D {
         context.quadraticCurveTo(c.x(), c.y(), this.target.x(), this.target.y());
     }
 }
+
+export { Line };

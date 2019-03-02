@@ -1,5 +1,7 @@
-interface Shape2D {
-    stroke(ctx: CanvasRenderingContext2D);
-    fill(ctx: CanvasRenderingContext2D);
-    hit(point: Vector2D, ctx: CanvasRenderingContext2D);
+import { Vector2D } from "./vector2d";
+
+export interface Shape2D {
+    stroke(ctx: CanvasRenderingContext2D): void;
+    fill(ctx: CanvasRenderingContext2D): void;
+    hit(point: Vector2D, ctx: CanvasRenderingContext2D): boolean;
 }

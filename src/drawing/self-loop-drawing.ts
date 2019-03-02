@@ -1,3 +1,13 @@
+import { EdgeDrawing } from "./edge-drawing";
+import { StateDrawing } from "./state-drawing";
+import { Draggable } from "./draggable_drawing";
+
+import { Vector2D } from "src/shapes/vector2d";
+import { Circle } from "src/shapes/circle";
+
+import { StyleManager } from "src/stylemanager/style-manager";
+import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-context-2d-utils";
+
 class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     public angle: number;
     public radius: number;
@@ -13,7 +23,7 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         this.radius = radius;
     }
 
-    public draw(context: CanvasRenderingContext2D) {
+    public draw(context: CanvasRenderingContext2D): void {
         context.save();
         // draw circle
         context.beginPath();
@@ -36,7 +46,7 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         context.restore();
     }
 
-    public hit(point: Vector2D, context: CanvasRenderingContext2D) {
+    public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {
         context.save();
         context.setTransform(1, 0, 0, 1, 0, 0);
         let circle = this.getCircle(context);
@@ -44,12 +54,12 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         return circle.hit(point, context);
     }
 
-    public drag(point: Vector2D, context: CanvasRenderingContext2D) {
+    public drag(point: Vector2D, context: CanvasRenderingContext2D): void {
         let angle = Vector2D.angle(this.source.center(context), point);
         this.angle = angle;
     }
 
-    protected getCircle(context: CanvasRenderingContext2D) {
+    protected getCircle(context: CanvasRenderingContext2D): Circle {
         context.save();
         StyleManager.setEdgeStandardStyle(context);
         let state = this.source;
@@ -61,3 +71,5 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         return circle;
     }
 }
+
+export { SelfLoopDrawing };

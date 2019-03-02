@@ -1,25 +1,34 @@
-/// <reference path='./tokens/index.ts'/>
-/// <reference path='./petrinet/index.ts'/>
+import { Petrinet } from "./petrinet/petrinet";
+import { TokenCount } from "./tokens/token-count";
+import { IntegerTokenCount } from "./tokens/integer-token-count";
 
-/// <reference path='../../lib/collections/index.ts'/>
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 
 class Marking {
     protected map: HashTable<string, TokenCount>;
 
-    public constructor(petrinet: Petrinet, map: HashTable<string, TokenCount> = null) {
-        this.map = new HashTable<string, TokenCount>();
+    public constructor(petrinet: Petrinet, map: HashTable<string, TokenCount> | null = null) {
+        if (map !== null) {
+            this.map = map;
+        } else {
+            this.map = new HashTable<string, TokenCount>(hashString, eqStrings);
+        }
         let places = petrinet.getPlaces().toArray();
         for(let i = 0; i < places.length; i++) {
             this.map.put(places[i], new IntegerTokenCount(0));
         }
     }
 
-    public set(place: string, tokens: TokenCount) {
+    public set(place: string, tokens: TokenCount): void {
         this.map.put(place, tokens);
     }
 
-    public get(place: string) {
-        return this.map.get(place);
+    public get(place: string): TokenCount {
+        if (this.map.hasKey(place)) {
+            return this.map.get(place)!;
+        }
+        throw new Error(`Could not get tokens for place ${place}`);
     }
 
     public toString(): string {
@@ -31,3 +40,5 @@ class Marking {
         return `[${result.join(", ")}]`;
     }
 }
+
+export { Marking };

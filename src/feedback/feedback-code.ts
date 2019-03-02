@@ -1,4 +1,4 @@
-enum FeedbackCode {
+export enum FeedbackCode {
     CORRECT_INITIAL_STATE            = 200,
     NO_INITIAL_STATE                 = 400,
     INCORRECT_INITIAL_STATE          = 401,

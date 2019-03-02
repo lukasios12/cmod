@@ -1,3 +1,5 @@
+import {Vector2D} from "./vector2d";
+
 class Intersection {
     public origin: Vector2D;
     public vector: Vector2D;
@@ -9,3 +11,5 @@ class Intersection {
         this.length = l;
     }
 }
+
+export { Intersection }

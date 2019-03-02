@@ -1,7 +1,15 @@
-class HashSet<K extends Hashable<K>> {
+class HashSet<K> {
+    protected hashFunc: (k: K) => number;
+    protected eqFunc: (l: K, r: K) => boolean;
     protected map: Array<Array<K>>
 
-    public constructor(buckets = 5) {
+    public constructor(
+        h: (k: K) => number,
+        e: (l: K, r: K) => boolean, 
+        buckets: number = 5
+        ) {
+        this.hashFunc = h;
+        this.eqFunc = e;
         this.map = new Array<Array<K>>();
         for(let i = 0; i < buckets; i++) {
             this.map[i] = new Array<K>();
@@ -18,7 +26,7 @@ class HashSet<K extends Hashable<K>> {
         let hash = this.hash(key);
         let bucket = this.map[hash];
         this.map[hash] = bucket.filter( (item) => {
-            return !key.equals(item);
+            return !this.eqFunc(key, item);
         });
     }
 
@@ -55,7 +63,7 @@ class HashSet<K extends Hashable<K>> {
     }
 
     public clone(): HashSet<K> {
-        let result = new HashSet<K>();
+        let result = new HashSet<K>(this.hashFunc, this.eqFunc);
         this.each((item) => {
             result.add(item);
         });
@@ -71,7 +79,7 @@ class HashSet<K extends Hashable<K>> {
     }
 
     public intersection(rhs: HashSet<K>): HashSet<K> {
-        let result = new HashSet<K>();
+        let result = new HashSet<K>(this.hashFunc, this.eqFunc);
         this.each((item) => {
             if(rhs.member(item)) {
                 result.add(item);
@@ -81,7 +89,7 @@ class HashSet<K extends Hashable<K>> {
     }
 
     public difference(rhs: HashSet<K>): HashSet<K> {
-        let result = new HashSet<K>();
+        let result = new HashSet<K>(this.hashFunc, this.eqFunc);
         this.each((item) => {
             if(!rhs.member(item)) {
                 result.add(item);
@@ -113,6 +121,8 @@ class HashSet<K extends Hashable<K>> {
     }
 
     protected hash(key: K): number {
-        return key.hash() % this.map.length;
+        return this.hashFunc(key) % this.map.length;
     }
 }
+
+export { HashSet };

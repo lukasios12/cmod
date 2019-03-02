@@ -1,4 +1,7 @@
-class IntegerTokenCount extends TokenCount {
+import { TokenCount } from "./token-count";
+import { OmegaTokenCount } from "./omega-token-count";
+
+export class IntegerTokenCount extends TokenCount {
     public value: number;
 
     public constructor(value: number) {

@@ -1,10 +1,22 @@
+import { Graph } from "src/system/graph/graph";
+import { State } from "src/system/graph/state";
+import { Edge } from "src/system/graph/edge";
+
+import { GraphDrawing } from "src/drawing/graph-drawing";
+import { StateDrawing } from "src/drawing/state-drawing";
+import { EdgeDrawing } from "src/drawing/edge-drawing";
+
+import { UndoableAction } from "lib/action/undoable-action";
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
+
 class DeleteState implements UndoableAction {
     protected id: number;
     protected state: State;
     protected stateDrawing: StateDrawing;
     protected initial: boolean;
-    protected preset: HashTable<number, Edge>;
-    protected postset: HashTable<number, Edge>
+    protected preset: HashTable<number, Edge> | null;
+    protected postset: HashTable<number, Edge> | null;
     protected presetDrawings: HashTable<number, EdgeDrawing>;
     protected postsetDrawings: HashTable<number, EdgeDrawing>;
     protected graph: Graph;
@@ -19,17 +31,22 @@ class DeleteState implements UndoableAction {
         this.graph = graph;
         this.graphDrawing = drawing;
         this.stateDrawing = this.graphDrawing.getStateDrawing(this.id);
-        this.state = this.graph.getState(this.id);
+        let state = this.graph.getState(this.id);
+        if (state !== null) {
+            this.state = state;
+        } else {
+            throw Error(`Could not construct delete action for state with id: ${id}`);
+        }
         this.initial = this.graph.getInitial() === this.id;
 
         // init variables for restoring edges upon undo
-        this.preset = undefined;
-        this.postset = undefined;
-        this.presetDrawings = new HashTable<number, EdgeDrawing>();
-        this.postsetDrawings = new HashTable<number, EdgeDrawing>();
+        this.preset = null;
+        this.postset = null;
+        this.presetDrawings = new HashTable<number, EdgeDrawing>(hashNumber, eqNumbers);
+        this.postsetDrawings = new HashTable<number, EdgeDrawing>(hashNumber, eqNumbers);
     }
 
-    public exec() {
+    public exec(): void {
         console.log(`Removing state with id: ${this.id}`);
         this.preset = this.graph.preset(this.id);
         this.postset = this.graph.postset(this.id);
@@ -61,19 +78,22 @@ class DeleteState implements UndoableAction {
         this.graphDrawing.delState(this.id);
     }
 
-    public undo() {
+    public undo(): void {
         console.log(`Undoing state removal with id: ${this.id}`);
+        if (!this.preset || !this.postset) {
+            throw new Error(`Could not restore edges: pre-set and/or post-set undefined`);
+        }
         let presetIds = this.preset.keys();
         let postsetIds = this.postset.keys();
         for (let i = 0; i < presetIds.length; i++) {
             let id = presetIds[i];
-            this.graph.addEdge(this.preset.get(id), id);
-            this.graphDrawing.addEdge(id, this.presetDrawings.get(id));
+            this.graph.addEdge(this.preset.get(id)!, id);
+            this.graphDrawing.addEdge(id, this.presetDrawings.get(id)!);
         }
         for (let i = 0; i < postsetIds.length; i++) {
             let id = postsetIds[i];
-            this.graph.addEdge(this.postset.get(id), id);
-            this.graphDrawing.addEdge(id, this.postsetDrawings.get(id));
+            this.graph.addEdge(this.postset.get(id)!, id);
+            this.graphDrawing.addEdge(id, this.postsetDrawings.get(id)!);
         }
         if (this.initial) {
             this.graph.setInitial(this.id);
@@ -83,8 +103,10 @@ class DeleteState implements UndoableAction {
         this.graphDrawing.addState(this.id, this.stateDrawing);
     }
 
-    public redo() {
+    public redo(): void {
         console.log(`Redoing state removal with id: ${this.id}`);
         this.exec();
     }
 }
+
+export { DeleteState };

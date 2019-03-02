@@ -5,7 +5,7 @@ class URLGenerator {
         this.base = base;
     }
 
-    public generate(path: string) {
+    public generate(path: string): string {
         let url = this.base;
         if (this.base[this.base.length - 1] !== '/') {
             url += '/';

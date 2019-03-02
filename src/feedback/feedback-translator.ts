@@ -1,20 +1,26 @@
+import { FeedbackCode } from "./feedback-code";
+
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension"
+
 class FeedbackTranslator
 {
-    protected static Translations: HashTable<FeedbackCode, string> = null;
+    protected static translations: HashTable<FeedbackCode, string> | null = null;
 
-    public static Translate(code: FeedbackCode)
-    {
-        if(FeedbackTranslator.Translations == null) {
-            FeedbackTranslator.FillTranslations();
+    public static translate(code: FeedbackCode): string {
+        if(FeedbackTranslator.translations == null) {
+            FeedbackTranslator.fillTranslations();
         }
-        return FeedbackTranslator.Translations.get(code);
+        if (FeedbackTranslator.translations!.hasKey(code)) {
+            return FeedbackTranslator.translations!.get(code)!;
+        }
+        throw new Error(`Could not retrieve translation for code ${code}`)
     }
 
-    protected static FillTranslations()
-    {
-        FeedbackTranslator.Translations = new HashTable<FeedbackCode, string>();
+    protected static fillTranslations(): void {
+        FeedbackTranslator.translations = new HashTable<FeedbackCode, string>(hashNumber, eqNumbers);
 
-        let t = FeedbackTranslator.Translations;
+        let t = FeedbackTranslator.translations;
         
         // initial states
         t.put(FeedbackCode.NO_INITIAL_STATE, "No initial state is defined");
@@ -40,3 +46,5 @@ class FeedbackTranslator
         t.put(FeedbackCode.MISSED_SELF_LOOP, "This edge should points to its source");
     }
 }
+
+export { FeedbackTranslator };

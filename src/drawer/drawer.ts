@@ -1,8 +1,11 @@
-/// <reference path='../feedback/index.ts'/>
-/// <reference path='../stylemanager/index.ts'/>
+import { DrawerOptions } from "./drawer-options";
 
-/// <reference path='../../lib/math/math.ts'/>
-/// <reference path='../../lib/matrix/matrix.ts'/>
+import { Drawing } from "src/drawing/drawing";
+import { isSnappable } from "src/drawing/snappable-drawing";
+import { Vector2D } from "src/shapes/vector2d";
+
+import { Matrix } from "lib/matrix/matrix";
+import { clamp } from "lib/math/math";
 
 class Drawer {
     public canvas: HTMLCanvasElement;
@@ -24,35 +27,37 @@ class Drawer {
         this.initialHeight = canvas.height;
     }
 
-    public draw(drawing: Drawing = null): void {
+    public draw(drawing: Drawing | null = null): void {
         this.clear();
         if(this.options.gridOptions.drawGrid) {
             this.drawGrid();
         }
-        let context = this.canvas.getContext("2d");
-        context.save();
+        let context = this.canvas.getContext("2d"); 
+        context!.save();
         if(!drawing) {
             drawing = this.drawingCache;
         }
         if(drawing) {
             if(this.options.gridOptions.snapGrid && isSnappable(drawing)) {
                 drawing.snap(this.options.gridOptions.horizontalGridSeperation,
-                             this.options.gridOptions.verticalGridSeperation);
+                            this.options.gridOptions.verticalGridSeperation);
             }
-            drawing.draw(context);
+            drawing.draw(context!);
             this.drawingCache = drawing;
         }
-        context.restore();
+        context!.restore();
+    
     }
 
     public clear(): void {
         let context = this.canvas.getContext("2d");
-        context.save();
-        context.setTransform(1, 0, 0, 1, 0, 0);
+        context!.save();
+        context!.setTransform(1, 0, 0, 1, 0, 0);
         let width = this.canvas.width;
         let height = this.canvas.height;
-        context.clearRect(0, 0, width, height);
-        context.restore();
+        context!.clearRect(0, 0, width, height);
+        context!.restore();
+
     }
 
     public registerEvents(): void {
@@ -122,8 +127,8 @@ class Drawer {
         let htrans = mat.get(0, 2);
         let vtrans = mat.get(1, 2);
 
-        mat.set(0, 0, Math.clamp(hscale, options.minZoom, options.maxZoom));
-        mat.set(1, 1, Math.clamp(vscale, options.minZoom, options.maxZoom));
+        mat.set(0, 0, clamp(hscale, options.minZoom, options.maxZoom));
+        mat.set(1, 1, clamp(vscale, options.minZoom, options.maxZoom));
         hscale = mat.get(0, 0);
         vscale = mat.get(1, 1);
         // let minx = options.minX - ((this.initialWidth - this.canvas.width) / 2);
@@ -132,7 +137,7 @@ class Drawer {
         mat.set(1, 2, vtrans);
 
         this.currentTransform = mat;
-        context.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
+        context!.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
                              mat.get(1,1), mat.get(0,2), -mat.get(1,2));
 
         // console.log(this.initialWidth, this.canvas.width, mat);
@@ -141,8 +146,10 @@ class Drawer {
 
     public resize(): void {
         let parent = this.canvas.parentElement;
-        this.canvas.width = parent.offsetWidth;
-        this.canvas.height = parent.offsetHeight;
+        if (parent) {
+            this.canvas.width = parent.offsetWidth;
+            this.canvas.height = parent.offsetHeight;
+        }
 
         if(this.drawingCache) {
             this.draw(this.drawingCache);
@@ -165,7 +172,7 @@ class Drawer {
         this.transform(mat);
     }
 
-    public globalToLocal(point: Vector2D) {
+    public globalToLocal(point: Vector2D): Vector2D {
         let context = this.canvas.getContext("2d");
         let vector = new Matrix(3, 1);
         vector.set(0, 0, point.x());
@@ -173,8 +180,8 @@ class Drawer {
         vector.set(2, 0, 1);
         let mat = this.currentTransform.inverse();
         let normalized = Matrix.mult(mat, vector);
-        context.rect(normalized.get(0,0) - 5, normalized.get(1,0) - 5, 10, 10);
-        context.fill();
+        context!.rect(normalized.get(0,0) - 5, normalized.get(1,0) - 5, 10, 10);
+        context!.fill();
         return new Vector2D(normalized.get(0,0), normalized.get(1,0));
     }
 
@@ -198,24 +205,26 @@ class Drawer {
         let ymax = Math.ceil((height / transform.get(1,1)) / vdist) *
                    vdist + ymin + vdist;
 
-        context.save();
-        context.strokeStyle = "rgb(220, 220, 220)";
-        context.lineWidth = 1; // px
+        context!.save();
+        context!.strokeStyle = "rgb(220, 220, 220)";
+        context!.lineWidth = 1; // px
         for(let x = xmin; x <= xmax; x += hdist) {
-            context.beginPath();
-            context.moveTo(x, ymin);
-            context.lineTo(x, ymax);
-            context.stroke();
+            context!.beginPath();
+            context!.moveTo(x, ymin);
+            context!.lineTo(x, ymax);
+            context!.stroke();
         }
-        context.closePath();
+        context!.closePath();
 
         for(let y = ymin; y <= ymax; y += vdist) {
-            context.beginPath();
-            context.moveTo(xmin, y);
-            context.lineTo(xmax, y);
-            context.stroke();
+            context!.beginPath();
+            context!.moveTo(xmin, y);
+            context!.lineTo(xmax, y);
+            context!.stroke();
         }
-        context.closePath();
-        context.restore();
+        context!.closePath();
+        context!.restore();
     }
 }
+
+export { Drawer }

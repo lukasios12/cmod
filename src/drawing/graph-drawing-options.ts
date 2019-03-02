@@ -1,10 +1,10 @@
-/// <reference path='../feedback/index.ts'/>
+import { Feedback } from "src/feedback/feedback";
 
-class GraphDrawingOptions {
-    public selected: number;
-    public feedback: Feedback;
+export class GraphDrawingOptions {
+    public selected: number | null;
+    public feedback: Feedback | null;
 
-    public constructor(feedback: Feedback = null, selected: number = null) {
+    public constructor(feedback: Feedback | null = null, selected: number | null = null) {
         this.feedback = feedback;
         this.selected = selected;
     }

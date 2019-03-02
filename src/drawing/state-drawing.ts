@@ -1,12 +1,21 @@
-/// <reference path='../system/graph/index.ts'/>
-/// <reference path='../stylemanager/index.ts'/>
-/// <reference path='../utils/canvas-rendering-context-2d-utils.ts'/>
+import { Hittable } from "./hittable-drawing";
+import { Snappable } from "./snappable-drawing";
+import { Draggable } from "./draggable_drawing";
+
+import { State } from "src/system/graph/state";
+
+import { Vector2D } from "src/shapes/vector2d";
+import { Rectangle } from "src/shapes/rectangle";
+import { Intersection } from "src/shapes/intersection";
+
+import { StyleManager } from "src/stylemanager/style-manager";
+import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-context-2d-utils";
 
 class StateDrawing implements Hittable, Draggable, Snappable {
     public state: State;
     public position: Vector2D;
 
-    public constructor(state: State, position: Vector2D = null) {
+    public constructor(state: State, position: Vector2D | null = null) {
         this.state = state;
         if(position) {
             this.position = position;
@@ -15,7 +24,7 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         }
     }
 
-    public draw(context: CanvasRenderingContext2D) {
+    public draw(context: CanvasRenderingContext2D): void {
         context.save();
         let text = this.state.toString();
         let box = this.getBox(context);
@@ -32,7 +41,7 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         context.restore();
     }
 
-    public hit(point: Vector2D, context: CanvasRenderingContext2D) {
+    public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {
         context.save();
         context.setTransform(1, 0, 0, 1, 0, 0);
         let box = this.getBox(context);
@@ -40,7 +49,7 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         return box.hit(point, context);
     }
 
-    public drag(point: Vector2D, context: CanvasRenderingContext2D) {
+    public drag(point: Vector2D, context: CanvasRenderingContext2D): void {
         context.save();
         StyleManager.setStateStandardStyle(context);
         let width = this.getWidth(context);
@@ -50,13 +59,13 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         context.restore();
     }
 
-    public snap(hgrid: number, vgrid: number) {
+    public snap(hgrid: number, vgrid: number): void {
         let x = Math.round(this.position.x() / hgrid) * hgrid;
         let y = Math.round(this.position.y() / vgrid) * vgrid;
         this.position = new Vector2D(x, y);
     }
 
-    public center(context:CanvasRenderingContext2D) {
+    public center(context:CanvasRenderingContext2D): Vector2D {
         context.save();
         StyleManager.setStateStandardStyle(context);
         let vector = new Vector2D(this.position.x(), this.position.y());
@@ -65,7 +74,7 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         return Vector2D.add(vector, wh);
     }
 
-    protected getBox(context: CanvasRenderingContext2D) {
+    protected getBox(context: CanvasRenderingContext2D): Rectangle {
         context.save();
         StyleManager.setStateStandardStyle(context);
         let width = this.getWidth(context);
@@ -78,7 +87,7 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         return box;
     }
 
-    public getIntersection(p: Vector2D, context: CanvasRenderingContext2D) {
+    public getIntersection(p: Vector2D, context: CanvasRenderingContext2D): Intersection {
         context.save();
         StyleManager.setStateStandardStyle(context);
         let center = this.center(context);
@@ -88,7 +97,7 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         return result;
     }
 
-    public getIntersectionAt(angle: number, context: CanvasRenderingContext2D) {
+    public getIntersectionAt(angle: number, context: CanvasRenderingContext2D): Intersection {
         context.save();
         StyleManager.setStateStandardStyle(context);
         let center = this.center(context);
@@ -132,12 +141,14 @@ class StateDrawing implements Hittable, Draggable, Snappable {
         return result;
     }
 
-    public getHeight(context: CanvasRenderingContext2D) {
+    public getHeight(context: CanvasRenderingContext2D): number {
         let fontsize = CanvasRenderingContext2DUtils.getFontSize(context);
         return 1.5 * fontsize;
     }
 
-    public getWidth(context: CanvasRenderingContext2D) {
+    public getWidth(context: CanvasRenderingContext2D): number {
         return context.measureText(this.state.toString()).width + 10;
     }
 }
+
+export { StateDrawing };

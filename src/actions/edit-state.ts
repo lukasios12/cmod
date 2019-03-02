@@ -1,7 +1,14 @@
+import { Graph } from "src/system/graph/graph"
+import { State } from "src/system/graph/state";
+
+import { GraphDrawing } from "src/drawing/graph-drawing";
+
+import { UndoableAction } from "lib/action/undoable-action";
+
 class EditState implements UndoableAction {
 
     protected id: number;
-    protected oldState: State;
+    protected oldState: State | null;
     protected newState: State;
     protected graph: Graph;
     protected graphDrawing: GraphDrawing;
@@ -16,6 +23,7 @@ class EditState implements UndoableAction {
         this.newState = state;
         this.graph = graph;
         this.graphDrawing = drawing;
+        this.oldState = null;
     }
 
     public exec() {
@@ -28,12 +36,14 @@ class EditState implements UndoableAction {
 
     public undo() {
         this.graph.delState(this.id);
-        this.graph.addState(this.oldState, this.id);
+        this.graph.addState(this.oldState!, this.id);
         let drawing = this.graphDrawing.getStateDrawing(this.id);
-        drawing.state = this.oldState;
+        drawing.state = this.oldState!;
     }
 
     public redo() {
         this.exec();
     }
 }
+
+export { EditState };

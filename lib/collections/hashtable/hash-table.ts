@@ -1,7 +1,17 @@
-class HashTable<K extends Hashable<K>, V> {
+import { HashRecord } from "./hash-record";
+
+class HashTable<K, V> {
+    protected hashFunc: (k: K) => number;
+    protected eqFunc: (l: K, r: K) => boolean;
     protected map: Array<Array<HashRecord<K, V>>>;
 
-    public constructor(buckets = 5) {
+    public constructor(
+        h: (k: K) => number,
+        e: (l: K, r: K) => boolean,
+        buckets: number = 5
+        ) {
+        this.hashFunc = h;
+        this.eqFunc = e;
         this.map = new Array<Array<HashRecord<K, V>>>();
         for(let i = 0; i < buckets; i++) {
             this.map[i] = new Array<HashRecord<K, V>>();
@@ -22,7 +32,7 @@ class HashTable<K extends Hashable<K>, V> {
     public get(key: K): V | null {
         let hash = this.hash(key);
         for(let i = 0; i < this.map[hash].length; i++) {
-            if(key.equals(this.map[hash][i].key)) {
+            if(this.equalKeys(key, this.map[hash][i].key)) {
                 return this.map[hash][i].value;
             }
         }
@@ -32,14 +42,14 @@ class HashTable<K extends Hashable<K>, V> {
     public remove(key: K): void {
         let hash = this.hash(key);
         this.map[hash] = this.map[hash].filter((record) => {
-            return !key.equals(record.key);
+            return !this.equalKeys(key, record.key);
         });
     }
 
     public hasKey(key: K): boolean {
         let hash = this.hash(key);
         for(let i = 0; i < this.map[hash].length; i++) {
-            if(key.equals(this.map[hash][i].key)) {
+            if(this.equalKeys(key, this.map[hash][i].key)) {
                 return true;
             }
         }
@@ -84,7 +94,7 @@ class HashTable<K extends Hashable<K>, V> {
     }
 
     public toArray(): Array<HashRecord<K, V>> {
-        let result = [];
+        let result = Array<HashRecord<K, V>>();
         for(let i = 0; i < this.map.length; i++) {
             for(let j = 0; j < this.map[i].length; j++) {
                 result.push(this.map[i][j]);
@@ -102,6 +112,12 @@ class HashTable<K extends Hashable<K>, V> {
     }
 
     protected hash(key: K): number {
-        return key.hash() % this.map.length;
+        return this.hashFunc(key) % this.map.length;
+    }
+
+    protected equalKeys(l: K, r: K) {
+        return this.eqFunc(l, r);
     }
 }
+
+export { HashTable };

@@ -1,21 +1,42 @@
+import { GraphDrawingOptions } from "./graph-drawing-options";
+
+import { Drawing } from "./drawing";
+import { Snappable } from "./snappable-drawing";
+import { EdgeDrawing } from "./edge-drawing";
+import { StateDrawing } from "./state-drawing";
+import { LinearEdgeDrawing } from "./linear-edge-drawing";
+import { SelfLoopDrawing } from "./self-loop-drawing";
+
+import { Arrow } from "src/shapes/arrow";
+import { Vector2D } from "src/shapes/vector2d";
+
+import { StyleManager } from "src/stylemanager/style-manager";
+
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
+
 class GraphDrawing implements Drawing, Snappable {
     public states: HashTable<number, StateDrawing>;
     public edges: HashTable<number, EdgeDrawing>;
     public initial: number | null;
 
-    public options: GraphDrawingOptions;
+    public options: GraphDrawingOptions
 
-    public constructor(options: GraphDrawingOptions = null) {
-        this.states = new HashTable<number, StateDrawing>();
-        this.edges = new HashTable<number, EdgeDrawing>();
+    public constructor(options: GraphDrawingOptions | null = null) {
+        this.states = new HashTable<number, StateDrawing>(hashNumber, eqNumbers);
+        this.edges = new HashTable<number, EdgeDrawing>(hashNumber, eqNumbers);
         this.initial = null;
-        this.options = options;
+        if(options) { 
+            this.options = options;
+        } else {
+            this.options = new GraphDrawingOptions(null, null);
+        }
     }
 
-    public draw(context: CanvasRenderingContext2D) {
+    public draw(context: CanvasRenderingContext2D): void {
         let stateIds = this.states.keys();
         let edgeIds = this.edges.keys();
-        let drawn = new HashTable<number, boolean>();
+        let drawn = new HashTable<number, boolean>(hashNumber, eqNumbers);
         // draw edges
         context.save();
         StyleManager.setEdgeStandardStyle(context);
@@ -41,13 +62,15 @@ class GraphDrawing implements Drawing, Snappable {
                             c = -c;
                         }
                         edge.offset = c;
-                        let codes = this.options.feedback.get(shared[k]);
-                        if (codes !== null) {
-                            context.save();
-                            let code = codes.toArray().sort()[codes.length() - 1];
-                            StyleManager.setStyle(code, context);
-                            edge.draw(context);
-                            context.restore();
+                        if(this.options.feedback) {
+                            let codes = this.options.feedback.get(shared[k]);
+                            if (codes !== null) {
+                                context.save();
+                                let code = codes.toArray().sort()[codes.length() - 1];
+                                StyleManager.setStyle(code, context);
+                                edge.draw(context);
+                                context.restore();
+                            }
                         }
                         if (this.options.selected == shared[k]) {
                             context.save();
@@ -72,42 +95,46 @@ class GraphDrawing implements Drawing, Snappable {
             });
             for (let i = 0; i < loops.length; i++) {
                 let edrawing = this.edges.get(loops[i]);
-                let codes = this.options.feedback.get(loops[i]);
-                if (codes !== null) {
-                    context.save();
-                    let code = codes.toArray().sort()[codes.length() - 1];
-                    StyleManager.setStyle(code, context);
-                    edrawing.draw(context);
-                    context.restore();
+                if (this.options.feedback) {
+                    let codes = this.options.feedback.get(loops[i]);
+                    if (codes !== null) {
+                        context.save();
+                        let code = codes.toArray().sort()[codes.length() - 1];
+                        StyleManager.setStyle(code, context);
+                        edrawing!.draw(context);
+                        context.restore();
+                    } 
                 }
                 if (this.options.selected == loops[i]) {
                     context.save();
                     StyleManager.setEdgeSelectedStyle(context);
-                    edrawing.draw(context);
+                    edrawing!.draw(context);
                     context.restore();
                 }
-                edrawing.draw(context);
+                edrawing!.draw(context);
             }
         }
         // draw states
         StyleManager.setStateStandardStyle(context);
         for(let i = 0; i < stateIds.length; i++) {
             let sdrawing = this.states.get(stateIds[i]);
-            let codes = this.options.feedback.get(stateIds[i]);
-            if (codes !== null) {
-                context.save();
-                let code = codes.toArray().sort()[codes.length() - 1];
-                StyleManager.setStyle(code, context);
-                sdrawing.draw(context);
-                context.restore();
+            if (this.options.feedback) {
+                let codes = this.options.feedback.get(stateIds[i]);
+                if (codes !== null) {
+                    context.save();
+                    let code = codes.toArray().sort()[codes.length() - 1];
+                    StyleManager.setStyle(code, context);
+                    sdrawing!.draw(context);
+                    context.restore();
+                }
             }
             if (this.options.selected == stateIds[i]) {
                 context.save();
                 StyleManager.setStateSelectedStyle(context);
-                sdrawing.draw(context);
+                sdrawing!.draw(context);
                 context.restore();
             }
-            sdrawing.draw(context);
+            sdrawing!.draw(context);
         }
         context.restore();
         // draw initial state pointer
@@ -117,74 +144,78 @@ class GraphDrawing implements Drawing, Snappable {
             context.strokeStyle = "black";
             context.lineWidth = 2;
             let state = this.getStateDrawing(this.initial);
-            let pos = state.position;
+            let pos = state!.position;
             let arrow = new Arrow(pos.x() - 30, pos.y() - 30, pos.x(), pos.y());
             arrow.fill(context);
             context.restore();
         }
     }
 
-    public addState(id: number, drawing: StateDrawing) {
+    public addState(id: number, drawing: StateDrawing): StateDrawing {
         this.states.put(id, drawing);
         return drawing;
     }
 
-    public addEdge(id: number, edge: EdgeDrawing) {
+    public addEdge(id: number, edge: EdgeDrawing): EdgeDrawing {
         this.edges.put(id, edge);
         return edge;
     }
 
-    public delState(id: number) {
+    public delState(id: number): void {
         this.states.remove(id);
     }
 
-    public delEdge(id: number) {
+    public delEdge(id: number): void {
         this.edges.remove(id);
     }
 
-    public getDrawing(id: number) {
-        let sd = this.getStateDrawing(id);
-        if (sd) return sd;
-        let ed = this.getEdgeDrawing(id);
-        if (ed) return ed;
-        return null;
-    }
-
-    public getStateDrawing(id: number) {
+    public getDrawing(id: number): Drawing {
         if(this.states.hasKey(id)) {
-            return this.states.get(id);
-        }
-        return null;
-    }
-
-    public getEdgeDrawing(id: number) {
+            return this.getStateDrawing(id);
+        } 
         if(this.edges.hasKey(id)) {
-            return this.edges.get(id);
+            return this.getEdgeDrawing(id);
         }
-        return null;
+        throw new Error(`A drawing with id ${id} does not exist`);
     }
 
-    public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D) {
+    public getStateDrawing(id: number): StateDrawing {
+        if(this.states.hasKey(id)) {
+            return this.states.get(id)!;
+        }
+        throw new Error(`A state drawing with id ${id} does not exist`);
+    }
+
+    public getEdgeDrawing(id: number): EdgeDrawing {
+        if(this.edges.hasKey(id)) {
+            return this.edges.get(id)!;
+        }
+        throw new Error(`An edge drawing with it ${id} does not exist`);
+    }
+
+    public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D): number | null {
         let keys = this.states.keys();
         for(let i = 0; i < keys.length; i++) {
-            if(this.states.get(keys[i]).hit(pos, context)) {
+            if(this.states.get(keys[i])!.hit(pos, context)) {
                 return keys[i];
             }
         }
         keys = this.edges.keys();
         for(let i = 0; i < keys.length; i++) {
-            if(this.edges.get(keys[i]).hit(pos, context)) {
+            if(this.edges.get(keys[i])!.hit(pos, context)) {
                 return keys[i];
             }
         }
         return null;
     }
 
-    public snap(hgrid: number, vgrid: number) {
+    public snap(hgrid: number, vgrid: number): void {
         let keys = this.states.keys();
         for(let i = 0; i < keys.length; i++) {
             let state = this.states.get(keys[i]);
-            state.snap(hgrid, vgrid);
+            state!.snap(hgrid, vgrid);
         }
     }
 }
+
+export { GraphDrawing }

@@ -1,3 +1,8 @@
+import { Graph } from "src/system/graph/graph";
+import { GraphDrawing } from "src/drawing/graph-drawing";
+
+import { UndoableAction } from "lib/action/undoable-action";
+
 class DeleteInitial implements UndoableAction {
     protected id: number;
     protected graph: Graph;
@@ -9,18 +14,20 @@ class DeleteInitial implements UndoableAction {
         this.graphDrawing = drawing;
     }
 
-    public exec() {
+    public exec(): void {
         this.graph.setInitial(null);
         this.graphDrawing.initial = null;
         console.log(this.graph);
     }
 
-    public undo() {
+    public undo(): void {
         this.graph.setInitial(this.id);
         this.graphDrawing.initial = this.id;
     }
 
-    public redo() {
+    public redo(): void {
         this.exec();
     }
 }
+
+export { DeleteInitial };

@@ -1,4 +1,4 @@
-/// <reference path='../action/index.ts'/>
+import { UndoableAction } from "lib/action/undoable-action";
 
 class ActionManager {
     protected history: Array<UndoableAction>;
@@ -11,7 +11,7 @@ class ActionManager {
         this.hooks = new Array<() => any>();
     }
 
-    public exec(action: UndoableAction) {
+    public exec(action: UndoableAction): void {
         action.exec();
         if(this.pointer == this.history.length - 1) {
             this.history.push(action);
@@ -23,7 +23,7 @@ class ActionManager {
         this.execHooks();
     }
 
-    public undo() {
+    public undo(): void {
         if(this.pointer >= 0) {
             let action = this.history[this.pointer];
             action.undo();
@@ -32,7 +32,7 @@ class ActionManager {
         this.execHooks();
     }
 
-    public redo() {
+    public redo(): void {
         if(this.pointer < this.history.length - 1) {
             this.pointer = Math.min(this.pointer + 1, this.history.length - 1);
             let action = this.history[this.pointer];
@@ -41,13 +41,15 @@ class ActionManager {
         this.execHooks();
     }
 
-    public addHook(f: () => any) {
+    public addHook(f: () => any): void {
         this.hooks.push(f);
     }
 
-    protected execHooks() {
+    protected execHooks(): void {
         for(let i = 0; i < this.hooks.length; i++) {
             this.hooks[i]();
         }
     }
 }
+
+export { ActionManager };

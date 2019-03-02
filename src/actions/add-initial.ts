@@ -1,3 +1,8 @@
+import { Graph } from "src/system/graph/graph";
+import { GraphDrawing } from "src/drawing/graph-drawing";
+
+import { UndoableAction } from "lib/action/undoable-action";
+
 class AddInitial implements UndoableAction {
     protected id: number;
     protected graph: Graph;
@@ -9,20 +14,22 @@ class AddInitial implements UndoableAction {
         this.graphDrawing = drawing;
     }
 
-    public exec() {
+    public exec(): void {
         console.log(`Setting initial state with id: ${this.id}`);
         this.graph.setInitial(this.id);
         this.graphDrawing.initial = this.id;
     }
 
-    public undo() {
+    public undo(): void {
         console.log(`Undoing initial state setting of state with id: ${this.id}`);
         this.graph.setInitial(null);
         this.graphDrawing.initial = null;
     }
 
-    public redo() {
+    public redo(): void {
         console.log(`Redoing initial state setting of state with id: ${this.id}`);
         this.exec();
     }
 }
+
+export { AddInitial };

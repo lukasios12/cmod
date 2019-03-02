@@ -1,1 +1,3 @@
-type State = Marking;
+import { Marking } from "../marking";
+
+export type State = Marking;

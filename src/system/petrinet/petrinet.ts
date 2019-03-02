@@ -1,21 +1,21 @@
-/// <reference path='../marking.ts'/>
-
-/// <reference path='../../../lib/collections/index.ts'/>
+import { HashSet } from "lib/collections/hashset/hash-set";
 
 class Petrinet {
     protected places: HashSet<string>;
     protected transitions: HashSet<string>;
 
-    public constructor(p, t) {
+    public constructor(p: HashSet<string>, t: HashSet<string>) {
         this.places = p;
         this.transitions = t;
     }
 
-    public getPlaces() {
+    public getPlaces(): HashSet<string> {
         return this.places;
     }
 
-    public getTransitions() {
+    public getTransitions(): HashSet<string> {
         return this.transitions;
     }
 }
+
+export { Petrinet }

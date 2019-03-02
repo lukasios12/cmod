@@ -1,4 +1,4 @@
-class Edge {
+export class Edge {
     public from: number;
     public to: number;
     public label: string;

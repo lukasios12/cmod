@@ -1,14 +1,26 @@
+import { Vector2D } from "./vector2d";
+import { Line } from "./line";
+import { Triangle } from "./triangle";
+
 class Arrow extends Line {
     public width: number;
-    public height; number;
+    public height: number;
 
-    public constructor(x1, y1, x2, y2, b = 0, w = 10, h = 15) {
+    public constructor(
+        x1: number, 
+        y1: number, 
+        x2: number, 
+        y2: number, 
+        b: number = 0,  // bend
+        w: number = 10, // tip width
+        h: number = 15  // tip height
+        ) {
         super(x1, y1, x2, y2, b);
         this.width = w;
         this.height = h;
     }
 
-    public stroke(context: CanvasRenderingContext2D) {
+    public stroke(context: CanvasRenderingContext2D): void {
         context.save();
         super.stroke(context);
         let tip = this.getTip();
@@ -16,7 +28,7 @@ class Arrow extends Line {
         context.restore();
     }
 
-    public fill(context: CanvasRenderingContext2D) {
+    public fill(context: CanvasRenderingContext2D): void {
         context.save();
         super.fill(context);
         let tip = this.getTip();
@@ -24,7 +36,7 @@ class Arrow extends Line {
         context.restore();
     }
 
-    protected getTip() {
+    protected getTip(): Triangle {
         let a = new Vector2D(this.target.x(), this.target.y());
         let rev = Vector2D.unit(Vector2D.sub(super.getControlPoint(), a));
         let perp = new Vector2D(rev.y(), -rev.x());
@@ -37,3 +49,5 @@ class Arrow extends Line {
         return triangle;
     }
 }
+
+export { Arrow };

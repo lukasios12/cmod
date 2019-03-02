@@ -1,4 +1,4 @@
-interface Action {
-    exec()
+export interface Action {
+    exec(): void
 }
 

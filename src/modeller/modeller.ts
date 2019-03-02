@@ -1,12 +1,35 @@
-/// <reference path='./actions/index.ts'/>
-/// <reference path='./drawer/index.ts'/>
-/// <reference path='./drawing/index.ts'/>
-/// <reference path='./system/index.ts'/>
-/// <reference path='./feedback/index.ts'/>
-/// <reference path='./shapes/index.ts'/>
+import { Petrinet } from "src/system/petrinet/petrinet";
+import { Graph } from "src/system/graph/graph";
+import { State } from "src/system/graph/state";
+import { Edge } from "src/system/graph/edge";
+import { Marking } from "src/system/marking";
+import { IntegerTokenCount } from "src/system/tokens/integer-token-count";
+import { OmegaTokenCount } from "src/system/tokens/omega-token-count";
 
-/// <reference path='../lib/action-manager/index.ts'/>
-/// <reference path='../lib/matrix/matrix.ts'/>
+import { Drawing } from "src/drawing/drawing";
+import { GraphDrawing } from "src/drawing/graph-drawing";
+import { GraphDrawingOptions } from "src/drawing/graph-drawing-options";
+import { isDraggable } from "src/drawing/draggable_drawing";
+
+import { Vector2D } from "src/shapes/vector2d";
+
+import { Drawer } from "src/drawer/drawer";
+import { Feedback } from "src/feedback/feedback";
+import { FeedbackCode } from "src/feedback/feedback-code";
+
+import { AddState } from "src/actions/add-state";
+import { AddEdge } from "src/actions/add-edge";
+import { AddInitial } from "src/actions/add-initial";
+import { DeleteState } from "src/actions/del-state";
+import { DeleteEdge } from "src/actions/del-edge";
+import { DeleteInitial } from "src/actions/del-initial";
+import { EditState } from "src/actions/edit-state";
+import { EditEdge } from "src/actions/edit-edge";
+
+
+import { ActionManager } from "lib/action-manager/action-manager";
+import { HashSet } from "lib/collections/hashset/hash-set";
+import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 
 class Modeller {
     protected drawer: Drawer;
@@ -18,10 +41,10 @@ class Modeller {
     public graphDrawing: GraphDrawing;
     public graphDrawingOptions: GraphDrawingOptions;
 
-    public selection: Drawing;
-    public selectionId: number;
+    public selection: Drawing | null;
+    public selectionId: number | null;
 
-    public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet = null) {
+    public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
         this.drawer = new Drawer(canvas, {
             minZoom: 1, maxZoom: 10,
             minX: -20, maxX: 20,
@@ -37,14 +60,18 @@ class Modeller {
         this.actionManager.addHook( () => {
             this.drawer.draw();
         });
+
+        this.selection = null;
+        this.selectionId = null;
+
         this.registerEvents();
 
-        let places = new HashSet<string>();
+        let places = new HashSet<string>(hashString, eqStrings);
         places.add("p1");
         places.add("p2");
         places.add("p3");
         places.add("p4");
-        let transitions = new HashSet<string>();
+        let transitions = new HashSet<string>(hashString, eqStrings);
         transitions.add("t1");
         transitions.add("t2");
         transitions.add("t3");
@@ -62,6 +89,7 @@ class Modeller {
         feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 4);
         feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
         // feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
+        this.feedback = feedback;
         this.setFeedback(feedback);
 
         let a = new Marking(this.petrinet);
@@ -85,64 +113,67 @@ class Modeller {
         this.editState(1, c);
 
         this.drawer.draw(this.graphDrawing);
+
+        // let menu = new EditEdgeMenu(1, this.petrinet);
+        // menu.insert(document.body);
     }
 
-    public addState(state: State, position: Vector2D = null) {
+    public addState(state: State, position: Vector2D | null = null): void {
         let a = new AddState(state, this.graph, this.graphDrawing, position);
         this.actionManager.exec(a);
     }
 
-    public addEdge(edge: Edge) {
+    public addEdge(edge: Edge): void {
         let a = new AddEdge(edge, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
-    public delState(id: number) {
+    public delState(id: number): void {
         let a = new DeleteState(id, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
-    public delEdge(id: number) {
+    public delEdge(id: number): void {
         let a = new DeleteEdge(id, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
-    public editState(id: number, state: State) {
+    public editState(id: number, state: State): void {
         let a = new EditState(id, state, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
-    public editEdge(id: number, label: string) {
+    public editEdge(id: number, label: string): void {
         let a = new EditEdge(id, label, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
-    public setInitial(id: number) {
+    public setInitial(id: number): void {
         let a = new AddInitial(id, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
-    public unsetInitial(id: number) {
+    public unsetInitial(id: number): void {
         let a = new DeleteInitial(id, this.graph, this.graphDrawing);
         this.actionManager.exec(a);
     }
 
-    public select(pos: Vector2D, context: CanvasRenderingContext2D) {
+    public select(pos: Vector2D, context: CanvasRenderingContext2D): void {
         this.selectionId  = this.graphDrawing.getDrawingAt(pos, context);
-        this.selection = this.selectionId != null ?
+        this.selection = this.selectionId !== null ?
             this.graphDrawing.getDrawing(this.selectionId) :
             null;
         this.graphDrawingOptions.selected = this.selectionId;
         console.log(this.selectionId);
     }
 
-    public setFeedback(feedback: Feedback) {
+    public setFeedback(feedback: Feedback): void {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
         this.graphDrawing.options = this.graphDrawingOptions;
     }
 
-    protected registerEvents() {
+    protected registerEvents(): void {
         this.drawer.registerEvents();
 
         window.addEventListener("offline", (event) => {
@@ -165,6 +196,10 @@ class Modeller {
                         }
                     }
                     break;
+                case 72: // h
+                    // let tut = new TutorialMenu();
+                    // tut.insert(document.body);
+                    break;
                 case 89: // y
                     if(event.ctrlKey) {
                         this.actionManager.redo();
@@ -184,7 +219,7 @@ class Modeller {
         let mouseDownLeft= false;
         canvas.addEventListener("mousedown", (event) => {
             if(event.buttons == 1) {
-                this.select(new Vector2D(event.clientX, event.clientY), context);
+                this.select(new Vector2D(event.clientX, event.clientY), context!);
                 mouseDownLeft= true;
             }
         });
@@ -193,7 +228,7 @@ class Modeller {
                 let pos = this.drawer.globalToLocal(
                     new Vector2D(event.clientX, event.clientY)
                 );
-                this.selection.drag(pos, context);
+                this.selection.drag(pos, context!);
                 this.drawer.draw();
             }
         });
@@ -203,3 +238,5 @@ class Modeller {
         });
     }
 }
+
+export { Modeller }; 

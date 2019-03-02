@@ -8,19 +8,19 @@ class Vector {
         }
     }
 
-    public get(i: number) {
+    public get(i: number): number {
         return this.data[i];
     }
 
-    public set(i: number, val: number) {
+    public set(i: number, val: number): void {
         this.data[i] = val;
     }
 
-    public dimensions() {
+    public dimensions(): number {
         return this.data.length;
     }
 
-    public static add(lhs: Vector, rhs: Vector) {
+    public static add(lhs: Vector, rhs: Vector): Vector {
         if(lhs.dimensions() == rhs.dimensions()) {
             let v = new Vector(lhs.dimensions());
             for(let i = 0; i < lhs.dimensions(); i++) {
@@ -28,13 +28,14 @@ class Vector {
             }
             return v;
         }
+        throw new Error("Vectors not of equal dimensions");
     }
 
-    public static sub(lhs: Vector, rhs: Vector) {
+    public static sub(lhs: Vector, rhs: Vector): Vector {
         return Vector.add(lhs, Vector.scale(rhs, -1));
     }
 
-    public static scale(v: Vector, n: number) {
+    public static scale(v: Vector, n: number): Vector {
         let result = new Vector(v.dimensions());
         for(let i = 0; i < v.dimensions(); i++) {
             result.set(i,v.get(i) * n);
@@ -42,7 +43,7 @@ class Vector {
         return result;
     }
 
-    public static norm(v: Vector) {
+    public static norm(v: Vector): number {
         let sum = 0;
         for(let i = 0; i < v.dimensions(); i++) {
             sum += v.get(i) * v.get(i);
@@ -50,8 +51,10 @@ class Vector {
         return Math.sqrt(sum);
     }
 
-    public static unit(v: Vector) {
+    public static unit(v: Vector): Vector {
         let norm = Vector.norm(v);
         return Vector.scale(v, 1 / norm);
     }
 }
+
+export { Vector };

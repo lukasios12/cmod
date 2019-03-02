@@ -1,0 +1,38 @@
+{
+  "name": "cmod",
+  "version": "1.0.0",
+  "description": "Alternative modeller for the Coverability Graph Assistant (CoRA)",
+  "private": true,
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukasios12/cmod.git"
+  },
+  "keywords": [
+    "modeller",
+    "coverbability",
+    "graphs",
+    "petrinets",
+    "cora"
+  ],
+  "author": "Lucas Steehouwer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukasios12/cmod/issues"
+  },
+  "homepage": "https://github.com/lukasios12/cmod#readme",
+  "devDependencies": {
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  }
+}

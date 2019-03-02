@@ -1,9 +1,9 @@
-interface Number extends Hashable<Number> { }
-
-Number.prototype.hash = function() {
-    return Math.floor(this);
+function hashNumber(num: number): number {
+    return Math.floor(num);
 }
 
-Number.prototype.equals = function(rhs: Number) {
-    return this == rhs;
+function eqNumbers(l: number, r: number): boolean {
+    return l == r;
 }
+
+export { hashNumber, eqNumbers };
