@@ -29,11 +29,13 @@
   },
   "homepage": "https://github.com/lukasios12/cmod#readme",
   "devDependencies": {
-    "axios": "^0.18.0",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.3333",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
   }
 }

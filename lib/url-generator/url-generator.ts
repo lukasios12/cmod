@@ -14,3 +14,5 @@ class URLGenerator {
         return url;
     }
 }
+
+export { URLGenerator };

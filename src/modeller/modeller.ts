@@ -16,6 +16,7 @@ import { Vector2D } from "src/shapes/vector2d";
 import { Drawer } from "src/drawer/drawer";
 import { Feedback } from "src/feedback/feedback";
 import { FeedbackCode } from "src/feedback/feedback-code";
+import { FeedbackService } from "src/feedback/feedback-service";
 
 import { AddState } from "src/actions/add-state";
 import { AddEdge } from "src/actions/add-edge";
@@ -37,6 +38,7 @@ class Modeller {
     protected drawer: Drawer;
     protected actionManager: ActionManager;
     protected feedback: Feedback;
+    protected feedbackService: FeedbackService;
 
     public petrinet: Petrinet;
     public graph: Graph;
@@ -58,9 +60,11 @@ class Modeller {
                 verticalGridSeperation: 50
             }
         });
+        this.feedbackService = new FeedbackService("localhost/~lucas/cora-server/");
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
             this.drawer.draw();
+            this.feedbackService.get(1,1,1, new Graph());
         });
 
         this.selection = null;
