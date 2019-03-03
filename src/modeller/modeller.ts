@@ -26,6 +26,8 @@ import { DeleteInitial } from "src/actions/del-initial";
 import { EditState } from "src/actions/edit-state";
 import { EditEdge } from "src/actions/edit-edge";
 
+import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
+import { Tutorial } from "src/menus/tutorial";
 
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
@@ -197,8 +199,9 @@ class Modeller {
                     }
                     break;
                 case 72: // h
-                    // let tut = new TutorialMenu();
-                    // tut.insert(document.body);
+                    let opts = new HTMLGeneratorOptions();
+                    let tut = new Tutorial(opts);
+                    tut.insert(document.body);
                     break;
                 case 89: // y
                     if(event.ctrlKey) {

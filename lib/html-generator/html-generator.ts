@@ -30,6 +30,8 @@ abstract class HTMLGenerator {
             if (parent) {
                 parent.removeChild(this.element);
                 this.element = null;
+            } else {
+                throw new Error("Could not destroy element: no parent");
             }
             for (let i = 0; i < this.destroyHooks.length; i++) {
                 this.destroyHooks[i]();
@@ -52,4 +54,4 @@ abstract class HTMLGenerator {
     }
 }
 
-export { HTMLGenerator }
+export { HTMLGenerator };
