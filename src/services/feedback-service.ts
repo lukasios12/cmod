@@ -2,7 +2,7 @@ import axios, { AxiosResponse, AxiosInstance } from "axios";
 import { User, UserList } from "src/response-types/user";
 import { URLGenerator } from "lib/url-generator/url-generator";
 import { Graph } from "src/system/graph/graph";
-import { Config } from "src/services/config";
+import { Config } from "src/services/config-service";
 import { Observer } from "lib/observer/observer";
 import { GraphToRequest } from "src/converters/graph-to-request";
 
@@ -25,7 +25,7 @@ export class FeedbackService implements Observer<Config>{
         this.http.request({
             url: url,
             method: "post",
-            data: JSON.stringify(graph),
+            data: graph,
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
             }

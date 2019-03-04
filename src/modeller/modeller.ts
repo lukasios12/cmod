@@ -16,7 +16,7 @@ import { Vector2D } from "src/shapes/vector2d";
 import { Drawer } from "src/drawer/drawer";
 import { Feedback } from "src/feedback/feedback";
 import { FeedbackCode } from "src/feedback/feedback-code";
-import { FeedbackService } from "src/feedback/feedback-service";
+import { FeedbackService } from "src/services/feedback-service";
 
 import { AddState } from "src/actions/add-state";
 import { AddEdge } from "src/actions/add-edge";
@@ -33,7 +33,7 @@ import { Tutorial } from "src/menus/tutorial";
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
-import { Session } from "src/services/session";
+import { Session } from "src/services/session-service";
 
 class Modeller {
     protected drawer: Drawer;
