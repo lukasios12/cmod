@@ -1,25 +1,38 @@
 import axios, { AxiosResponse, AxiosInstance } from "axios";
-import { User, UserList } from "src/response-types/user";
-import { URLGenerator } from "lib/url-generator/url-generator";
+
 import { Graph } from "src/system/graph/graph";
-import { Config } from "src/services/config-service";
-import { Observer } from "lib/observer/observer";
 import { GraphToRequest } from "src/converters/graph-to-request";
 
-export class FeedbackService implements Observer<Config>{
-    protected generator: URLGenerator; 
-    protected http: AxiosInstance;
+import { Config } from "src/services/config-service";
+import { Observer } from "lib/observer/observer";
+import { Observable } from "lib/observer/observable";
 
-    public constructor() {
+import { Feedback } from "src/feedback/feedback";
+import { FeedbackResponse } from "src/response-types/feedback";
+import { ResponseToFeedback } from "src/converters/response-to-feedback";
+
+export class FeedbackService implements Observer<Config>, Observable<Feedback> {
+    private static instance: FeedbackService | null = null;
+    protected http: AxiosInstance;
+    protected listeners: Array<Observer<Feedback>>;
+
+    protected constructor() {
         let config = Config.getInstance();
-        this.generator = new URLGenerator(config.baseUrl);
         this.http = axios.create({
-            
+            baseURL: config.baseUrl
         });
+        this.listeners = new Array<Observer<Feedback>>();
+    }
+
+    public static getInstance() {
+        if (FeedbackService.instance === null) {
+            FeedbackService.instance = new FeedbackService();
+        }
+        return FeedbackService.instance;
     }
 
     public get(uid: number, pid: number, sid: number, g: Graph) {
-        let url = this.generator.generate(`petrinet/${uid}/${pid}/${sid}/feedback`);
+        let url = `petrinet/${uid}/${pid}/${sid}/feedback`;
         let graph = GraphToRequest.convert(g);
         console.log(JSON.stringify(graph));
         this.http.request({
@@ -29,14 +42,32 @@ export class FeedbackService implements Observer<Config>{
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
             }
-        }).then( (list: any) => {
-            console.log(list);
+        }).then( (f: AxiosResponse<FeedbackResponse>) => {
+            this.notify(ResponseToFeedback.convert(f.data));
         }).catch((reason) => {
             console.log(reason);
         });
     }
 
-    public update(c: Config) {
-        this.generator = new URLGenerator(c.baseUrl);
+    public update(c: Config): void {
+        this.http.prototype.baseUrl = c.baseUrl;
+    }
+
+    public notify(f: Feedback) {
+        for(let i = 0; i < this.listeners.length; i++) {
+            this.listeners[i].update(f);
+        }
+    }
+
+    public attach(o: Observer<Feedback>): void {
+        this.listeners.push(o);
+    }
+
+    public detach(o: Observer<Feedback>): void {
+        let index = this.listeners.indexOf(o);
+        if (index >= 0) {
+            this.listeners[index] = this.listeners[this.listeners.length - 1];
+            this.listeners.pop();
+        }
     }
 }

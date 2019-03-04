@@ -17,6 +17,7 @@ import { Drawer } from "src/drawer/drawer";
 import { Feedback } from "src/feedback/feedback";
 import { FeedbackCode } from "src/feedback/feedback-code";
 import { FeedbackService } from "src/services/feedback-service";
+import { Observer } from "lib/observer/observer";
 
 import { AddState } from "src/actions/add-state";
 import { AddEdge } from "src/actions/add-edge";
@@ -35,11 +36,10 @@ import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 import { Session } from "src/services/session-service";
 
-class Modeller {
+class Modeller implements Observer<Feedback> {
     protected drawer: Drawer;
     protected actionManager: ActionManager;
-    protected feedback: Feedback;
-    protected feedbackService: FeedbackService;
+    protected feedback: Feedback | null;
 
     public petrinet: Petrinet;
     public graph: Graph;
@@ -61,18 +61,19 @@ class Modeller {
                 verticalGridSeperation: 50
             }
         });
-        this.feedbackService = new FeedbackService();
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
             this.drawer.draw();
             let session = Session.getInstance();
-            this.feedbackService.get(
+            FeedbackService.getInstance().get(
                 session.userId,
                 session.petrinetId, 
                 session.sessionId, 
                 this.graph
             );
         });
+
+        FeedbackService.getInstance().attach(this);
 
         this.selection = null;
         this.selectionId = null;
@@ -94,16 +95,17 @@ class Modeller {
         this.graph = new Graph();
         this.graphDrawing = new GraphDrawing();
         this.graphDrawingOptions = new GraphDrawingOptions();
-        let feedback = new Feedback();
-        feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
-        feedback.add(FeedbackCode.DUPLICATE_STATE, 2);
-        feedback.add(FeedbackCode.DISABLED, 3);
-        feedback.add(FeedbackCode.DUPLICATE_EDGE, 4);
-        feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 4);
-        feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
-        // feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
-        this.feedback = feedback;
-        this.setFeedback(feedback);
+        this.feedback = null;
+        // let feedback = new Feedback();
+        // feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
+        // feedback.add(FeedbackCode.DUPLICATE_STATE, 2);
+        // feedback.add(FeedbackCode.DISABLED, 3);
+        // feedback.add(FeedbackCode.DUPLICATE_EDGE, 4);
+        // feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 4);
+        // feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
+        // // feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
+        // this.feedback = feedback;
+        // this.setFeedback(feedback);
 
         let a = new Marking(this.petrinet);
         a.set("p1", new IntegerTokenCount(1));
@@ -126,9 +128,6 @@ class Modeller {
         this.editState(1, c);
 
         this.drawer.draw(this.graphDrawing);
-
-        // let menu = new EditEdgeMenu(1, this.petrinet);
-        // menu.insert(document.body);
     }
 
     public addState(state: State, position: Vector2D | null = null): void {
@@ -179,9 +178,14 @@ class Modeller {
         this.graphDrawingOptions.selected = this.selectionId;
     }
 
+    public update(feedback: Feedback): void {
+        this.setFeedback(feedback);
+    }
+
     public setFeedback(feedback: Feedback): void {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
+        console.log(this.graphDrawingOptions);
         this.graphDrawing.options = this.graphDrawingOptions;
     }
 
