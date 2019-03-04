@@ -33,6 +33,7 @@ import { Tutorial } from "src/menus/tutorial";
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
+import { Session } from "src/services/session";
 
 class Modeller {
     protected drawer: Drawer;
@@ -60,11 +61,17 @@ class Modeller {
                 verticalGridSeperation: 50
             }
         });
-        this.feedbackService = new FeedbackService("localhost/~lucas/cora-server/");
+        this.feedbackService = new FeedbackService();
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
             this.drawer.draw();
-            this.feedbackService.get(1,1,1, new Graph());
+            let session = Session.getInstance();
+            this.feedbackService.get(
+                session.userId,
+                session.petrinetId, 
+                session.sessionId, 
+                this.graph
+            );
         });
 
         this.selection = null;
@@ -170,7 +177,6 @@ class Modeller {
             this.graphDrawing.getDrawing(this.selectionId) :
             null;
         this.graphDrawingOptions.selected = this.selectionId;
-        console.log(this.selectionId);
     }
 
     public setFeedback(feedback: Feedback): void {

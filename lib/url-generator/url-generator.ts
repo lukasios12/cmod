@@ -3,12 +3,15 @@ class URLGenerator {
 
     public constructor(base: string) {
         this.base = base;
+        if (this.base[this.base.length - 1] !== "/") {
+            this.base += "/";
+        }
     }
 
     public generate(path: string): string {
         let url = this.base;
-        if (this.base[this.base.length - 1] !== '/') {
-            url += '/';
+        if (path[0] == "/") {
+            path = path.slice(1);
         }
         url += path;
         return url;

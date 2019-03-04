@@ -37,7 +37,7 @@ class DeleteState implements UndoableAction {
         } else {
             throw Error(`Could not construct delete action for state with id: ${id}`);
         }
-        this.initial = this.graph.getInitial() === this.id;
+        this.initial = this.graph.initial === this.id;
 
         // init variables for restoring edges upon undo
         this.preset = null;
@@ -71,7 +71,7 @@ class DeleteState implements UndoableAction {
             this.graphDrawing.delEdge(id);
         }
         if (this.initial) {
-            this.graph.setInitial(null);
+            this.graph.initial = null;
             this.graphDrawing.initial = null;
         }
         this.graph.delState(this.id);
@@ -96,7 +96,7 @@ class DeleteState implements UndoableAction {
             this.graphDrawing.addEdge(id, this.postsetDrawings.get(id)!);
         }
         if (this.initial) {
-            this.graph.setInitial(this.id);
+            this.graph.initial = this.id;
             this.graphDrawing.initial = this.id;
         }
         this.graph.addState(this.state, this.id);

@@ -31,6 +31,10 @@ class Marking {
         throw new Error(`Could not get tokens for place ${place}`);
     }
 
+    public places() {
+        return this.map.keys();
+    }
+
     public toString(): string {
         let places = this.map.keys();
         let result = new Array<string>();
@@ -38,6 +42,15 @@ class Marking {
             result.push(`${places[i]}: ${this.map.get(places[i])}`);
         }
         return `[${result.join(", ")}]`;
+    }
+
+    public toRequestString(): string {
+        let places = this.map.keys();
+        let result = new Array<string>();
+        for(let i = 0; i < places.length; i++) {
+            result.push(`${places[i]}: ${this.map.get(places[i])}`);
+        }
+        return `${result.join(", ")}`;
     }
 }
 

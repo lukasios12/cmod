@@ -15,13 +15,13 @@ class DeleteInitial implements UndoableAction {
     }
 
     public exec(): void {
-        this.graph.setInitial(null);
+        this.graph.initial = null;
         this.graphDrawing.initial = null;
         console.log(this.graph);
     }
 
     public undo(): void {
-        this.graph.setInitial(this.id);
+        this.graph.initial = this.id;
         this.graphDrawing.initial = this.id;
     }
 
