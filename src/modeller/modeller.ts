@@ -185,7 +185,6 @@ class Modeller implements Observer<Feedback> {
     public setFeedback(feedback: Feedback): void {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
-        console.log(this.graphDrawingOptions);
         this.graphDrawing.options = this.graphDrawingOptions;
     }
 
@@ -253,6 +252,10 @@ class Modeller implements Observer<Feedback> {
             mouseDownLeft = false;
             this.drawer.draw();
         });
+    }
+    
+    protected getContainer(): HTMLElement | null {
+        return this.drawer.canvas.parentElement;
     }
 }
 
