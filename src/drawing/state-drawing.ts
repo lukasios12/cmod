@@ -26,7 +26,7 @@ class StateDrawing implements Hittable, Draggable, Snappable {
 
     public draw(context: CanvasRenderingContext2D): void {
         context.save();
-        let text = this.state.toString();
+        let text = this.getStateString();
         let box = this.getBox(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
@@ -147,7 +147,11 @@ class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     public getWidth(context: CanvasRenderingContext2D): number {
-        return context.measureText(this.state.toString()).width + 10;
+        return context.measureText(this.getStateString()).width + 10;
+    }
+
+    protected getStateString() {
+        return `[${this.state.toString()}]`;
     }
 }
 

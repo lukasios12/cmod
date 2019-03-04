@@ -18,7 +18,7 @@ class GraphToRequest {
         for(let i = 0; i < sids.length; i++) {
             let state: State = states.get(sids[i])!;
             let r: StateRequest = {
-                state: state.toRequestString(),
+                state: state.toString(),
                 id: sids[i]
             };
             requestStates.push(r);

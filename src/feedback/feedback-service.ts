@@ -33,12 +33,7 @@ export class FeedbackService implements Observer<Config>{
             console.log(list);
         }).catch((reason) => {
             console.log(reason);
-        })
-        // this.http.request({
-        //     url: url,
-        //     method: "post",
-        //     data: g
-        // });
+        });
     }
 
     public update(c: Config) {

@@ -8,9 +8,9 @@ class Main {
         let config = Config.getInstance();
         config.baseUrl = "http://localhost/~lucas/cora-server/api";
         let session = Session.getInstance();
-        session.petrinetId = 36;
-        session.userId = 20;
-        session.sessionId = 1;
+        session.petrinetId = 69;
+        session.userId = 51;
+        session.sessionId = 0;
         let modeller = new Modeller(canvas);
     }
 }

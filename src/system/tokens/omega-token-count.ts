@@ -14,6 +14,6 @@ export class OmegaTokenCount extends TokenCount {
     }
 
     public toString():string {
-        return "OMEGA";
+        return "ω";
     }
 }
