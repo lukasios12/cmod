@@ -1,40 +1,40 @@
-import { Petrinet } from "src/system/petrinet/petrinet";
-import { Graph } from "src/system/graph/graph";
-import { State } from "src/system/graph/state";
-import { Edge } from "src/system/graph/edge";
-import { Marking } from "src/system/marking";
-import { IntegerTokenCount } from "src/system/tokens/integer-token-count";
-import { OmegaTokenCount } from "src/system/tokens/omega-token-count";
+import { Petrinet } from "./system/petrinet/petrinet";
+import { Graph } from "./system/graph/graph";
+import { State } from "./system/graph/state";
+import { Edge } from "./system/graph/edge";
+import { Marking } from "./system/marking";
+import { IntegerTokenCount } from "./system/tokens/integer-token-count";
+import { OmegaTokenCount } from "./system/tokens/omega-token-count";
 
-import { Drawing } from "src/drawing/drawing";
-import { GraphDrawing } from "src/drawing/graph-drawing";
-import { GraphDrawingOptions } from "src/drawing/graph-drawing-options";
-import { isDraggable } from "src/drawing/draggable_drawing";
+import { Drawing } from "./drawing/drawing";
+import { GraphDrawing } from "./drawing/graph-drawing";
+import { GraphDrawingOptions } from "./drawing/graph-drawing-options";
+import { isDraggable } from "./drawing/draggable_drawing";
 
-import { Vector2D } from "src/shapes/vector2d";
+import { Vector2D } from "./shapes/vector2d";
 
-import { Drawer } from "src/drawer/drawer";
-import { Feedback } from "src/feedback/feedback";
-import { FeedbackCode } from "src/feedback/feedback-code";
-import { FeedbackService } from "src/services/feedback-service";
-import { Observer } from "lib/observer/observer";
+import { Drawer } from "./drawer/drawer";
+import { Feedback } from "./feedback/feedback";
+import { FeedbackCode } from "./feedback/feedback-code";
+import { FeedbackService } from "./services/feedback-service";
+import { Observer } from "../lib/observer/observer";
 
-import { AddState } from "src/actions/add-state";
-import { AddEdge } from "src/actions/add-edge";
-import { AddInitial } from "src/actions/add-initial";
-import { DeleteState } from "src/actions/del-state";
-import { DeleteEdge } from "src/actions/del-edge";
-import { DeleteInitial } from "src/actions/del-initial";
-import { EditState } from "src/actions/edit-state";
-import { EditEdge } from "src/actions/edit-edge";
+import { AddState } from "./actions/add-state";
+import { AddEdge } from "./actions/add-edge";
+import { AddInitial } from "./actions/add-initial";
+import { DeleteState } from "./actions/del-state";
+import { DeleteEdge } from "./actions/del-edge";
+import { DeleteInitial } from "./actions/del-initial";
+import { EditState } from "./actions/edit-state";
+import { EditEdge } from "./actions/edit-edge";
 
-import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
-import { Tutorial } from "src/menus/tutorial";
+import { HTMLGeneratorOptions } from "../lib/html-generator/html-generator-options";
+import { Tutorial } from "./menus/tutorial";
 
-import { ActionManager } from "lib/action-manager/action-manager";
-import { HashSet } from "lib/collections/hashset/hash-set";
-import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
-import { Session } from "src/services/session-service";
+import { ActionManager } from "../lib/action-manager/action-manager";
+import { HashSet } from "../lib/collections/hashset/hash-set";
+import { hashString, eqStrings } from "../lib/collections/extensions/string-extension";
+import { Session } from "./services/session-service";
 
 class Modeller implements Observer<Feedback> {
     protected drawer: Drawer;
@@ -212,9 +212,9 @@ class Modeller implements Observer<Feedback> {
                     }
                     break;
                 case 72: // h
-                    let opts = new HTMLGeneratorOptions();
-                    let tut = new Tutorial(opts);
-                    tut.insert(document.body);
+                    // let opts = new HTMLGeneratorOptions();
+                    // let tut = new Tutorial(opts);
+                    // tut.insert(document.body);
                     break;
                 case 89: // y
                     if(event.ctrlKey) {

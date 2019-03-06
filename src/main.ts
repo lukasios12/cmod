@@ -1,6 +1,6 @@
-import { Modeller } from "./modeller/modeller";
-import { Session } from "./services/session-service";
-import { Config } from "./services/config-service";
+import { Modeller } from "./modeller/modeller"
+import { Session } from "./modeller/services/session-service";
+import { Config } from "./modeller/services/config-service";
 
 class Main {
     public static main() {
