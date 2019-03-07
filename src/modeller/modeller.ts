@@ -30,6 +30,7 @@ import { EditEdge } from "./actions/edit-edge";
 
 import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
 import { Tutorial } from "./menus/tutorial";
+import { EditStateMenu } from "src/modeller/menus/edit-state";
 
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
@@ -211,6 +212,22 @@ class Modeller implements Observer<Feedback> {
                         }
                     }
                     break;
+                case 69: //
+                    if (this.selectionId !== null && 
+                        this.graph.hasState(this.selectionId)
+                    ) {
+                        let state = this.graph.getState(this.selectionId);
+                        let options = new HTMLGeneratorOptions();
+                        let menu = new EditStateMenu(state!, options);
+                        menu.onCancel(()=> {
+                            menu.destroy();
+                        });
+                        menu.onConfirm(() => {
+                            console.log("confirm");
+                            menu.destroy();
+                        })
+                        menu.insert(document.getElementById("app")!);
+                    }
                 case 72: // h
                     // let opts = new HTMLGeneratorOptions();
                     // let tut = new Tutorial(opts);
