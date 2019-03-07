@@ -6,9 +6,9 @@ import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
 import { StateDrawing } from "src/modeller/drawing/state-drawing";
 import { EdgeDrawing } from "src/modeller/drawing/edge-drawing";
 
-import { UndoableAction } from "src/lib/action/undoable-action";
-import { HashTable } from "src/lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "src/lib/collections/extensions/number-extension";
+import { UndoableAction } from "lib/action/undoable-action";
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
 class DeleteState implements UndoableAction {
     protected id: number;

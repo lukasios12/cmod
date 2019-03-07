@@ -6,7 +6,7 @@ import { Vector2D } from "src/modeller/shapes/vector2d";
 import { Circle } from "src/modeller/shapes/circle";
 
 import { StyleManager } from "src/modeller/stylemanager/style-manager";
-import { CanvasRenderingContext2DUtils } from "src/lib/utils/canvas-rendering-context-2d-utils";
+import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
 class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     public angle: number;

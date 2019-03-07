@@ -1,8 +1,8 @@
 import { State } from "./state";
 import { Edge } from "./edge";
 
-import { HashTable } from "src/lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "src/lib/collections/extensions/number-extension";
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
 class Graph {
     protected _states: HashTable<number, State>;

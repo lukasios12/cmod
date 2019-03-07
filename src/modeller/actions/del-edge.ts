@@ -4,7 +4,7 @@ import { Edge } from "src/modeller/system/graph/edge";
 import { GraphDrawing } from "src/modeller/drawing/graph-drawing"
 import { EdgeDrawing } from "src/modeller/drawing/edge-drawing";
 
-import { UndoableAction } from "src/lib/action/undoable-action";
+import { UndoableAction } from "lib/action/undoable-action";
 
 class DeleteEdge implements UndoableAction {
     protected id: number;

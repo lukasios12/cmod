@@ -17,7 +17,7 @@ import { Drawer } from "./drawer/drawer";
 import { Feedback } from "./feedback/feedback";
 import { FeedbackCode } from "./feedback/feedback-code";
 import { FeedbackService } from "./services/feedback-service";
-import { Observer } from "../lib/observer/observer";
+import { Observer } from "lib/observer/observer";
 
 import { AddState } from "./actions/add-state";
 import { AddEdge } from "./actions/add-edge";
@@ -28,12 +28,12 @@ import { DeleteInitial } from "./actions/del-initial";
 import { EditState } from "./actions/edit-state";
 import { EditEdge } from "./actions/edit-edge";
 
-import { HTMLGeneratorOptions } from "../lib/html-generator/html-generator-options";
+import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
 import { Tutorial } from "./menus/tutorial";
 
-import { ActionManager } from "../lib/action-manager/action-manager";
-import { HashSet } from "../lib/collections/hashset/hash-set";
-import { hashString, eqStrings } from "../lib/collections/extensions/string-extension";
+import { ActionManager } from "lib/action-manager/action-manager";
+import { HashSet } from "lib/collections/hashset/hash-set";
+import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 import { Session } from "./services/session-service";
 
 class Modeller implements Observer<Feedback> {

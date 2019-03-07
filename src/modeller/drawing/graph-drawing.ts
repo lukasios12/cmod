@@ -12,8 +12,8 @@ import { Vector2D } from "src/modeller/shapes/vector2d";
 
 import { StyleManager } from "src/modeller/stylemanager/style-manager";
 
-import { HashTable } from "src/lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "src/lib/collections/extensions/number-extension";
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
 class GraphDrawing implements Drawing, Snappable {
     public states: HashTable<number, StateDrawing>;

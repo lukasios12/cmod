@@ -6,7 +6,7 @@ import { StateDrawing } from "src/modeller/drawing/state-drawing";
 
 import { Vector2D } from "src/modeller/shapes/vector2d";
 
-import { UndoableAction } from "src/lib/action/undoable-action";
+import { UndoableAction } from "lib/action/undoable-action";
 
 class AddState implements UndoableAction {
     protected id: number | null;

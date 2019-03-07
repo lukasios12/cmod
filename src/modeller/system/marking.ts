@@ -2,8 +2,8 @@ import { Petrinet } from "./petrinet/petrinet";
 import { TokenCount } from "./tokens/token-count";
 import { IntegerTokenCount } from "./tokens/integer-token-count";
 
-import { HashTable } from "src/lib/collections/hashtable/hash-table";
-import { hashString, eqStrings } from "src/lib/collections/extensions/string-extension";
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 
 class Marking {
     protected map: HashTable<string, TokenCount>;

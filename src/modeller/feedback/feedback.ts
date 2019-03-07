@@ -1,8 +1,8 @@
 import { FeedbackCode }  from "./feedback-code";
 
-import { HashTable } from "src/lib/collections/hashtable/hash-table";
-import { HashSet } from "src/lib/collections/hashset/hash-set";
-import { hashNumber, eqNumbers } from "src/lib/collections/extensions/number-extension";
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { HashSet } from "lib/collections/hashset/hash-set";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
 class Feedback {
     public general: HashSet<FeedbackCode>;

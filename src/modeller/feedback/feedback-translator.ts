@@ -1,7 +1,7 @@
 import { FeedbackCode } from "./feedback-code";
 
-import { HashTable } from "src/lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "src/lib/collections/extensions/number-extension"
+import { HashTable } from "lib/collections/hashtable/hash-table";
+import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension"
 
 class FeedbackTranslator
 {

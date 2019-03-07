@@ -4,8 +4,8 @@ import { Graph } from "src/modeller/system/graph/graph";
 import { GraphToRequest } from "src/modeller/converters/graph-to-request";
 
 import { Config } from "src/modeller/services/config-service";
-import { Observer } from "src/lib/observer/observer";
-import { Observable } from "src/lib/observer/observable";
+import { Observer } from "lib/observer/observer";
+import { Observable } from "lib/observer/observable";
 
 import { Feedback } from "src/modeller/feedback/feedback";
 import { FeedbackResponse } from "src/modeller/response-types/feedback";

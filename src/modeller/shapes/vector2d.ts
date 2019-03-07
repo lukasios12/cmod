@@ -1,4 +1,4 @@
-import { Vector } from "src/lib/vector/vector";
+import { Vector } from "lib/vector/vector";
 
 class Vector2D {
     public vec: Vector;

@@ -3,7 +3,7 @@ import { State } from "src/modeller/system/graph/state";
 
 import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
 
-import { UndoableAction } from "src/lib/action/undoable-action";
+import { UndoableAction } from "lib/action/undoable-action";
 
 class EditState implements UndoableAction {
 

@@ -1,7 +1,7 @@
 import { Graph } from "src/modeller/system/graph/graph";
 import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
 
-import { UndoableAction } from "src/lib/action/undoable-action";
+import { UndoableAction } from "lib/action/undoable-action";
 
 class DeleteInitial implements UndoableAction {
     protected id: number;

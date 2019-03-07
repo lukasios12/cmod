@@ -6,7 +6,7 @@ import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
 import { LinearEdgeDrawing } from "src/modeller/drawing/linear-edge-drawing";
 import { SelfLoopDrawing } from "src/modeller/drawing/self-loop-drawing";
 
-import { UndoableAction } from "src/lib/action/undoable-action";
+import { UndoableAction } from "lib/action/undoable-action";
 
 class AddEdge implements UndoableAction {
     protected id: number | null;

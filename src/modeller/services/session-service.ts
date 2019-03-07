@@ -1,5 +1,5 @@
-import { Observable } from "src/lib/observer/observable";
-import { Observer } from "src/lib/observer/observer";
+import { Observable } from "lib/observer/observable";
+import { Observer } from "lib/observer/observer";
 
 class Session implements Observable<Session> {
     private static instance: Session | null = null;
