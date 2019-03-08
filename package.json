@@ -29,15 +29,23 @@
   },
   "homepage": "https://github.com/lukasios12/cmod#readme",
   "devDependencies": {
+    "@types/node": "^11.10.5",
     "css-loader": "^2.1.0",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.3333",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.8",
+    "vue-template-loader": "^1.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-dev-server": "^3.2.1",
+    "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "vue": "^2.6.8",
+    "vue-class-component": "^7.0.1",
+    "vue-property-decorator": "^8.0.0"
   }
 }
