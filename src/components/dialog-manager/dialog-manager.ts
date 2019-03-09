@@ -3,19 +3,19 @@ import WithRender from "./dialog-manager.html";
 
 import { WelcomeDialogComponent } from "src/components/dialogs/welcome/welcome";
 import { UploadDialogComponent } from "src/components/dialogs/upload/upload";
-import { AlertComponent } from "src/components/messages/alert/alert";
+import { LoaderComponent } from "src/components/loader/loader";
 
 @WithRender
 @Component({
     name: "manager-dialog",
     components: {
-        "alert": AlertComponent,
         "welcome": WelcomeDialogComponent,
         "upload": UploadDialogComponent,
+        "loader": LoaderComponent
     }
 })
 class DialogManagerComponent extends Vue {
-    current = UploadDialogComponent;
+    current = LoaderComponent;
 }
 
 export { DialogManagerComponent }
