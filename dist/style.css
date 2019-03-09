@@ -1,5 +1,6 @@
 html {
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 *, *::before, *::after {
@@ -8,12 +9,15 @@ html {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: serif;
+    font-weight: 200;
     margin-top: .25em;
     margin-bottom: .25em;
+    line-height: 1.75em;
 }
 
 h1 {
     font-size: 3rem;
+    border-bottom: 1px solid grey;
 }
 
 h2 {
@@ -42,6 +46,21 @@ body {
     padding: 0rem;
 }
 
+header {
+    display: block;
+    width: 100%;
+    padding: 0 2rem;
+    background: #999999;
+    color: white;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    line-height: 3rem;
+}
+
 main {
     display: block;
     position: absolute;
@@ -49,6 +68,21 @@ main {
     left: 0;
     width: 95%;
     height: 95%;
+}
+
+input[type="text"],
+input[type="password"] {
+    outline: 0;
+    border-width: 2px;
+    border-style: solid;
+    border-color: teal;
+    border-radius: 0;
+    padding: .5rem;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: orange;
 }
 
 canvas {
@@ -61,7 +95,7 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 90%;
+    max-width: 40rem;
     border: 2px solid grey;
     border-radius: 5px;
     background: #FAFAFA;
@@ -75,4 +109,31 @@ canvas {
 
 .dialog *:last-child {
     margin-bottom: 0;
+}
+
+.dialog input {
+    display: block;
+    width: 100%;
+}
+
+.message {
+    display: block;
+    padding: 1em;
+    margin: 1.5em;
+    font-size: 1.25em;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.message.alert {
+    background: tomato;
+    border-color: red;
+}
+
+footer {
+    display: block;
+    padding: 2rem;
+    background: #343434;
+    color: white;
+    font-size: .8rem;
 }

@@ -2,13 +2,13 @@ import { Modeller } from "./modeller/modeller"
 import { Session } from "./modeller/services/session-service";
 import { Config } from "./modeller/services/config-service";
 
-import { Component, Vue } from "vue-property-decorator";
-import { Dialog } from "src/components/dialog/dialog";
+import Vue from "vue";
+import { MainManagerComponent } from "src/components/main-manager/main-manager";
 
 class Main {
     public static main() {
         new Vue({
-            render: (h) => h(Dialog)
+            render: (h) => h(MainManagerComponent)
         }).$mount("#app");
         // let canvas = document.getElementById("canvas") as HTMLCanvasElement;
         // let config = Config.getInstance();
