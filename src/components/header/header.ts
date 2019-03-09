@@ -5,8 +5,8 @@ import WithRender from "./header.html";
     name: "cora-header"
 })
 @WithRender
-class Header extends Vue {
+class HeaderComponent extends Vue {
     title: string = "CoRA"
 }
 
-export { Header };
+export { HeaderComponent };

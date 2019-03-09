@@ -1,12 +1,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./modeller.html";
 
-import { Header } from "src/components/header/header";
+import { HeaderComponent } from "src/components/header/header";
 
 @Component({
     name: "modeller",
     components: {
-        "cora-header": Header
+        "cora-header": HeaderComponent
     }
 })
 @WithRender
