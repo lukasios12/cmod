@@ -1,10 +1,17 @@
 import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./modeller-manager.html";
 
-@Component
+import { Multipane, MultipaneResizer } from "vue-multipane";
+
+@Component({
+    components: {
+        "multipane": Multipane,
+        "multipane-resizer": MultipaneResizer
+    }
+})
 @WithRender
 class ModellerManagerComponent extends Vue {
-    message: string = "hallo";
+    
 }
 
 export { ModellerManagerComponent };

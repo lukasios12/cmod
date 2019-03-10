@@ -46,6 +46,7 @@
     "axios": "^0.18.0",
     "vue": "^2.6.8",
     "vue-class-component": "^7.0.1",
+    "vue-multipane": "^0.9.5",
     "vue-property-decorator": "^8.0.0"
   }
 }

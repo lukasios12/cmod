@@ -7,6 +7,11 @@ html {
     box-sizing: inherit;
 }
 
+body {
+    margin: 10px;
+    height: 100%;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: serif;
     font-weight: 200;
@@ -141,10 +146,10 @@ canvas {
     border-top-color: grey;
     border-left-color: lightgrey;
     border-right-color: lightgrey;
-    border-bottom-color: lightgrey;
+    border-bottom-color: grey;
     border-style: solid;
     border-radius: 50%;
-    animation: spin 1s ease infinite;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -154,6 +159,30 @@ canvas {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.split-container {
+    display: grid;
+    border: 3px dotted red;
+    padding: 10px;
+    grid-gap: 5px;
+    height: 100em;;
+}
+
+.split-container .left {
+    border: 3px dotted blue;
+    overflow: auto;
+    resize: horizontal;
+}
+
+.split-container .right {
+    border: 3px dotted green;
+    overflow: auto;
+    resize: horizontal;
+}
+
+.split-container .divider {
+    border: 3px dotted purple;
 }
 
 footer {

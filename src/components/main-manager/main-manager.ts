@@ -7,16 +7,16 @@ import { ModellerManagerComponent } from "src/components/modeller-manager/modell
     name: "manager-main",
     components: {
         "manager-dialog": DialogManagerComponent,
-        "manager-modeller": ModellerManagerComponent
+        "manager-modeller": ModellerManagerComponent,
     }
 })
 @WithRender
 class MainManagerComponent extends Vue {
     components = [
         DialogManagerComponent,
-        ModellerManagerComponent
+        ModellerManagerComponent,
     ];
-    current = DialogManagerComponent;
+    current = ModellerManagerComponent;
 }
 
 export { MainManagerComponent };
