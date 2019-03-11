@@ -8,7 +8,8 @@ html {
 }
 
 body {
-    margin: 10px;
+    margin: 0;
+    padding: 0;
     height: 100%;
 }
 
@@ -44,11 +45,6 @@ h5 {
 h6 {
     font-size: 1rem;
     font-weight: bold;
-}
-
-body {
-    margin: 0rem;
-    padding: 0rem;
 }
 
 header {
@@ -161,28 +157,38 @@ canvas {
     }
 }
 
-.split-container {
-    display: grid;
-    border: 3px dotted red;
-    padding: 10px;
-    grid-gap: 5px;
-    height: 100em;;
+.modeller {
+    height: 100vh;
+    width: 100%;
 }
 
-.split-container .left {
-    border: 3px dotted blue;
-    overflow: auto;
-    resize: horizontal;
+.modeller .pane {
+    background: #eee;
+    padding: 1rem;
 }
 
-.split-container .right {
-    border: 3px dotted green;
-    overflow: auto;
-    resize: horizontal;
+.modeller .pane.right {
+    flex-grow: 1;
 }
 
-.split-container .divider {
-    border: 3px dotted purple;
+.modeller .resizer {
+    background: transparent;
+    left: 0 !important; 
+    margin-left: 0 !important;
+    width: 15px !important;
+}
+.modeller .resizer:before {
+    content: "";
+    display: block;
+    width: 4px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #aaa;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
 }
 
 footer {
