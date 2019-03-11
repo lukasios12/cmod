@@ -16,7 +16,7 @@ import { Vector2D } from "./shapes/vector2d";
 import { Drawer } from "./drawer/drawer";
 import { Feedback } from "./feedback/feedback";
 import { FeedbackCode } from "./feedback/feedback-code";
-import { FeedbackService } from "./services/feedback-service";
+import { FeedbackService } from "src/services/feedback-service";
 import { Observer } from "lib/observer/observer";
 
 import { AddState } from "./actions/add-state";
@@ -35,7 +35,7 @@ import { EditStateMenu } from "src/modeller/menus/edit-state";
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
-import { Session } from "./services/session-service";
+import { Session } from "src/services/session-service";
 
 class Modeller implements Observer<Feedback> {
     protected drawer: Drawer;

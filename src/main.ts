@@ -1,6 +1,6 @@
 import { Modeller } from "./modeller/modeller"
-import { Session } from "./modeller/services/session-service";
-import { Config } from "./modeller/services/config-service";
+import { Session } from "./services/session-service";
+import { Config } from "./services/config-service";
 
 import Vue from "vue";
 import { MainManagerComponent } from "src/components/main-manager/main-manager";
