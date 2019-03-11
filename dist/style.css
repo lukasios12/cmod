@@ -59,7 +59,9 @@ header h1 {
     margin: 0;
     padding: 0;
     font-size: 1.5rem;
+    font-weight: bold;
     line-height: 3rem;
+    border: 0;
 }
 
 main {
@@ -189,6 +191,111 @@ canvas {
     text-align: center;
     transform: translate(-50%, -50%);
     border-radius: 5px;
+}
+
+.menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1em;
+    width: 20rem;
+    height: 100%;
+    background: red;
+    z-index: 100;
+    transition: all .2s ease;
+}
+
+.menu.hidden {
+    left: -20rem;
+}
+
+.menu .category {
+    display: block;
+    border-bottom: 1px solid black;
+}
+
+.menu .category:last-child {
+    border-bottom: 0;
+}
+
+.menu h1 {
+    display: block;
+    margin: 0;
+    font-size: 1.25em;
+    border-bottom: 0;
+}
+
+.menu-toggle {
+    display: block;
+    position: relative;
+    padding: 1em;
+    margin: 1em;
+    width: 5em;
+    height: 5em;
+    background: green;
+    border-radius: 10%;
+}
+
+.menu-toggle .bar {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 1em;
+    width: 3em;
+    height: .5em;
+    background: black;
+    transform: translateY(-50%);
+    transition-property: background;
+    transition-duration: .2s;
+    transition-delay: 0s;
+    border-radius: 5px;
+}
+
+.menu-toggle .bar::before {
+    display: block;
+    position: relative;
+    content: "";
+    top: -1.0em;
+    left: 0em;
+    width: 3em;
+    height: .5em;
+    background: black;
+    transition-property: top, transform;
+    transition-duration: .2s, .2s;
+    transition-delay: .2s, 0s;
+    border-radius: 5px;
+}
+
+.menu-toggle .bar::after {
+    display: block;
+    position: relative;
+    content: "";
+    top: .5em;
+    left: 0em;
+    width: 3em;
+    height: .5em;
+    background: black;
+    transition-property: top, transform;
+    transition-duration: .2s, .2s;
+    transition-delay: .2s, 0s;
+    border-radius: 5px;
+}
+
+.menu-toggle.open .bar {
+    background: transparent;
+}
+
+.menu-toggle.open .bar::before {
+    top: 0;
+    transform: rotate(45deg);
+    transition-delay: 0s, .2s;
+}
+
+.menu-toggle.open .bar::after {
+    top: -0.5em;
+    transform: rotate(-45deg);
+    transition-delay: 0s, .2s;
 }
 
 footer {
