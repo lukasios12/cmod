@@ -1,10 +1,12 @@
+@import "src/components/variables.scss";
+
 .menu-toggle {
     display: block;
     position: absolute;
-    width: 3.5em;
-    height: 3.5rem;
+    width: $menuToggleWidth;
+    height: $menuToggleHeight;
     top: 0;
-    left: 1rem;
+    left: $menuToggleLeft;
     background: transparent;
     
     z-index: 4;
@@ -58,6 +60,10 @@
     transition-duration: .2s, .2s;
     transition-delay: .2s, 0s;
     border-radius: 5px;
+}
+
+.menu-toggle.open {
+    position: fixed;
 }
 
 .menu-toggle.open .bar {

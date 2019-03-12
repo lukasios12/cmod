@@ -1,10 +1,12 @@
+@import "src/components/variables.scss";
+
 .menu {
     display: block;
     position: fixed;
     top: 0;
     left: 0;
-    padding: 1em;
-    width: 20rem;
+    padding: $menuPaddingT $menuPaddingR $menuPaddingB $menuPaddingL;
+    width: $menuWidth;
     height: 100%;
     background: red;
     z-index: 3;
@@ -12,7 +14,7 @@
 }
 
 .menu.hidden {
-    left: -20rem;
+    left: -$menuWidth;
 }
 
 .menu .category {

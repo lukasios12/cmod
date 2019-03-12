@@ -1,11 +1,13 @@
+@import "src/components/variables.scss";
+
 .modeller {
-    height: 100vh;
+    height: $modellerHeight;
     width: 100%;
     z-index: 1;
 }
 
 .modeller .pane {
-    background: #eee;
+    background: rgb(90, 10, 173);
     padding: 1rem;
 }
 
@@ -17,14 +19,14 @@
     background: transparent;
     left: 0 !important; 
     margin-left: 0 !important;
-    width: 15px !important;
+    width: $dividerWidth !important;
     z-index: 2;
 }
 .modeller .resizer:before {
     content: "";
     display: block;
-    width: 4px;
-    height: 100px;
+    width: $resizerWidth;
+    height: $resizerHeight;
     position: absolute;
     top: 50%;
     left: 50%;
