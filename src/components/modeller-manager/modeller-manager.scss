@@ -1,4 +1,5 @@
 @import "src/components/variables.scss";
+@import "src/components/colors.scss";
 
 .modeller {
     height: $modellerHeight;
@@ -7,7 +8,7 @@
 }
 
 .modeller .pane {
-    background: rgb(90, 10, 173);
+    background: white;
     padding: 1rem;
 }
 
@@ -16,7 +17,7 @@
 }
 
 .modeller .resizer {
-    background: transparent;
+    background: darkgrey;
     left: 0 !important; 
     margin-left: 0 !important;
     width: $dividerWidth !important;
@@ -30,7 +31,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    background: #aaa;
+    background: $black;
     text-align: center;
     transform: translate(-50%, -50%);
     border-radius: 5px;

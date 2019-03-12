@@ -1,14 +1,16 @@
 @import "src/components/variables.scss";
+@import "src/components/colors.scss";
 
 .menu {
     display: block;
     position: fixed;
     top: 0;
     left: 0;
+    color: $white;
     padding: $menuPaddingT $menuPaddingR $menuPaddingB $menuPaddingL;
     width: $menuWidth;
     height: 100%;
-    background: red;
+    background: $black;
     z-index: 3;
     transition: all .2s ease;
 }
