@@ -6,7 +6,7 @@ import WithRender from "./menu-toggle.html";
 })
 @WithRender
 class MenuToggleComponent extends Vue {
-    isOpen: boolean = true;
+    isOpen: boolean = false;
 }
 
 export { MenuToggleComponent };

@@ -50,7 +50,7 @@ h6 {
 header {
     display: block;
     width: 100%;
-    padding: 0 2rem;
+    padding: 1rem 5rem 1rem 5rem;
     background: #999999;
     color: white;
 }
@@ -60,7 +60,7 @@ header h1 {
     padding: 0;
     font-size: 1.5rem;
     font-weight: bold;
-    line-height: 3rem;
+    line-height: 1;
     border: 0;
 }
 
@@ -162,6 +162,7 @@ canvas {
 .modeller {
     height: 100vh;
     width: 100%;
+    z-index: 1;
 }
 
 .modeller .pane {
@@ -178,6 +179,7 @@ canvas {
     left: 0 !important; 
     margin-left: 0 !important;
     width: 15px !important;
+    z-index: 2;
 }
 .modeller .resizer:before {
     content: "";
@@ -202,7 +204,7 @@ canvas {
     width: 20rem;
     height: 100%;
     background: red;
-    z-index: 100;
+    z-index: 3;
     transition: all .2s ease;
 }
 
@@ -228,22 +230,28 @@ canvas {
 
 .menu-toggle {
     display: block;
-    position: relative;
-    padding: 1em;
-    margin: 1em;
-    width: 5em;
-    height: 5em;
-    background: green;
-    border-radius: 10%;
+    position: absolute;
+    width: 3.5em;
+    height: 3.5rem;
+    top: 0;
+    left: 1rem;
+    background: transparent;
+    
+    z-index: 4;
+}
+
+.menu-toggle:hover {
+    background: grey;
+    cursor: pointer;
 }
 
 .menu-toggle .bar {
     display: block;
     position: absolute;
     top: 50%;
-    left: 1em;
-    width: 3em;
-    height: .5em;
+    left: .5em;
+    width: 2.5em;
+    height: .25em;
     background: black;
     transform: translateY(-50%);
     transition-property: background;
@@ -256,10 +264,10 @@ canvas {
     display: block;
     position: relative;
     content: "";
-    top: -1.0em;
+    top: -0.75em;
     left: 0em;
-    width: 3em;
-    height: .5em;
+    width: 2.5em;
+    height: .25em;
     background: black;
     transition-property: top, transform;
     transition-duration: .2s, .2s;
@@ -273,8 +281,8 @@ canvas {
     content: "";
     top: .5em;
     left: 0em;
-    width: 3em;
-    height: .5em;
+    width: 2.5em;
+    height: .25em;
     background: black;
     transition-property: top, transform;
     transition-duration: .2s, .2s;
@@ -293,15 +301,20 @@ canvas {
 }
 
 .menu-toggle.open .bar::after {
-    top: -0.5em;
+    top: -0.25em;
     transform: rotate(-45deg);
     transition-delay: 0s, .2s;
 }
 
 footer {
-    display: block;
-    padding: 2rem;
-    background: #343434;
+    display: flex;
+    padding: 2rem 5rem;
     color: white;
-    font-size: .8rem;
+    background: #100e17;
+    font-size: .9rem;
+    z-index: 2;
+}
+
+footer .column {
+    flex: 1;
 }

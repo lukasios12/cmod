@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosInstance } from "axios";
 import { Graph } from "src/modeller/system/graph/graph";
 import { GraphToRequest } from "src/modeller/converters/graph-to-request";
 
-import { Config } from "src/modeller/services/config-service";
+import { Config } from "src/services/config-service";
 import { Observer } from "lib/observer/observer";
 import { Observable } from "lib/observer/observable";
 
