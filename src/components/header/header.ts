@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator"; 
-import WithRender from "./header.html";
+import WithRender from "./header.html?style=./header.scss";
 
 @Component({
     name: "cora-header"

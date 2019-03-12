@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
-import WithRender from "./dialog-manager.html";
+import WithRender from "./dialog-manager.html?style=./dialog-manager.scss";
 
 import { WelcomeDialogComponent } from "src/components/dialogs/welcome/welcome";
 import { UploadDialogComponent } from "src/components/dialogs/upload/upload";

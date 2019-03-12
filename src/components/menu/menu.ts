@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
-import WithRender from "./menu.html";
+import WithRender from "./menu.html?style=./menu.scss";
 
 @Component({
     name: "modeller-menu"

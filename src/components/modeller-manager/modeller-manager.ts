@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
-import WithRender from "./modeller-manager.html";
+import WithRender from "./modeller-manager.html?style=./modeller-manager.scss";
 
 import { Multipane, MultipaneResizer } from "vue-multipane";
 import { HeaderComponent } from "src/components/header/header";

@@ -3,7 +3,7 @@ declare module "*.vue" {
   export default Vue
 }
 
-declare module '*.html' {
+declare module '*.scss' {
   import Vue, { ComponentOptions, FunctionalComponentOptions } from 'vue'
   interface WithRender {
     <V extends Vue, U extends ComponentOptions<V> | FunctionalComponentOptions>(options: U): U
