@@ -1,0 +1,32 @@
+.menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1em;
+    width: 20rem;
+    height: 100%;
+    background: red;
+    z-index: 3;
+    transition: all .2s ease;
+}
+
+.menu.hidden {
+    left: -20rem;
+}
+
+.menu .category {
+    display: block;
+    border-bottom: 1px solid black;
+}
+
+.menu .category:last-child {
+    border-bottom: 0;
+}
+
+.menu h1 {
+    display: block;
+    margin: 0;
+    font-size: 1.25em;
+    border-bottom: 0;
+}

@@ -17,6 +17,7 @@ class MainManagerComponent extends Vue {
         ModellerManagerComponent,
     ];
     current = ModellerManagerComponent;
+    // current = DialogManagerComponent;
 }
 
 export { MainManagerComponent };

@@ -1,3 +1,77 @@
 .menu-toggle {
-    box-shadow: 10px 10px 10px red;
+    display: block;
+    position: absolute;
+    width: 3.5em;
+    height: 3.5rem;
+    top: 0;
+    left: 1rem;
+    background: transparent;
+    
+    z-index: 4;
+}
+
+.menu-toggle:hover {
+    background: grey;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: .5em;
+    width: 2.5em;
+    height: .25em;
+    background: black;
+    transform: translateY(-50%);
+    transition-property: background;
+    transition-duration: .2s;
+    transition-delay: 0s;
+    border-radius: 5px;
+}
+
+.menu-toggle .bar::before {
+    display: block;
+    position: relative;
+    content: "";
+    top: -0.75em;
+    left: 0em;
+    width: 2.5em;
+    height: .25em;
+    background: black;
+    transition-property: top, transform;
+    transition-duration: .2s, .2s;
+    transition-delay: .2s, 0s;
+    border-radius: 5px;
+}
+
+.menu-toggle .bar::after {
+    display: block;
+    position: relative;
+    content: "";
+    top: .5em;
+    left: 0em;
+    width: 2.5em;
+    height: .25em;
+    background: black;
+    transition-property: top, transform;
+    transition-duration: .2s, .2s;
+    transition-delay: .2s, 0s;
+    border-radius: 5px;
+}
+
+.menu-toggle.open .bar {
+    background: transparent;
+}
+
+.menu-toggle.open .bar::before {
+    top: 0;
+    transform: rotate(45deg);
+    transition-delay: 0s, .2s;
+}
+
+.menu-toggle.open .bar::after {
+    top: -0.25em;
+    transform: rotate(-45deg);
+    transition-delay: 0s, .2s;
 }

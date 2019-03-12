@@ -1,0 +1,88 @@
+html {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: serif;
+    font-weight: 200;
+    margin-top: .25em;
+    margin-bottom: .25em;
+    line-height: 1.75em;
+}
+
+h1 {
+    font-size: 3rem;
+    border-bottom: 1px solid grey;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+main {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 95%;
+    height: 95%;
+}
+
+input[type="text"],
+input[type="password"] {
+    outline: 0;
+    border-width: 2px;
+    border-style: solid;
+    border-color: teal;
+    border-radius: 0;
+    padding: .5rem;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: orange;
+}
+
+canvas {
+    border: 2px solid black;
+}
+
+footer {
+    display: flex;
+    padding: 2rem 5rem;
+    color: white;
+    background: #100e17;
+    font-size: .9rem;
+    z-index: 2;
+}
+
+footer .column {
+    flex: 1;
+}
