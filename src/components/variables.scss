@@ -21,7 +21,7 @@ $menuPaddingB: 1rem;
 $menuPaddingL: 1rem;
 $menuPaddingR: 1rem;
 
-$modellerHeight: 100vh;
+$modellerHeight: calc(100vh - #{$headerHeight});
 $dividerWidth: .75rem;
 $resizerWidth: $dividerWidth / 3;
 $resizerHeight: 5rem;
