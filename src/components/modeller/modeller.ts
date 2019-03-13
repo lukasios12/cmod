@@ -1,12 +1,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./modeller.html?style=./modeller.scss";
 
-import { HeaderComponent } from "src/components/header/header";
+import { Multipane, MultipaneResizer } from "vue-multipane";
 
 @Component({
-    name: "modeller",
     components: {
-        "cora-header": HeaderComponent
+        "split-container": Multipane,
+        "split-container-resizer": MultipaneResizer
     }
 })
 @WithRender

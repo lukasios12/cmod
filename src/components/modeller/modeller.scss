@@ -1,0 +1,38 @@
+@import "src/components/variables.scss";
+@import "src/components/colors.scss";
+
+.modeller {
+    height: $modellerHeight;
+    width: 100%;
+    z-index: 1;
+}
+
+.modeller .pane {
+    background: white;
+    padding: 1rem;
+}
+
+.modeller .pane.right {
+    flex-grow: 1;
+}
+
+.modeller .resizer {
+    background: darkgrey;
+    left: 0 !important; 
+    margin-left: 0 !important;
+    width: $dividerWidth !important;
+    z-index: 2;
+}
+.modeller .resizer:before {
+    content: "";
+    display: block;
+    width: $resizerWidth;
+    height: $resizerHeight;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $black;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+}

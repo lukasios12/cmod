@@ -2,7 +2,7 @@ import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./header.html?style=./header.scss";
 
 @Component({
-    name: "cora-header"
+    name: "modeller-header"
 })
 @WithRender
 class HeaderComponent extends Vue {
