@@ -3,11 +3,12 @@
 
 footer {
     display: flex;
+    position: relative;
     padding: $footerPaddingT $footerPaddingR $footerPaddingB $footerPaddingL;
     color: white;
     background: $black;
     font-size: .9rem;
-    z-index: 2;
+    z-index: 4;
 }
 
 footer .column {

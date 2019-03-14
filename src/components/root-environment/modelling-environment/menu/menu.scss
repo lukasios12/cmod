@@ -9,8 +9,8 @@
     color: $white;
     padding: $menuPaddingT $menuPaddingR $menuPaddingB $menuPaddingL;
     width: $menuWidth;
-    height: 100%;
-    background: $black;
+    height: calc(#{$headerHeight} + #{$modellerHeight});
+    background: $orange;
     z-index: 3;
     transition: all .2s ease;
 }

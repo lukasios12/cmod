@@ -3,10 +3,12 @@
 
 header {
     display: block;
+    position: relative;
     width: 100%;
     padding: $headerPaddingT $headerPaddingR $headerPaddingB $headerPaddingL;
     background: $red;
     color: white;
+    z-index: 4;
 }
 
 header h1 {
