@@ -1,8 +1,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./root-environment.html?style=./root-environment.scss";
 
-import { InitEnvironment } from "src/components/init-environment/init-environment";
-import { ModellingEnvironment } from "src/components/modelling-environment/modelling-environment";
+import { InitEnvironment } from "./init-environment/init-environment";
+import { ModellingEnvironment } from "./modelling-environment/modelling-environment";
 import { FooterComponent } from "./footer/footer";
 
 @Component({
