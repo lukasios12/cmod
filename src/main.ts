@@ -3,12 +3,12 @@ import { Session } from "./services/session-service";
 import { Config } from "./services/config-service";
 
 import Vue from "vue";
-import { EnvironmentManager } from "src/components/environment-manager/environment-manager";
+import { RootEnvironment } from "src/components/root-environment/root-environment";
 
 class Main {
     public static main() {
         new Vue({
-            render: (h) => h(EnvironmentManager)
+            render: (h) => h(RootEnvironment)
         }).$mount("#app");
         // let canvas = document.getElementById("canvas") as HTMLCanvasElement;
         // let config = Config.getInstance();

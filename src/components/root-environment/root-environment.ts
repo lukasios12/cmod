@@ -1,18 +1,18 @@
 import { Component, Vue } from "vue-property-decorator";
-import WithRender from "./environment-manager.html?style=./environment-manager.scss";
+import WithRender from "./root-environment.html?style=./root-environment.scss";
 
 import { InitEnvironment } from "src/components/init-environment/init-environment";
 import { ModellingEnvironment } from "src/components/modelling-environment/modelling-environment";
 
 @Component({
-    name: "environment-manager",
+    name: "root-environment",
     components: {
         "init-environment": InitEnvironment,
         "modelling-environment": ModellingEnvironment,
     }
 })
 @WithRender
-class EnvironmentManager extends Vue {
+class RootEnvironment extends Vue {
     components = [
         InitEnvironment,
         ModellingEnvironment,
@@ -21,4 +21,4 @@ class EnvironmentManager extends Vue {
     // current = DialogManagerComponent;
 }
 
-export { EnvironmentManager };
+export { RootEnvironment };
