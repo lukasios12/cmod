@@ -17,12 +17,17 @@
 }
 
 .modeller .resizer {
-    background: darkgrey;
+    background: lightgrey;
     left: 0 !important; 
     margin-left: 0 !important;
     width: $dividerWidth !important;
     z-index: 2;
 }
+
+.modeller.is-resizing .resizer {
+    background: darkgrey;
+}
+
 .modeller .resizer:before {
     content: "";
     display: block;
@@ -31,8 +36,12 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    background: $black;
+    background: darkgrey;
     text-align: center;
     transform: translate(-50%, -50%);
     border-radius: 5px;
+}
+
+.modeller.is-resizing .resizer:before {
+    background: grey;
 }
