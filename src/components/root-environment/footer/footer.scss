@@ -1,0 +1,15 @@
+@import "src/components/variables.scss";
+@import "src/components/colors.scss";
+
+footer {
+    display: flex;
+    padding: $footerPaddingT $footerPaddingR $footerPaddingB $footerPaddingL;
+    color: white;
+    background: $black;
+    font-size: .9rem;
+    z-index: 2;
+}
+
+footer .column {
+    flex: 1;
+}
