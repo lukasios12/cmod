@@ -3,7 +3,7 @@ import { Session } from "./services/session-service";
 import { Config } from "./services/config-service";
 
 import Vue from "vue";
-import { RootEnvironment } from "src/components/root-environment/root-environment";
+import RootEnvironment from "src/components/root-environment/root-environment";
 
 class Main {
     public static main() {

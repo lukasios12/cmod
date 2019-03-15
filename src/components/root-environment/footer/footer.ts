@@ -5,8 +5,6 @@ import WithRender from "./footer.html?style=./footer.scss";
     name: "root-footer"
 })
 @WithRender
-class FooterComponent extends Vue {
+export default class FooterComponent extends Vue {
 
 }
-
-export { FooterComponent };

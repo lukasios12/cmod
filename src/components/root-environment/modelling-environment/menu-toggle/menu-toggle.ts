@@ -1,11 +1,14 @@
-import { Component, Vue } from "vue-property-decorator";
+import { Emit, Component, Vue } from "vue-property-decorator";
 import WithRender from "./menu-toggle.html?style=./menu-toggle.scss";
 @Component({
     name: "modeller-menu-toggle"
 })
 @WithRender
-class MenuToggleComponent extends Vue {
+export default class MenuToggleComponent extends Vue {
     isOpen: boolean = false;
-}
 
-export { MenuToggleComponent };
+    @Emit("menuToggle")
+    menuToggle() {
+        console.log("menu-toggle");
+    }
+}

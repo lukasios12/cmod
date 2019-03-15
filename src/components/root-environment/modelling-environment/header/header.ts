@@ -5,8 +5,6 @@ import WithRender from "./header.html?style=./header.scss";
     name: "modeller-header"
 })
 @WithRender
-class HeaderComponent extends Vue {
+export default class HeaderComponent extends Vue {
     title: string = "CoRA"
 }
-
-export { HeaderComponent };

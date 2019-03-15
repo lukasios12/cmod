@@ -10,8 +10,6 @@ import { Multipane, MultipaneResizer } from "vue-multipane";
     }
 })
 @WithRender
-class ModellerComponent extends Vue {
+export default class ModellerComponent extends Vue {
 
 }
-
-export { ModellerComponent };

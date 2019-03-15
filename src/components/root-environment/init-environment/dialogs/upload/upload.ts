@@ -3,8 +3,6 @@ import WithRender from "./upload.html?style=./upload.scss";
 
 @Component
 @WithRender
-class UploadDialogComponent extends Vue {
+export default class UploadDialogComponent extends Vue {
     
 }
-
-export { UploadDialogComponent };

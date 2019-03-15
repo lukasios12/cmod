@@ -5,7 +5,7 @@ import WithRender from "./welcome.html?style=./welcome.scss";
     name: "welcome"
 })
 @WithRender
-class WelcomeDialogComponent extends Vue {
+export default class WelcomeDialogComponent extends Vue {
     title: string = "Welcome"
     username: string = ""
 
@@ -14,5 +14,3 @@ class WelcomeDialogComponent extends Vue {
         console.log(this.username);
     }
 }
-
-export { WelcomeDialogComponent };

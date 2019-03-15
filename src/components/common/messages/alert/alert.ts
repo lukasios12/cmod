@@ -5,7 +5,7 @@ import WithRender from "./alert.html?style=./alert.scss";
     name: "alert"
 })
 @WithRender
-class AlertComponent extends Vue {
+export default class AlertComponent extends Vue {
 
 }
 

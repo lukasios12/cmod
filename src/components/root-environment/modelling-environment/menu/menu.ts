@@ -5,8 +5,6 @@ import WithRender from "./menu.html?style=./menu.scss";
     name: "modeller-menu"
 })
 @WithRender 
-class MenuComponent extends Vue {
+export default class MenuComponent extends Vue {
     isHidden: boolean = true;
 }
-
-export { MenuComponent };
