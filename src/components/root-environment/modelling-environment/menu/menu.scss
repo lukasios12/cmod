@@ -12,7 +12,7 @@
     height: calc(#{$headerHeight} + #{$modellerHeight});
     background: $orange;
     z-index: 3;
-    transition: all .2s ease;
+    transition: all $menuTransitionDuration ease;
 }
 
 .menu.hidden {
