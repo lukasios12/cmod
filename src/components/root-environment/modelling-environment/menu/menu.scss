@@ -9,6 +9,7 @@
     color: $white;
     padding: $menuPaddingT $menuPaddingR $menuPaddingB $menuPaddingL;
     width: $menuWidth;
+    max-width: $menuMaxWidth;
     height: calc(#{$headerHeight} + #{$modellerHeight});
     background: $orange;
     z-index: 3;
