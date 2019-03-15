@@ -19,5 +19,6 @@ export default class RootEnvironment extends Vue {
         InitEnvironment,
         ModellingEnvironment,
     ];
-    current = ModellingEnvironment;
+    // current = ModellingEnvironment;
+    current = InitEnvironment;
 }

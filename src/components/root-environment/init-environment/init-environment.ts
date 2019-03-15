@@ -15,5 +15,5 @@ import LoaderComponent from "src/components/common/loader/loader";
     }
 })
 export default class InitEnvironment extends Vue {
-    current = LoaderComponent;
+    current = WelcomeDialogComponent;
 }
