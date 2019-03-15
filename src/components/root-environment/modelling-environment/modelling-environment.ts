@@ -1,4 +1,4 @@
-import { Emit, Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./modelling-environment.html?style=./modelling-environment.scss";
 
 import HeaderComponent from "./header/header";
@@ -18,9 +18,7 @@ import ModellerComponent from "./modeller/modeller";
 export default class ModellingEnvironment extends Vue {
     menuOpen: boolean = false;
 
-    @Emit()
     menuToggle(): void {
         this.menuOpen = !this.menuOpen;
-        console.log("menu open", this.menuOpen);
     }
 }

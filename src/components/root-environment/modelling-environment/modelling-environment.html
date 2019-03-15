@@ -1,6 +1,6 @@
 <div>
-    <modeller-menu-toggle></modeller-menu-toggle>
-    <modeller-menu></modeller-menu>
+    <modeller-menu-toggle v-on:menu-toggle="menuToggle" v-bind:isOpen="menuOpen"></modeller-menu-toggle>
+    <modeller-menu v-bind:isOpen="menuOpen"></modeller-menu>
     <modeller-header></modeller-header>
     <modeller-environment></modeller-environment>
 </div>

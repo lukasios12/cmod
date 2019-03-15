@@ -1,4 +1,4 @@
-import { Component, Vue } from "vue-property-decorator";
+import { Prop, Component, Vue } from "vue-property-decorator";
 import WithRender from "./menu.html?style=./menu.scss";
 
 @Component({
@@ -6,5 +6,6 @@ import WithRender from "./menu.html?style=./menu.scss";
 })
 @WithRender 
 export default class MenuComponent extends Vue {
-    isHidden: boolean = true;
+    @Prop(Boolean)
+    isOpen!: boolean;
 }
