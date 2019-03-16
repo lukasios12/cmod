@@ -58,20 +58,20 @@ main {
     height: 95%;
 }
 
-input[type="text"],
-input[type="password"] {
-    outline: 0;
-    border-width: 2px;
-    border-style: solid;
-    border-color: teal;
-    border-radius: 0;
-    padding: .5rem;
-}
+// input[type="text"],
+// input[type="password"] {
+//     outline: 0;
+//     border-width: 2px;
+//     border-style: solid;
+//     border-color: teal;
+//     border-radius: 0;
+//     padding: .5rem;
+// }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: orange;
-}
+// input[type="text"]:focus,
+// input[type="password"]:focus {
+//     border-color: orange;
+// }
 
 canvas {
     border: 2px solid black;

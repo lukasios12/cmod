@@ -2,6 +2,13 @@
     <h1>{{ title }}</h1>
     <p>Welcome to CoRA, the Coverability Graph Assistant.</p>
     <p>Please start the application by picking a unique username</p>
-    <input v-model.trim="username" type="text" placeholder="username"/>
-    <button @click="send($event)" >Submit</button>
+    <form>
+        <div class="item text">
+            <label for="username">Username:</label>
+            <input v-model.trim="username" type="text" placeholder="username" name="username"/>
+        </div>
+        <div class="item buttonrow">
+            <button @click="send($event)" class="confirm">Submit</button>
+        </div>
+    </form>
 </div>
