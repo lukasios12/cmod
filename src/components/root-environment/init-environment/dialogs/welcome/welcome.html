@@ -8,7 +8,7 @@
             <input v-model.trim="username" type="text" placeholder="username" name="username"/>
         </div>
         <div class="item buttonrow">
-            <button @click="send($event)" class="confirm">Submit</button>
+            <button @click.prevent="send($event)" class="confirm">Submit</button>
         </div>
     </form>
 </div>
