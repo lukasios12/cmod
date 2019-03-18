@@ -1,7 +1,7 @@
 import { Observable } from "lib/observer/observable";
 import { Observer } from "lib/observer/observer";
 
-class Config implements Observable<Config> {
+export default class Config implements Observable<Config> {
     private static instance: Config | null = null;
     private _baseUrl: string;
     private listeners: Array<Observer<Config>>;
@@ -45,5 +45,3 @@ class Config implements Observable<Config> {
         }
     }
 }
-
-export { Config };

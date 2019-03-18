@@ -1,19 +1,19 @@
 import { Observable } from "lib/observer/observable";
 import { Observer } from "lib/observer/observer";
 
-class Session implements Observable<Session> {
+export default class Session implements Observable<Session> {
     private static instance: Session | null = null;
 
-    private _userId: number;
-    private _sessionId: number;
-    private _petrinetId: number;
+    private _userId: number | null;
+    private _sessionId: number | null;
+    private _petrinetId: number | null;
 
     private listeners: Array<Observer<Session>>;
 
     private constructor() {
-        this._userId = 0;
-        this._sessionId = 0;
-        this._petrinetId = 0;
+        this._userId = null;
+        this._sessionId = null;
+        this._petrinetId = null;
 
         this.listeners = new Array<Observer<Session>>();
     }
@@ -22,7 +22,7 @@ class Session implements Observable<Session> {
         return this._userId;
     }
 
-    set userId(id: number) {
+    set userId(id: number | null) {
         this._userId = id;
         this.notify();
     }
@@ -31,7 +31,7 @@ class Session implements Observable<Session> {
         return this._sessionId;
     }
 
-    set sessionId(id: number) {
+    set sessionId(id: number | null) {
         this._sessionId = id;
         this.notify();
     }
@@ -40,14 +40,13 @@ class Session implements Observable<Session> {
         return this._petrinetId;
     }
 
-    set petrinetId(id: number) {
+    set petrinetId(id: number | null) {
         this._petrinetId = id;
         this.notify();
     }
 
     public static getInstance() {
         if (!Session.instance) {
-            console.log("creating");
             Session.instance = new Session();
         }
         return Session.instance;
@@ -72,5 +71,3 @@ class Session implements Observable<Session> {
         }
     }
 }
-
-export { Session  };

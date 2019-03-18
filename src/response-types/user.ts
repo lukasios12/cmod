@@ -10,4 +10,9 @@ interface UserList {
     users: User[];
 }
 
-export { User, UserList };
+interface UserCreated {
+    id: string;
+    selfUrl: string;
+}
+
+export { User, UserList, UserCreated };

@@ -35,7 +35,7 @@ import { EditStateMenu } from "src/modeller/menus/edit-state";
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
-import { Session } from "src/services/session-service";
+import Session from "src/services/session-service";
 
 class Modeller implements Observer<Feedback> {
     protected drawer: Drawer;
@@ -67,9 +67,9 @@ class Modeller implements Observer<Feedback> {
             this.drawer.draw();
             let session = Session.getInstance();
             FeedbackService.getInstance().get(
-                session.userId,
-                session.petrinetId, 
-                session.sessionId, 
+                53,
+                70, 
+                1, 
                 this.graph
             );
         });

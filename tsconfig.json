@@ -64,5 +64,6 @@
     "./src/**/*.vue",
     "./src/**/*.html",
     "./src/**/*.js",
-  ]
+  ],
+  "compileOnSave": false,
 }

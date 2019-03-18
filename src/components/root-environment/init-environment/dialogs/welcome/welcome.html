@@ -5,7 +5,7 @@
     <form>
         <div class="item text">
             <label for="username">Username:</label>
-            <input v-model.trim="username" type="text" placeholder="username" name="username"/>
+            <input v-model.trim="username" type="text" placeholder="username" name="username" v-on:keyup.enter="send"/>
         </div>
         <div class="item buttonrow">
             <button @click.prevent="send($event)" class="confirm">Submit</button>

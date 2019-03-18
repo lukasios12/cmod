@@ -3,12 +3,12 @@ import axios, { AxiosResponse, AxiosInstance } from "axios";
 import { Graph } from "src/modeller/system/graph/graph";
 import { GraphToRequest } from "src/modeller/converters/graph-to-request";
 
-import { Config } from "src/services/config-service";
+import Config from "src/services/config-service";
 import { Observer } from "lib/observer/observer";
 import { Observable } from "lib/observer/observable";
 
 import { Feedback } from "src/modeller/feedback/feedback";
-import { FeedbackResponse } from "src/modeller/response-types/feedback";
+import FeedbackResponse from "src/response-types/feedback";
 import { ResponseToFeedback } from "src/modeller/converters/response-to-feedback";
 
 export class FeedbackService implements Observer<Config>, Observable<Feedback> {
