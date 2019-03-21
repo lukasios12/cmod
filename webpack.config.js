@@ -1,5 +1,5 @@
 const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let config = {
@@ -29,6 +29,7 @@ let config = {
             },
             {
                 test: /\.html$/,
+                include: /src\/components/,
                 loader: 'vue-template-loader',
                 options: {
                     scoped: false,
@@ -57,6 +58,9 @@ let config = {
         ]
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            template: "./src/index.html"
+        }),
         new MiniCssExtractPlugin({
             filename: "style.css"
         }),
