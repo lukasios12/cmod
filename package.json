@@ -41,6 +41,7 @@
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.8",
     "vue-template-loader": "^1.0.0",
+    "vuex-class": "^0.3.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1",
@@ -51,6 +52,7 @@
     "vue": "^2.6.8",
     "vue-class-component": "^7.0.1",
     "vue-multipane": "^0.9.5",
-    "vue-property-decorator": "^8.0.0"
+    "vue-property-decorator": "^8.0.0",
+    "vuex": "^3.1.0"
   }
 }

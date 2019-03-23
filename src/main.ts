@@ -7,8 +7,8 @@ import RootEnvironment from "src/components/root-environment/root-environment";
 
 class Main {
     public static main() {
-        let config = Config.getInstance();
-        config.baseUrl = "http://localhost:80/~lucas/cora-server/api";
+        // let config = Config.getInstance();
+        // config.baseUrl = "http://localhost:80/~lucas/cora-server/api";
         
         new Vue({
             render: (h) => h(RootEnvironment)
