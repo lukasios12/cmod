@@ -4,7 +4,7 @@ import WithRender from "./welcome.html?style=./welcome.scss";
 import AlertComponent from "src/components/common/messages/alert/alert";
 
 import { getModule } from "vuex-module-decorators";
-import User from "src/store/user";
+import UserModule from "src/store/user/user";
 
 @WithRender
 @Component({
@@ -18,12 +18,12 @@ export default class WelcomeDialogComponent extends Vue {
     username: string = ""
 
     get error(): string {
-        let mod = getModule(User, this.$store);
+        let mod = getModule(UserModule, this.$store);
         return mod.error;
     }
 
     send() {
-        let mod = getModule(User, this.$store);
+        let mod = getModule(UserModule, this.$store);
         mod.register(this.username);
     }
 }

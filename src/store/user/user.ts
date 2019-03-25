@@ -1,11 +1,14 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import axios, { AxiosPromise, AxiosResponse } from "axios";
 
+import { Error } from "src/store/types";
+import { UserCreated } from "./types";
+
 @Module({
-    name: "User",
+    name: "UserModule",
     namespaced: true
 })
-export default class User extends VuexModule {
+export default class UserModule extends VuexModule {
     uid: number | null = null;
     err: string = "";
 
@@ -39,7 +42,7 @@ export default class User extends VuexModule {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
-        }).then((response: AxiosResponse<any>) => {
+        }).then((response: AxiosResponse<UserCreated>) => {
             console.log(response.data);
             alert("succesfull registration");
         }).catch((response: AxiosResponse<any>) => {

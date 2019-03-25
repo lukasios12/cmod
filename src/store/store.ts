@@ -3,10 +3,10 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-import User from "./user";
+import UserModule from "./user/user";
 
 export const Store = new Vuex.Store({
     modules: {
-        User
+        UserModule
     }
 });
