@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import axios, { AxiosPromise, AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 import { Error } from "src/store/types";
 import { UserCreated } from "./types";
@@ -43,11 +43,11 @@ export default class UserModule extends VuexModule {
                 "Content-Type": "multipart/form-data"
             }
         }).then((response: AxiosResponse<UserCreated>) => {
-            console.log(response.data);
-            alert("succesfull registration");
-        }).catch((response: AxiosResponse<any>) => {
-            console.log(response.request)
-            this.setFailure(response.request.response)
+            let id = Number(response.data.id);
+            this.setUser(id);
+        }).catch((error: AxiosError) => {
+            let message = error.response.data;
+            this.setFailure(message.error);
         });
     }
 }
