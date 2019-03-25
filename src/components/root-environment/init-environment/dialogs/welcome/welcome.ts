@@ -1,30 +1,29 @@
 import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./welcome.html?style=./welcome.scss";
 
-import { AxiosResponse } from "axios";
+import AlertComponent from "src/components/common/messages/alert/alert";
 
-import UserService from "src/services/user-service";
-import SessionService from "src/services/session-service";
-import { UserCreated } from "src/response-types/user";
-import { ErrorResponse } from "src/response-types/error";
+import { getModule } from "vuex-module-decorators";
+import User from "src/store/user";
 
-@Component({
-    name: "welcome"
-})
 @WithRender
+@Component({
+    name: "welcome",
+    components: {
+        "alert": AlertComponent
+    }
+})
 export default class WelcomeDialogComponent extends Vue {
     title: string = "Welcome"
     username: string = ""
 
+    get error(): string {
+        let mod = getModule(User, this.$store);
+        return mod.error;
+    }
+
     send() {
-        let service = UserService.getInstance();
-        service.set(this.username)
-            .then( (response: AxiosResponse<UserCreated>) => {
-                let id = response.data.id;
-                SessionService.getInstance().userId = Number(id);
-            })
-            .catch( (response: AxiosResponse<ErrorResponse>) => {
-                console.warn(response.request.responseText);
-            });
+        let mod = getModule(User, this.$store);
+        mod.register(this.username);
     }
 }

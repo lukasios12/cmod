@@ -2,6 +2,9 @@
     <h1>{{ title }}</h1>
     <p>Welcome to CoRA, the Coverability Graph Assistant.</p>
     <p>Please start the application by picking a unique username</p>
+    <alert v-if="error.length > 0">
+        {{ error }}
+    </alert>
     <form>
         <div class="item text">
             <label for="username">Username:</label>

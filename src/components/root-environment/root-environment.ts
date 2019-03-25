@@ -5,8 +5,7 @@ import InitEnvironment from "./init-environment/init-environment";
 import ModellingEnvironment from "./modelling-environment/modelling-environment";
 import FooterComponent from "./footer/footer";
 
-import { State, Getter, Mutation, Action, namespace } from "vuex-class";
-
+@WithRender
 @Component({
     name: "root-environment",
     components: {
@@ -15,12 +14,13 @@ import { State, Getter, Mutation, Action, namespace } from "vuex-class";
         "footer-component": FooterComponent
     }
 })
-@WithRender
 export default class RootEnvironment extends Vue {
     components = [
         InitEnvironment,
         ModellingEnvironment,
+        FooterComponent
     ];
+
     get current() {
         return InitEnvironment;
     }

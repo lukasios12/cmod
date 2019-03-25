@@ -5,13 +5,16 @@ import Config from "./services/config-service";
 import Vue from "vue";
 import RootEnvironment from "src/components/root-environment/root-environment";
 
+import { Store } from "./store/store";
+
 class Main {
     public static main() {
         // let config = Config.getInstance();
         // config.baseUrl = "http://localhost:80/~lucas/cora-server/api";
         
         new Vue({
-            render: (h) => h(RootEnvironment)
+            store: Store,
+            render: (h) => h(RootEnvironment),
         }).$mount("#app");
         // let canvas = document.getElementById("canvas") as HTMLCanvasElement;
         // let config = Config.getInstance();

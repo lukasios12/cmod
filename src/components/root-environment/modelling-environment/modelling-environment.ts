@@ -6,6 +6,7 @@ import MenuComponent from "./menu/menu";
 import MenuToggleComponent from "./menu-toggle/menu-toggle";
 import ModellerComponent from "./modeller/modeller";
 
+@WithRender
 @Component({
     components: {
         "modeller-environment": ModellerComponent,
@@ -14,7 +15,6 @@ import ModellerComponent from "./modeller/modeller";
         "modeller-menu-toggle": MenuToggleComponent,
     },
 })
-@WithRender
 export default class ModellingEnvironment extends Vue {
     menuOpen: boolean = false;
 
