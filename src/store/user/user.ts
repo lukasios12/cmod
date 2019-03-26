@@ -10,14 +10,20 @@ import { UserCreated } from "./types";
 })
 export default class UserModule extends VuexModule {
     uid: number | null = null;
+    sid: number | null = null;
     err: string = "";
+    loading: boolean = false;
 
     get userId() {
         return this.userId;
     }
 
-    get error() {
+    get error(): string {
         return this.err;
+    }
+
+    get isLoading(): boolean {
+        return this.loading;
     }
 
     @Mutation
@@ -30,8 +36,14 @@ export default class UserModule extends VuexModule {
         this.err = message;
     }
 
+    @Mutation
+    setLoading(val: boolean) {
+        this.loading = val;
+    }
+
     @Action
     register(username: string) {
+        this.setLoading(true);
         let fd = new FormData();
         fd.set("name", username);
         axios.request({
@@ -50,6 +62,8 @@ export default class UserModule extends VuexModule {
             let message = error.response.data;
             this.setUser(null);
             this.setFailure(message.error);
+        }).finally(() => {
+            this.setLoading(false);
         });
     }
 }

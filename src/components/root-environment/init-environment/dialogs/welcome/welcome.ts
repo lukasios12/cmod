@@ -23,7 +23,7 @@ export default class WelcomeDialogComponent extends Vue {
         return mod.error;
     }
 
-    get showAlert() {
+    get showAlert(): boolean {
         let mod = getModule(UserModule, this.$store);
         return mod.error.length > 0 && !this.hide;
     }
