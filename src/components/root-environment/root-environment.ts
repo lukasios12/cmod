@@ -5,6 +5,9 @@ import InitEnvironment from "./init-environment/init-environment";
 import ModellingEnvironment from "./modelling-environment/modelling-environment";
 import FooterComponent from "./footer/footer";
 
+import { getModule } from "vuex-module-decorators";
+import UserModule from "src/store/user/user";
+
 @WithRender
 @Component({
     name: "root-environment",
@@ -22,6 +25,11 @@ export default class RootEnvironment extends Vue {
     ];
 
     get current() {
-        return InitEnvironment;
+        let mod = getModule(UserModule, this.$store);
+        if (mod.userId === null || mod.sessionId === null) {
+            return InitEnvironment;
+        } else {
+            return ModellingEnvironment;
+        }
     }
 }

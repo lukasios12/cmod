@@ -9,13 +9,17 @@ import { UserCreated, PetrinetUploaded } from "./types";
     namespaced: true
 })
 export default class UserModule extends VuexModule {
-    uid: number | null = 1;
+    uid: number | null = null;
     sid: number | null = null;
     err: string = "";
     loading: boolean = false;
 
     get userId() {
         return this.uid;
+    }
+
+    get sessionId() {
+        return this.sid;
     }
 
     get error(): string {
