@@ -2,7 +2,7 @@
     <h1>{{ title }}</h1>
     <p>Welcome to CoRA, the Coverability Graph Assistant.</p>
     <p>Please start the application by picking a unique username</p>
-    <alert v-if="error.length > 0">
+    <alert v-bind:closeable="true" @close-alert="closeAlert" :show="showAlert">
         {{ error }}
     </alert>
     <form>

@@ -21,7 +21,7 @@ export default class UserModule extends VuexModule {
     }
 
     @Mutation
-    setUser(id: number) {
+    setUser(id: number | null) {
         this.uid = id;
     }
 
@@ -45,8 +45,10 @@ export default class UserModule extends VuexModule {
         }).then((response: AxiosResponse<UserCreated>) => {
             let id = Number(response.data.id);
             this.setUser(id);
+            this.setFailure("");
         }).catch((error: AxiosError) => {
             let message = error.response.data;
+            this.setUser(null);
             this.setFailure(message.error);
         });
     }

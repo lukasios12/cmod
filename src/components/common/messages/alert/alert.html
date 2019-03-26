@@ -1,4 +1,9 @@
-<div class="message alert">
-    Alert!
-    <slot></slot>
+<div v-if="show" class="message alert">
+    <div class="icon">!</div>
+    <div class="payload">
+        <slot></slot>
+    </div>
+    <div v-if="closeable" class="buttonRow">
+        <button @click="close">X</button>
+    </div>
 </div>
