@@ -20,8 +20,12 @@ import UserModule from "src/store/user/user";
 })
 export default class InitEnvironment extends Vue {
     current() {
-        if (this.isLoading) {
+        let mod = getModule(UserModule, this.$store);
+        if (mod.isLoading) {
             return LoaderComponent;
+        }
+        else if (mod.userId !== null) {
+            return UploadDialogComponent;
         }
         return WelcomeDialogComponent
     }

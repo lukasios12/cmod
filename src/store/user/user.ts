@@ -15,7 +15,7 @@ export default class UserModule extends VuexModule {
     loading: boolean = false;
 
     get userId() {
-        return this.userId;
+        return this.uid;
     }
 
     get error(): string {
