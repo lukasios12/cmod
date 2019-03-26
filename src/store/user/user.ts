@@ -1,6 +1,10 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import axios, { AxiosResponse, AxiosError } from "axios";
 
+import Config from "src/services/config";
+import UserService from "src/services/user";
+import PetrinetService from "src/services/petrinet";
+
 import { Error } from "src/store/types";
 import { UserCreated, PetrinetUploaded } from "./types";
 
@@ -55,15 +59,7 @@ export default class UserModule extends VuexModule {
         this.setLoading(true);
         let fd = new FormData();
         fd.set("name", username);
-        axios.request({
-            baseURL: "http://localhost/~lucas/cora-server/api",
-            url: "users/new",
-            data: fd,
-            method: "post",
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        }).then((response: AxiosResponse<UserCreated>) => {
+        UserService.setUser(username).then((response: AxiosResponse<UserCreated>) => {
             let id = Number(response.data.id);
             this.setUser(id);
             this.setFailure("");
@@ -84,17 +80,7 @@ export default class UserModule extends VuexModule {
             this.setFailure("No user logged in");
         } else {
             this.setLoading(true);
-            let fd = new FormData();
-            fd.set("petrinet", file);
-            axios.request({
-                baseURL: "http://localhost/~lucas/cora-server/api",
-                url: `petrinet/${this.uid}/new`,
-                data: fd,
-                method: "post",
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).then((response: AxiosResponse<PetrinetUploaded>) => {
+            PetrinetService.set(this.uid, file).then((response: AxiosResponse<PetrinetUploaded>) => {
                 let id = Number(response.data.petrinetId);
                 this.setFailure("");
                 this.setPetrinet(id);
