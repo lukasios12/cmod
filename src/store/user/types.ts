@@ -15,4 +15,9 @@ interface UserCreated {
     selfUrl: string;
 }
 
-export { User, UserList, UserCreated };
+interface PetrinetUploaded {
+    petrinetId: string;
+    petrinetUrl: string;
+}
+
+export { User, UserList, UserCreated, PetrinetUploaded };

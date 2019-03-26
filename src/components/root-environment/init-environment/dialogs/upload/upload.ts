@@ -14,7 +14,13 @@ import UserModule from "src/store/user/user";
     }
 })
 export default class UploadDialogComponent extends Vue {
+    file: File | null = null;
     hideError: boolean = false;
+
+    selectFile(event) {
+        let file = event.target.files[0];
+        this.file = file;
+    }
 
     closeAlert() {
         this.hideError = true;
@@ -30,6 +36,8 @@ export default class UploadDialogComponent extends Vue {
     }
 
     send() {
-        console.log("uploading");
+        this.hideError = false;
+        let mod = getModule(UserModule, this.$store);
+        mod.uploadPetrinet(this.file);
     }
 }
