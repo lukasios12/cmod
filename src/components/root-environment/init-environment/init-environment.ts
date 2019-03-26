@@ -27,7 +27,8 @@ export default class InitEnvironment extends Vue {
         else if (mod.userId !== null) {
             return UploadDialogComponent;
         }
-        return WelcomeDialogComponent
+        // return WelcomeDialogComponent;
+        return UploadDialogComponent;
     }
 
     get isLoading(): boolean {
