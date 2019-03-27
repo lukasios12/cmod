@@ -35,4 +35,13 @@ export default class PetrinetService {
             method: "get"
         });
     }
+
+    public static image(id: number) {
+        let conf = Config.getInstance();
+        return axios.request({
+            baseURL: conf.baseUrl,
+            url: conf.petrinetUrl + `/${id}/image`,
+            method: "get"
+        });
+    }
 }
