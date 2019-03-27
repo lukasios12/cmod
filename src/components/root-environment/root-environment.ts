@@ -26,7 +26,7 @@ export default class RootEnvironment extends Vue {
 
     get current() {
         let mod = getModule(UserModule, this.$store);
-        if (mod.userId === null || mod.sessionId === null) {
+        if (mod.userId === null || mod.sessionId === null || mod.petrinetId === null) {
             return InitEnvironment;
         } else {
             return ModellingEnvironment;

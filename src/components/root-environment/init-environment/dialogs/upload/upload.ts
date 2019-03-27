@@ -38,6 +38,11 @@ export default class UploadDialogComponent extends Vue {
     send() {
         this.hideError = false;
         let mod = getModule(UserModule, this.$store);
-        mod.uploadPetrinet(this.file);
+        mod.uploadPetrinet(this.file).then(() => {
+            console.log("uploading complete, succes");
+            mod.startSession();
+        }).catch(() => {
+            console.log("uploading complete, failure");
+        });
     }
 }

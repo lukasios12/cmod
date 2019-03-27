@@ -1,12 +1,11 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import axios, { AxiosResponse, AxiosError } from "axios";
+import { AxiosResponse, AxiosError } from "axios";
 
-import Config from "src/services/config";
 import UserService from "src/services/user";
 import PetrinetService from "src/services/petrinet";
+import SessionService from "src/services/session";
 
-import { Error } from "src/store/types";
-import { UserCreated, PetrinetUploaded } from "./types";
+import { UserCreated, PetrinetUploaded, SessionStarted } from "./types";
 
 @Module({
     name: "UserModule",
@@ -14,12 +13,17 @@ import { UserCreated, PetrinetUploaded } from "./types";
 })
 export default class UserModule extends VuexModule {
     uid: number | null = null;
+    pid: number | null = null;
     sid: number | null = null;
     err: string = "";
     loading: boolean = false;
 
     get userId() {
         return this.uid;
+    }
+
+    get petrinetId() {
+        return this.pid;
     }
 
     get sessionId() {
@@ -41,6 +45,11 @@ export default class UserModule extends VuexModule {
 
     @Mutation
     setPetrinet(id: number | null) {
+        this.pid = id;
+    }
+
+    @Mutation
+    setSession(id: number | null) {
         this.sid = id;
     }
 
@@ -59,16 +68,18 @@ export default class UserModule extends VuexModule {
         this.setLoading(true);
         let fd = new FormData();
         fd.set("name", username);
-        UserService.setUser(username).then((response: AxiosResponse<UserCreated>) => {
-            let id = Number(response.data.id);
-            this.setUser(id);
-            this.setFailure("");
-        }).catch((error: AxiosError) => {
-            let message = error.response.data;
-            this.setUser(null);
-            this.setFailure(message.error);
-        }).finally(() => {
-            this.setLoading(false);
+        return new Promise((resolve, reject) => {
+            UserService.setUser(username).then((response: AxiosResponse<UserCreated>) => {
+                let id = Number(response.data.id);
+                this.setUser(id);
+                this.setFailure("");
+            }).catch((error: AxiosError) => {
+                let message = error.response.data;
+                this.setUser(null);
+                this.setFailure(message.error);
+            }).finally(() => {
+                this.setLoading(false);
+            });
         });
     }
 
@@ -80,16 +91,41 @@ export default class UserModule extends VuexModule {
             this.setFailure("No user logged in");
         } else {
             this.setLoading(true);
-            PetrinetService.set(this.uid, file).then((response: AxiosResponse<PetrinetUploaded>) => {
-                let id = Number(response.data.petrinetId);
-                this.setFailure("");
-                this.setPetrinet(id);
-            }).catch((response: AxiosError) => {
-                let error = response.response.data;
-                this.setPetrinet(null);
-                this.setFailure(error.error);
-            }).finally(() => {
-                this.setLoading(false);
+            return new Promise((resolve, reject) => {
+                PetrinetService.set(this.uid, file).then((response: AxiosResponse<PetrinetUploaded>) => {
+                    let id = Number(response.data.petrinetId);
+                    this.setFailure("");
+                    this.setPetrinet(id);
+                    resolve();
+                }).catch((response: AxiosError) => {
+                    let error = response.response.data;
+                    this.setPetrinet(null);
+                    this.setFailure(error.error);
+                    reject();
+                }).finally(() => {
+                    this.setLoading(false);
+                }); 
+            });
+        }
+    }
+
+    @Action
+    startSession() {
+        if (this.uid === null || this.pid === null) {
+            this.setFailure("Not enough information to start session");
+        } else {
+            this.setLoading(true);
+            return new Promise((resolve, reject) => {
+                SessionService.set(this.uid, this.pid).then((response: AxiosResponse<SessionStarted>) => {
+                    let sid = response.data.session_id;
+                    this.setSession(sid);
+                }).catch((response: AxiosError) => {
+                    let error = response.response.data;
+                    this.setSession(null);
+                    this.setFailure(error.error);
+                }).finally(() => {
+                    this.setLoading(false);
+                });
             });
         }
     }

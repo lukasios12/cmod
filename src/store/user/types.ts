@@ -20,4 +20,8 @@ interface PetrinetUploaded {
     petrinetUrl: string;
 }
 
-export { User, UserList, UserCreated, PetrinetUploaded };
+interface SessionStarted {
+    session_id: number;
+}
+
+export { User, UserList, UserCreated, PetrinetUploaded, SessionStarted };
