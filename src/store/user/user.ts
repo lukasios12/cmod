@@ -73,10 +73,12 @@ export default class UserModule extends VuexModule {
                 let id = Number(response.data.id);
                 this.setUser(id);
                 this.setFailure("");
+                resolve();
             }).catch((error: AxiosError) => {
                 let message = error.response.data;
                 this.setUser(null);
                 this.setFailure(message.error);
+                reject();
             }).finally(() => {
                 this.setLoading(false);
             });
@@ -119,10 +121,12 @@ export default class UserModule extends VuexModule {
                 SessionService.set(this.uid, this.pid).then((response: AxiosResponse<SessionStarted>) => {
                     let sid = response.data.session_id;
                     this.setSession(sid);
+                    return resolve();
                 }).catch((response: AxiosError) => {
                     let error = response.response.data;
                     this.setSession(null);
                     this.setFailure(error.error);
+                    return reject();
                 }).finally(() => {
                     this.setLoading(false);
                 });
