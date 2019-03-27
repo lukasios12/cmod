@@ -16,7 +16,7 @@ import { Vector2D } from "./shapes/vector2d";
 import { Drawer } from "./drawer/drawer";
 import { Feedback } from "./feedback/feedback";
 import { FeedbackCode } from "./feedback/feedback-code";
-import { FeedbackService } from "src/services/feedback-service";
+import FeedbackService from "src/services/feedback";
 import { Observer } from "lib/observer/observer";
 
 import { AddState } from "./actions/add-state";
@@ -35,9 +35,9 @@ import { EditStateMenu } from "src/modeller/menus/edit-state";
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
-import Session from "src/services/session-service";
+import Session from "src/services/session";
 
-class Modeller implements Observer<Feedback> {
+class Modeller {
     protected drawer: Drawer;
     protected actionManager: ActionManager;
     protected feedback: Feedback | null;
@@ -65,16 +65,14 @@ class Modeller implements Observer<Feedback> {
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
             this.drawer.draw();
-            let session = Session.getInstance();
-            FeedbackService.getInstance().get(
-                53,
-                70, 
-                1, 
-                this.graph
-            );
+            // let session = Session.getInstance();
+            // FeedbackService.getInstance().get(
+            //     53,
+            //     70, 
+            //     1, 
+            //     this.graph
+            // );
         });
-
-        FeedbackService.getInstance().attach(this);
 
         this.selection = null;
         this.selectionId = null;
@@ -177,10 +175,6 @@ class Modeller implements Observer<Feedback> {
             this.graphDrawing.getDrawing(this.selectionId) :
             null;
         this.graphDrawingOptions.selected = this.selectionId;
-    }
-
-    public update(feedback: Feedback): void {
-        this.setFeedback(feedback);
     }
 
     public setFeedback(feedback: Feedback): void {
