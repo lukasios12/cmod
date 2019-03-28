@@ -1,5 +1,5 @@
 import Drawing from "./drawing";
-import Vector2D from "src/modeller/shapes/vector2d";
+import Vector2D from "src/editor/shapes/vector2d";
 
 export default interface Hittable extends Drawing {
     hit(point: Vector2D, context: CanvasRenderingContext2D): boolean;

@@ -1,5 +1,5 @@
-import Graph from "src/modeller/system/graph/graph";
-import GraphDrawing from "src/modeller/drawing/graph-drawing";
+import Graph from "src/editor/system/graph/graph";
+import GraphDrawing from "src/editor/drawing/graph-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 

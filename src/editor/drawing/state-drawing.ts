@@ -2,13 +2,13 @@ import Hittable from "./hittable-drawing";
 import Snappable from "./snappable-drawing";
 import Draggable from "./draggable_drawing";
 
-import State from "src/modeller/system/graph/state";
+import State from "src/editor/system/graph/state";
 
-import Vector2D from "src/modeller/shapes/vector2d";
-import Rectangle from "src/modeller/shapes/rectangle";
-import Intersection from "src/modeller/shapes/intersection";
+import Vector2D from "src/editor/shapes/vector2d";
+import Rectangle from "src/editor/shapes/rectangle";
+import Intersection from "src/editor/shapes/intersection";
 
-import StyleManager from "src/modeller/stylemanager/style-manager";
+import StyleManager from "src/editor/stylemanager/style-manager";
 import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
 export default class StateDrawing implements Hittable, Draggable, Snappable {

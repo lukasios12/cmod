@@ -1,8 +1,8 @@
-import Graph from "src/modeller/system/graph/graph";
-import Edge from "src/modeller/system/graph/edge";
+import Graph from "src/editor/system/graph/graph";
+import Edge from "src/editor/system/graph/edge";
 
-import GraphDrawing from "src/modeller/drawing/graph-drawing"
-import EdgeDrawing from "src/modeller/drawing/edge-drawing";
+import GraphDrawing from "src/editor/drawing/graph-drawing"
+import EdgeDrawing from "src/editor/drawing/edge-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 

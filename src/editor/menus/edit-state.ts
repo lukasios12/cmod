@@ -1,7 +1,7 @@
 import Menu from "./menu";
 import Confirmable from "./confirmable";
 
-import State from "src/modeller/system/graph/state";
+import State from "src/editor/system/graph/state";
 
 import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
 

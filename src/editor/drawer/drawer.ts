@@ -1,8 +1,8 @@
 import DrawerOptions from "./drawer-options";
 
-import Drawing from "src/modeller/drawing/drawing";
-import { isSnappable } from "src/modeller/drawing/snappable-drawing";
-import Vector2D from "src/modeller/shapes/vector2d";
+import Drawing from "src/editor/drawing/drawing";
+import { isSnappable } from "src/editor/drawing/snappable-drawing";
+import Vector2D from "src/editor/shapes/vector2d";
 
 import { Matrix } from "lib/matrix/matrix";
 import { clamp } from "lib/math/math";

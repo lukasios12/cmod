@@ -30,14 +30,14 @@ import EditEdge from "./actions/edit-edge";
 
 import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
 import Tutorial from "./menus/tutorial";
-import EditStateMenu from "src/modeller/menus/edit-state";
+import EditStateMenu from "src/editor/menus/edit-state";
 
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 import Session from "src/services/session";
 
-export default class Modeller {
+export default class Editor {
     protected drawer: Drawer;
     protected actionManager: ActionManager;
     protected feedback: Feedback | null;
@@ -270,4 +270,3 @@ export default class Modeller {
     }
 }
 
-export { Modeller }; 

@@ -1,10 +1,10 @@
-import Graph from "src/modeller/system/graph/graph";
-import Edge from "src/modeller/system/graph/edge";
-import State from "src/modeller/system/graph/state";
-import StateRequest from "src/modeller/request-types/state-request";
-import EdgeRequest from "src/modeller/request-types/edge-request";
-import InitialRequest from "src/modeller/request-types/initial-request";
-import GraphRequest from "src/modeller/request-types/graph-request";
+import Graph from "src/editor/system/graph/graph";
+import Edge from "src/editor/system/graph/edge";
+import State from "src/editor/system/graph/state";
+import StateRequest from "src/editor/request-types/state-request";
+import EdgeRequest from "src/editor/request-types/edge-request";
+import InitialRequest from "src/editor/request-types/initial-request";
+import GraphRequest from "src/editor/request-types/graph-request";
 
 export default class GraphToRequest {
     public static convert(g: Graph) {
