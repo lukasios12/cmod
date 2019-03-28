@@ -37,7 +37,7 @@ import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 import Session from "src/services/session";
 
-class Modeller {
+export default class Modeller {
     protected drawer: Drawer;
     protected actionManager: ActionManager;
     protected feedback: Feedback | null;
