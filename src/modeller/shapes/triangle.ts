@@ -1,7 +1,7 @@
-import {Shape2D} from "./shape2d";
-import {Vector2D} from "./vector2d";
+import Shape2D from "./shape2d";
+import Vector2D from "./vector2d";
 
-class Triangle implements Shape2D {
+export default class Triangle implements Shape2D {
     public alpha: Vector2D;
     public beta: Vector2D;
     public gamma: Vector2D;
@@ -38,5 +38,3 @@ class Triangle implements Shape2D {
         context.closePath();
     }
 }
-
-export { Triangle };

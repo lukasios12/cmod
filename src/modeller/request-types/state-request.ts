@@ -1,6 +1,4 @@
-interface StateRequest {
+export default interface StateRequest {
     state: string;
     id: number;
 }
-
-export { StateRequest };

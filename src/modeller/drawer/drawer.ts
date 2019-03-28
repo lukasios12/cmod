@@ -1,13 +1,13 @@
-import { DrawerOptions } from "./drawer-options";
+import DrawerOptions from "./drawer-options";
 
-import { Drawing } from "src/modeller/drawing/drawing";
+import Drawing from "src/modeller/drawing/drawing";
 import { isSnappable } from "src/modeller/drawing/snappable-drawing";
-import { Vector2D } from "src/modeller/shapes/vector2d";
+import Vector2D from "src/modeller/shapes/vector2d";
 
 import { Matrix } from "lib/matrix/matrix";
 import { clamp } from "lib/math/math";
 
-class Drawer {
+export default class Drawer {
     public canvas: HTMLCanvasElement;
     protected currentTransform: Matrix;
     protected drawingCache: Drawing | null;
@@ -226,5 +226,3 @@ class Drawer {
         context!.restore();
     }
 }
-
-export { Drawer }

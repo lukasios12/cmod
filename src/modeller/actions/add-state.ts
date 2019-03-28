@@ -1,14 +1,14 @@
-import { Graph } from "src/modeller/system/graph/graph";
-import { State } from "src/modeller/system/graph/state";
+import Graph from "src/modeller/system/graph/graph";
+import State from "src/modeller/system/graph/state";
 
-import { GraphDrawing } from "src/modeller/drawing/graph-drawing"
-import { StateDrawing } from "src/modeller/drawing/state-drawing";
+import GraphDrawing from "src/modeller/drawing/graph-drawing"
+import StateDrawing from "src/modeller/drawing/state-drawing";
 
-import { Vector2D } from "src/modeller/shapes/vector2d";
+import Vector2D from "src/modeller/shapes/vector2d";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
-class AddState implements UndoableAction {
+export default class AddState implements UndoableAction {
     protected id: number | null;
     protected state: State;
     protected stateDrawing: StateDrawing | null;
@@ -53,4 +53,3 @@ class AddState implements UndoableAction {
     }
 }
 
-export { AddState };

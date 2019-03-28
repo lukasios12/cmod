@@ -1,9 +1,9 @@
-import { FeedbackCode } from "./feedback-code";
+import FeedbackCode from "./feedback-code";
 
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension"
 
-class FeedbackTranslator
+export default class FeedbackTranslator
 {
     protected static translations: HashTable<FeedbackCode, string> | null = null;
 
@@ -46,5 +46,3 @@ class FeedbackTranslator
         t.put(FeedbackCode.MISSED_SELF_LOOP, "This edge should points to its source");
     }
 }
-
-export { FeedbackTranslator };

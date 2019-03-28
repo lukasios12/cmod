@@ -6,12 +6,12 @@ import { Modeller } from "./modeller/modeller";
 
 class Main {
     public static main() {
-        new Vue({
-            store: Store,
-            render: (h) => h(RootEnvironment),
-        }).$mount("#app");
-        // let canvas = document.getElementById("canvas") as HTMLCanvasElement;
-        // let modeller = new Modeller(canvas);
+        // new Vue({
+        //     store: Store,
+        //     render: (h) => h(RootEnvironment),
+        // }).$mount("#app");
+        let canvas = document.getElementById("canvas") as HTMLCanvasElement;
+        let modeller = new Modeller(canvas);
     }
 }
 

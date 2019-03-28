@@ -1,18 +1,18 @@
-import { FeedbackCode } from "src/modeller/feedback/feedback-code";
+import FeedbackCode from "src/modeller/feedback/feedback-code";
 
-import { Colors } from "./colors";
-import { StyleManagerAction } from "./actions/style-manager-action";
-import { CorrectEdgeStyle } from "./actions/correct-edge-style";
-import { CorrectStateStyle } from "./actions/correct-state-style";
-import { IncorrectEdgeStyle } from "./actions/incorrect-edge-style";
-import { IncorrectStateStyle } from "./actions/incorrect-state-style";
-import { WarningEdgeStyle } from "./actions/warning-edge-style";
-import { WarningStateStyle } from "./actions/warning-state-style";
+import Colors from "./colors";
+import StyleManagerAction from "./actions/style-manager-action";
+import CorrectEdgeStyle from "./actions/correct-edge-style";
+import CorrectStateStyle from "./actions/correct-state-style";
+import IncorrectEdgeStyle from "./actions/incorrect-edge-style";
+import IncorrectStateStyle from "./actions/incorrect-state-style";
+import WarningEdgeStyle from "./actions/warning-edge-style";
+import WarningStateStyle from "./actions/warning-state-style";
 
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
-class StyleManager {
+export default class StyleManager {
     protected static callbacks: HashTable<FeedbackCode, StyleManagerAction> | null = null;
 
     public static setStyle(code: FeedbackCode, context: CanvasRenderingContext2D): void {
@@ -103,5 +103,3 @@ class StyleManager {
         StyleManager.callbacks = c;
     }
 }
-
-export { StyleManager };

@@ -1,11 +1,11 @@
-import { Menu } from "./menu";
-import { Confirmable } from "./confirmable";
+import Menu from "./menu";
+import Confirmable from "./confirmable";
 
-import { State } from "src/modeller/system/graph/state";
+import State from "src/modeller/system/graph/state";
 
 import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
 
-class EditStateMenu extends Menu implements Confirmable {
+export default class EditStateMenu extends Menu implements Confirmable {
     protected state: State;
     protected cancelHooks: Array<() => void>
     protected confirmHooks: Array<() => void>
@@ -63,5 +63,3 @@ class EditStateMenu extends Menu implements Confirmable {
         }
     }
 }
-
-export { EditStateMenu };

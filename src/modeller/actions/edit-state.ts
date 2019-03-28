@@ -1,11 +1,11 @@
-import { Graph } from "src/modeller/system/graph/graph"
-import { State } from "src/modeller/system/graph/state";
+import Graph from "src/modeller/system/graph/graph"
+import State from "src/modeller/system/graph/state";
 
-import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
+import GraphDrawing from "src/modeller/drawing/graph-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
-class EditState implements UndoableAction {
+export default class EditState implements UndoableAction {
 
     protected id: number;
     protected oldState: State | null;
@@ -45,5 +45,3 @@ class EditState implements UndoableAction {
         this.exec();
     }
 }
-
-export { EditState };

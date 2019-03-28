@@ -1,7 +1,7 @@
-import { Shape2D } from "./shape2d";
-import { Vector2D } from "./vector2d";
+import Shape2D from "./shape2d";
+import Vector2D from "./vector2d";
 
-class Line implements Shape2D {
+export default class Line implements Shape2D {
     public source: Vector2D;
     public target: Vector2D;
     public bend: number;
@@ -56,5 +56,3 @@ class Line implements Shape2D {
         context.quadraticCurveTo(c.x(), c.y(), this.target.x(), this.target.y());
     }
 }
-
-export { Line };

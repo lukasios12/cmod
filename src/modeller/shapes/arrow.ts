@@ -1,8 +1,8 @@
-import { Vector2D } from "./vector2d";
-import { Line } from "./line";
-import { Triangle } from "./triangle";
+import Vector2D from "./vector2d";
+import Line from "./line";
+import Triangle from "./triangle";
 
-class Arrow extends Line {
+export default class Arrow extends Line {
     public width: number;
     public height: number;
 
@@ -49,5 +49,3 @@ class Arrow extends Line {
         return triangle;
     }
 }
-
-export { Arrow };

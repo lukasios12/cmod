@@ -1,14 +1,14 @@
-import { Graph } from "src/modeller/system/graph/graph";
-import { Edge } from "src/modeller/system/graph/edge";
+import Graph from "src/modeller/system/graph/graph";
+import Edge from "src/modeller/system/graph/edge";
 
-import { EdgeDrawing } from "src/modeller/drawing/edge-drawing";
-import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
-import { LinearEdgeDrawing } from "src/modeller/drawing/linear-edge-drawing";
-import { SelfLoopDrawing } from "src/modeller/drawing/self-loop-drawing";
+import EdgeDrawing from "src/modeller/drawing/edge-drawing";
+import GraphDrawing from "src/modeller/drawing/graph-drawing";
+import LinearEdgeDrawing from "src/modeller/drawing/linear-edge-drawing";
+import SelfLoopDrawing from "src/modeller/drawing/self-loop-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
-class AddEdge implements UndoableAction {
+export default class AddEdge implements UndoableAction {
     protected id: number | null;
     protected edge: Edge;
     protected edgeDrawing: EdgeDrawing | null;
@@ -61,5 +61,3 @@ class AddEdge implements UndoableAction {
         console.log(this.graphDrawing);
     }
 }
-
-export { AddEdge };

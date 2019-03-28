@@ -1,10 +1,10 @@
-import { FeedbackCode }  from "./feedback-code";
+import FeedbackCode from "./feedback-code";
 
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
-class Feedback {
+export default class Feedback {
     public general: HashSet<FeedbackCode>;
     public specific: HashTable<number, HashSet<FeedbackCode>>;
 
@@ -42,5 +42,3 @@ class Feedback {
         }
     }
 }
-
-export { Feedback };

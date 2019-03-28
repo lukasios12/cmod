@@ -1,6 +1,6 @@
-import { Menu } from "./menu";
+import Menu from "./menu";
 
-class Tutorial extends Menu {
+export default class Tutorial extends Menu {
     protected generateBody(): HTMLElement {
         let container = document.createElement("div");
         let title = document.createElement("h2");
@@ -15,5 +15,3 @@ class Tutorial extends Menu {
         return container;
     }
 }
-
-export { Tutorial };

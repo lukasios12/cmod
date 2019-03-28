@@ -1,4 +1,4 @@
-export enum FeedbackCode {
+enum FeedbackCode {
     CORRECT_INITIAL_STATE            = 200,
     NO_INITIAL_STATE                 = 400,
     INCORRECT_INITIAL_STATE          = 401,
@@ -19,3 +19,5 @@ export enum FeedbackCode {
     DISABLED_CORRECT_POST            = 443,
     MISSED_SELF_LOOP                 = 444,
 }
+
+export default FeedbackCode;

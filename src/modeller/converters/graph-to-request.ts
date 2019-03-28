@@ -1,12 +1,12 @@
-import { Graph } from "src/modeller/system/graph/graph";
-import { Edge } from "src/modeller/system/graph/edge";
-import { State } from "src/modeller/system/graph/state";
-import { StateRequest } from "src/modeller/request-types/state-request";
-import { EdgeRequest } from "src/modeller/request-types/edge-request";
-import { InitialRequest } from "src/modeller/request-types/initial-request";
-import { GraphRequest } from "src/modeller/request-types/graph-request";
+import Graph from "src/modeller/system/graph/graph";
+import Edge from "src/modeller/system/graph/edge";
+import State from "src/modeller/system/graph/state";
+import StateRequest from "src/modeller/request-types/state-request";
+import EdgeRequest from "src/modeller/request-types/edge-request";
+import InitialRequest from "src/modeller/request-types/initial-request";
+import GraphRequest from "src/modeller/request-types/graph-request";
 
-class GraphToRequest {
+export default class GraphToRequest {
     public static convert(g: Graph) {
         let states = g.states;
         let edges = g.edges;
@@ -49,5 +49,3 @@ class GraphToRequest {
         return result;
     }
 }
-
-export { GraphToRequest };

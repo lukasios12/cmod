@@ -1,16 +1,16 @@
-import { Graph } from "src/modeller/system/graph/graph";
-import { State } from "src/modeller/system/graph/state";
-import { Edge } from "src/modeller/system/graph/edge";
+import Graph from "src/modeller/system/graph/graph";
+import State from "src/modeller/system/graph/state";
+import Edge from "src/modeller/system/graph/edge";
 
-import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
-import { StateDrawing } from "src/modeller/drawing/state-drawing";
-import { EdgeDrawing } from "src/modeller/drawing/edge-drawing";
+import GraphDrawing from "src/modeller/drawing/graph-drawing";
+import StateDrawing from "src/modeller/drawing/state-drawing";
+import EdgeDrawing from "src/modeller/drawing/edge-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
-class DeleteState implements UndoableAction {
+export default class DeleteState implements UndoableAction {
     protected id: number;
     protected state: State;
     protected stateDrawing: StateDrawing;
@@ -108,5 +108,3 @@ class DeleteState implements UndoableAction {
         this.exec();
     }
 }
-
-export { DeleteState };

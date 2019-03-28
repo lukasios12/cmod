@@ -1,7 +1,7 @@
-import { Shape2D } from "./shape2d";
-import { Vector2D } from "./vector2d";
+import Shape2D from "./shape2d";
+import Vector2D from "./vector2d";
 
-class Rectangle implements Shape2D {
+export default class Rectangle implements Shape2D {
     public source: Vector2D;
     public width: number;
     public height: number;
@@ -34,5 +34,3 @@ class Rectangle implements Shape2D {
         context.rect(this.source.x(), this.source.y(), this.width, this.height);
     }
 }
-
-export { Rectangle };

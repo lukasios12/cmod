@@ -1,7 +1,7 @@
 import { HTMLGenerator } from "lib/html-generator/html-generator";
 import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
 
-abstract class Menu extends HTMLGenerator {
+export default abstract class Menu extends HTMLGenerator {
     public constructor(opts: HTMLGeneratorOptions) {
         super();
     }
@@ -15,5 +15,3 @@ abstract class Menu extends HTMLGenerator {
 
     protected abstract generateBody(): HTMLElement;
 }
-
-export { Menu };

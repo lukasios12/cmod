@@ -1,11 +1,11 @@
-import { Petrinet } from "./petrinet/petrinet";
-import { TokenCount } from "./tokens/token-count";
-import { IntegerTokenCount } from "./tokens/integer-token-count";
+import Petrinet from "./petrinet/petrinet";
+import TokenCount from "./tokens/token-count";
+import IntegerTokenCount from "./tokens/integer-token-count";
 
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
 
-class Marking {
+export default class Marking {
     protected map: HashTable<string, TokenCount>;
 
     public constructor(petrinet: Petrinet, map: HashTable<string, TokenCount> | null = null) {
@@ -44,5 +44,3 @@ class Marking {
         return `${result.join(", ")}`;
     }
 }
-
-export { Marking };

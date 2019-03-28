@@ -1,21 +1,21 @@
-import { GraphDrawingOptions } from "./graph-drawing-options";
+import GraphDrawingOptions from "./graph-drawing-options";
 
-import { Drawing } from "./drawing";
-import { Snappable } from "./snappable-drawing";
-import { EdgeDrawing } from "./edge-drawing";
-import { StateDrawing } from "./state-drawing";
-import { LinearEdgeDrawing } from "./linear-edge-drawing";
-import { SelfLoopDrawing } from "./self-loop-drawing";
+import Drawing from "./drawing";
+import Snappable from "./snappable-drawing";
+import EdgeDrawing from "./edge-drawing";
+import StateDrawing from "./state-drawing";
+import LinearEdgeDrawing from "./linear-edge-drawing";
+import SelfLoopDrawing from "./self-loop-drawing";
 
-import { Arrow } from "src/modeller/shapes/arrow";
-import { Vector2D } from "src/modeller/shapes/vector2d";
+import Arrow from "src/modeller/shapes/arrow";
+import Vector2D from "src/modeller/shapes/vector2d";
 
-import { StyleManager } from "src/modeller/stylemanager/style-manager";
+import StyleManager from "src/modeller/stylemanager/style-manager";
 
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
-class GraphDrawing implements Drawing, Snappable {
+export default class GraphDrawing implements Drawing, Snappable {
     public states: HashTable<number, StateDrawing>;
     public edges: HashTable<number, EdgeDrawing>;
     public initial: number | null;
@@ -225,5 +225,3 @@ class GraphDrawing implements Drawing, Snappable {
         }
     }
 }
-
-export { GraphDrawing }

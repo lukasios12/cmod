@@ -1,10 +1,10 @@
-import { State } from "./state";
-import { Edge } from "./edge";
+import State from "./state";
+import Edge from "./edge";
 
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
-class Graph {
+export default class Graph {
     protected _states: HashTable<number, State>;
     protected _edges: HashTable<number, Edge>;
     protected _initial: number | null;
@@ -106,4 +106,3 @@ class Graph {
     }
 }
 
-export { Graph };

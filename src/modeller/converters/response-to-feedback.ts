@@ -1,7 +1,7 @@
-import { Feedback } from "src/modeller/feedback/feedback";
+import Feedback from "src/modeller/feedback/feedback";
 import { FeedbackResponse } from "src/types";
 
-class ResponseToFeedback {
+export default class ResponseToFeedback {
     public static convert(fr: FeedbackResponse) {
         let f = new Feedback();
         for(let i = 0; i < fr.general.length; i++) {
@@ -13,5 +13,3 @@ class ResponseToFeedback {
         return f;
     }
 }
-
-export { ResponseToFeedback };

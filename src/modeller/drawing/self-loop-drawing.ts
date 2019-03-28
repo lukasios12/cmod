@@ -1,14 +1,14 @@
-import { EdgeDrawing } from "./edge-drawing";
-import { StateDrawing } from "./state-drawing";
-import { Draggable } from "./draggable_drawing";
+import EdgeDrawing from "./edge-drawing";
+import StateDrawing from "./state-drawing";
+import Draggable from "./draggable_drawing";
 
-import { Vector2D } from "src/modeller/shapes/vector2d";
-import { Circle } from "src/modeller/shapes/circle";
+import Vector2D from "src/modeller/shapes/vector2d";
+import Circle from "src/modeller/shapes/circle";
 
-import { StyleManager } from "src/modeller/stylemanager/style-manager";
+import StyleManager from "src/modeller/stylemanager/style-manager";
 import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
-class SelfLoopDrawing extends EdgeDrawing implements Draggable {
+export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     public angle: number;
     public radius: number;
 
@@ -72,4 +72,3 @@ class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     }
 }
 
-export { SelfLoopDrawing };

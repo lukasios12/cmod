@@ -1,7 +1,7 @@
-import {Shape2D} from "./shape2d";
-import {Vector2D} from "./vector2d";
+import Shape2D from "./shape2d";
+import Vector2D from "./vector2d";
 
-class Circle implements Shape2D {
+export default class Circle implements Shape2D {
     public center: Vector2D;
     public radius: number;
     public rotation: number;
@@ -41,5 +41,3 @@ class Circle implements Shape2D {
         );
     }
 }
-
-export { Circle };

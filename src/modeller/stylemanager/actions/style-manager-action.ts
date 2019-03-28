@@ -1,6 +1,5 @@
-import { StyleManagerAction } from "./style-manager-action";
-import { Colors } from "../colors";
+import Colors from "../colors";
 
-export interface StyleManagerAction {
+export default interface StyleManagerAction {
     exec(context: CanvasRenderingContext2D): void;
 }

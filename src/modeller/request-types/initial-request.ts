@@ -1,5 +1,3 @@
-interface InitialRequest {
+export default interface InitialRequest {
     id: number | null;
 }
-
-export { InitialRequest };

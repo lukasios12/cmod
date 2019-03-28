@@ -1,6 +1,6 @@
-import { Vector2D } from "src/modeller/shapes/vector2d";
+import Vector2D from "src/modeller/shapes/vector2d";
 
-export interface Draggable {
+export default interface Draggable {
     drag(point: Vector2D, context: CanvasRenderingContext2D): void;
 }
 

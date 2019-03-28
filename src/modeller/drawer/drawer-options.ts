@@ -1,4 +1,4 @@
-interface DrawerOptions {
+export default interface DrawerOptions {
     minZoom: number;
     maxZoom: number;
     minX: number;
@@ -15,4 +15,4 @@ interface GridOptions {
     verticalGridSeperation: number;
 }
 
-export { DrawerOptions, GridOptions };
+export { GridOptions };

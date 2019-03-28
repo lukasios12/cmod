@@ -1,6 +1,6 @@
-import { Feedback } from "src/modeller/feedback/feedback";
+import Feedback from "src/modeller/feedback/feedback";
 
-export class GraphDrawingOptions {
+export default class GraphDrawingOptions {
     public selected: number | null;
     public feedback: Feedback | null;
 

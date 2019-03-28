@@ -1,4 +1,4 @@
-export interface Snappable {
+export default interface Snappable {
     snap(hgrid: number, vgrid: number): void;
 }
 

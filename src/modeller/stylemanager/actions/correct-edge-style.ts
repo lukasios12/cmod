@@ -1,7 +1,7 @@
-import { StyleManagerAction } from "./style-manager-action";
-import { Colors } from "../colors";
+import StyleManagerAction from "./style-manager-action";
+import Colors from "../colors";
 
-export class CorrectEdgeStyle implements StyleManagerAction {
+export default class CorrectEdgeStyle implements StyleManagerAction {
     public exec(context: CanvasRenderingContext2D): void {
         context.strokeStyle = Colors.green;
         context.lineWidth = 10;

@@ -1,9 +1,9 @@
-import { Graph } from "src/modeller/system/graph/graph";
-import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
+import Graph from "src/modeller/system/graph/graph";
+import GraphDrawing from "src/modeller/drawing/graph-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
-class EditEdge implements UndoableAction {
+export default class EditEdge implements UndoableAction {
     protected id: number;
     protected oldLabel: string | null;
     protected newLabel: string;
@@ -43,5 +43,3 @@ class EditEdge implements UndoableAction {
         this.exec();
     }
 }
-
-export { EditEdge };

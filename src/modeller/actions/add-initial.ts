@@ -1,9 +1,9 @@
-import { Graph } from "src/modeller/system/graph/graph";
-import { GraphDrawing } from "src/modeller/drawing/graph-drawing";
+import Graph from "src/modeller/system/graph/graph";
+import GraphDrawing from "src/modeller/drawing/graph-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
-class AddInitial implements UndoableAction {
+export default class AddInitial implements UndoableAction {
     protected id: number;
     protected graph: Graph;
     protected graphDrawing: GraphDrawing;
@@ -31,5 +31,3 @@ class AddInitial implements UndoableAction {
         this.exec();
     }
 }
-
-export { AddInitial };

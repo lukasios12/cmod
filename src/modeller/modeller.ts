@@ -1,36 +1,36 @@
-import { Petrinet } from "./system/petrinet/petrinet";
-import { Graph } from "./system/graph/graph";
-import { State } from "./system/graph/state";
-import { Edge } from "./system/graph/edge";
-import { Marking } from "./system/marking";
-import { IntegerTokenCount } from "./system/tokens/integer-token-count";
-import { OmegaTokenCount } from "./system/tokens/omega-token-count";
+import Petrinet from "./system/petrinet/petrinet";
+import Graph from "./system/graph/graph";
+import State from "./system/graph/state";
+import Edge from "./system/graph/edge";
+import Marking from "./system/marking";
+import IntegerTokenCount from "./system/tokens/integer-token-count";
+import OmegaTokenCount from "./system/tokens/omega-token-count";
 
-import { Drawing } from "./drawing/drawing";
-import { GraphDrawing } from "./drawing/graph-drawing";
-import { GraphDrawingOptions } from "./drawing/graph-drawing-options";
+import Drawing from "./drawing/drawing";
+import GraphDrawing from "./drawing/graph-drawing";
+import GraphDrawingOptions from "./drawing/graph-drawing-options";
 import { isDraggable } from "./drawing/draggable_drawing";
 
-import { Vector2D } from "./shapes/vector2d";
+import Vector2D from "./shapes/vector2d";
 
-import { Drawer } from "./drawer/drawer";
-import { Feedback } from "./feedback/feedback";
-import { FeedbackCode } from "./feedback/feedback-code";
+import Drawer from "./drawer/drawer";
+import Feedback from "./feedback/feedback";
+import FeedbackCode from "./feedback/feedback-code";
 import FeedbackService from "src/services/feedback";
 import { Observer } from "lib/observer/observer";
 
-import { AddState } from "./actions/add-state";
-import { AddEdge } from "./actions/add-edge";
-import { AddInitial } from "./actions/add-initial";
-import { DeleteState } from "./actions/del-state";
-import { DeleteEdge } from "./actions/del-edge";
-import { DeleteInitial } from "./actions/del-initial";
-import { EditState } from "./actions/edit-state";
-import { EditEdge } from "./actions/edit-edge";
+import AddState from "./actions/add-state";
+import AddEdge from "./actions/add-edge";
+import AddInitial from "./actions/add-initial";
+import DeleteState from "./actions/del-state";
+import DeleteEdge from "./actions/del-edge";
+import DeleteInitial from "./actions/del-initial";
+import EditState from "./actions/edit-state";
+import EditEdge from "./actions/edit-edge";
 
 import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
-import { Tutorial } from "./menus/tutorial";
-import { EditStateMenu } from "src/modeller/menus/edit-state";
+import Tutorial from "./menus/tutorial";
+import EditStateMenu from "src/modeller/menus/edit-state";
 
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
@@ -57,7 +57,7 @@ class Modeller {
             minY: -200, maxY: 200,
             gridOptions: {
                 drawGrid: true,
-                snapGrid: true,
+                snapGrid: false,
                 horizontalGridSeperation: 50,
                 verticalGridSeperation: 50
             }

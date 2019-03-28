@@ -1,13 +1,13 @@
-import { EdgeDrawing } from "./edge-drawing";
-import { StateDrawing } from "./state-drawing";
+import EdgeDrawing from "./edge-drawing";
+import StateDrawing from "./state-drawing";
 
-import { Vector2D } from "src/modeller/shapes/vector2d";
-import { Arrow } from "src/modeller/shapes/arrow";
+import Vector2D from "src/modeller/shapes/vector2d";
+import Arrow from "src/modeller/shapes/arrow";
 
-import { StyleManager } from "src/modeller/stylemanager/style-manager";
+import StyleManager from "src/modeller/stylemanager/style-manager";
 import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
-class LinearEdgeDrawing extends EdgeDrawing {
+export default class LinearEdgeDrawing extends EdgeDrawing {
     public target: StateDrawing;
     public offset: number;
 
@@ -60,5 +60,3 @@ class LinearEdgeDrawing extends EdgeDrawing {
         return arrow;
     }
 }
-
-export { LinearEdgeDrawing }

@@ -1,6 +1,6 @@
 import { HashSet } from "lib/collections/hashset/hash-set";
 
-class Petrinet {
+export default class Petrinet {
     protected places: HashSet<string>;
     protected transitions: HashSet<string>;
 
@@ -17,5 +17,3 @@ class Petrinet {
         return this.transitions;
     }
 }
-
-export { Petrinet }

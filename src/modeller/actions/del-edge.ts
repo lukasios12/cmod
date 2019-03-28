@@ -1,12 +1,12 @@
-import { Graph } from "src/modeller/system/graph/graph";
-import { Edge } from "src/modeller/system/graph/edge";
+import Graph from "src/modeller/system/graph/graph";
+import Edge from "src/modeller/system/graph/edge";
 
-import { GraphDrawing } from "src/modeller/drawing/graph-drawing"
-import { EdgeDrawing } from "src/modeller/drawing/edge-drawing";
+import GraphDrawing from "src/modeller/drawing/graph-drawing"
+import EdgeDrawing from "src/modeller/drawing/edge-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
-class DeleteEdge implements UndoableAction {
+export default class DeleteEdge implements UndoableAction {
     protected id: number;
     protected graph: Graph;
     protected graphDrawing: GraphDrawing;
@@ -43,5 +43,3 @@ class DeleteEdge implements UndoableAction {
         this.exec();
     }
 }
-
-export { DeleteEdge }; 

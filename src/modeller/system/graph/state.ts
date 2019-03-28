@@ -1,3 +1,5 @@
-import { Marking } from "../marking";
+import Marking from "../marking";
 
-export type State = Marking;
+type State = Marking;
+
+export default State;

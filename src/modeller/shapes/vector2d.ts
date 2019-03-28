@@ -1,6 +1,6 @@
 import { Vector } from "lib/vector/vector";
 
-class Vector2D {
+export default class Vector2D {
     public vec: Vector;
 
     public constructor(x: number, y: number) {
@@ -57,5 +57,3 @@ class Vector2D {
         return angle;
     }
 }
-
-export { Vector2D };
