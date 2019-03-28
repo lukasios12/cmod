@@ -5,7 +5,10 @@ import UserService from "src/services/user";
 import PetrinetService from "src/services/petrinet";
 import SessionService from "src/services/session";
 
-import { UserCreated, PetrinetUploaded, SessionStarted } from "./types";
+import { UserCreatedResponse,
+         PetrinetCreatedResponse,
+         SessionCreatedResponse
+       } from "src/types";
 
 @Module({
     name: "UserModule",
@@ -69,7 +72,7 @@ export default class UserModule extends VuexModule {
         let fd = new FormData();
         fd.set("name", username);
         return new Promise((resolve, reject) => {
-            UserService.setUser(username).then((response: AxiosResponse<UserCreated>) => {
+            UserService.setUser(username).then((response: AxiosResponse<UserCreatedResponse>) => {
                 let id = Number(response.data.id);
                 this.setUser(id);
                 this.setFailure("");
@@ -94,7 +97,7 @@ export default class UserModule extends VuexModule {
         } else {
             this.setLoading(true);
             return new Promise((resolve, reject) => {
-                PetrinetService.set(this.uid, file).then((response: AxiosResponse<PetrinetUploaded>) => {
+                PetrinetService.set(this.uid, file).then((response: AxiosResponse<PetrinetCreatedResponse>) => {
                     let id = Number(response.data.petrinetId);
                     this.setFailure("");
                     this.setPetrinet(id);
@@ -118,7 +121,7 @@ export default class UserModule extends VuexModule {
         } else {
             this.setLoading(true);
             return new Promise((resolve, reject) => {
-                SessionService.set(this.uid, this.pid).then((response: AxiosResponse<SessionStarted>) => {
+                SessionService.set(this.uid, this.pid).then((response: AxiosResponse<SessionCreatedResponse>) => {
                     let sid = response.data.session_id;
                     this.setSession(sid);
                     return resolve();

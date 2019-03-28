@@ -5,7 +5,7 @@ import WithRender from "./imager.html?style=./imager.scss";
 import Loader from "src/components/common/loader/loader";
 
 import { getModule } from "vuex-module-decorators";
-import UserModule from "src/store/user/user";
+import UserModule from "src/store/user";
 import PetrinetService from "src/services/petrinet";
 
 @WithRender

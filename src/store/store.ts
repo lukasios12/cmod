@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-import UserModule from "./user/user";
+import UserModule from "./user";
 
 export const Store = new Vuex.Store({
     modules: {

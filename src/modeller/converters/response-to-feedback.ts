@@ -1,5 +1,5 @@
 import { Feedback } from "src/modeller/feedback/feedback";
-import FeedbackResponse from "src/response-types/feedback";
+import { FeedbackResponse } from "src/types";
 
 class ResponseToFeedback {
     public static convert(fr: FeedbackResponse) {

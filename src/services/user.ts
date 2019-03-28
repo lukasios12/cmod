@@ -1,13 +1,13 @@
 import axios from "axios";
 import Config from "./config";
-import { User, UserCreated } from "src/store/user/types";
+import { UserResponse, UserCreatedResponse } from "src/types";
 
 export default class UserService {
     public static getUser(id: number) {
         let conf = Config.getInstance();
         let baseUrl: string = conf.baseUrl;
         let userUrl: string = conf.userUrl;
-        return axios.request<User>({
+        return axios.request<UserResponse>({
             baseURL: baseUrl,
             url: userUrl + `/${id}`,
             method: "get",
@@ -21,7 +21,7 @@ export default class UserService {
         
         let fd = new FormData();
         fd.append("name", un);
-        return axios.request<UserCreated>({
+        return axios.request<UserCreatedResponse>({
             baseURL: baseUrl,
             url: userUrl + "/new",
             method: "post",

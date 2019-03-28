@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import Config from "src/services/config";
-import { SessionStarted } from "src/store/user/types";
+import { SessionCreatedResponse } from "src/types";
 
 export default class SessionService {
     public static get(id: number) {
@@ -15,7 +15,7 @@ export default class SessionService {
 
     public static set(uid: number, pid: number) {
         let conf = Config.getInstance();
-        return axios.request<SessionStarted>({
+        return axios.request<SessionCreatedResponse>({
             baseURL: conf.baseUrl,
             url: conf.sessionUrl + `/${uid}/${pid}/new_session`,
             method: "post"

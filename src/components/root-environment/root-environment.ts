@@ -6,7 +6,7 @@ import ModellingEnvironment from "./modelling-environment/modelling-environment"
 import FooterComponent from "./footer/footer";
 
 import { getModule } from "vuex-module-decorators";
-import UserModule from "src/store/user/user";
+import UserModule from "src/store/user";
 
 @WithRender
 @Component({

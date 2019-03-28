@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import Config from "./config";
-import FeedbackResponse from "src/response-types/feedback";
+import { FeedbackResponse } from "src/types";
 
 export default class FeedbackService {
     public get(uid: number, pid: number, sid: number, g: string) {

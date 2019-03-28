@@ -6,7 +6,7 @@ import UploadDialogComponent from "./dialogs/upload/upload";
 import LoaderComponent from "src/components/common/loader/loader";
 
 import { getModule } from "vuex-module-decorators";
-import UserModule from "src/store/user/user";
+import UserModule from "src/store/user";
 
 
 @WithRender
