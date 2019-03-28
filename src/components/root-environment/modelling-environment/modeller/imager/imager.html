@@ -1,7 +1,5 @@
 <div @mousedown.stop class="imager">
-    <div v-if="loading">
-        <loader/>
-    </div>
+    <loader v-if="loading"/>
     <div v-else-if="error">
         {{ error }}
     </div>
