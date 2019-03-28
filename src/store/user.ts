@@ -15,9 +15,9 @@ import { UserCreatedResponse,
     namespaced: true
 })
 export default class UserModule extends VuexModule {
-    uid: number | null = null;
-    pid: number | null = null;
-    sid: number | null = null;
+    uid: number | null = 1;
+    pid: number | null = 4;
+    sid: number | null = 0;
     err: string = "";
     loading: boolean = false;
 
