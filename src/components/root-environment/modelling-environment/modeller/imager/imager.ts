@@ -28,6 +28,7 @@ export default class Imager extends Vue {
                 let parser = new DOMParser();
                 let el = parser.parseFromString(response.data, "image/svg+xml");
                 let svg = <SVGElement><unknown>el.documentElement;
+                svg.classList.add("image");
                 this.image = svg;
             }).catch((response: AxiosError) => {
                 this.error = response.message;
