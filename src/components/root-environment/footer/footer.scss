@@ -7,7 +7,8 @@ footer {
     padding: $footerPaddingT $footerPaddingR $footerPaddingB $footerPaddingL;
     color: white;
     background: $black;
-    font-size: .9rem;
+    font-size: .9em;
+    box-shadow: 0px 25px 10px -10px inset rgba(0, 0, 0, .4);
     z-index: 4;
 }
 
