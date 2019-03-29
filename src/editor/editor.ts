@@ -119,7 +119,7 @@ export default class Editor {
         this.addState(b, new Vector2D(420, 100));
         this.addEdge(new Edge(1, 2, "t3"));
         this.addEdge(new Edge(1, 1, "t2"));
-        // this.addEdge(new Edge(1, 2, "t1"));
+        this.addEdge(new Edge(1, 2, "t1"));
         this.addEdge(new Edge(2, 1, "t1"));
         this.setInitial(1);
 
@@ -246,16 +246,15 @@ export default class Editor {
         let mouseDownLeft= false;
         canvas.addEventListener("mousedown", (event) => {
             if(event.buttons == 1) {
-                this.select(new Vector2D(event.clientX, event.clientY), context!);
+                let point = this.drawer.globalToLocal(event);
+                this.select(point, context!);
                 mouseDownLeft= true;
             }
         });
         canvas.addEventListener("mousemove", (event) => {
             if(mouseDownLeft && this.selection && isDraggable(this.selection)) {
-                let pos = this.drawer.globalToLocal(
-                    new Vector2D(event.clientX, event.clientY)
-                );
-                this.selection.drag(pos, context!);
+                let point = this.drawer.globalToLocal(event);
+                this.selection.drag(point, context!);
                 this.drawer.draw();
             }
         });

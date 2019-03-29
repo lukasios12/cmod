@@ -172,7 +172,11 @@ export default class Drawer {
         this.transform(mat);
     }
 
-    public globalToLocal(point: Vector2D): Vector2D {
+    public globalToLocal(event: MouseEvent): Vector2D {
+        let box = this.canvas.getBoundingClientRect();
+        let x = event.clientX - Math.round(box.left);
+        let y = event.clientY - Math.round(box.top);
+        let point = new Vector2D(x, y);
         let context = this.canvas.getContext("2d");
         let vector = new Matrix(3, 1);
         vector.set(0, 0, point.x());
@@ -180,8 +184,6 @@ export default class Drawer {
         vector.set(2, 0, 1);
         let mat = this.currentTransform.inverse();
         let normalized = Matrix.mult(mat, vector);
-        context!.rect(normalized.get(0,0) - 5, normalized.get(1,0) - 5, 10, 10);
-        context!.fill();
         return new Vector2D(normalized.get(0,0), normalized.get(1,0));
     }
 
