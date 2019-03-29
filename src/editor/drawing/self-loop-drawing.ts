@@ -50,8 +50,9 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         context.save();
         context.setTransform(1, 0, 0, 1, 0, 0);
         let circle = this.getCircle(context);
+        let result = circle.hit(point, context);
         context.restore();
-        return circle.hit(point, context);
+        return result;
     }
 
     public drag(point: Vector2D, context: CanvasRenderingContext2D): void {

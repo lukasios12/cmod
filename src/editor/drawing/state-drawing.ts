@@ -45,8 +45,9 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         context.save();
         context.setTransform(1, 0, 0, 1, 0, 0);
         let box = this.getBox(context);
+        let result = box.hit(point, context);
         context.restore();
-        return box.hit(point, context);
+        return result;
     }
 
     public drag(point: Vector2D, context: CanvasRenderingContext2D): void {

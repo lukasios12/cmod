@@ -39,8 +39,9 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
         context.save();
         context.setTransform(1, 0, 0, 1, 0, 0);
         let arrow = this.getArrow(context);
+        let result = arrow.hit(point, context);
         context.restore();
-        return arrow.hit(point, context);
+        return result;
     }
 
     protected getArrow(context: CanvasRenderingContext2D): Arrow {
