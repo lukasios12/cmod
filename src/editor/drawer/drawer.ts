@@ -95,6 +95,7 @@ export default class Drawer {
         let mouseDownMiddle = false;
         canvas.addEventListener("mousedown", (event) => {
             if(event.buttons == 4) {
+                event.preventDefault();
                 mouseDownMiddle = true;
             }
         });
@@ -184,7 +185,13 @@ export default class Drawer {
         vector.set(2, 0, 1);
         let mat = this.currentTransform.inverse();
         let normalized = Matrix.mult(mat, vector);
-        return new Vector2D(normalized.get(0,0), normalized.get(1,0));
+        let result = new Vector2D(normalized.get(0,0), normalized.get(1,0));
+
+        context.beginPath();
+        context.fillRect(result.x() - 5, result.y() - 5, 10, 10);
+        context.closePath();
+
+        return result;
     }
 
     protected drawGrid(): void {

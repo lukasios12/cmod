@@ -95,16 +95,16 @@ export default class Editor {
         this.graphDrawing = new GraphDrawing();
         this.graphDrawingOptions = new GraphDrawingOptions();
         this.feedback = null;
-        // let feedback = new Feedback();
-        // feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
-        // feedback.add(FeedbackCode.DUPLICATE_STATE, 2);
-        // feedback.add(FeedbackCode.DISABLED, 3);
-        // feedback.add(FeedbackCode.DUPLICATE_EDGE, 4);
-        // feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 4);
-        // feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
-        // // feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
-        // this.feedback = feedback;
-        // this.setFeedback(feedback);
+        let feedback = new Feedback();
+        feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
+        feedback.add(FeedbackCode.DUPLICATE_STATE, 2);
+        feedback.add(FeedbackCode.DISABLED, 3);
+        feedback.add(FeedbackCode.DUPLICATE_EDGE, 4);
+        feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 4);
+        feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
+        // feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
+        this.feedback = feedback;
+        this.setFeedback(feedback);
 
         let a = new Marking(this.petrinet);
         a.set("p1", new IntegerTokenCount(1));
