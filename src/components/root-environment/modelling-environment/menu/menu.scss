@@ -14,24 +14,39 @@
     background: $orange;
     z-index: 3;
     transition: all $menuTransitionDuration ease;
+
+    &.hidden {
+        left: -$menuWidth;
+    }
+
+    & .category {
+        display: block;
+        border-bottom: 1px solid black;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        h1 {
+            display: block;
+            margin: 0;
+            font-size: 1.25em;
+            font-weight: bold;
+            border-bottom: 0;
+        }
+
+        .option {
+            display: flex;
+            margin: 1rem 0;
+
+            & .description {
+                flex: 4;
+            }
+
+            & .input {
+                flex: 6;
+            }
+        }
+    }
 }
 
-.menu.hidden {
-    left: -$menuWidth;
-}
-
-.menu .category {
-    display: block;
-    border-bottom: 1px solid black;
-}
-
-.menu .category:last-child {
-    border-bottom: 0;
-}
-
-.menu h1 {
-    display: block;
-    margin: 0;
-    font-size: 1.25em;
-    border-bottom: 0;
-}

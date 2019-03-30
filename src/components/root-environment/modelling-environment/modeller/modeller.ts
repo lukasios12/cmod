@@ -15,5 +15,7 @@ import { Multipane, MultipaneResizer } from "vue-multipane";
     }
 })
 export default class ModellerComponent extends Vue {
-
+    resize(pane) {
+        console.log(this);
+    }
 }

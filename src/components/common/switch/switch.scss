@@ -1,0 +1,11 @@
+.switch {
+    display: flex;
+
+    & .description {
+        flex: 1;
+    }
+
+    & .input {
+        flex: 3;
+    }
+}

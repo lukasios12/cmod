@@ -12,7 +12,6 @@ export default class EditorComponent extends Vue {
     modeller: Editor | null = null;
 
     mounted() {
-        console.log("mounted");
         let canvas = <HTMLCanvasElement>document.getElementById("editorCanvas");
         let modeller = new Editor(canvas);
         this.modeller = modeller;
