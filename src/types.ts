@@ -1,3 +1,27 @@
+// Request types
+interface InitialRequest {
+    id: number | null;
+}
+
+interface EdgeRequest {
+    id: number;
+    fromId: number;
+    toId: number;
+    transition: string;
+}
+
+interface StateRequest {
+    state: string;
+    id: number;
+}
+
+interface GraphRequest {
+    states: Array<StateRequest>;
+    edges: Array<EdgeRequest>;
+    initial: InitialRequest;
+}
+
+// Response types
 interface UserResponse {
     id: string;
     name: string;
@@ -34,6 +58,10 @@ interface ErrorResponse {
 }
 
 export {
+    InitialRequest,
+    EdgeRequest,
+    StateRequest,
+    GraphRequest,
     UserResponse,
     UserListResponse,
     UserCreatedResponse,

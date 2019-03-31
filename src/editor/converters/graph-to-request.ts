@@ -1,10 +1,7 @@
 import Graph from "src/editor/system/graph/graph";
 import Edge from "src/editor/system/graph/edge";
 import State from "src/editor/system/graph/state";
-import StateRequest from "src/editor/request-types/state-request";
-import EdgeRequest from "src/editor/request-types/edge-request";
-import InitialRequest from "src/editor/request-types/initial-request";
-import GraphRequest from "src/editor/request-types/graph-request";
+import { StateRequest, EdgeRequest, InitialRequest, GraphRequest } from "src/types";
 
 export default class GraphToRequest {
     public static convert(g: Graph) {
