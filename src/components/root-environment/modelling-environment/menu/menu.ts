@@ -21,8 +21,18 @@ export default class MenuComponent extends Vue {
         mod.toggleSnap();
     }
 
+    toggleDraw() {
+        let mod = getModule(SettingsModule, this.$store);
+        mod.toggleDraw();
+    }
+
     get snapToGrid(): boolean {
         let mod = getModule(SettingsModule, this.$store);
         return mod.snapToGrid;
+    }
+
+    get drawGrid(): boolean {
+        let mod = getModule(SettingsModule, this.$store);
+        return mod.drawGrid;
     }
 }

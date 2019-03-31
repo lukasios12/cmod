@@ -10,7 +10,7 @@
             <div class="input">
                 <switcher descriptionOn="On"
                           descriptionOff="Off"
-                          :current="snapToGrid"
+                          :on="snapToGrid"
                           @switch-toggle="toggleSnap($event)">
                 </switcher>
             </div>
@@ -20,7 +20,11 @@
                 Display Grid
             </div>
             <div class="input">
-
+                <switcher descriptionOn="On"
+                          descriptionOff="Off"
+                          :on="drawGrid"
+                          @switch-toggle="toggleDraw($event)">
+                </switcher>
             </div>
         </div>
     </div>

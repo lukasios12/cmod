@@ -5,8 +5,8 @@ import { VuexModule, Module, Mutation } from "vuex-module-decorators";
     namespaced: true
 })
 export default class SettingsModule extends VuexModule {
-    snapToGrid: boolean = true;
-    drawGrid: boolean = true;
+    snapToGrid: boolean = false;
+    drawGrid: boolean = false;
 
     @Mutation
     setSnap(snap: boolean) {

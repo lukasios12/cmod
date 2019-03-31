@@ -1,18 +1,13 @@
 import { Vue, Component, Emit, Prop } from "vue-property-decorator";
 import WithRender from "./switch.html?style=./switch.scss";
 
-enum SwitchState {
-    ON,
-    OFF
-}
-
 @WithRender
 @Component({
     name: "switch-component"
 })
 export default class SwithComponent extends Vue {
-    @Prop({ default: SwitchState.OFF })
-    readonly current!: SwitchState;
+    @Prop(Boolean)
+    readonly on!: boolean;
 
     @Prop({ default: "on" })
     descriptionOn!: string;
@@ -28,7 +23,7 @@ export default class SwithComponent extends Vue {
 
     @Emit("switch-toggle")
     toggle() {
-        if (this.current === SwitchState.ON) {
+        if (this.on) {
             this.toOff();
         } else {
             this.toOn();
@@ -36,11 +31,11 @@ export default class SwithComponent extends Vue {
     }
 
     isOn(): boolean {
-        return this.current == SwitchState.ON;
+        return this.on;
     }
 
     isOff(): boolean {
-        return this.current == SwitchState.OFF;
+        return !this.on;
     }
 }
 
