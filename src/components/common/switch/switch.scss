@@ -3,9 +3,50 @@
 
     & .description {
         flex: 1;
+
+        &.left {
+            text-align: left;
+        }
+
+        &.right {
+            text-align: right;
+        }
     }
 
     & .input {
         flex: 3;
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        background: red;
+        border: 2px solid green;
+        border-radius: 10px;
+        cursor: pointer;
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2rem;
+            background: blue;
+        }
+    }
+
+    &.on {
+        & .input {
+            &::after {
+                right: 0;
+            }
+        }
+    }
+
+    &.off {
+        & .input {
+            &::after {
+                left: 0;
+            }
+        }
     }
 }

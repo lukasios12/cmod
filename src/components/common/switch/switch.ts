@@ -11,7 +11,7 @@ enum SwitchState {
     name: "switch-component"
 })
 export default class SwithComponent extends Vue {
-    @Prop({ default: SwitchState.ON })
+    @Prop({ default: SwitchState.OFF })
     readonly current!: SwitchState;
 
     @Prop({ default: "on" })
@@ -21,18 +21,26 @@ export default class SwithComponent extends Vue {
     descriptionOff!: string;
 
     @Emit("switch-on")
-    toOn() {
-        console.log("turn on");
-    }
+    toOn() { }
 
     @Emit("switch-off")
-    toOff() {
-        console.log("turn off");
-    }
+    toOff() { }
 
     @Emit("switch-toggle")
     toggle() {
+        if (this.current === SwitchState.ON) {
+            this.toOff();
+        } else {
+            this.toOn();
+        }
+    }
 
+    isOn(): boolean {
+        return this.current == SwitchState.ON;
+    }
+
+    isOff(): boolean {
+        return this.current == SwitchState.OFF;
     }
 }
 
