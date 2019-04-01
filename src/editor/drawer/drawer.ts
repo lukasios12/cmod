@@ -46,7 +46,6 @@ export default class Drawer {
 
     public draw(drawing: Drawing | null = null): void {
         this.clear();
-        console.log(this.options.gridOptions.drawGrid);
         if(this.options.gridOptions.drawGrid) {
             this.drawGrid();
         }

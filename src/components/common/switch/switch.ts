@@ -16,10 +16,10 @@ export default class SwithComponent extends Vue {
     descriptionOff!: string;
 
     @Emit("switch-on")
-    toOn() { }
+    toOn() { console.log("turn on"); }
 
     @Emit("switch-off")
-    toOff() { }
+    toOff() { console.log("turn off"); }
 
     @Emit("switch-toggle")
     toggle() {

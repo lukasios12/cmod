@@ -33,7 +33,6 @@ export default class EditorComponent extends Vue {
     onSettingsChange() {
         let mod = getModule(DrawerSettingsModule, this.$store);
         if (this.editor) {
-            console.log("updating settings");
             this.editor.setSettings(mod.settings);
         }
     }
