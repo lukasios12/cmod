@@ -4,11 +4,11 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import UserModule from "./user";
-import SettingsModule from "./settings";
+import DrawerSettingsModule from "./drawer-settings";
 
 export const Store = new Vuex.Store({
     modules: {
         UserModule,
-        SettingsModule
+        DrawerSettingsModule
     }
 });

@@ -16,19 +16,37 @@ export default class Drawer {
     protected initialWidth: number;
     protected initialHeight: number;
 
-    public constructor(canvas: HTMLCanvasElement, options: DrawerOptions) {
-        this.options = options;
+    public constructor(canvas: HTMLCanvasElement, options?: DrawerOptions) {
+        if (options) {
+            this.options = options;
+        } else { // default settings
+            this.options = {
+                minZoom: 1,
+                maxZoom: 1 / 10,
+                minX: -500,
+                maxX:  500,
+                minY: -500,
+                maxY:  500,
+                gridOptions: {
+                    drawGrid: true,
+                    snapGrid: true,
+                    horizontalGridSeperation: 50,
+                    verticalGridSeperation:   50
+                }
+            };
+        }
+
         this.canvas = canvas;
         this.resize();
         this.drawingCache = null;
         this.currentTransform = Matrix.identity(3);
-
         this.initialWidth = canvas.width;
         this.initialHeight = canvas.height;
     }
 
     public draw(drawing: Drawing | null = null): void {
         this.clear();
+        console.log(this.options.gridOptions.drawGrid);
         if(this.options.gridOptions.drawGrid) {
             this.drawGrid();
         }
@@ -57,61 +75,6 @@ export default class Drawer {
         let height = this.canvas.height;
         context!.clearRect(0, 0, width, height);
         context!.restore();
-
-    }
-
-    public registerEvents(): void {
-        window.addEventListener('resize', (event) => {
-            this.resize();
-        });
-        // register key events
-        let canvas = this.canvas;
-        let movementSpeed = 40;
-        let zoomAmount = 1.2;
-        canvas.addEventListener("keydown", (event) => {
-            switch(event.keyCode) {
-                case 38: // up
-                    this.shift(0, -movementSpeed);
-                    break;
-                case 39: // right
-                    this.shift(movementSpeed);
-                    break;
-                case 40: // down
-                    this.shift(0, movementSpeed);
-                    break;
-                case 37: // left
-                    this.shift(-movementSpeed);
-                    break;
-                case 61: // +
-                    this.zoom(zoomAmount);
-                    break;
-                case 173: // -
-                    this.zoom(1 / zoomAmount);
-                    break;
-            }
-        });
-
-        // register mouse events
-        let mouseDownMiddle = false;
-        canvas.addEventListener("mousedown", (event) => {
-            if(event.buttons == 4) {
-                event.preventDefault();
-                mouseDownMiddle = true;
-            }
-        });
-
-        canvas.addEventListener("mousemove", (event) => {
-            if(mouseDownMiddle) {
-                let m = Matrix.identity(3);
-                m.set(0, 2, event.movementX);
-                m.set(1, 2, -event.movementY);
-                this.transform(m);
-            }
-        });
-
-        canvas.addEventListener("mouseup", (event) => {
-            mouseDownMiddle = false;
-        });
     }
 
     public transform(mat: Matrix): void {
@@ -145,19 +108,6 @@ export default class Drawer {
         this.draw(this.drawingCache);
     }
 
-    public resize(): void {
-        let parent = this.canvas.parentElement;
-        if (parent) {
-            this.canvas.width = parent.offsetWidth;
-            this.canvas.height = parent.offsetHeight;
-        }
-
-        if(this.drawingCache) {
-            this.draw(this.drawingCache);
-        }
-        this.setTransform(Matrix.identity(3));
-    }
-
     public shift(h: number = 0, v: number = 0): void {
         let mat = new Matrix(3, 3);
         mat.set(0, 2, h);
@@ -171,6 +121,23 @@ export default class Drawer {
         mat.set(0,0, amount);
         mat.set(1,1, amount);
         this.transform(mat);
+    }
+
+    public resize(): void {
+        let parent = this.canvas.parentElement;
+        if (parent) {
+            this.canvas.width = parent.offsetWidth;
+            this.canvas.height = parent.offsetHeight;
+        }
+
+        if(this.drawingCache) {
+            this.draw(this.drawingCache);
+        }
+        this.setTransform(Matrix.identity(3));
+    }
+
+    public setOptions(options: DrawerOptions) {
+        this.options = options;
     }
 
     public globalToLocal(event: MouseEvent): Vector2D {
@@ -233,5 +200,59 @@ export default class Drawer {
         }
         context!.closePath();
         context!.restore();
+    }
+
+    public registerEvents(): void {
+        window.addEventListener('resize', (event) => {
+            this.resize();
+        });
+        // register key events
+        let canvas = this.canvas;
+        let movementSpeed = 40;
+        let zoomAmount = 1.2;
+        canvas.addEventListener("keydown", (event) => {
+            switch(event.keyCode) {
+                case 38: // up
+                    this.shift(0, -movementSpeed);
+                    break;
+                case 39: // right
+                    this.shift(movementSpeed);
+                    break;
+                case 40: // down
+                    this.shift(0, movementSpeed);
+                    break;
+                case 37: // left
+                    this.shift(-movementSpeed);
+                    break;
+                case 61: // +
+                    this.zoom(zoomAmount);
+                    break;
+                case 173: // -
+                    this.zoom(1 / zoomAmount);
+                    break;
+            }
+        });
+
+        // register mouse events
+        let mouseDownMiddle = false;
+        canvas.addEventListener("mousedown", (event) => {
+            if(event.buttons == 4) {
+                event.preventDefault();
+                mouseDownMiddle = true;
+            }
+        });
+
+        canvas.addEventListener("mousemove", (event) => {
+            if(mouseDownMiddle) {
+                let m = Matrix.identity(3);
+                m.set(0, 2, event.movementX);
+                m.set(1, 2, -event.movementY);
+                this.transform(m);
+            }
+        });
+
+        canvas.addEventListener("mouseup", (event) => {
+            mouseDownMiddle = false;
+        });
     }
 }

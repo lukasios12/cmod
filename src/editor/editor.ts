@@ -14,6 +14,7 @@ import { isDraggable } from "./drawing/draggable_drawing";
 import Vector2D from "./shapes/vector2d";
 
 import Drawer from "./drawer/drawer";
+import DrawerOptions from "./drawer/drawer-options";
 import Feedback from "./feedback/feedback";
 import FeedbackCode from "./feedback/feedback-code";
 import FeedbackService from "src/services/feedback";
@@ -51,17 +52,7 @@ export default class Editor {
     public selectionId: number | null;
 
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
-        this.drawer = new Drawer(canvas, {
-            minZoom: 1, maxZoom: 10,
-            minX: -20, maxX: 20,
-            minY: -200, maxY: 200,
-            gridOptions: {
-                drawGrid: true,
-                snapGrid: false,
-                horizontalGridSeperation: 50,
-                verticalGridSeperation: 50
-            }
-        });
+        this.drawer = new Drawer(canvas);
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
             this.drawer.draw();
@@ -181,6 +172,11 @@ export default class Editor {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
         this.graphDrawing.options = this.graphDrawingOptions;
+    }
+
+    public setSettings(settings: DrawerOptions) {
+        this.drawer.setOptions(settings);
+        this.drawer.draw();
     }
 
     protected registerEvents(): void {

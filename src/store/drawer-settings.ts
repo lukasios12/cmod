@@ -2,17 +2,17 @@ import { VuexModule, Module, Mutation } from "vuex-module-decorators";
 import DrawerOptions, { GridOptions } from "src/editor/drawer/drawer-options";
 
 @Module({
-    name: "SettingsModule",
+    name: "DrawerSettingsModule",
     namespaced: true
 })
-export default class SettingsModule extends VuexModule {
-    settings: DrawerOptions = {
+export default class DrawerSettingsModule extends VuexModule {
+    _settings: DrawerOptions = {
         minX: -200,
         maxX: 200,
         minY: -200,
         maxY: 200,
         minZoom: 1,
-        maxZoom: 1 / 10,
+        maxZoom: 10,
         gridOptions: {
             drawGrid: true,
             snapGrid: true,
@@ -21,31 +21,27 @@ export default class SettingsModule extends VuexModule {
         }
     }
 
-    get snapToGrid() {
-        return this.settings.gridOptions.snapGrid;
-    }
-
-    get drawGrid() {
-        return this.settings.gridOptions.drawGrid;
+    get settings(): DrawerOptions {
+        return this._settings;
     }
 
     @Mutation
     setSnap(snap: boolean) {
-        this.settings.gridOptions.snapGrid = snap;
+        this._settings.gridOptions.snapGrid = snap;
     }
 
     @Mutation
     setDraw(draw: boolean) {
-        this.settings.gridOptions.drawGrid = draw;
+        this._settings.gridOptions.drawGrid = draw;
     }
 
     @Mutation
     toggleSnap() {
-        this.settings.gridOptions.snapGrid = !this.settings.gridOptions.snapGrid;
+        this._settings.gridOptions.snapGrid = !this._settings.gridOptions.snapGrid;
     }
 
     @Mutation
     toggleDraw() {
-        this.settings.gridOptions.drawGrid = !this.settings.gridOptions.drawGrid;
+        this._settings.gridOptions.drawGrid = !this._settings.gridOptions.drawGrid;
     }
 }

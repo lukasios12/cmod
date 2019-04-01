@@ -1,7 +1,7 @@
 import { Prop, Component, Vue } from "vue-property-decorator";
 import WithRender from "./menu.html?style=./menu.scss";
 import { getModule } from "vuex-module-decorators";
-import SettingsModule from "src/store/settings";
+import DrawerSettingsModule from "src/store/drawer-settings";
 
 import SwitchComponent from "src/components/common/switch/switch";
 
@@ -17,22 +17,22 @@ export default class MenuComponent extends Vue {
     isOpen!: boolean;
 
     toggleSnap() {
-        let mod = getModule(SettingsModule, this.$store);
+        let mod = getModule(DrawerSettingsModule, this.$store);
         mod.toggleSnap();
     }
 
     toggleDraw() {
-        let mod = getModule(SettingsModule, this.$store);
+        let mod = getModule(DrawerSettingsModule, this.$store);
         mod.toggleDraw();
     }
 
     get snapToGrid(): boolean {
-        let mod = getModule(SettingsModule, this.$store);
-        return mod.snapToGrid;
+        let mod = getModule(DrawerSettingsModule, this.$store);
+        return mod.settings.gridOptions.snapGrid;
     }
 
     get drawGrid(): boolean {
-        let mod = getModule(SettingsModule, this.$store);
-        return mod.drawGrid;
+        let mod = getModule(DrawerSettingsModule, this.$store);
+        return mod.settings.gridOptions.drawGrid;
     }
 }
