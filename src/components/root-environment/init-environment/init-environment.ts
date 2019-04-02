@@ -6,7 +6,7 @@ import UploadDialogComponent from "./dialogs/upload/upload";
 import LoaderComponent from "src/components/common/loader/loader";
 
 import { getModule } from "vuex-module-decorators";
-import UserModule from "src/store/user";
+import SessionModule from "src/store/session";
 
 
 @WithRender
@@ -20,7 +20,7 @@ import UserModule from "src/store/user";
 })
 export default class InitEnvironment extends Vue {
     current() {
-        let mod = getModule(UserModule, this.$store);
+        let mod = getModule(SessionModule, this.$store);
         if (mod.isLoading) {
             return LoaderComponent;
         }
@@ -31,7 +31,7 @@ export default class InitEnvironment extends Vue {
     }
 
     get isLoading(): boolean {
-        let mod = getModule(UserModule, this.$store);
+        let mod = getModule(SessionModule, this.$store);
         return mod.isLoading;
     }
 }

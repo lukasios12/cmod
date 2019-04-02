@@ -5,7 +5,7 @@ import WithRender from "./imager.html?style=./imager.scss";
 import Loader from "src/components/common/loader/loader";
 
 import { getModule } from "vuex-module-decorators";
-import UserModule from "src/store/user";
+import SessionModule from "src/store/session";
 import PetrinetService from "src/services/petrinet";
 
 @WithRender
@@ -21,7 +21,7 @@ export default class Imager extends Vue {
     loading: boolean = false;
 
     mounted() {
-        let mod = getModule(UserModule, this.$store);
+        let mod = getModule(SessionModule, this.$store);
         if (mod.petrinetId !== null) {
             this.loading = true;
             PetrinetService.image(mod.petrinetId).then((response: AxiosResponse<string>) => {

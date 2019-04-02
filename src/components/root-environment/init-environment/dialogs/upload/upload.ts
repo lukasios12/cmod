@@ -4,7 +4,7 @@ import WithRender from "./upload.html?style=./upload.scss";
 import AlertComponent from "src/components/common/messages/alert/alert";
 
 import { getModule } from "vuex-module-decorators";
-import UserModule from "src/store/user";
+import SessionModule from "src/store/session";
 
 @WithRender
 @Component({
@@ -27,7 +27,7 @@ export default class UploadDialogComponent extends Vue {
     }
 
     get error() {
-        let mod = getModule(UserModule, this.$store);
+        let mod = getModule(SessionModule, this.$store);
         return mod.error;
     }
 
@@ -37,7 +37,7 @@ export default class UploadDialogComponent extends Vue {
 
     send() {
         this.hideError = false;
-        let mod = getModule(UserModule, this.$store);
+        let mod = getModule(SessionModule, this.$store);
         mod.uploadPetrinet(this.file).then(() => {
             console.log("uploading complete, succes");
             mod.startSession();

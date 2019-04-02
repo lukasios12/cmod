@@ -11,10 +11,10 @@ import { UserCreatedResponse,
        } from "src/types";
 
 @Module({
-    name: "UserModule",
+    name: "SessionModule",
     namespaced: true
 })
-export default class UserModule extends VuexModule {
+export default class SessionModule extends VuexModule {
     uid: number | null = 4;
     pid: number | null = 4;
     sid: number | null = 0;
