@@ -16,7 +16,7 @@ import ModellerComponent from "./modeller/modeller";
     },
 })
 export default class ModellingEnvironment extends Vue {
-    menuOpen: boolean = true;
+    menuOpen: boolean = false;
 
     menuToggle(): void {
         this.menuOpen = !this.menuOpen;

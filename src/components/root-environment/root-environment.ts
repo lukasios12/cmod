@@ -32,8 +32,4 @@ export default class RootEnvironment extends Vue {
             return ModellingEnvironment;
         }
     }
-
-    updated() {
-        console.log("something just updated");
-    }
 }

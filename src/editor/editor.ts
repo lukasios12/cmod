@@ -259,7 +259,14 @@ export default class Editor {
             this.drawer.draw();
         });
     }
-    
+
+    public resize() {
+        console.log('resizing editor');
+        if (this.drawer) {
+            this.drawer.resize();
+        }
+    }
+
     protected getContainer(): HTMLElement | null {
         return this.drawer.canvas.parentElement;
     }
