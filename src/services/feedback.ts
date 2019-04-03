@@ -1,9 +1,9 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import Config from "./config";
-import { FeedbackResponse } from "src/types";
+import { FeedbackResponse, GraphRequest } from "src/types";
 
 export default class FeedbackService {
-    public get(uid: number, pid: number, sid: number, g: string) {
+    public static get(uid: number, pid: number, sid: number, g: GraphRequest) {
         let conf = Config.getInstance();
         let base = conf.baseUrl;
         let petrinetUrl = conf.petrinetUrl;
