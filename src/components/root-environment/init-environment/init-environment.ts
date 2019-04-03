@@ -6,6 +6,8 @@ import UploadDialogComponent from "./dialogs/upload/upload";
 import LoaderComponent from "src/components/common/loader/loader";
 
 import { getModule } from "vuex-module-decorators";
+import UserModule from "src/store/user";
+import PetrinetModule from "src/store/petrinet";
 import SessionModule from "src/store/session";
 
 
@@ -20,18 +22,21 @@ import SessionModule from "src/store/session";
 })
 export default class InitEnvironment extends Vue {
     current() {
-        let mod = getModule(SessionModule, this.$store);
-        if (mod.isLoading) {
+        let umod = getModule(UserModule, this.$store);
+        let pmod = getModule(PetrinetModule, this.$store);
+        let smod = getModule(SessionModule, this.$store);
+
+        if (umod.isLoading || pmod.isLoading || smod.isLoading) {
             return LoaderComponent;
         }
-        else if (mod.userId !== null) {
+        else if (umod.id !== null) {
             return UploadDialogComponent;
         }
         return WelcomeDialogComponent;
     }
 
     get isLoading(): boolean {
-        let mod = getModule(SessionModule, this.$store);
+        let mod = getModule(UserModule, this.$store);
         return mod.isLoading;
     }
 }

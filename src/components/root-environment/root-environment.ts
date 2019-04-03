@@ -6,7 +6,9 @@ import ModellingEnvironment from "./modelling-environment/modelling-environment"
 import FooterComponent from "./footer/footer";
 
 import { getModule } from "vuex-module-decorators";
-import UserModule from "src/store/session";
+import UserModule from "src/store/user";
+import PetrinetModule from "src/store/petrinet";
+import SessionModule from "src/store/session";
 
 @WithRender
 @Component({
@@ -25,8 +27,10 @@ export default class RootEnvironment extends Vue {
     ];
 
     get current() {
-        let mod = getModule(UserModule, this.$store);
-        if (mod.userId === null || mod.sessionId === null || mod.petrinetId === null) {
+        let umod = getModule(UserModule, this.$store);
+        let pmod = getModule(PetrinetModule, this.$store);
+        let smod = getModule(SessionModule, this.$store);
+        if (umod.id === null || smod.id === null || pmod.id === null) {
             return InitEnvironment;
         } else {
             return ModellingEnvironment;

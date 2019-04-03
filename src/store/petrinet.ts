@@ -2,22 +2,21 @@ import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-dec
 import { AxiosResponse, AxiosError } from "axios";
 
 import UserModule from "./user";
-import PetrinetModule from "./petrinet";
 
-import SessionService from "src/services/session";
-import { SessionCreatedResponse } from "src/types";
+import PetrinetService from "src/services/petrinet";
+import { PetrinetCreatedResponse } from "src/types";
 
 @Module({
-    name: "SessionModule",
-    namespaced: true,
+    name: "PetrinetModule",
+    namespaced: true
 })
-export default class SessionModule extends VuexModule {
-    sid: number = 0;
+export default class PetrinetModule extends VuexModule {
+    pid: number | null = null;
     err: string = "";
     loading: boolean = false;
 
     get id() {
-        return this.sid;
+        return this.pid;
     }
 
     get error() {
@@ -25,17 +24,17 @@ export default class SessionModule extends VuexModule {
     }
 
     get isLoading() {
-        return this.loading
+        return this.loading;
     }
 
     @Mutation
     setId(id: number | null) {
-        this.sid = id;
+        this.pid = id;
     }
 
     @Mutation
-    setError(message: string) {
-        this.err = message;
+    setError(err: string) {
+        this.err = err;
     }
 
     @Mutation
@@ -44,21 +43,23 @@ export default class SessionModule extends VuexModule {
     }
 
     @Action
-    register() {
+    register(file: File | null) {
         let umod = getModule(UserModule);
-        let pmod = getModule(PetrinetModule);
-        if (umod.id === null || pmod.id === null) {
-            this.setError("Not enough information to start the session");
+        if (!file) {
+            this.setError("No file selected");
+        } else if (umod.id === null) {
+            this.setError("No user logged in");
         } else {
             this.setLoading(true);
             return new Promise((resolve, reject) => {
-                SessionService.set(umod.id, pmod.id)
-                .then((response: AxiosResponse<SessionCreatedResponse>) => {
-                    let sid = response.data.session_id;
-                    this.setId(sid);
-                    return resolve();
+                PetrinetService.set(umod.id, file)
+                .then((response: AxiosResponse<PetrinetCreatedResponse>) => {
+                    let id = Number(response.data.petrinetId);
+                    this.setError("");
+                    this.setId(id);
+                    resolve();
                 }).catch((response: AxiosError) => {
-                    let error =response.response.data;
+                    let error = response.response.data;
                     this.setId(null);
                     this.setError(error.error);
                 }).finally(() => {
