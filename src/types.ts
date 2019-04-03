@@ -39,6 +39,18 @@ interface UserCreatedResponse {
     selfUrl: string;
 }
 
+interface PetrinetResponse {
+    places: Array<string>;
+    transitions: Array<string>;
+    flows: Array<EdgeResponse>;
+}
+
+interface EdgeResponse {
+    from: string;
+    to: string;
+    weight: number;
+}
+
 interface PetrinetCreatedResponse {
     petrinetId: string;
     petrinetUrl: string;
@@ -65,6 +77,7 @@ export {
     UserResponse,
     UserListResponse,
     UserCreatedResponse,
+    PetrinetResponse,
     PetrinetCreatedResponse,
     SessionCreatedResponse,
     FeedbackResponse,
