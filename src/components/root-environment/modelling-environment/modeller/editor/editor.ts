@@ -4,6 +4,7 @@ import WithRender from "./editor.html?style=./editor.scss";
 import { getModule } from "vuex-module-decorators";
 import DrawerSettingsModule from "src/store/drawer-settings";
 import ModellerModule from "src/store/modeller";
+import PetrinetModule from "src/store/petrinet";
 
 import Editor from "src/editor/editor";
 import DrawerOptions, { GridOptions } from "src/editor/drawer/drawer-options";
@@ -18,11 +19,16 @@ export default class EditorComponent extends Vue {
 
     mounted() {
         let canvas = <HTMLCanvasElement>document.getElementById("editorCanvas");
-        let editor = new Editor(canvas);
+        let editor = new Editor(canvas, this.petrinet);
         this.editor = editor;
 
         let settings = this.settings;
         this.editor.setSettings(settings);
+    }
+
+    get petrinet() {
+        let mod = getModule(PetrinetModule, this.$store);
+        return mod.petrinet;
     }
 
     get settings() {
@@ -33,6 +39,14 @@ export default class EditorComponent extends Vue {
     get isResizing() {
         let mod = getModule(ModellerModule, this.$store);
         return mod.resizing;
+    }
+
+    @Watch('petrinet', {deep: true, immediate: false})
+    onPetrinetChange() {
+        let mod = getModule(PetrinetModule, this.$store);
+        if (this.editor) {
+            this.editor.petrinet = mod.petrinet;
+        }
     }
 
     @Watch('settings', {deep: true, immediate: true})

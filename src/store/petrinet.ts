@@ -23,6 +23,10 @@ export default class PetrinetModule extends VuexModule {
         return this.pid;
     }
 
+    get petrinet() {
+        return this.net;
+    }
+
     get error() {
         return this.err;
     }

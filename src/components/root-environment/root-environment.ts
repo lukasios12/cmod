@@ -30,7 +30,10 @@ export default class RootEnvironment extends Vue {
         let umod = getModule(UserModule, this.$store);
         let pmod = getModule(PetrinetModule, this.$store);
         let smod = getModule(SessionModule, this.$store);
-        if (umod.id === null || smod.id === null || pmod.id === null) {
+        if (umod.id === null ||
+            smod.id === null ||
+            pmod.id === null ||
+            pmod.petrinet === null) {
             return InitEnvironment;
         } else {
             return ModellingEnvironment;

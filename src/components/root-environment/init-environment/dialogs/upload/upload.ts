@@ -42,7 +42,6 @@ export default class UploadDialogComponent extends Vue {
         let pmod = getModule(PetrinetModule, this.$store);
         let smod = getModule(SessionModule, this.$store);
         pmod.register(this.file).then(() => {
-            console.log("uploading complete, succes");
             pmod.get();
             smod.register();
         }).catch(() => {

@@ -52,35 +52,17 @@ export default class Editor {
     public selectionId: number | null;
 
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
+        this.petrinet = petrinet;
         this.drawer = new Drawer(canvas);
         this.actionManager = new ActionManager();
         this.actionManager.addHook( () => {
             this.drawer.draw();
-            // let session = Session.getInstance();
-            // FeedbackService.getInstance().get(
-            //     53,
-            //     70, 
-            //     1, 
-            //     this.graph
-            // );
         });
 
         this.selection = null;
         this.selectionId = null;
 
         this.registerEvents();
-
-        let places = new HashSet<string>(hashString, eqStrings);
-        places.add("p1");
-        places.add("p2");
-        places.add("p3");
-        places.add("p4");
-        let transitions = new HashSet<string>(hashString, eqStrings);
-        transitions.add("t1");
-        transitions.add("t2");
-        transitions.add("t3");
-        transitions.add("t4");
-        this.petrinet = new Petrinet(places, transitions);
 
         this.graph = new Graph();
         this.graphDrawing = new GraphDrawing();
@@ -118,6 +100,8 @@ export default class Editor {
         this.editState(1, c);
 
         this.drawer.draw(this.graphDrawing);
+
+        // console.log(this.petrinet);
     }
 
     public addState(state: State, position: Vector2D | null = null): void {
