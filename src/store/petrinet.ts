@@ -58,13 +58,15 @@ export default class PetrinetModule extends VuexModule {
     @Action
     register(file: File | null) {
         let umod = getModule(UserModule);
-        if (!file) {
-            this.setError("No file selected");
-        } else if (umod.id === null) {
-            this.setError("No user logged in");
-        } else {
-            this.setLoading(true);
-            return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
+            if (!file) {
+                this.setError("No file selected");
+                reject();
+            } else if (umod.id === null) {
+                this.setError("No user logged in");
+                reject();
+            } else {
+                this.setLoading(true);
                 PetrinetService.set(umod.id, file)
                 .then((response: AxiosResponse<PetrinetCreatedResponse>) => {
                     let id = Number(response.data.petrinetId);
@@ -73,7 +75,6 @@ export default class PetrinetModule extends VuexModule {
                     resolve();
                 }).catch((error: AxiosError) => {
                     let message: string;
-                    console.log(JSON.parse(JSON.stringify(error)));
                     if (error.response) {
                         message = error.response.data.error;
                     } else {
@@ -81,11 +82,12 @@ export default class PetrinetModule extends VuexModule {
                     }
                     this.setId(null);
                     this.setError(message);
+                    reject();
                 }).finally(() => {
                     this.setLoading(false);
                 });
-            });
-        }
+            }
+        });
     }
 
     @Action
