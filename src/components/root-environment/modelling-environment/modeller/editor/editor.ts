@@ -58,7 +58,6 @@ export default class EditorComponent extends Vue {
     @Watch('feedback', {deep: true, immediate: false})
     onFeedbackChange() {
         let feedback = this.feedback;
-        console.log(feedback);
         if (this.editor) {
              this.editor.setFeedback(feedback);
         }

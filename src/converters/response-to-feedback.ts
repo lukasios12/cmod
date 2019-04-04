@@ -7,9 +7,14 @@ export default class ResponseToFeedback {
         for(let i = 0; i < fr.general.length; i++) {
             f.add(fr.general[i]);
         }
-        // for(let i = 0; i < fr.specific.length; i++) {
-        //     f.add(fr.specific[i]);
-        // }
+        let keys = Object.keys(fr.specific);
+        for(let i = 0; i < keys.length; i++) {
+            let id = keys[i];
+            let items = fr.specific[id];
+            for(let j = 0; j < items.length; j++) {
+                f.add(items[j], Number(id));
+            }
+        }
         return f;
     }
 }

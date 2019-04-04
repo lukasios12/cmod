@@ -75,14 +75,20 @@ export default class Editor {
         a.set("p1", new IntegerTokenCount(1));
         a.set("p2", new IntegerTokenCount(5));
         let b = new Marking(this.petrinet);
-        b.set("p2", new IntegerTokenCount(2));
+        b.set("p1", new IntegerTokenCount(1));
+        b.set("p2", new OmegaTokenCount());
         let c = new Marking(this.petrinet);
-        c.set("p3", new OmegaTokenCount());
+        c.set("p2", new IntegerTokenCount(5));
+        c.set("p3", new IntegerTokenCount(1));
         let d = new Marking(this.petrinet);
         d.set("p1", new IntegerTokenCount(3));
 
         this.addState(a, new Vector2D(50, 100));
-        // this.addState(b, new Vector2D(420, 100));
+        this.addState(b, new Vector2D(420, 100));
+        this.addState(c, new Vector2D(420, 250));
+
+        this.addEdge(new Edge(1, 2, "t1"));
+        this.addEdge(new Edge(1, 3, "t2"));
         // this.addEdge(new Edge(1, 2, "t3"));
         // this.addEdge(new Edge(1, 1, "t2"));
         // this.addEdge(new Edge(1, 2, "t1"));
@@ -144,7 +150,7 @@ export default class Editor {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
         this.graphDrawing.options = this.graphDrawingOptions;
-        console.log(this.feedback);
+        this.drawer.draw();
     }
 
     public setSettings(settings: DrawerOptions) {
