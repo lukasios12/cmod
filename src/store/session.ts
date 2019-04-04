@@ -12,7 +12,7 @@ import { SessionCreatedResponse } from "src/types";
     namespaced: true,
 })
 export default class SessionModule extends VuexModule {
-    sid: number = 0;
+    sid: number | null = null;
     err: string = "";
     loading: boolean = false;
 

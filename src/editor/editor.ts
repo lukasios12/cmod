@@ -18,6 +18,7 @@ import DrawerOptions from "./drawer/drawer-options";
 import Feedback from "./feedback/feedback";
 import FeedbackCode from "./feedback/feedback-code";
 import FeedbackService from "src/services/feedback";
+import FeedbackDispatch from "./feedback/feedback-dispatch";
 import { Observer } from "lib/observer/observer";
 
 import AddState from "./actions/add-state";
@@ -55,8 +56,9 @@ export default class Editor {
         this.petrinet = petrinet;
         this.drawer = new Drawer(canvas);
         this.actionManager = new ActionManager();
-        this.actionManager.addHook( () => {
+        this.actionManager.addHook(() => {
             this.drawer.draw();
+            FeedbackDispatch.get(this.graph);
         });
 
         this.selection = null;
@@ -68,19 +70,10 @@ export default class Editor {
         this.graphDrawing = new GraphDrawing();
         this.graphDrawingOptions = new GraphDrawingOptions();
         this.feedback = null;
-        let feedback = new Feedback();
-        feedback.add(FeedbackCode.REACHABLE_FROM_PRESET, 1);
-        feedback.add(FeedbackCode.DUPLICATE_STATE, 2);
-        feedback.add(FeedbackCode.DISABLED, 3);
-        feedback.add(FeedbackCode.DUPLICATE_EDGE, 4);
-        feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 4);
-        feedback.add(FeedbackCode.ENABLED_CORRECT_POST, 5);
-        // feedback.add(FeedbackCode.DUPLICATE_EDGE, 6);
-        this.feedback = feedback;
-        this.setFeedback(feedback);
 
         let a = new Marking(this.petrinet);
         a.set("p1", new IntegerTokenCount(1));
+        a.set("p2", new IntegerTokenCount(5));
         let b = new Marking(this.petrinet);
         b.set("p2", new IntegerTokenCount(2));
         let c = new Marking(this.petrinet);
@@ -89,19 +82,14 @@ export default class Editor {
         d.set("p1", new IntegerTokenCount(3));
 
         this.addState(a, new Vector2D(50, 100));
-        this.addState(b, new Vector2D(420, 100));
-        this.addEdge(new Edge(1, 2, "t3"));
-        this.addEdge(new Edge(1, 1, "t2"));
-        this.addEdge(new Edge(1, 2, "t1"));
-        this.addEdge(new Edge(2, 1, "t1"));
+        // this.addState(b, new Vector2D(420, 100));
+        // this.addEdge(new Edge(1, 2, "t3"));
+        // this.addEdge(new Edge(1, 1, "t2"));
+        // this.addEdge(new Edge(1, 2, "t1"));
+        // this.addEdge(new Edge(2, 1, "t1"));
         this.setInitial(1);
 
-        this.editEdge(4, "test");
-        this.editState(1, c);
-
         this.drawer.draw(this.graphDrawing);
-
-        // console.log(this.petrinet);
     }
 
     public addState(state: State, position: Vector2D | null = null): void {
@@ -156,6 +144,7 @@ export default class Editor {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
         this.graphDrawing.options = this.graphDrawingOptions;
+        console.log(this.feedback);
     }
 
     public setSettings(settings: DrawerOptions) {

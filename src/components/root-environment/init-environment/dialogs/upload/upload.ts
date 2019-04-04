@@ -45,7 +45,7 @@ export default class UploadDialogComponent extends Vue {
             pmod.get();
             smod.register();
         }).catch(() => {
-            console.log("uploading complete, failure");
+
         });
     }
 }

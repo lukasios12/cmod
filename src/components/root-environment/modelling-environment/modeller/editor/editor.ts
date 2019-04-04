@@ -5,6 +5,7 @@ import { getModule } from "vuex-module-decorators";
 import DrawerSettingsModule from "src/store/drawer-settings";
 import ModellerModule from "src/store/modeller";
 import PetrinetModule from "src/store/petrinet";
+import FeedbackModule from "src/store/feedback";
 
 import Editor from "src/editor/editor";
 import DrawerOptions, { GridOptions } from "src/editor/drawer/drawer-options";
@@ -31,6 +32,11 @@ export default class EditorComponent extends Vue {
         return mod.petrinet;
     }
 
+    get feedback() {
+        let mod = getModule(FeedbackModule, this.$store);
+        return mod.feedback;
+    }
+
     get settings() {
         let mod = getModule(DrawerSettingsModule, this.$store);
         return mod.settings;
@@ -46,6 +52,15 @@ export default class EditorComponent extends Vue {
         let mod = getModule(PetrinetModule, this.$store);
         if (this.editor) {
             this.editor.petrinet = mod.petrinet;
+        }
+    }
+
+    @Watch('feedback', {deep: true, immediate: false})
+    onFeedbackChange() {
+        let feedback = this.feedback;
+        console.log(feedback);
+        if (this.editor) {
+             this.editor.setFeedback(feedback);
         }
     }
 
