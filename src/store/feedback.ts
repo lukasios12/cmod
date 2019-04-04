@@ -54,9 +54,13 @@ export default class FeedbackModule extends VuexModule {
                 let feedback = ResponseToFeedback.convert(fr);
                 this.setFeedback(feedback);
                 resolve();
-            }).catch((response: AxiosError) => {
-                let error = response;
-                console.log(error);
+            }).catch((error: AxiosError) => {
+                let message: string;
+                if (error.response) {
+                    message = error.response.data.error;
+                } else {
+                    message = "Could not connect to server";
+                }
                 reject();
             }).finally(() => {
                 this.setLoading(false);

@@ -57,10 +57,15 @@ export default class SessionModule extends VuexModule {
                     let sid = response.data.session_id;
                     this.setId(sid);
                     return resolve();
-                }).catch((response: AxiosError) => {
-                    let error =response.response.data;
+                }).catch((error: AxiosError) => {
+                    let message: string;
+                    if (error.response) {
+                        message = error.response.data.error;
+                    } else {
+                        message = "Could not connect to server";
+                    }
                     this.setId(null);
-                    this.setError(error.error);
+                    this.setError(message);
                 }).finally(() => {
                     this.setLoading(false);
                 });

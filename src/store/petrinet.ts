@@ -71,10 +71,16 @@ export default class PetrinetModule extends VuexModule {
                     this.setError("");
                     this.setId(id);
                     resolve();
-                }).catch((response: AxiosError) => {
-                    let error = response.response.data;
+                }).catch((error: AxiosError) => {
+                    let message: string;
+                    console.log(JSON.parse(JSON.stringify(error)));
+                    if (error.response) {
+                        message = error.response.data.error;
+                    } else {
+                        message = "Could not connect to server";
+                    }
                     this.setId(null);
-                    this.setError(error.error);
+                    this.setError(message);
                 }).finally(() => {
                     this.setLoading(false);
                 });
@@ -95,9 +101,14 @@ export default class PetrinetModule extends VuexModule {
                     let cnet = ResponseToPetrinet.convert(net);
                     this.setPetrinet(cnet);
                     this.setError("");
-                }).catch((response: AxiosError) => {
-                    let error = response.response.data;
-                    this.setError(error.error);
+                }).catch((error: AxiosError) => {
+                    let message: string;
+                    if (error.response) {
+                        message = error.response.data.error;
+                    } else {
+                        message = "Could not connect to server";
+                    }
+                    this.setError(message);
                 }).finally(() => {
                     this.setLoading(false);
                 });

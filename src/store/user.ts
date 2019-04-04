@@ -53,9 +53,14 @@ export default class UserModule extends VuexModule {
                 this.setError("");
                 resolve();
             }).catch((error: AxiosError) => {
-                let message = error.response.data;
+                let message: string;
+                if (error.response) {
+                    message = error.response.data.error;
+                } else {
+                    message = "Could not connect to server";
+                }
                 this.setId(null);
-                this.setError(message.error);
+                this.setError(message);
                 reject();
             }).finally(() => {
                 this.setLoading(false);
