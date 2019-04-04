@@ -44,14 +44,15 @@ export default class SessionModule extends VuexModule {
     }
 
     @Action
-    register() {
+    register(): Promise<any> {
         let umod = getModule(UserModule);
         let pmod = getModule(PetrinetModule);
-        if (umod.id === null || pmod.id === null) {
-            this.setError("Not enough information to start the session");
-        } else {
-            this.setLoading(true);
-            return new Promise((resolve, reject) => {
+
+        return new Promise((resolve, reject) => {
+            if (umod.id === null || pmod.id === null) {
+                this.setError("Not enough information to start the session");
+            } else {
+                this.setLoading(true);
                 SessionService.set(umod.id, pmod.id)
                 .then((response: AxiosResponse<SessionCreatedResponse>) => {
                     let sid = response.data.session_id;
@@ -69,7 +70,7 @@ export default class SessionModule extends VuexModule {
                 }).finally(() => {
                     this.setLoading(false);
                 });
-            });
-        }
+            }
+        });
     }
 }

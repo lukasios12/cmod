@@ -41,7 +41,7 @@ export default class UserModule extends VuexModule {
     }
 
     @Action
-    register(username: string) {
+    register(username: string): Promise<any> {
         this.setLoading(true);
         let fd = new FormData();
         fd.set("name", username);

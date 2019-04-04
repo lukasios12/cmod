@@ -56,7 +56,7 @@ export default class PetrinetModule extends VuexModule {
     }
 
     @Action
-    register(file: File | null) {
+    register(file: File | null): Promise<any> {
         let umod = getModule(UserModule);
         return new Promise((resolve, reject) => {
             if (!file) {
@@ -91,18 +91,20 @@ export default class PetrinetModule extends VuexModule {
     }
 
     @Action
-    get() {
-        if (this.id === null) {
-            this.setError("Could not retrieve Petri net as no id is supplied");
-        } else {
-            this.setLoading(true);
-            return new Promise((resolve, reject) => {
+    get(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.id === null) {
+                this.setError("Could not retrieve Petri net as no id is supplied");
+                reject();
+            } else {
+                this.setLoading(true);
                 PetrinetService.get(this.id)
                 .then((response: AxiosResponse<PetrinetResponse>) => {
                     let net = response.data;
                     let cnet = ResponseToPetrinet.convert(net);
                     this.setPetrinet(cnet);
                     this.setError("");
+                    resolve();
                 }).catch((error: AxiosError) => {
                     let message: string;
                     if (error.response) {
@@ -111,10 +113,11 @@ export default class PetrinetModule extends VuexModule {
                         message = "Could not connect to server";
                     }
                     this.setError(message);
+                    reject();
                 }).finally(() => {
                     this.setLoading(false);
                 });
-            });
-        }
+           }
+        });
     }
 }
