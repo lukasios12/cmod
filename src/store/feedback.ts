@@ -41,7 +41,7 @@ export default class FeedbackModule extends VuexModule {
     }
 
     @Action
-    get(graph: Graph) {
+    get(graph: Graph): Promise<any> {
         let data = GraphToRequest.convert(graph);
         let umod = getModule(UserModule);
         let smod = getModule(SessionModule);
