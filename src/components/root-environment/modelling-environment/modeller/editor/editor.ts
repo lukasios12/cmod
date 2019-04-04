@@ -49,7 +49,7 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    @Watch('settings', {deep: true, immediate: true})
+    @Watch('settings', {deep: true, immediate: false})
     onSettingsChange() {
         let mod = getModule(DrawerSettingsModule, this.$store);
         if (this.editor) {
@@ -57,10 +57,10 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    @Watch('isResizing', {deep: true, immediate: true})
+    @Watch('isResizing', {deep: true, immediate: false})
     onResizeChange() {
         let mod = getModule(ModellerModule, this.$store);
-        if (!mod.resizing && this.editor) {
+        if (this.editor) {
             this.editor.resize();
         }
     }
