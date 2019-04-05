@@ -1,6 +1,6 @@
 import EdgeDrawing from "./edge-drawing";
 import StateDrawing from "./state-drawing";
-import Draggable from "./draggable_drawing";
+import Draggable from "./draggable-drawing";
 
 import Vector2D from "src/editor/shapes/vector2d";
 import Circle from "src/editor/shapes/circle";

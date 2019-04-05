@@ -1,6 +1,6 @@
 import Hittable from "./hittable-drawing";
 import Snappable from "./snappable-drawing";
-import Draggable from "./draggable_drawing";
+import Draggable from "./draggable-drawing";
 
 import State from "src/editor/system/graph/state";
 

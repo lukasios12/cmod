@@ -9,7 +9,7 @@ import OmegaTokenCount from "./system/tokens/omega-token-count";
 import Drawing from "./drawing/drawing";
 import GraphDrawing from "./drawing/graph-drawing";
 import GraphDrawingOptions from "./drawing/graph-drawing-options";
-import { isDraggable } from "./drawing/draggable_drawing";
+import { isDraggable } from "./drawing/draggable-drawing";
 
 import Vector2D from "./shapes/vector2d";
 
