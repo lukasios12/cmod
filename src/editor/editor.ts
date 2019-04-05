@@ -30,10 +30,6 @@ import DeleteInitial from "./actions/del-initial";
 import EditState from "./actions/edit-state";
 import EditEdge from "./actions/edit-edge";
 
-import { HTMLGeneratorOptions } from "lib/html-generator/html-generator-options";
-import Tutorial from "./menus/tutorial";
-import EditStateMenu from "src/editor/menus/edit-state";
-
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
@@ -181,21 +177,11 @@ export default class Editor {
                         }
                     }
                     break;
-                case 69: //
+                case 69: // e
                     if (this.selectionId !== null && 
                         this.graph.hasState(this.selectionId)
                     ) {
-                        let state = this.graph.getState(this.selectionId);
-                        let options = new HTMLGeneratorOptions();
-                        let menu = new EditStateMenu(state!, options);
-                        menu.onCancel(()=> {
-                            menu.destroy();
-                        });
-                        menu.onConfirm(() => {
-                            console.log("confirm");
-                            menu.destroy();
-                        })
-                        menu.insert(document.getElementById("app")!);
+                        console.log("editing");
                     }
                 case 72: // h
                     // let opts = new HTMLGeneratorOptions();
