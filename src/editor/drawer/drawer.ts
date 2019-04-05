@@ -137,6 +137,7 @@ export default class Drawer {
 
     public setOptions(options: DrawerOptions) {
         this.options = options;
+        this.draw();
     }
 
     public globalToLocal(event: MouseEvent): Vector2D {

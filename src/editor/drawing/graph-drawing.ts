@@ -34,6 +34,7 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
+        console.log(this.options);
         let stateIds = this.states.keys();
         let edgeIds = this.edges.keys();
         let drawn = new HashTable<number, boolean>(hashNumber, eqNumbers);
