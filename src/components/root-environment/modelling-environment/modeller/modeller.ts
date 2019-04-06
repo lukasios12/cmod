@@ -14,7 +14,7 @@ import { Multipane, MultipaneResizer } from "vue-multipane";
         "editor": Editor,
         "imager": Imager,
         "split-container": Multipane,
-        "split-container-resizer": MultipaneResizer
+        "split-container-resizer": MultipaneResizer,
     }
 })
 export default class ModellerComponent extends Vue {
