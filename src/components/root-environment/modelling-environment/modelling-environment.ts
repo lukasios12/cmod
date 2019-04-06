@@ -25,21 +25,17 @@ export default class ModellingEnvironment extends Vue {
         window.addEventListener('keyup', (event) => {
             switch(event.keyCode) {
                 case 72:
-                    this.tutorialToggle();
+                    this.toggleTutorial();
                 break;
             }
         });
     }
 
-    menuToggle(): void {
+    toggleMenu(): void {
         this.menuOpen = !this.menuOpen;
     }
 
-    closeTutorial(): void {
-        this.showTutorial = false;
-    }
-
-    tutorialToggle() {
+    toggleTutorial() {
         this.showTutorial = !this.showTutorial;
     }
 }

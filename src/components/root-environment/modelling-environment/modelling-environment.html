@@ -1,7 +1,7 @@
 <div>
-    <modeller-menu-toggle v-on:menu-toggle="menuToggle" v-bind:isOpen="menuOpen"></modeller-menu-toggle>
+    <modeller-menu-toggle v-on:menu-toggle="toggleMenu" v-bind:isOpen="menuOpen"></modeller-menu-toggle>
     <modeller-menu v-bind:isOpen="menuOpen"></modeller-menu>
     <modeller-header></modeller-header>
     <modeller-environment></modeller-environment>
-    <modeller-tutorial v-show="showTutorial" @close-tutorial="closeTutorial"/>
+    <modeller-tutorial v-show="showTutorial" @close-tutorial="toggleTutorial"/>
 </div>

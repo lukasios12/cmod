@@ -27,8 +27,6 @@ import DrawerOptions from "src/editor/drawer/drawer-options";
 import Feedback from "src/editor/feedback/feedback";
 import FeedbackCode from "src/editor/feedback/feedback-code";
 import FeedbackService from "src/services/feedback";
-import FeedbackDispatch from "src/editor/feedback/feedback-dispatch";
-import { Observer } from "lib/observer/observer";
 
 import AddState from "src/editor/actions/add-state";
 import AddEdge from "src/editor/actions/add-edge";
@@ -42,7 +40,6 @@ import EditEdge from "src/editor/actions/edit-edge";
 import { ActionManager } from "lib/action-manager/action-manager";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
-import Session from "src/services/session";
 
 @WithRender
 @Component({
@@ -174,11 +171,6 @@ export default class Editor extends Vue {
                         console.log("editing");
                     }
                     break;
-                case 72: // h
-                    // let opts = new HTMLGeneratorOptions();
-                    // let tut = new Tutorial(opts);
-                    // tut.insert(document.body);
-                    break;
                 case 73: // i
                     if (this.selectionId !== null) {
                         this.setInitial(this.selectionId);
@@ -204,9 +196,16 @@ export default class Editor extends Vue {
         // mouse events
         let mouseDownLeft= false;
         canvas.addEventListener("mousedown", (event) => {
-            if(event.buttons == 1) {
+            if(event.buttons == 1) { // left click
                 let point = this.drawer.globalToLocal(event);
-                this.select(point, context!);
+                if (this.selectionId !== null && event.ctrlKey) {
+                    let id = this.graphDrawing.getDrawingAt(point, context);
+                    let transitions = this.petrinet.getTransitions().toArray();
+                    let edge = new Edge(this.selectionId, id, transitions[0]);
+                    this.addEdge(edge);
+                } else {
+                    this.select(point, context);
+                }
                 mouseDownLeft= true;
             }
         });
