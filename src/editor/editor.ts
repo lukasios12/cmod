@@ -113,10 +113,6 @@ export default class Editor {
         this.graphDrawingOptions.selected = this.selectionId;
     }
 
-    public reset() {
-        console.log("resetting editor");
-    }
-
     public setFeedback(feedback: Feedback): void {
         this.feedback = feedback;
         this.graphDrawingOptions.feedback = feedback;
@@ -204,7 +200,8 @@ export default class Editor {
             }
         });
         canvas.addEventListener("mousemove", (event) => {
-            if(mouseDownLeft && this.selection && isDraggable(this.selection)) {
+            if (mouseDownLeft && !event.ctrlKey &&
+                this.selection && isDraggable(this.selection)) {
                 let point = this.drawer.globalToLocal(event);
                 this.selection.drag(point, context!);
                 this.drawer.draw();

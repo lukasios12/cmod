@@ -19,19 +19,17 @@ import Editor from "src/editor/editor";
     }
 })
 export default class EditorComponent extends Vue {
-    editor: Editor | null;
+    editor: Editor | null = null;
     showContextMenu: boolean = false;
 
-    mounted () {
+    mounted() {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
         this.editor = new Editor(canvas, this.petrinet);
         this.editor.setSettings(this.settings);
-        
-        canvas.addEventListener("mouseup", (event) => {
-            switch(event.button) {
-                case 2:
-                    this.showContextMenu = !this.showContextMenu;
-                    break;
+
+        canvas.addEventListener("mousedown", (event) => {
+            if (event.buttons === 2) {
+                this.showContextMenu = !this.showContextMenu;
             }
         });
     }
@@ -67,7 +65,6 @@ export default class EditorComponent extends Vue {
 
     @Watch('settings', {deep:true, immediate: false})
     onSettingsChange() {
-        // this.drawer.draw();
         if (this.editor) {
             this.editor.setSettings(this.settings);
         }

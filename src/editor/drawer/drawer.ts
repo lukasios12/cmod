@@ -236,7 +236,10 @@ export default class Drawer {
         // register mouse events
         let mouseDownMiddle = false;
         canvas.addEventListener("mousedown", (event) => {
-            if(event.buttons == 4) {
+            if (event.buttons === 1) {
+                canvas.focus();
+            }
+            if (event.buttons === 4) {
                 event.preventDefault();
                 mouseDownMiddle = true;
             }

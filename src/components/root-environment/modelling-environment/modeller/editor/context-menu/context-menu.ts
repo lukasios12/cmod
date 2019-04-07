@@ -8,9 +8,9 @@ import Editor from "../editor";
     name: "context-menu"
 })
 export default class ContextMenuComponent extends Vue {
-    @Prop(Editor) receiver!: Editor;
+    @Prop(Editor) editor!: Editor;
 
-    mounted() {
-        console.log(this.receiver);
+    test() {
+        console.log(this.editor);
     }
 }
