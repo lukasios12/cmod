@@ -29,9 +29,13 @@ export default class EditorComponent extends Vue {
 
         canvas.addEventListener("mousedown", (event) => {
             if (event.buttons === 2) {
-                this.showContextMenu = !this.showContextMenu;
+                this.toggleContext();
             }
         });
+    }
+
+    toggleContext() {
+        this.showContextMenu = !this.showContextMenu;
     }
 
     get petrinet() {

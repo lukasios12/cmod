@@ -1,6 +1,10 @@
 .contextMenu {
     display: block;
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
     & .backdrop {
         display: block;
@@ -9,7 +13,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, .5);
+        background: transparent;
     }
 
     & .menu {
@@ -17,8 +21,26 @@
         position: absolute;
         top: 50%;
         left: 50%;
+        margin: 0;
+        padding: 0;
         width: 10em;
-        background: red;
-        border: 2px solid blue;
+        height: initial;
+        color: #111;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, .5);
+
+        & .item {
+            display: block;
+            margin: 0;
+            padding: 0 1em;
+            line-height: 2em;
+            cursor: pointer;
+
+            &:hover {
+                background: orange;
+                padding-left: 1.25em;
+            }
+        }
     }
 }

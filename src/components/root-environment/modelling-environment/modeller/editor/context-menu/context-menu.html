@@ -1,7 +1,7 @@
-<div class="contextMenu" @click="test">
-    <div class="backdrop"></div>
+<div class="contextMenu">
+    <div class="backdrop" @click="close"></div>
     <div class="menu">
-        <div class="item">a</div>
+        <div class="item" @click="addState">Add State</div>
         <div class="item">b</div>
         <div class="item">c</div>
     </div>

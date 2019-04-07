@@ -212,7 +212,8 @@ export default class Editor {
             this.drawer.draw();
         });
         
-        canvas.addEventListener("contextmenu", (event) => { 
+        canvas.addEventListener("contextmenu", (event) => {
+            console.log(event);
             event.preventDefault();
         });
     }
