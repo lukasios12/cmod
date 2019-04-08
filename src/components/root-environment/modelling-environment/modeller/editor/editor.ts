@@ -8,7 +8,8 @@ import PetrinetModule from "src/store/petrinet";
 import FeedbackModule from "src/store/feedback";
 
 import ContextMenuComponent from "./context-menu/context-menu";
-import MessengerComponent from "./messenger/messenger.ts";
+import MessengerComponent from "./messenger/messenger";
+import EditStateComponent from "./edit-state/edit-state";
 
 import Editor from "src/editor/editor";
 
@@ -18,6 +19,7 @@ import Editor from "src/editor/editor";
     components: {
         "context-menu": ContextMenuComponent,
         "messenger": MessengerComponent,
+        "edit-state": EditStateComponent,
     }
 })
 export default class EditorComponent extends Vue {

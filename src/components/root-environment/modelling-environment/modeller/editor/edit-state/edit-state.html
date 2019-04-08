@@ -1,0 +1,17 @@
+<div class="edit-state">
+    <div class="places">
+        <div class="place" v-for="p in places">
+            <div class="name">{{ p }}</div>
+            <input type="text" value="0"/>
+            <div class="buttons">
+                <button>-</button>
+                <button>o</button>
+                <button>+</button>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="cancel">Cancel</button>
+        <button class="confirm">Confirm</button>
+    </div>
+</div>
