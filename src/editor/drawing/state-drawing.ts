@@ -35,8 +35,8 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         StyleManager.setStateTextStyle(context);
         context.fillText(
             text,
-            this.position.x() + width / 2,
-            this.position.y() + height / 2
+            this.position.x + width / 2,
+            this.position.y + height / 2
         );
         context.restore();
     }
@@ -55,21 +55,21 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         StyleManager.setStateStandardStyle(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
-        let newPos = new Vector2D(point.x() - (width / 2), point.y() - (height / 2));
+        let newPos = new Vector2D(point.x - (width / 2), point.y - (height / 2));
         this.position = newPos;
         context.restore();
     }
 
     public snap(hgrid: number, vgrid: number): void {
-        let x = Math.round(this.position.x() / hgrid) * hgrid;
-        let y = Math.round(this.position.y() / vgrid) * vgrid;
+        let x = Math.round(this.position.x / hgrid) * hgrid;
+        let y = Math.round(this.position.y / vgrid) * vgrid;
         this.position = new Vector2D(x, y);
     }
 
     public center(context:CanvasRenderingContext2D): Vector2D {
         context.save();
         StyleManager.setStateStandardStyle(context);
-        let vector = new Vector2D(this.position.x(), this.position.y());
+        let vector = new Vector2D(this.position.x, this.position.y);
         let wh = new Vector2D(this.getWidth(context) / 2, this.getHeight(context) / 2);
         context.restore();
         return Vector2D.add(vector, wh);
@@ -80,8 +80,8 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         StyleManager.setStateStandardStyle(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
-        let box = new Rectangle(this.position.x(),
-                                this.position.y(),
+        let box = new Rectangle(this.position.x,
+                                this.position.y,
                                 width,
                                 height);
         context.restore();

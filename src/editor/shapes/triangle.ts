@@ -32,9 +32,9 @@ export default class Triangle implements Shape2D {
 
     protected preparePath(context:CanvasRenderingContext2D): void {
         context.beginPath();
-        context.moveTo(this.alpha.x(), this.alpha.y());
-        context.lineTo(this.beta.x() , this.beta.y());
-        context.lineTo(this.gamma.x(), this.gamma.y());
+        context.moveTo(this.alpha.x, this.alpha.y);
+        context.lineTo(this.beta.x , this.beta.y);
+        context.lineTo(this.gamma.x, this.gamma.y);
         context.closePath();
     }
 }

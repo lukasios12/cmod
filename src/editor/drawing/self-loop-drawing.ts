@@ -31,7 +31,7 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         let i = state.getIntersectionAt(this.angle, context);
         let vec = Vector2D.scale(i.vector, i.length + this.radius / 2);
         let p = Vector2D.add(i.origin, vec);
-        context.arc(p.x(), p.y(), this.radius, 0, 2 * Math.PI);
+        context.arc(p.x, p.x, this.radius, 0, 2 * Math.PI);
         context.stroke();
         context.closePath();
         StyleManager.setEdgeTextStyle(context);
@@ -41,8 +41,8 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         let a = this.angle < Math.PI ? -1 : 1;
         vec = Vector2D.scale(new Vector2D(0, a), this.radius / 2 + fh / 2);
         p = Vector2D.add(p, vec);
-        context.clearRect(p.x() - fw / 2, p.y() - fh / 2, fw, fh);
-        context.fillText(this.label, p.x(), p.y());
+        context.clearRect(p.x - fw / 2, p.x - fh / 2, fw, fh);
+        context.fillText(this.label, p.x, p.x);
         context.restore();
     }
 
@@ -67,7 +67,7 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         let i = state.getIntersectionAt(this.angle, context);
         let vec = Vector2D.scale(i.vector, i.length + this.radius);
         let p = Vector2D.add(i.origin, vec);
-        let circle = new Circle(p.x(), p.y(), this.radius);
+        let circle = new Circle(p.x, p.x, this.radius);
         context.restore();
         return circle;
     }

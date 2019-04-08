@@ -9,11 +9,11 @@ export default class Vector2D {
         this.vec.set(1, y);
     }
 
-    public x(): number {
+    get x(): number {
         return this.vec.get(0);
     }
 
-    public y(): number {
+    get y(): number {
         return this.vec.get(1);
     }
 
@@ -43,15 +43,15 @@ export default class Vector2D {
 
     public static angle(a: Vector2D, b: Vector2D): number {
         let vec = Vector2D.sub(b, a);
-        let ratio = -vec.y() / vec.x();
+        let ratio = -vec.y / vec.x;
         let angle = Math.atan(ratio);
-        if (angle == 0 && a.x() > b.x()) {
+        if (angle == 0 && a.x > b.x) {
             angle = Math.PI;
         }
         if (angle < 0) {
             angle = Math.PI + angle;
         }
-        if (a.y() < b.y()) {
+        if (a.y < b.y) {
             angle += Math.PI;
         }
         return angle;

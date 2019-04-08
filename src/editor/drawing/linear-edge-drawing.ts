@@ -27,11 +27,11 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
         let lheight = CanvasRenderingContext2DUtils.getFontSize(context) * 1.5;
         context.save();
         StyleManager.setEdgeTextStyle(context);
-        context.clearRect(point.x() - lwidth / 2, point.y() - lheight / 2,
+        context.clearRect(point.x - lwidth / 2, point.y - lheight / 2,
                           lwidth, lheight);
-        // context.strokeRect(point.x() - lwidth / 2, point.y() - lheight / 2,
+        // context.strokeRect(point.x - lwidth / 2, point.y - lheight / 2,
         //                   lwidth, lheight);
-        context.fillText(this.label, point.x(), point.y());
+        context.fillText(this.label, point.x, point.y);
         context.restore();
     }
 
@@ -57,7 +57,7 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
         let vec = Vector2D.scale(intersection.vector, intersection.length);
         let p2 = Vector2D.add(c2, vec);
         context.restore();
-        let arrow = new Arrow(p1.x(), p1.y(), p2.x(), p2.y(), this.offset);
+        let arrow = new Arrow(p1.x, p1.y, p2.x, p2.y, this.offset);
         return arrow;
     }
 }

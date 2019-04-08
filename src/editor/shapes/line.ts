@@ -25,7 +25,7 @@ export default class Line implements Shape2D {
         context.save();
         context.lineWidth = 20;
         this.preparePath(context);
-        let result = context.isPointInStroke(point.x(), point.y());
+        let result = context.isPointInStroke(point.x, point.y);
         context.restore();
         return result;
     }
@@ -34,7 +34,7 @@ export default class Line implements Shape2D {
         let vec = Vector2D.sub(this.target, this.source);
         let len = Vector2D.norm(vec);
         let unit = Vector2D.unit(vec);
-        let perp = new Vector2D(unit.y(), -unit.x());
+        let perp = new Vector2D(unit.y, -unit.x);
         let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / 2));
         let result = Vector2D.add(
             middle,
@@ -48,11 +48,11 @@ export default class Line implements Shape2D {
         let vec = Vector2D.sub(this.target, this.source);
         let len = Vector2D.norm(vec);
         let unit = Vector2D.unit(vec);
-        let perp = new Vector2D(unit.y(), -unit.x());
+        let perp = new Vector2D(unit.y, -unit.x);
         let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / 2));
 
         let c = Vector2D.add(middle, Vector2D.scale(perp, this.bend));
-        context.moveTo(this.source.x(), this.source.y());
-        context.quadraticCurveTo(c.x(), c.y(), this.target.x(), this.target.y());
+        context.moveTo(this.source.x, this.source.y);
+        context.quadraticCurveTo(c.x, c.y, this.target.x, this.target.y);
     }
 }

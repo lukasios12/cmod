@@ -47,7 +47,7 @@ export default class GraphDrawing implements Drawing, Snappable {
             let sdrawing = this.states.get(stateIds[i]);
             if (feedback !== null) {
                 let codes = feedback.get(stateIds[i]);
-                if (codes !== null && !codes.isEmpty()) {
+                if (codes !== null && !codes.isEmpty) {
                     context.save();
                     let code = codes.toArray().sort()[codes.length() - 1];
                     StyleManager.setStyle(code, context);
@@ -83,7 +83,7 @@ export default class GraphDrawing implements Drawing, Snappable {
                         edge.offset = c;
                         if(feedback) {
                             let codes = feedback.get(shared[k]);
-                            if (codes !== null && !codes.isEmpty()) {
+                            if (codes !== null && !codes.isEmpty) {
                                 context.save();
                                 let code = codes.toArray().sort()[codes.length() - 1];
                                 StyleManager.setStyle(code, context);
@@ -116,7 +116,7 @@ export default class GraphDrawing implements Drawing, Snappable {
                 let edrawing = this.edges.get(loops[i]);
                 if (feedback) {
                     let codes = feedback.get(loops[i]);
-                    if (codes !== null && !codes.isEmpty()) {
+                    if (codes !== null && !codes.isEmpty) {
                         context.save();
                         let code = codes.toArray().sort()[codes.length() - 1];
                         StyleManager.setStyle(code, context);
@@ -154,7 +154,7 @@ export default class GraphDrawing implements Drawing, Snappable {
             context.lineWidth = 2;
             let state = this.getStateDrawing(this.initial);
             let pos = state!.position;
-            let arrow = new Arrow(pos.x() - 30, pos.y() - 30, pos.x(), pos.y());
+            let arrow = new Arrow(pos.x - 30, pos.y - 30, pos.x, pos.y);
             arrow.fill(context);
             context.restore();
         }

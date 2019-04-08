@@ -26,15 +26,15 @@ export default class Circle implements Shape2D {
         context.save();
         context.lineWidth = 20;
         this.preparePath(context);
-        let result = context.isPointInPath(pos.x(), pos.y());
+        let result = context.isPointInPath(pos.x, pos.y);
         context.restore();
         return result;
     }
 
     protected preparePath(context: CanvasRenderingContext2D): void {
         context.beginPath();
-        context.arc(this.center.x(),
-                    this.center.y(),
+        context.arc(this.center.x,
+                    this.center.y,
                     this.radius,
                     0,
                     this.rotation

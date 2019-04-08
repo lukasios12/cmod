@@ -13,24 +13,24 @@ export default class Rectangle implements Shape2D {
     }
 
     public stroke(context: CanvasRenderingContext2D): void {
-        context.strokeRect(this.source.x(), this.source.y(), this.width, this.height);
+        context.strokeRect(this.source.x, this.source.y, this.width, this.height);
     }
 
     public fill(context: CanvasRenderingContext2D): void {
-        context.fillRect(this.source.x(), this.source.y(), this.width, this.height);
+        context.fillRect(this.source.x, this.source.y, this.width, this.height);
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {
         context.save();
         context.lineWidth = 20;
         this.preparePath(context);
-        let result = context.isPointInPath(point.x(), point.y());
+        let result = context.isPointInPath(point.x, point.y);
         context.restore();
         return result;
     }
 
     protected preparePath(context: CanvasRenderingContext2D): void {
         context.beginPath();
-        context.rect(this.source.x(), this.source.y(), this.width, this.height);
+        context.rect(this.source.x, this.source.y, this.width, this.height);
     }
 }
