@@ -16,7 +16,7 @@ export default class EditStateComponent extends Vue {
     get places() {
         let mod = getModule(PetrinetModule, this.$store);
         let petrinet = mod.petrinet;
-        let places = petrinet.getPlaces();
+        let places = petrinet.places;
         return places.toArray();
     }
 

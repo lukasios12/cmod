@@ -189,7 +189,7 @@ export default class Editor {
                     let point = this.drawer.globalToLocal(event);
                     if (this.selectionId !== null && event.ctrlKey) {
                         let id = this.graphDrawing.getDrawingAt(point, context);
-                        let transitions = this.petrinet.getTransitions().toArray();
+                        let transitions = this.petrinet.transitions.toArray();
                         let edge = new Edge(this.selectionId, id, transitions[0]);
                         this.addEdge(edge);
                     } else {

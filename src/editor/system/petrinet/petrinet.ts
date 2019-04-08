@@ -1,19 +1,19 @@
 import { HashSet } from "lib/collections/hashset/hash-set";
 
 export default class Petrinet {
-    protected places: HashSet<string>;
-    protected transitions: HashSet<string>;
+    protected _places: HashSet<string>;
+    protected _transitions: HashSet<string>;
 
     public constructor(p: HashSet<string>, t: HashSet<string>) {
-        this.places = p;
-        this.transitions = t;
+        this._places = p;
+        this._transitions = t;
     }
 
-    public getPlaces(): HashSet<string> {
-        return this.places;
+    get places(): HashSet<string> {
+        return this._places;
     }
 
-    public getTransitions(): HashSet<string> {
-        return this.transitions;
+    get transitions(): HashSet<string> {
+        return this._transitions;
     }
 }

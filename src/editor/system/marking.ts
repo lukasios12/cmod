@@ -14,7 +14,7 @@ export default class Marking {
         } else {
             this.map = new HashTable<string, TokenCount>(hashString, eqStrings);
         }
-        let places = petrinet.getPlaces().toArray();
+        let places = petrinet.places.toArray();
         for(let i = 0; i < places.length; i++) {
             this.map.put(places[i], new IntegerTokenCount(0));
         }
