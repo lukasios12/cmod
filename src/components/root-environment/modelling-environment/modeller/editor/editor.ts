@@ -10,6 +10,7 @@ import FeedbackModule from "src/store/feedback";
 import ContextMenuComponent from "./context-menu/context-menu";
 import MessengerComponent from "./messenger/messenger";
 import EditStateComponent from "./edit-state/edit-state";
+import EditEdgeComponent from "./edit-edge/edit-edge";
 
 import Editor from "src/editor/editor";
 
@@ -20,6 +21,7 @@ import Editor from "src/editor/editor";
         "context-menu": ContextMenuComponent,
         "messenger": MessengerComponent,
         "edit-state": EditStateComponent,
+        "edit-edge": EditEdgeComponent,
     }
 })
 export default class EditorComponent extends Vue {
