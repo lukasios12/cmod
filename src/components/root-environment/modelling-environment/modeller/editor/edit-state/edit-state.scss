@@ -1,16 +1,12 @@
-.edit-state {
-    display: block;
-    position: absolute;
+.editState {
     top: 50%;
     left: 50%;
-    background: white;
-    border: 1px solid grey;
-    box-shadow: 5px 5px 2px 0 rgba(0, 0, 0, .3);
     transform: translate(-50%, -50%);
 
     & > .input {
-        display: flex;
-        border-bottom: 1px solid grey;
+        &.places {
+            display: flex;
+        }
 
         & > .place {
             flex: 1;
@@ -45,47 +41,6 @@
                     &:last-child {
                         border-right: 0;
                     }
-                }
-            }
-        }
-    }
-
-    & > .buttons {
-        display: flex;
-        padding: .5em;
-
-        & button {
-            flex: 1;
-            margin: 0 2em;
-            padding: .5em;
-            border: 0;
-            border-radius: 7px;
-            cursor: pointer;
-
-            &:first-child {
-                margin-left: 0;
-            }
-
-            &:last-child {
-                margin-right: 0;
-            }
-
-            &.cancel {
-                display: block;
-                background: transparent;
-                color: blue;
-
-                &:hover {
-                    background: rgba(0, 0, 0, .2);
-                }
-            }
-
-            &.confirm {
-                display: block;
-                background: orange;
-
-                &:hover {
-                    background: darkOrange;
                 }
             }
         }
