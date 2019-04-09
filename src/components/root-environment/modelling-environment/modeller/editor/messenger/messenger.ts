@@ -1,9 +1,9 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import WithRender from "./messenger.html?style=./messenger.scss";
 
-import Feedback from "src/editor/feedback/feedback";
-import FeedbackCode from "src/editor/feedback/feedback-code";
-import FeedbackTranslator from "src/editor/feedback/feedback-translator";
+import Feedback from "src/feedback/feedback";
+import FeedbackCode from "src/feedback/feedback-code";
+import FeedbackTranslator from "src/feedback/feedback-translator";
 
 @WithRender
 @Component({

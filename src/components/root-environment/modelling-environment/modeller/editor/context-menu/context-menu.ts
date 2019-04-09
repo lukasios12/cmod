@@ -2,7 +2,7 @@ import { Vue, Component, Prop, Emit } from "vue-property-decorator";
 import WithRender from "./context-menu.html?style=./context-menu.scss";
 
 import Editor from "src/editor/editor";
-import Marking from "src/editor/system/marking";
+import Marking from "src/system/marking";
 
 @WithRender
 @Component({

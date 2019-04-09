@@ -1,4 +1,4 @@
-import Feedback from "src/editor/feedback/feedback";
+import Feedback from "src/feedback/feedback";
 import { FeedbackResponse } from "src/types";
 
 export default class ResponseToFeedback {

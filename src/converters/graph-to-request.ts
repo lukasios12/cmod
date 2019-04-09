@@ -1,6 +1,6 @@
-import Graph from "src/editor/system/graph/graph";
-import Edge from "src/editor/system/graph/edge";
-import State from "src/editor/system/graph/state";
+import Graph from "src/system/graph/graph";
+import Edge from "src/system/graph/edge";
+import State from "src/system/graph/state";
 import { StateRequest, EdgeRequest, InitialRequest, GraphRequest } from "src/types";
 
 export default class GraphToRequest {

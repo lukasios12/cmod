@@ -1,7 +1,7 @@
 import StateDrawing from "./state-drawing";
 import Hittable from "./hittable-drawing";
 
-import Vector2D from "src/editor/shapes/vector2d";
+import Vector2D from "src/shapes/vector2d";
 
 export default abstract class EdgeDrawing implements Hittable {
     public source: StateDrawing;

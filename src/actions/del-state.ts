@@ -1,10 +1,10 @@
-import Graph from "src/editor/system/graph/graph";
-import State from "src/editor/system/graph/state";
-import Edge from "src/editor/system/graph/edge";
+import Graph from "src/system/graph/graph";
+import State from "src/system/graph/state";
+import Edge from "src/system/graph/edge";
 
-import GraphDrawing from "src/editor/drawing/graph-drawing";
-import StateDrawing from "src/editor/drawing/state-drawing";
-import EdgeDrawing from "src/editor/drawing/edge-drawing";
+import GraphDrawing from "src/drawing/graph-drawing";
+import StateDrawing from "src/drawing/state-drawing";
+import EdgeDrawing from "src/drawing/edge-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 import { HashTable } from "lib/collections/hashtable/hash-table";

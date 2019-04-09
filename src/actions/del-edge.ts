@@ -1,8 +1,8 @@
-import Graph from "src/editor/system/graph/graph";
-import Edge from "src/editor/system/graph/edge";
+import Graph from "src/system/graph/graph";
+import Edge from "src/system/graph/edge";
 
-import GraphDrawing from "src/editor/drawing/graph-drawing"
-import EdgeDrawing from "src/editor/drawing/edge-drawing";
+import GraphDrawing from "src/drawing/graph-drawing"
+import EdgeDrawing from "src/drawing/edge-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 

@@ -2,10 +2,10 @@ import EdgeDrawing from "./edge-drawing";
 import StateDrawing from "./state-drawing";
 import Draggable from "./draggable-drawing";
 
-import Vector2D from "src/editor/shapes/vector2d";
-import Circle from "src/editor/shapes/circle";
+import Vector2D from "src/shapes/vector2d";
+import Circle from "src/shapes/circle";
 
-import StyleManager from "src/editor/stylemanager/style-manager";
+import StyleManager from "src/stylemanager/style-manager";
 import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
 export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {

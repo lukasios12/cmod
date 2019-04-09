@@ -5,9 +5,9 @@ import { getModule } from "vuex-module-decorators";
 import PetrinetModule from "src/store/petrinet";
 
 import Editor from "src/editor/editor";
-import Marking from "src/editor/system/marking";
-import OmegaTokenCount from "src/editor/system/tokens/omega-token-count";
-import IntegerTokenCount from "src/editor/system/tokens/integer-token-count";
+import Marking from "src/system/marking";
+import OmegaTokenCount from "src/system/tokens/omega-token-count";
+import IntegerTokenCount from "src/system/tokens/integer-token-count";
 
 @WithRender
 @Component({

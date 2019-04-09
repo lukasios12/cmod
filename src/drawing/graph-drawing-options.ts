@@ -1,4 +1,4 @@
-import Feedback from "src/editor/feedback/feedback";
+import Feedback from "src/feedback/feedback";
 
 export default class GraphDrawingOptions {
     public selected: number | null;

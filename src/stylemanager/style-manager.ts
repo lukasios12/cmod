@@ -1,4 +1,4 @@
-import FeedbackCode from "src/editor/feedback/feedback-code";
+import FeedbackCode from "src/feedback/feedback-code";
 
 import Colors from "./colors";
 import StyleManagerAction from "./actions/style-manager-action";

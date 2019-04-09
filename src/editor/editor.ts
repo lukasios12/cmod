@@ -1,29 +1,29 @@
-import Petrinet from "./system/petrinet/petrinet";
-import Graph from "./system/graph/graph";
-import State from "./system/graph/state";
-import Edge from "./system/graph/edge";
-import Marking from "./system/marking";
+import Petrinet from "src/system/petrinet/petrinet";
+import Graph from "src/system/graph/graph";
+import State from "src/system/graph/state";
+import Edge from "src/system/graph/edge";
+import Marking from "src/system/marking";
 
-import Drawing from "./drawing/drawing";
-import GraphDrawing from "./drawing/graph-drawing";
-import GraphDrawingOptions from "./drawing/graph-drawing-options";
-import { isDraggable } from "./drawing/draggable-drawing";
+import Drawing from "src/drawing/drawing";
+import GraphDrawing from "src/drawing/graph-drawing";
+import GraphDrawingOptions from "src/drawing/graph-drawing-options";
+import { isDraggable } from "src/drawing/draggable-drawing";
 
-import Vector2D from "./shapes/vector2d";
+import Vector2D from "src/shapes/vector2d";
 
-import Drawer from "./drawer/drawer";
-import DrawerOptions from "./drawer/drawer-options";
-import Feedback from "./feedback/feedback";
-import FeedbackDispatch from "./feedback/feedback-dispatch";
+import Drawer from "src/drawer/drawer";
+import DrawerOptions from "src/drawer/drawer-options";
+import Feedback from "src/feedback/feedback";
+import FeedbackDispatch from "src/feedback/feedback-dispatch";
 
-import AddState from "./actions/add-state";
-import AddEdge from "./actions/add-edge";
-import AddInitial from "./actions/add-initial";
-import DeleteState from "./actions/del-state";
-import DeleteEdge from "./actions/del-edge";
-import DeleteInitial from "./actions/del-initial";
-import EditState from "./actions/edit-state";
-import EditEdge from "./actions/edit-edge";
+import AddState from "src/actions/add-state";
+import AddEdge from "src/actions/add-edge";
+import AddInitial from "src/actions/add-initial";
+import DeleteState from "src/actions/del-state";
+import DeleteEdge from "src/actions/del-edge";
+import DeleteInitial from "src/actions/del-initial";
+import EditState from "src/actions/edit-state";
+import EditEdge from "src/actions/edit-edge";
 
 import { ActionManager } from "lib/action-manager/action-manager";
 

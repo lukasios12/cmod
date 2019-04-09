@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation } from "vuex-module-decorators";
-import DrawerOptions, { GridOptions } from "src/editor/drawer/drawer-options";
+import DrawerOptions, { GridOptions } from "src/drawer/drawer-options";
 
 @Module({
     name: "DrawerSettingsModule",

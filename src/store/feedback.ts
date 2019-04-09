@@ -5,12 +5,12 @@ import UserModule from "./user";
 import SessionModule from "./session";
 import PetrinetModule from "./petrinet";
 
-import Graph from "src/editor/system/graph/graph";
+import Graph from "src/system/graph/graph";
 import GraphToRequest from "src/converters/graph-to-request";
 import ResponseToFeedback from "src/converters/response-to-feedback";
 
 import FeedbackService from "src/services/feedback";
-import Feedback from "src/editor/feedback/feedback";
+import Feedback from "src/feedback/feedback";
 
 import { FeedbackResponse } from "src/types";
 

@@ -1,7 +1,7 @@
 import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-decorators";
 import { AxiosResponse, AxiosError } from "axios";
 
-import Petrinet from "src/editor/system/petrinet/petrinet";
+import Petrinet from "src/system/petrinet/petrinet";
 import ResponseToPetrinet from "src/converters/response-to-petrinet";
 import UserModule from "./user";
 

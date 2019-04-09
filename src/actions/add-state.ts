@@ -1,10 +1,10 @@
-import Graph from "src/editor/system/graph/graph";
-import State from "src/editor/system/graph/state";
+import Graph from "src/system/graph/graph";
+import State from "src/system/graph/state";
 
-import GraphDrawing from "src/editor/drawing/graph-drawing"
-import StateDrawing from "src/editor/drawing/state-drawing";
+import GraphDrawing from "src/drawing/graph-drawing"
+import StateDrawing from "src/drawing/state-drawing";
 
-import Vector2D from "src/editor/shapes/vector2d";
+import Vector2D from "src/shapes/vector2d";
 
 import { UndoableAction } from "lib/action/undoable-action";
 

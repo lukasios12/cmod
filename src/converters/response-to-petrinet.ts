@@ -1,4 +1,4 @@
-import Petrinet from "src/editor/system/petrinet/petrinet";
+import Petrinet from "src/system/petrinet/petrinet";
 import { PetrinetResponse } from "src/types";
 
 import { HashSet } from "lib/collections/hashset/hash-set";

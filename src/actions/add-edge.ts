@@ -1,10 +1,10 @@
-import Graph from "src/editor/system/graph/graph";
-import Edge from "src/editor/system/graph/edge";
+import Graph from "src/system/graph/graph";
+import Edge from "src/system/graph/edge";
 
-import EdgeDrawing from "src/editor/drawing/edge-drawing";
-import GraphDrawing from "src/editor/drawing/graph-drawing";
-import LinearEdgeDrawing from "src/editor/drawing/linear-edge-drawing";
-import SelfLoopDrawing from "src/editor/drawing/self-loop-drawing";
+import EdgeDrawing from "src/drawing/edge-drawing";
+import GraphDrawing from "src/drawing/graph-drawing";
+import LinearEdgeDrawing from "src/drawing/linear-edge-drawing";
+import SelfLoopDrawing from "src/drawing/self-loop-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
