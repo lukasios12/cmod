@@ -1,11 +1,11 @@
 <div class="editorMenu editEdge">
     <div class="input">
-        <select>
-            <option value="0">test</option>
+        <select v-model="label">
+            <option v-for="lab in labels">{{ lab }}</option>
         </select>
     </div>
     <div class="buttons">
         <button class="cancel">Cancel</button>
-        <button class="confirm">Confirm</button>
+        <button @click="confirm" class="confirm">Confirm</button>
     </div>
 </div>
