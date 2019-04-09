@@ -1,17 +1,17 @@
 <div class="editState editorMenu">
     <div class="input places">
-        <div class="place" v-for="p in places">
-            <div class="name">{{ p }}</div>
-            <input type="text" value="0"/>
+        <div class="place" v-for="item in list">
+            <div class="name">{{ item.place }}</div>
+            <input type="text" v-model:value="item.value"/>
             <div class="buttons">
-                <button>-</button>
-                <button>o</button>
-                <button>+</button>
+                <button @click="item.value = dec(item.value)">-</button>
+                <button @click="item.value = omega()">ω</button>
+                <button @click="item.value = inc(item.value)">+</button>
             </div>
         </div>
     </div>
     <div class="buttons">
         <button class="cancel">Cancel</button>
-        <button class="confirm">Confirm</button>
+        <button @click="confirm" class="confirm">Confirm</button>
     </div>
 </div>
