@@ -26,6 +26,7 @@ export default class FeedbackTranslator
         t.put(FeedbackCode.NO_INITIAL_STATE, "No initial state is defined");
         t.put(FeedbackCode.INCORRECT_INITIAL_STATE, "The defined initial state is incorrect");
         t.put(FeedbackCode.CORRECT_INITIAL_STATE, "The initial state is correct");
+        t.put(FeedbackCode.OMEGA_IN_INITIAL, "One of the places in the initial state is marked as unbounded. This is impossible");
 
         // states
         t.put(FeedbackCode.NOT_REACHABLE_FROM_PRESET, "This state is not reachable from one of the markings in its pre-set");

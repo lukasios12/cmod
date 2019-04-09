@@ -2,6 +2,7 @@ enum FeedbackCode {
     CORRECT_INITIAL_STATE            = 200,
     NO_INITIAL_STATE                 = 400,
     INCORRECT_INITIAL_STATE          = 401,
+    OMEGA_IN_INITIAL                 = 402,
 
     REACHABLE_FROM_PRESET            = 220,
     DUPLICATE_STATE                  = 320,
