@@ -40,6 +40,8 @@ export default class Editor {
     public selection: Drawing | null;
     public selectionId: number | null;
 
+    public hoverId: number | null;
+
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
         this.petrinet = petrinet;
         this.drawer = new Drawer(canvas);
@@ -51,6 +53,7 @@ export default class Editor {
 
         this.selection = null;
         this.selectionId = null;
+        this.hoverId = null;
 
         this.registerEvents();
 
@@ -205,6 +208,9 @@ export default class Editor {
                 let point = this.drawer.globalToLocal(event);
                 this.selection.drag(point, context!);
                 this.drawer.draw();
+            } else if (!mouseDownLeft) {
+                let point = this.drawer.globalToLocal(event);
+                this.hoverId = this.graphDrawing.getDrawingAt(point, context);
             }
         });
         canvas.addEventListener("mouseup", (event) => {

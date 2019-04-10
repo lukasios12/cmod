@@ -44,6 +44,13 @@ export default class EditorComponent extends Vue {
         this.showContextMenu = !this.showContextMenu;
     }
 
+    get hoverId() {
+        if (this.editor) {
+            return this.editor.hoverId;
+        }
+        return null;
+    }
+
     get petrinet() {
         let mod = getModule(PetrinetModule, this.$store);
         return mod.petrinet;

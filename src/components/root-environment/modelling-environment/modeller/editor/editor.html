@@ -5,7 +5,7 @@
     <canvas id="editorCanvas" tabindex="1">
         Your browser does not support the HTML 5 Canvas API
     </canvas>
-    <messenger v-bind:feedback="feedback"/>
+    <messenger v-bind:feedback="feedback" v-bind:id="hoverId"/>
     <edit-state :editor="editor"/>
     <edit-edge :editor="editor"/>
 </div>

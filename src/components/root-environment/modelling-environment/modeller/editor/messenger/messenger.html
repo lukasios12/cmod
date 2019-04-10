@@ -1,3 +1,8 @@
 <div v-if="show" class="messenger">
-    <div class="item" v-for="item in general">{{ item }}</div>
+    <div v-if="showGeneral">
+        <div class="item" v-for="item in general">{{ item }}</div>
+    </div>
+    <div v-if="showSpecific">
+        <div class="item" v-for="item in specific">{{ item }}</div>
+    </div>
 </div>
