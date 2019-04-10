@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
-import WithRender from "./welcome.html?style=./welcome.scss";
+import WithRender from "./welcome.html";
 
 import AlertComponent from "src/components/common/messages/alert/alert";
 

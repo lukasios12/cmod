@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
-import WithRender from "./modelling-environment.html?style=./modelling-environment.scss";
+import WithRender from "./modelling-environment.html";
 
 import HeaderComponent from "./header/header";
 import MenuComponent from "./menu/menu";
