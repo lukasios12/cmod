@@ -1,5 +1,8 @@
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import WithRender from "./edit-edge.html?style=./edit-edge.scss";
+
+import { getModule } from "vuex-module-decorators";
+import PetrinetModule from "src/store/petrinet";
 
 import Editor from "src/editor/editor";
 
@@ -10,45 +13,51 @@ import Editor from "src/editor/editor";
 export default class EditEdgeComponent extends Vue {
     @Prop(Editor) editor!: Editor;
 
-    get label() {
-        if(this.editor) {
-            let id = this.editor.selectionId;
-            let edge = this.editor.graph.getEdge(id);
-            if (edge) {
-                return edge.label;
-            }
-            return null;
+    label: string | null = null;
+    labels: string[] | null = null;
+
+    confirm() {
+        let id = this.id;
+        if (id !== null && this.label !== null) {
+            this.editor.editEdge(id, this.label);
+        }
+    }
+
+    cancel() {
+        this.setLabel();
+    }
+
+    get id() {
+        if (this.editor && this.editor.selectionId &&
+            this.editor.graph.hasEdge(this.editor.selectionId)) {
+            return this.editor.selectionId;
         }
         return null;
     }
 
-    set label(lab: string) {
-        if(this.editor) {
-            let id = this.editor.selectionId;
-            this.editor.editEdge(id, lab);
-        }
+    @Watch('id', {deep: true, immediate: true})
+    onSelectionChange() {
+        this.setLabel();
     }
 
-    get id() {
-        let id = null;
-        if (this.editor) {
-            id = this.editor.selectionId;
-        }
-        return id;
+    get petrinet() {
+        let module = getModule(PetrinetModule, this.$store);
+        return module.petrinet;
     }
 
-    get labels() {
-        let result = [];
-        if (this.editor) {
-            result = this.editor.petrinet.transitions.toArray();
-        }
-        return result;
+    @Watch('petrinet', {deep: true, immediate: true})
+    onPetrinetChange() {
+        let petrinet = this.petrinet;
+        let transitions = petrinet.transitions.toArray();
+        this.labels = transitions;
     }
 
-    confirm() {
-        if(this.editor) {
-            let label = this.label;
-            this.editor.editEdge(this.editor.selectionId, label);
+    protected setLabel() {
+        let id = this.id;
+        if (id !== null) {
+            let graph = this.editor.graph;
+            let edge = graph.getEdge(id);
+            this.label = edge.label;
         }
     }
 }

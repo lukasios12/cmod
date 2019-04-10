@@ -68,7 +68,8 @@ export default class EditStateComponent extends Vue {
     }
 
     get id() {
-        if(this.editor) {
+        if(this.editor && this.editor.selectionId &&
+           this.editor.graph.hasState(this.editor.selectionId)) {
             return this.editor.selectionId;
         }
         return null;
