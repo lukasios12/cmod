@@ -44,6 +44,7 @@ export default class EditStateComponent extends Vue {
         }
     }
 
+    @Emit('close')
     confirm() {
         if (this.id !== null) {
             let marking = new Marking(this.editor.petrinet);
@@ -63,6 +64,7 @@ export default class EditStateComponent extends Vue {
         }
     }
 
+    @Emit('close')
     cancel() {
         this.setMap();
     }

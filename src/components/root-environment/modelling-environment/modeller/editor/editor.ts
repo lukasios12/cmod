@@ -27,6 +27,8 @@ import Editor from "src/editor/editor";
 export default class EditorComponent extends Vue {
     editor: Editor | null = null;
     showContextMenu: boolean = false;
+    showEditState: boolean = false;
+    showEditEdge: boolean = false;
 
     mounted() {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
@@ -38,6 +40,27 @@ export default class EditorComponent extends Vue {
                 this.toggleContext();
             }
         });
+    }
+
+    openEditMenu() {
+        if (this.editor) {
+            let id = this.editor.selectionId;
+            let graph = this.editor.graph;
+            if (graph.hasState(id)) {
+                this.showEditState = true;
+            } else if (graph.hasEdge(id)) {
+                this.showEditEdge = true;
+            }
+        }
+    }
+
+    closeEditMenu() {
+        this.showEditState = false;
+        this.showEditEdge = false;
+    }
+
+    get showMenu() {
+        return this.showEditState || this.showEditEdge;
     }
 
     toggleContext() {

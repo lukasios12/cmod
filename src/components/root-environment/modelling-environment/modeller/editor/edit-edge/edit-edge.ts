@@ -1,4 +1,4 @@
-import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+import { Vue, Component, Prop, Watch, Emit } from "vue-property-decorator";
 import WithRender from "./edit-edge.html?style=./edit-edge.scss";
 
 import { getModule } from "vuex-module-decorators";
@@ -16,6 +16,7 @@ export default class EditEdgeComponent extends Vue {
     label: string | null = null;
     labels: string[] | null = null;
 
+    @Emit('close')
     confirm() {
         let id = this.id;
         if (id !== null && this.label !== null) {
@@ -23,6 +24,7 @@ export default class EditEdgeComponent extends Vue {
         }
     }
 
+    @Emit('close')
     cancel() {
         this.setLabel();
     }
