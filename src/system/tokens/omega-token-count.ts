@@ -13,6 +13,13 @@ export default class OmegaTokenCount extends TokenCount {
         return new OmegaTokenCount();
     }
 
+    public equals(rhs: TokenCount): boolean {
+        if (rhs instanceof OmegaTokenCount) {
+            return true;
+        }
+        return false;
+    }
+
     public toString():string {
         return "ω";
     }

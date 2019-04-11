@@ -35,6 +35,22 @@ export default class Marking {
         return this.map.keys();
     }
 
+    public static equals(lhs: Marking, rhs: Marking) {
+        let lplaces = lhs.places().sort();
+        let rplaces = rhs.places().sort();
+        if (lplaces.length === rplaces.length) {
+            for(let i = 0; i < lplaces.length; i++) {
+                let lplace = lplaces[i];
+                let rplace = rplaces[i];
+                if (lplace !== rplace || !lhs.get(lplace).equals(rhs.get(rplace))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public toString(): string {
         let places = this.map.keys();
         let result = new Array<string>();

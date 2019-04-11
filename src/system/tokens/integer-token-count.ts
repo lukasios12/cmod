@@ -37,6 +37,15 @@ export default class IntegerTokenCount extends TokenCount {
         }
     }
 
+    public equals(rhs: TokenCount) {
+        if (rhs instanceof IntegerTokenCount) {
+            return this.value === rhs.value;
+        } else if (rhs instanceof OmegaTokenCount) {
+            return false;
+        }
+        return false;
+    }
+
     public toString(): string {
         return this.value.toString();
     }

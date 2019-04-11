@@ -86,13 +86,23 @@ export default class Editor {
     }
 
     public editState(id: number, state: State): void {
-        let a = new EditState(id, state, this.graph, this.graphDrawing);
-        this.actionManager.exec(a);
+        if (this.graph.hasState(id)) {
+            let current = this.graph.getState(id);
+            if (!Marking.equals(current, state)) {
+                let a = new EditState(id, state, this.graph, this.graphDrawing);
+                this.actionManager.exec(a);
+            }
+        }
     }
 
     public editEdge(id: number, label: string): void {
-        let a = new EditEdge(id, label, this.graph, this.graphDrawing);
-        this.actionManager.exec(a);
+        if (this.graph.hasEdge(id)) {
+            let current = this.graph.getEdge(id).label;
+            if (current !== label) {
+                let a = new EditEdge(id, label, this.graph, this.graphDrawing);
+                this.actionManager.exec(a);
+            }
+        }
     }
 
     public setInitial(id: number): void {
