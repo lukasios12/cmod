@@ -32,6 +32,8 @@ export default class EditorComponent extends Vue {
 
     contextLeft: number = 0;
     contextTop: number = 0;
+    contextX: number = 0;
+    contextY: number = 0;
 
     mounted() {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
@@ -42,10 +44,12 @@ export default class EditorComponent extends Vue {
     openContextMenu(event) {
         if (this.editor) {
             let box = this.editor.clientRect;
-            let left = event.clientX - Math.round(box.left);
-            let top = event.clientY - Math.round(box.top);
-            this.contextLeft = left;
-            this.contextTop = top;
+            let drawer = this.editor.drawer;
+            let point = drawer.globalToLocal(event);
+            this.contextLeft = event.clientX - Math.round(box.left);
+            this.contextTop = event.clientY - Math.round(box.top);
+            this.contextX = point.x;
+            this.contextY = point.y;
             this.showContextMenu = true;
         }
     }

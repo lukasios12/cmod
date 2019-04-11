@@ -28,7 +28,7 @@ import EditEdge from "src/actions/edit-edge";
 import { ActionManager } from "lib/action-manager/action-manager";
 
 export default class Editor {
-    protected drawer: Drawer;
+    protected _drawer: Drawer;
     protected actionManager: ActionManager;
     protected feedback: Feedback | null;
 
@@ -44,7 +44,7 @@ export default class Editor {
 
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
         this.petrinet = petrinet;
-        this.drawer = new Drawer(canvas);
+        this._drawer = new Drawer(canvas);
         this.actionManager = new ActionManager();
         this.actionManager.addHook(() => {
             this.drawer.draw();
@@ -231,6 +231,10 @@ export default class Editor {
         if (this.drawer) {
             this.drawer.resize();
         }
+    }
+
+    get drawer() {
+        return this._drawer;
     }
 
     get clientRect() {

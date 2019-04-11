@@ -16,6 +16,8 @@
     <context-menu :editor="editor"
                   :top="contextTop"
                   :left="contextLeft"
+                  :x="contextX"
+                  :y="contextY"
                   v-if="showContextMenu"
                   @close="closeContextMenu"
                   @edit-state="openEditMenu"
