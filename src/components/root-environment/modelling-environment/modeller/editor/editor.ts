@@ -30,14 +30,24 @@ export default class EditorComponent extends Vue {
     showEditState: boolean = false;
     showEditEdge: boolean = false;
 
+    contextLeft: number = 0;
+    contextTop: number = 0;
+
     mounted() {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
         this.editor = new Editor(canvas, this.petrinet);
         this.editor.setSettings(this.settings);
     }
 
-    openContextMenu() {
-        this.showContextMenu = true;
+    openContextMenu(event) {
+        if (this.editor) {
+            let box = this.editor.clientRect;
+            let left = event.clientX - Math.round(box.left);
+            let top = event.clientY - Math.round(box.top);
+            this.contextLeft = left;
+            this.contextTop = top;
+            this.showContextMenu = true;
+        }
     }
 
     openEditMenu() {

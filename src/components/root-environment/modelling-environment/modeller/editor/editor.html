@@ -14,6 +14,8 @@
                v-show="showEditEdge"
                @close="closeEditEdgeMenu"/>
     <context-menu :editor="editor"
+                  :top="contextTop"
+                  :left="contextLeft"
                   v-if="showContextMenu"
                   @close="closeContextMenu"
                   @edit-state="openEditMenu"

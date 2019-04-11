@@ -1,4 +1,4 @@
-<div class="contextMenu">
+<div class="contextMenu" :style="styleObject">
     <div class="item" @click="setInitial()" v-show="stateSelected">Set Initial</div>
     <div class="item" @click="addState()">Add State</div>
     <div class="item" @click="editElement()" v-show="id">Edit</div>

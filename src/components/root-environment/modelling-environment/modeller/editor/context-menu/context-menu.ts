@@ -13,13 +13,19 @@ export default class ContextMenuComponent extends Vue {
     @Prop(Number) left!: number;
     @Prop(Number) top!: number;
 
+    get styleObject() {
+        return {
+            left: this.left.toString() + "px",
+            top: this.top.toString() + "px",
+        };
+    }
+
     @Emit('close')
     addState() {
+        console.log(this.top, this.left);
         if (this.editor !== null) {
-            console.log("hello");
             let state = new Marking(this.editor.petrinet);
             this.editor.addState(state);
-            this.close();
         }
     }
 
@@ -62,7 +68,4 @@ export default class ContextMenuComponent extends Vue {
     get edgeSelected() {
         return this.id && this.editor.graph.hasEdge(this.id);
     }
-
-    @Emit('close')
-    close() {}
 }

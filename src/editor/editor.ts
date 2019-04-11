@@ -229,4 +229,11 @@ export default class Editor {
             this.drawer.resize();
         }
     }
+
+    get clientRect() {
+        if (this.drawer) {
+            return this.drawer.canvas.getBoundingClientRect();
+        }
+        return null;
+    }    
 }
