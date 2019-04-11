@@ -1,12 +1,21 @@
 <div class="editor">
-    <context-menu v-show="showContextMenu"
-                  :editor="editor"
-                  @close="toggleContext"/>
-    <canvas id="editorCanvas" tabindex="1" @dblclick="openEditMenu">
+    <canvas id="editorCanvas" tabindex="1" @dblclick="openEditMenu" @contextmenu="openContextMenu">
         Your browser does not support the HTML 5 Canvas API
     </canvas>
+
     <messenger v-bind:feedback="feedback" v-bind:id="hoverId"/>
-    <div class="backdrop" v-show="showMenu" @click="closeEditMenu"></div>
-    <edit-state :editor="editor" v-show="showEditState" @close="closeEditMenu"/>
-    <edit-edge :editor="editor" v-show="showEditEdge" @close="closeEditMenu"/>
+
+    <div class="backdrop" v-show="showingMenu"
+                          @click="closeEditMenu"></div>
+    <edit-state :editor="editor"
+                v-show="showEditState"
+                @close="closeEditMenu"/>
+    <edit-edge :editor="editor"
+               v-show="showEditEdge"
+               @close="closeEditMenu"/>
+    <context-menu :editor="editor"
+                  v-if="showContextMenu"
+                  @close="closeContextMenu"
+                  @edit-state="openEditMenu"
+                  @edit-edge="openEditMenu"/>
 </div>

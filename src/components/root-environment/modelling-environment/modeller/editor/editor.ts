@@ -34,12 +34,10 @@ export default class EditorComponent extends Vue {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
         this.editor = new Editor(canvas, this.petrinet);
         this.editor.setSettings(this.settings);
+    }
 
-        canvas.addEventListener("mousedown", (event) => {
-            if (event.buttons === 2) {
-                this.toggleContext();
-            }
-        });
+    openContextMenu() {
+        this.showContextMenu = true;
     }
 
     openEditMenu() {
@@ -54,13 +52,17 @@ export default class EditorComponent extends Vue {
         }
     }
 
+    closeContextMenu() {
+        this.showContextMenu = false;
+    }
+
     closeEditMenu() {
         this.showEditState = false;
         this.showEditEdge = false;
     }
 
-    get showMenu() {
-        return this.showEditState || this.showEditEdge;
+    get showingMenu() {
+        return this.showEditState || this.showEditEdge || this.showContextMenu;
     }
 
     toggleContext() {
