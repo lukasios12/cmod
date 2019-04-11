@@ -56,9 +56,18 @@ export default class EditorComponent extends Vue {
         this.showContextMenu = false;
     }
 
-    closeEditMenu() {
+    closeEditStateMenu() {
         this.showEditState = false;
+    }
+
+    closeEditEdgeMenu() {
         this.showEditEdge = false;
+    }
+
+    closeMenus() {
+        this.closeContextMenu();
+        this.closeEditStateMenu();
+        this.closeEditEdgeMenu();
     }
 
     get showingMenu() {

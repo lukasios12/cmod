@@ -6,13 +6,13 @@
     <messenger v-bind:feedback="feedback" v-bind:id="hoverId"/>
 
     <div class="backdrop" v-show="showingMenu"
-                          @click="closeEditMenu"></div>
+                          @click="closeMenus"></div>
     <edit-state :editor="editor"
                 v-show="showEditState"
-                @close="closeEditMenu"/>
+                @close="closeEditStateMenu"/>
     <edit-edge :editor="editor"
                v-show="showEditEdge"
-               @close="closeEditMenu"/>
+               @close="closeEditEdgeMenu"/>
     <context-menu :editor="editor"
                   v-if="showContextMenu"
                   @close="closeContextMenu"
