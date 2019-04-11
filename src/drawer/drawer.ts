@@ -144,20 +144,14 @@ export default class Drawer {
         let box = this.canvas.getBoundingClientRect();
         let x = event.clientX - Math.round(box.left);
         let y = event.clientY - Math.round(box.top);
-        let point = new Vector2D(x, y);
         let context = this.canvas.getContext("2d");
         let vector = new Matrix(3, 1);
-        vector.set(0, 0, point.x);
-        vector.set(1, 0, point.y);
+        vector.set(0, 0, x);
+        vector.set(1, 0, y);
         vector.set(2, 0, 1);
         let mat = this.currentTransform.inverse();
         let normalized = Matrix.mult(mat, vector);
         let result = new Vector2D(normalized.get(0,0), normalized.get(1,0));
-
-        context.beginPath();
-        context.fillRect(result.x - 5, result.y - 5, 10, 10);
-        context.closePath();
-
         return result;
     }
 
