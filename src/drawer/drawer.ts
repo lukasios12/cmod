@@ -11,7 +11,7 @@ export default class Drawer {
     public canvas: HTMLCanvasElement;
     protected _currentTransform: Matrix;
     protected drawingCache: Drawing | null;
-    protected options: DrawerOptions;
+    protected _options: DrawerOptions;
 
     protected initialWidth: number;
     protected initialHeight: number;
@@ -45,16 +45,17 @@ export default class Drawer {
     }
 
     public draw(drawing: Drawing | null = null): void {
+        if (!this.canvas) return;
         this.clear();
-        if(this.options.gridOptions.drawGrid) {
+        if (this.options.gridOptions.drawGrid) {
             this.drawGrid();
         }
         let context = this.canvas.getContext("2d"); 
         context!.save();
-        if(!drawing) {
+        if (!drawing) {
             drawing = this.drawingCache;
         }
-        if(drawing) {
+        if (drawing) {
             if(this.options.gridOptions.snapGrid && isSnappable(drawing)) {
                 drawing.snap(this.options.gridOptions.horizontalGridSeperation,
                             this.options.gridOptions.verticalGridSeperation);
@@ -132,11 +133,6 @@ export default class Drawer {
             this.draw(this.drawingCache);
         }
         this.setTransform(Matrix.identity(3));
-    }
-
-    public setOptions(options: DrawerOptions) {
-        this.options = options;
-        this.draw();
     }
 
     public globalToLocal(event: MouseEvent): Vector2D {
@@ -263,5 +259,14 @@ export default class Drawer {
 
     get currentTransform() {
         return this._currentTransform;
+    }
+
+    get options() {
+        return this._options;
+    }
+
+    set options(opts: DrawerOptions) {
+        this._options = opts;
+        this.draw();
     }
 }

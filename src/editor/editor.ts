@@ -135,7 +135,7 @@ export default class Editor {
     }
 
     public setSettings(settings: DrawerOptions) {
-        this.drawer.setOptions(settings);
+        this.drawer.options = settings;
         this.drawer.draw();
     }
 
