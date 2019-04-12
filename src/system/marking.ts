@@ -51,7 +51,7 @@ export default class Marking {
         return false;
     }
 
-    public toString(): string {
+    public toString(type: MarkingStringType = MarkingStringType.FULL): string {
         let places = this.map.keys();
         let result = new Array<string>();
         for(let i = 0; i < places.length; i++) {
@@ -60,3 +60,10 @@ export default class Marking {
         return `${result.join(", ")}`;
     }
 }
+
+enum MarkingStringType {
+    MINIMAL,
+    FULL
+}
+
+export { MarkingStringType };
