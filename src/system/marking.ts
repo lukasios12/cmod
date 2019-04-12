@@ -31,13 +31,13 @@ export default class Marking {
         throw new Error(`Could not get tokens for place ${place}`);
     }
 
-    public places() {
+    get places() {
         return this.map.keys();
     }
 
     public static equals(lhs: Marking, rhs: Marking) {
-        let lplaces = lhs.places().sort();
-        let rplaces = rhs.places().sort();
+        let lplaces = lhs.places.sort();
+        let rplaces = rhs.places.sort();
         if (lplaces.length === rplaces.length) {
             for(let i = 0; i < lplaces.length; i++) {
                 let lplace = lplaces[i];
