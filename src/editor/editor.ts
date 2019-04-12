@@ -166,12 +166,6 @@ export default class Editor {
                     let state = new Marking(this.petrinet);
                     this.addState(state);
                     break;
-                case 69: // e
-                    if (this.selectionId !== null && 
-                        this.graph.hasState(this.selectionId)
-                    ) {
-                        console.log("editing");
-                    }
                 case 73: // i
                     if (this.selectionId !== null) {
                         this.setInitial(this.selectionId);
