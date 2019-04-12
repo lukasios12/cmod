@@ -155,6 +155,15 @@ export default class Drawer {
         return result;
     }
 
+    public localToGlobal(point: Vector2D): Vector2D {
+        let x = point.x;
+        let y = point.y;
+        let t = this.currentTransform;
+        x = (x * t.get(0, 0)) + t.get(0, 2);
+        y = (y * t.get(1, 1)) - t.get(1, 2);
+        return new Vector2D(x, y);
+    }
+
     protected drawGrid(): void {
         let context = this.canvas.getContext("2d");
         let width = this.canvas.width;
@@ -251,5 +260,9 @@ export default class Drawer {
         canvas.addEventListener("mouseup", (event) => {
             mouseDownMiddle = false;
         });
+    }
+
+    get _currentTransform() {
+        return this.currentTransform;
     }
 }

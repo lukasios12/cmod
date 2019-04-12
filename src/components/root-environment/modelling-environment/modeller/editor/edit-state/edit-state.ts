@@ -8,6 +8,7 @@ import Editor from "src/editor/editor";
 import Marking from "src/system/marking";
 import OmegaTokenCount from "src/system/tokens/omega-token-count";
 import IntegerTokenCount from "src/system/tokens/integer-token-count";
+import StyleManager from "src/stylemanager/style-manager";
 
 @WithRender
 @Component({
@@ -47,6 +48,9 @@ export default class EditStateComponent extends Vue {
     @Emit('close')
     confirm() {
         if (this.id !== null) {
+            let drawer = this.editor.drawer;
+            let drawing = this.editor.graphDrawing.getStateDrawing(this.id);
+            let position = drawer.localToGlobal(drawing.position);
             let marking = new Marking(this.editor.petrinet);
             for(let i = 0; i < this.map.length; i++) {
                 let record = this.map[i];
@@ -108,5 +112,28 @@ export default class EditStateComponent extends Vue {
                 this.map.push(this.createRecord(places[i], tokenString));
             }
         }
+    }
+
+    get styleObject() {
+        if (this.id !== null) {
+            let drawer = this.editor.drawer;
+            let drawing = this.editor.graphDrawing.getStateDrawing(this.id);
+            let position = drawer.localToGlobal(drawing.position);
+            let context = drawer.canvas.getContext("2d");
+            let t = drawer._currentTransform;
+
+            context.save();
+            StyleManager.setStateStandardStyle(context);
+            let height = drawing.getHeight(context);
+            let width = drawing.getWidth(context);
+            context.restore();
+            let x = position.x + (width * t.get(0, 0)) / 2;
+            let y = position.y + (height * t.get(1, 1));
+            return {
+                "left": x.toString() + "px",
+                "top": y.toString() + "px",
+            };
+        }
+        return null;
     }
 }
