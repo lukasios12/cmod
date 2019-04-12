@@ -9,7 +9,7 @@ import { clamp } from "lib/math/math";
 
 export default class Drawer {
     public canvas: HTMLCanvasElement;
-    protected currentTransform: Matrix;
+    protected _currentTransform: Matrix;
     protected drawingCache: Drawing | null;
     protected options: DrawerOptions;
 
@@ -39,7 +39,7 @@ export default class Drawer {
         this.canvas = canvas;
         this.resize();
         this.drawingCache = null;
-        this.currentTransform = Matrix.identity(3);
+        this._currentTransform = Matrix.identity(3);
         this.initialWidth = canvas.width;
         this.initialHeight = canvas.height;
     }
@@ -63,7 +63,6 @@ export default class Drawer {
             this.drawingCache = drawing;
         }
         context!.restore();
-    
     }
 
     public clear(): void {
@@ -99,7 +98,7 @@ export default class Drawer {
         mat.set(0, 2, htrans);
         mat.set(1, 2, vtrans);
 
-        this.currentTransform = mat;
+        this._currentTransform = mat;
         context!.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
                              mat.get(1,1), mat.get(0,2), -mat.get(1,2));
 
@@ -262,7 +261,7 @@ export default class Drawer {
         });
     }
 
-    get _currentTransform() {
-        return this.currentTransform;
+    get currentTransform() {
+        return this._currentTransform;
     }
 }
