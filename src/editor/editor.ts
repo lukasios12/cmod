@@ -124,6 +124,7 @@ export default class Editor {
             this.graphDrawing.getDrawing(this.selectionId) :
             null;
         this.graphDrawingOptions.selected = this.selectionId;
+        this.drawer.draw();
     }
 
     public setFeedback(feedback: Feedback): void {
@@ -197,6 +198,7 @@ export default class Editor {
         let mouseDownLeft = false;
         canvas.addEventListener("mousedown", (event) => {
             event.preventDefault();
+            console.log(event.buttons);
             switch(event.buttons) {
                 case 1: // left click
                     let point = this.drawer.globalToLocal(event);
@@ -213,6 +215,10 @@ export default class Editor {
                         this.select(point, context);
                     }
                     mouseDownLeft = true;
+                    break;
+                case 2: // right click
+                    point = this.drawer.globalToLocal(event);
+                    this.select(point, context);
                     break;
             }
         });
