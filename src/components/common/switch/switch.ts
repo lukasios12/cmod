@@ -5,7 +5,7 @@ import WithRender from "./switch.html?style=./switch.scss";
 @Component({
     name: "switch-component"
 })
-export default class SwithComponent extends Vue {
+export default class SwitchComponent extends Vue {
     @Prop(Boolean)
     readonly on!: boolean;
 
