@@ -30,12 +30,12 @@ import { ActionManager } from "lib/action-manager/action-manager";
 export default class Editor {
     protected _drawer: Drawer;
     protected actionManager: ActionManager;
-    protected feedback: Feedback | null;
+    protected _feedback: Feedback | null;
 
     public petrinet: Petrinet;
     public graph: Graph;
     public graphDrawing: GraphDrawing;
-    public graphDrawingOptions: GraphDrawingOptions;
+    protected _graphDrawingOptions: GraphDrawingOptions;
 
     public selection: Drawing | null;
     public selectionId: number | null;
@@ -58,7 +58,10 @@ export default class Editor {
         this.registerEvents();
 
         this.graph = new Graph();
-        this.graphDrawingOptions = new GraphDrawingOptions();
+        this.graphDrawingOptions = {
+            selected: null,
+            feedback: null,
+        };
         this.graphDrawing = new GraphDrawing(this.graphDrawingOptions);
         this.feedback = null;
 
@@ -127,15 +130,27 @@ export default class Editor {
         this.drawer.draw();
     }
 
-    public setFeedback(feedback: Feedback): void {
-        this.feedback = feedback;
-        this.graphDrawingOptions.feedback = feedback;
-        this.graphDrawing.options = this.graphDrawingOptions;
-        this.drawer.draw();
+    get feedback() {
+        return this._feedback;
     }
 
-    public setSettings(settings: DrawerOptions) {
-        this.drawer.options = settings;
+    set feedback(f: Feedback) {
+        this._feedback = f;
+        this.graphDrawingOptions.feedback = f;
+        this.graphDrawing.options = this.graphDrawingOptions;
+        this.drawer.draw(this.graphDrawing);
+    }
+
+    set drawerOptions(opts: DrawerOptions) {
+        this.drawer.options = opts;
+    }
+
+    get graphDrawingOptions() {
+        return this._graphDrawingOptions;
+    }
+
+    set graphDrawingOptions(opts: GraphDrawingOptions) {
+        this._graphDrawingOptions = opts;
         this.drawer.draw();
     }
 
@@ -192,7 +207,6 @@ export default class Editor {
         let mouseDownLeft = false;
         canvas.addEventListener("mousedown", (event) => {
             event.preventDefault();
-            console.log(event.buttons);
             switch(event.buttons) {
                 case 1: // left click
                     let point = this.drawer.globalToLocal(event);

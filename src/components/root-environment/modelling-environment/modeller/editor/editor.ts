@@ -38,7 +38,7 @@ export default class EditorComponent extends Vue {
     mounted() {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
         this.editor = new Editor(canvas, this.petrinet);
-        this.editor.setSettings(this.settings);
+        this.editor.drawerOptions = this.settings;
     }
 
     openContextMenu(event) {
@@ -119,7 +119,7 @@ export default class EditorComponent extends Vue {
     @Watch('feedback', {deep: true, immediate: false})
     onFeedbackChange() {
         if (this.editor) {
-            this.editor.setFeedback(this.feedback);
+            this.editor.feedback = this.feedback;
         }
     }
 
@@ -131,7 +131,7 @@ export default class EditorComponent extends Vue {
     @Watch('settings', {deep:true, immediate: false})
     onSettingsChange() {
         if (this.editor) {
-            this.editor.setSettings(this.settings);
+            this.editor.drawerOptions = this.settings;
         }
     }
 

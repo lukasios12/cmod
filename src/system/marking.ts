@@ -51,11 +51,20 @@ export default class Marking {
         return false;
     }
 
-    public toString(type: MarkingStringType = MarkingStringType.FULL): string {
+    public toString(type: MarkingStringType = MarkingStringType.MINIMAL): string {
         let places = this.map.keys();
         let result = new Array<string>();
-        for(let i = 0; i < places.length; i++) {
-            result.push(`${places[i]}: ${this.map.get(places[i])}`);
+        if (type === MarkingStringType.FULL) {
+            for(let i = 0; i < places.length; i++) {
+                result.push(`${places[i]}: ${this.map.get(places[i])}`);
+            }
+        } else if (type === MarkingStringType.MINIMAL) {
+            for(let i = 0; i < places.length; i++) {
+                let tokens = this.get(places[i]);
+                if (!(tokens instanceof IntegerTokenCount) || tokens.value > 0) {
+                    result.push(`${places[i]}: ${this.get(places[i])}`);
+                }
+            }
         }
         return `${result.join(", ")}`;
     }
@@ -66,4 +75,4 @@ enum MarkingStringType {
     FULL
 }
 
-export { MarkingStringType };
+export { Marking, MarkingStringType };
