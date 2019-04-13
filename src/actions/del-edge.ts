@@ -27,19 +27,16 @@ export default class DeleteEdge implements UndoableAction {
     }
 
     public exec(): void {
-        console.log(`Deleting edge with id: ${this.id}`);
         this.graph.delEdge(this.id);
         this.graphDrawing.delEdge(this.id);
     }
 
     public undo(): void {
-        console.log(`Undoing deletion of edge with id: ${this.id}`);
         this.graph.addEdge(this.edge, this.id);
         this.graphDrawing.addEdge(this.id, this.edgeDrawing);
     }
 
     public redo(): void {
-        console.log("REDO");
         this.exec();
     }
 }

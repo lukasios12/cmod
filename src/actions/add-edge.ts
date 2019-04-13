@@ -25,7 +25,6 @@ export default class AddEdge implements UndoableAction {
     }
 
     public exec(): void {
-        console.log(`Adding edge (${this.edge.from},${this.edge.to}, ${this.edge.label})`);
         this.id = this.graph.addEdge(this.edge);
         let drawing;
         if(this.edge.from == this.edge.to) {
@@ -49,15 +48,12 @@ export default class AddEdge implements UndoableAction {
     }
 
     public undo(): void {
-        console.log(`Undoing addition of edge (${this.edge.from},${this.edge.to}, ${this.edge.label})`);
         this.graph.delEdge(this.id!);
         this.graphDrawing.delEdge(this.id!);
     }
 
     public redo(): void {
-        console.log(`Readding edge (${this.edge.from},${this.edge.to}, ${this.edge.label})`);
         this.graph.addEdge(this.edge, this.id);
         this.graphDrawing.addEdge(this.id!, this.edgeDrawing!);
-        console.log(this.graphDrawing);
     }
 }

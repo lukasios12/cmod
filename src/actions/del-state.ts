@@ -47,11 +47,8 @@ export default class DeleteState implements UndoableAction {
     }
 
     public exec(): void {
-        console.log(`Removing state with id: ${this.id}`);
         this.preset = this.graph.preset(this.id);
         this.postset = this.graph.postset(this.id);
-        console.log(this.preset);
-        console.log(this.postset);
         let presetIds = this.preset.keys();
         let postsetIds = this.postset.keys();
         for (let i = 0; i < presetIds.length; i++) {
@@ -79,7 +76,6 @@ export default class DeleteState implements UndoableAction {
     }
 
     public undo(): void {
-        console.log(`Undoing state removal with id: ${this.id}`);
         if (!this.preset || !this.postset) {
             throw new Error(`Could not restore edges: pre-set and/or post-set undefined`);
         }
@@ -104,7 +100,6 @@ export default class DeleteState implements UndoableAction {
     }
 
     public redo(): void {
-        console.log(`Redoing state removal with id: ${this.id}`);
         this.exec();
     }
 }

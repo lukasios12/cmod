@@ -31,20 +31,17 @@ export default class AddState implements UndoableAction {
     }
 
     public exec(): void {
-        console.log(`Adding state: ${this.state}`);
         this.id = this.graph.addState(this.state);
         this.stateDrawing = new StateDrawing(this.state, this.position);
         this.graphDrawing.addState(this.id, this.stateDrawing);
     }
 
     public undo(): void {
-        console.log(`Undoing state addition: ${this.state}. ID: ${this.id}`);
         this.graph.delState(this.id!);
         this.graphDrawing.delState(this.id!);
     }
 
     public redo(): void {
-        console.log(`Redoing state addition: ${this.state}`);
         this.graph.addState(this.state, this.id);
         this.graphDrawing.addState(
             this.id!,
