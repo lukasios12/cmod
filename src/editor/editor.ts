@@ -235,6 +235,7 @@ export default class Editor {
                 this.selection && isDraggable(this.selection)) {
                 let point = this.drawer.globalToLocal(event);
                 this.selection.drag(point, context!);
+                this.hoverId = null;
                 this.drawer.draw();
             } else if (!mouseDownLeft) {
                 let point = this.drawer.globalToLocal(event);
