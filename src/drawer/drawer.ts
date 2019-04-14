@@ -8,7 +8,7 @@ import { Matrix } from "lib/matrix/matrix";
 import { clamp } from "lib/math/math";
 
 export default class Drawer {
-    public canvas: HTMLCanvasElement;
+    public context: CanvasRenderingContext2D;
     protected _currentTransform: Matrix;
     protected drawingCache: Drawing | null;
     protected _options: DrawerOptions;
@@ -17,6 +17,10 @@ export default class Drawer {
     protected initialHeight: number;
 
     public constructor(canvas: HTMLCanvasElement, options?: DrawerOptions) {
+        this.context = canvas.getContext("2d");
+        this.drawingCache = null;
+        this._currentTransform = Matrix.identity(3);
+
         if (options) {
             this.options = options;
         } else { // default settings
@@ -36,21 +40,19 @@ export default class Drawer {
             };
         }
 
-        this.canvas = canvas;
         this.resize();
-        this.drawingCache = null;
-        this._currentTransform = Matrix.identity(3);
         this.initialWidth = canvas.width;
         this.initialHeight = canvas.height;
     }
 
     public draw(drawing: Drawing | null = null): void {
-        if (!this.canvas) return;
+        let canvas = this.context.canvas;
+        if (!canvas) return;
         this.clear();
         if (this.options.gridOptions.drawGrid) {
             this.drawGrid();
         }
-        let context = this.canvas.getContext("2d"); 
+        let context = this.context;
         context!.save();
         if (!drawing) {
             drawing = this.drawingCache;
@@ -67,11 +69,12 @@ export default class Drawer {
     }
 
     public clear(): void {
-        let context = this.canvas.getContext("2d");
+        let context = this.context;
+        let canvas = context.canvas;
         context!.save();
         context!.setTransform(1, 0, 0, 1, 0, 0);
-        let width = this.canvas.width;
-        let height = this.canvas.height;
+        let width = canvas.width;
+        let height = canvas.height;
         context!.clearRect(0, 0, width, height);
         context!.restore();
     }
@@ -82,7 +85,7 @@ export default class Drawer {
     }
 
     public setTransform(mat: Matrix): void {
-        let context = this.canvas.getContext("2d");
+        let context = this.context;
         let options = this.options;
 
         let hscale = mat.get(0, 0);
@@ -123,10 +126,11 @@ export default class Drawer {
     }
 
     public resize(): void {
-        let parent = this.canvas.parentElement;
+        let canvas = this.context.canvas;
+        let parent = canvas.parentElement;
         if (parent) {
-            this.canvas.width = parent.offsetWidth;
-            this.canvas.height = parent.offsetHeight;
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
         }
 
         if(this.drawingCache) {
@@ -136,10 +140,11 @@ export default class Drawer {
     }
 
     public globalToLocal(event: MouseEvent): Vector2D {
-        let box = this.canvas.getBoundingClientRect();
+        let canvas = this.context.canvas;
+        let box = canvas.getBoundingClientRect();
         let x = event.clientX - Math.round(box.left);
         let y = event.clientY - Math.round(box.top);
-        let context = this.canvas.getContext("2d");
+        let context = this.context;
         let vector = new Matrix(3, 1);
         vector.set(0, 0, x);
         vector.set(1, 0, y);
@@ -160,9 +165,10 @@ export default class Drawer {
     }
 
     protected drawGrid(): void {
-        let context = this.canvas.getContext("2d");
-        let width = this.canvas.width;
-        let height = this.canvas.height;
+        let context = this.context;
+        let canvas = context.canvas;
+        let width = canvas.width;
+        let height = canvas.height;
 
         let hdist = this.options.gridOptions.horizontalGridSeperation;
         let vdist = this.options.gridOptions.verticalGridSeperation;
@@ -179,25 +185,21 @@ export default class Drawer {
         let ymax = Math.ceil((height / transform.get(1,1)) / vdist) *
                    vdist + ymin + vdist;
 
-        context!.save();
-        context!.strokeStyle = "rgb(220, 220, 220)";
-        context!.lineWidth = 1; // px
+        context.save();
+        context.strokeStyle = "rgb(220, 220, 220)";
+        context.lineWidth = 1; // px
+        context.beginPath();
         for(let x = xmin; x <= xmax; x += hdist) {
-            context!.beginPath();
-            context!.moveTo(x, ymin);
-            context!.lineTo(x, ymax);
-            context!.stroke();
+            context.moveTo(x, ymin);
+            context.lineTo(x, ymax);
         }
-        context!.closePath();
-
         for(let y = ymin; y <= ymax; y += vdist) {
-            context!.beginPath();
-            context!.moveTo(xmin, y);
-            context!.lineTo(xmax, y);
-            context!.stroke();
+            context.moveTo(xmin, y);
+            context.lineTo(xmax, y);
         }
-        context!.closePath();
-        context!.restore();
+        context.stroke();
+        context.closePath();
+        context.restore();
     }
 
     public registerEvents(): void {
@@ -205,7 +207,8 @@ export default class Drawer {
             this.resize();
         });
         // register key events
-        let canvas = this.canvas;
+        let context = this.context;
+        let canvas = context.canvas;
         let movementSpeed = 40;
         let zoomAmount = 1.2;
         canvas.addEventListener("keydown", (event) => {
@@ -255,6 +258,11 @@ export default class Drawer {
         canvas.addEventListener("mouseup", (event) => {
             mouseDownMiddle = false;
         });
+    }
+
+    // getters and setters
+    get canvas() {
+        return this.context.canvas;
     }
 
     get currentTransform() {

@@ -141,7 +141,7 @@ export default class EditStateComponent extends Vue {
             let drawer = this.editor.drawer;
             let drawing = this.editor.graphDrawing.getStateDrawing(this.id);
             let position = drawer.localToGlobal(drawing.position);
-            let context = drawer.canvas.getContext("2d");
+            let context = drawer.context.canvas.getContext("2d");
             let t = drawer.currentTransform;
 
             context.save();

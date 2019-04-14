@@ -161,7 +161,7 @@ export default class Editor {
             alert("You seem to be offline, you cannot receive feedback while offline");
         });
 
-        let canvas = this.drawer.canvas;
+        let canvas = this.drawer.context.canvas;
         let context = canvas.getContext("2d");
 
         // key events
@@ -264,7 +264,7 @@ export default class Editor {
 
     get clientRect() {
         if (this.drawer) {
-            return this.drawer.canvas.getBoundingClientRect();
+            return this.drawer.context.canvas.getBoundingClientRect();
         }
         return null;
     }    
