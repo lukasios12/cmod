@@ -1,6 +1,6 @@
 import { UndoableAction } from "lib/action/undoable-action";
 
-class ActionManager {
+export default class HistoryList {
     protected history: Array<UndoableAction>;
     protected pointer: number;
     protected hooks: Array<() => any>;
@@ -51,5 +51,3 @@ class ActionManager {
         }
     }
 }
-
-export { ActionManager };

@@ -25,11 +25,11 @@ import DeleteInitial from "src/actions/del-initial";
 import EditState from "src/actions/edit-state";
 import EditEdge from "src/actions/edit-edge";
 
-import { ActionManager } from "lib/action-manager/action-manager";
+import HistoryList from "src/history-list/history-list";
 
 export default class Editor {
     protected _drawer: Drawer;
-    protected actionManager: ActionManager;
+    protected historyList: HistoryList;
     protected _feedback: Feedback | null;
 
     public petrinet: Petrinet;
@@ -45,8 +45,8 @@ export default class Editor {
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
         this.petrinet = petrinet;
         this._drawer = new Drawer(canvas);
-        this.actionManager = new ActionManager();
-        this.actionManager.addHook(() => {
+        this.historyList = new HistoryList();
+        this.historyList.addHook(() => {
             this.drawer.draw();
             FeedbackDispatch.get(this.graph);
         });
@@ -70,22 +70,22 @@ export default class Editor {
 
     public addState(state: State, position: Vector2D | null = null): void {
         let a = new AddState(state, this.graph, this.graphDrawing, position);
-        this.actionManager.exec(a);
+        this.historyList.exec(a);
     }
 
     public addEdge(edge: Edge): void {
         let a = new AddEdge(edge, this.graph, this.graphDrawing);
-        this.actionManager.exec(a);
+        this.historyList.exec(a);
     }
 
     public delState(id: number): void {
         let a = new DeleteState(id, this.graph, this.graphDrawing);
-        this.actionManager.exec(a);
+        this.historyList.exec(a);
     }
 
     public delEdge(id: number): void {
         let a = new DeleteEdge(id, this.graph, this.graphDrawing);
-        this.actionManager.exec(a);
+        this.historyList.exec(a);
     }
 
     public editState(id: number, state: State): void {
@@ -93,7 +93,7 @@ export default class Editor {
             let current = this.graph.getState(id);
             if (!Marking.equals(current, state)) {
                 let a = new EditState(id, state, this.graph, this.graphDrawing);
-                this.actionManager.exec(a);
+                this.historyList.exec(a);
             }
         }
     }
@@ -103,21 +103,21 @@ export default class Editor {
             let current = this.graph.getEdge(id).label;
             if (current !== label) {
                 let a = new EditEdge(id, label, this.graph, this.graphDrawing);
-                this.actionManager.exec(a);
+                this.historyList.exec(a);
             }
         }
     }
 
     public setInitial(id: number): void {
         let a = new AddInitial(id, this.graph, this.graphDrawing);
-        this.actionManager.exec(a);
+        this.historyList.exec(a);
     }
 
     public unsetInitial(): void {
         let id = this.graph.initial;
         if (id !== null) {
             let a = new DeleteInitial(id, this.graph, this.graphDrawing);
-            this.actionManager.exec(a);
+            this.historyList.exec(a);
         }
     }
 
@@ -190,14 +190,14 @@ export default class Editor {
                     break;
                 case 89: // y
                     if(event.ctrlKey) {
-                        this.actionManager.redo();
+                        this.historyList.redo();
                     }
                     break;
                 case 90: // z
                     if(event.ctrlKey && !event.shiftKey) {
-                        this.actionManager.undo();
+                        this.historyList.undo();
                     } else if(event.ctrlKey && event.shiftKey) {
-                        this.actionManager.redo();
+                        this.historyList.redo();
                     }
                     break;
             }
