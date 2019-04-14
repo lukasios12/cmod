@@ -54,8 +54,8 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    openEditMenu() {
-        if (this.editor) {
+    openEditMenu(event) {
+        if (this.editor && !event.ctrlKey) {
             let id = this.editor.selectionId;
             let graph = this.editor.graph;
             if (graph.hasState(id)) {

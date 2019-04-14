@@ -1,9 +1,9 @@
 <div class="editor">
     <canvas id="editorCanvas"
             tabindex="1"
-            @dblclick="openEditMenu"
-            @contextmenu="openContextMenu"
-            @keyup.e="openEditMenu">
+            @dblclick="openEditMenu($event)"
+            @contextmenu="openContextMenu($event)"
+            @keyup.e="openEditMenu($event)">
         Your browser does not support the HTML 5 Canvas API
     </canvas>
 
