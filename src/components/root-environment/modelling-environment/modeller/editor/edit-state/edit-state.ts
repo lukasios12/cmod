@@ -10,6 +10,8 @@ import OmegaTokenCount from "src/system/tokens/omega-token-count";
 import IntegerTokenCount from "src/system/tokens/integer-token-count";
 import StyleManager from "src/stylemanager/style-manager";
 
+import { remainder } from "lib/math/math";
+
 @WithRender
 @Component({
     name: "edit-state"
@@ -47,7 +49,7 @@ export default class EditStateComponent extends Vue {
 
     next(index: number) {
         if (index >= 0 && index < this.map.length) {
-            let i = (index + 1) % this.map.length;
+            let i = remainder(index + 1, this.map.length);
             let element = document.getElementById(this.inputId(i));
             element.focus();
         }
@@ -55,10 +57,7 @@ export default class EditStateComponent extends Vue {
 
     prev(index: number) {
         if(index >= 0 && index < this.map.length) {
-            let i = (index - 1) % this.map.length;
-            if (i < 0) {
-                i = this.map.length + i;
-            }
+            let i = remainder(index - 1, this.map.length);
             let element = document.getElementById(this.inputId(i));
             element.focus();
         }
