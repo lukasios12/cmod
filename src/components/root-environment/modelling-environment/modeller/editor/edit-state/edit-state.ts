@@ -40,8 +40,27 @@ export default class EditStateComponent extends Vue {
     }
 
     omega(index: number) {
-        if (index >= 0 && this.map.length) {
+        if (index >= 0 && index < this.map.length) {
             this.map[index].tokens = new OmegaTokenCount().toString();
+        }
+    }
+
+    next(index: number) {
+        if (index >= 0 && index < this.map.length) {
+            let i = (index + 1) % this.map.length;
+            let element = document.getElementById(this.inputId(i));
+            element.focus();
+        }
+    }
+
+    prev(index: number) {
+        if(index >= 0 && index < this.map.length) {
+            let i = (index - 1) % this.map.length;
+            if (i < 0) {
+                i = this.map.length + i;
+            }
+            let element = document.getElementById(this.inputId(i));
+            element.focus();
         }
     }
 
@@ -112,6 +131,10 @@ export default class EditStateComponent extends Vue {
                 this.map.push(this.createRecord(places[i], tokenString));
             }
         }
+    }
+
+    protected inputId(i: number) {
+        return `edit-state-input-${i}`;
     }
 
     get styleObject() {
