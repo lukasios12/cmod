@@ -12,8 +12,13 @@ import StyleManager from "src/stylemanager/style-manager";
 import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
 export default class StateDrawing implements Hittable, Draggable, Snappable {
-    public state: State;
-    public position: Vector2D;
+    protected _state: State;
+    protected _position: Vector2D;
+
+    protected validCache: boolean;
+    protected boxCache: Rectangle | null;
+    protected widthCache: number  | null;
+    protected heightCache: number | null;
 
     public constructor(state: State, position: Vector2D | null = null) {
         this.state = state;
@@ -22,6 +27,11 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         } else {
             this.position = new Vector2D(0, 0);
         }
+
+        this.boxCache = null;
+        this.widthCache = null;
+        this.heightCache = null;
+        this.validCache = false;
     }
 
     public draw(context: CanvasRenderingContext2D): void {
@@ -76,15 +86,22 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     protected getBox(context: CanvasRenderingContext2D): Rectangle {
-        context.save();
-        StyleManager.setStateStandardStyle(context);
-        let width = this.getWidth(context);
-        let height = this.getHeight(context);
-        let box = new Rectangle(this.position.x,
+        let box;
+        if (!this.boxCache || !this.validCache) {
+            context.save();
+            StyleManager.setStateStandardStyle(context);
+            let width = this.getWidth(context);
+            let height = this.getHeight(context);
+            box = new Rectangle(this.position.x,
                                 this.position.y,
                                 width,
                                 height);
-        context.restore();
+            context.restore();
+            this.boxCache = box;
+            this.validCache = true;
+        } else {
+            box = this.boxCache;
+        }
         return box;
     }
 
@@ -143,16 +160,48 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     public getHeight(context: CanvasRenderingContext2D): number {
-        let fontsize = CanvasRenderingContext2DUtils.getFontSize(context);
-        return 1.5 * fontsize;
+        let height;
+        if (this.validCache && this.heightCache !== null) {
+            height = this.heightCache;
+        } else {
+            let fontsize = CanvasRenderingContext2DUtils.getFontSize(context);
+            height = 1.5 * fontsize;
+            this.heightCache = height;
+        }
+        return height;
     }
 
     public getWidth(context: CanvasRenderingContext2D): number {
-        return context.measureText(this.getStateString()).width + 10;
+        let width;
+        if (this.validCache && this.widthCache !== null) {
+            width = this.widthCache;
+        } else {
+            width = context.measureText(this.getStateString()).width + 10;
+            this.widthCache = width;
+        }
+        return width;
     }
 
     protected getStateString() {
         return `[${this.state.toString()}]`;
+    }
+
+    public get state() {
+        return this._state;
+    }
+
+    public set state(ns: State) {
+        this._state = ns;
+        this.validCache = false;
+    }
+
+    public get position() {
+        return this._position;
+    }
+
+    public set position(pos: Vector2D) {
+        this._position = pos;
+        this.validCache = false;
     }
 }
 
