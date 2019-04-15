@@ -29,13 +29,13 @@ export default class AddEdge implements UndoableAction {
         let drawing;
         if(this.edge.from == this.edge.to) {
             drawing = new SelfLoopDrawing(
-                this.graphDrawing.getStateDrawing(this.edge.from),
+                this.graphDrawing.getState(this.edge.from),
                 this.edge.label
             );
         } else {
             drawing = new LinearEdgeDrawing(
-                this.graphDrawing.getStateDrawing(this.edge.from),
-                this.graphDrawing.getStateDrawing(this.edge.to),
+                this.graphDrawing.getState(this.edge.from),
+                this.graphDrawing.getState(this.edge.to),
                 this.edge.label
             );
         }

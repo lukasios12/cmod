@@ -30,7 +30,7 @@ export default class DeleteState implements UndoableAction {
         this.id = id;
         this.graph = graph;
         this.graphDrawing = drawing;
-        this.stateDrawing = this.graphDrawing.getStateDrawing(this.id);
+        this.stateDrawing = this.graphDrawing.getState(this.id);
         let state = this.graph.getState(this.id);
         if (state !== null) {
             this.state = state;
@@ -53,7 +53,7 @@ export default class DeleteState implements UndoableAction {
         let postsetIds = this.postset.keys();
         for (let i = 0; i < presetIds.length; i++) {
             let id = presetIds[i];
-            let drawing = this.graphDrawing.getEdgeDrawing(id);
+            let drawing = this.graphDrawing.getEdge(id);
             this.presetDrawings.put(id, drawing);
             // delete the edge from the graph and drawing
             this.graph.delEdge(id);
@@ -61,7 +61,7 @@ export default class DeleteState implements UndoableAction {
         }
         for (let i = 0; i < postsetIds.length; i++) {
             let id = postsetIds[i];
-            let drawing = this.graphDrawing.getEdgeDrawing(id);
+            let drawing = this.graphDrawing.getEdge(id);
             this.postsetDrawings.put(id, drawing);
             // delete the edge from the graph and drawing
             this.graph.delEdge(id);

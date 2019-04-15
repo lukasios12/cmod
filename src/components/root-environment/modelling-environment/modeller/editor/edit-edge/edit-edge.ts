@@ -68,7 +68,7 @@ export default class EditEdgeComponent extends Vue {
     get styleObject() {
         let id = this.id;
         if (id !== null) {
-            let drawing = this.editor.graphDrawing.getEdgeDrawing(id);
+            let drawing = this.editor.graphDrawing.getEdge(id);
             if (!drawing) return {};
             let drawer = this.editor.drawer;
             let context = drawer.context;

@@ -67,7 +67,7 @@ export default class EditStateComponent extends Vue {
     confirm() {
         if (this.id !== null) {
             let drawer = this.editor.drawer;
-            let drawing = this.editor.graphDrawing.getStateDrawing(this.id);
+            let drawing = this.editor.graphDrawing.getState(this.id);
             let position = drawer.localToGlobal(drawing.position);
             let marking = new Marking(this.editor.petrinet);
             for(let i = 0; i < this.map.length; i++) {
@@ -139,7 +139,7 @@ export default class EditStateComponent extends Vue {
     get styleObject() {
         if (this.id !== null) {
             let drawer = this.editor.drawer;
-            let drawing = this.editor.graphDrawing.getStateDrawing(this.id);
+            let drawing = this.editor.graphDrawing.getState(this.id);
             let position = drawer.localToGlobal(drawing.position);
             let context = drawer.context.canvas.getContext("2d");
             let t = drawer.currentTransform;

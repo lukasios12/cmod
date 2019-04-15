@@ -25,7 +25,7 @@ export default class EditEdge implements UndoableAction {
         }
         this.oldLabel = edge.label;
         edge.label = this.newLabel;
-        let edgeDrawing = this.graphDrawing.getEdgeDrawing(this.id);
+        let edgeDrawing = this.graphDrawing.getEdge(this.id);
         edgeDrawing.label = this.newLabel;
     }
 
@@ -35,7 +35,7 @@ export default class EditEdge implements UndoableAction {
             throw new Error(`Could not edit edge: invalid id: ${this.id}`);
         }
         edge.label = this.oldLabel!;
-        let edgeDrawing = this.graphDrawing.getEdgeDrawing(this.id);
+        let edgeDrawing = this.graphDrawing.getEdge(this.id);
         edgeDrawing.label = this.oldLabel!;
     }
 

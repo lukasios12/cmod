@@ -30,14 +30,14 @@ export default class EditState implements UndoableAction {
         this.oldState = this.graph.getState(this.id);
         this.graph.delState(this.id);
         this.graph.addState(this.newState, this.id);
-        let drawing = this.graphDrawing.getStateDrawing(this.id);
+        let drawing = this.graphDrawing.getState(this.id);
         drawing.state = this.newState;
     }
 
     public undo() {
         this.graph.delState(this.id);
         this.graph.addState(this.oldState!, this.id);
-        let drawing = this.graphDrawing.getStateDrawing(this.id);
+        let drawing = this.graphDrawing.getState(this.id);
         drawing.state = this.oldState!;
     }
 

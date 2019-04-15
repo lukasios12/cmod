@@ -23,7 +23,7 @@ export default class DeleteEdge implements UndoableAction {
         } else {
             throw new Error(`Could not delete edge: invalid id: ${this.id}`);
         }
-        this.edgeDrawing = drawing.getEdgeDrawing(id);
+        this.edgeDrawing = drawing.getEdge(id);
     }
 
     public exec(): void {

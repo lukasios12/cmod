@@ -151,7 +151,7 @@ export default class GraphDrawing implements Drawing, Snappable {
             context.fillStyle = "black";
             context.strokeStyle = "black";
             context.lineWidth = 2;
-            let state = this.getStateDrawing(this.initial);
+            let state = this.getState(this.initial);
             let pos = state!.position;
             let arrow = new Arrow(pos.x - 30, pos.y - 30, pos.x, pos.y);
             arrow.fill(context);
@@ -179,26 +179,26 @@ export default class GraphDrawing implements Drawing, Snappable {
 
     public getDrawing(id: number): Drawing {
         if(this.states.hasKey(id)) {
-            return this.getStateDrawing(id);
+            return this.getState(id);
         } 
         if(this.edges.hasKey(id)) {
-            return this.getEdgeDrawing(id);
+            return this.getEdge(id);
         }
-        throw new Error(`A drawing with id ${id} does not exist`);
+        return null;
     }
 
-    public getStateDrawing(id: number): StateDrawing {
+    public getState(id: number): StateDrawing {
         if(this.states.hasKey(id)) {
             return this.states.get(id)!;
         }
-        throw new Error(`A state drawing with id ${id} does not exist`);
+        return null;
     }
 
-    public getEdgeDrawing(id: number): EdgeDrawing {
+    public getEdge(id: number): EdgeDrawing {
         if(this.edges.hasKey(id)) {
             return this.edges.get(id)!;
         }
-        throw new Error(`An edge drawing with it ${id} does not exist`);
+        return null;
     }
 
     public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D): number | null {
