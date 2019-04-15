@@ -60,6 +60,14 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         this.angle = angle;
     }
 
+    public getLabelPosition(context: CanvasRenderingContext2D): Vector2D {
+        let state = this.source;
+        let i = state.getIntersectionAt(this.angle, context);
+        let vec = Vector2D.scale(i.vector, i.length + this.radius);
+        let p = Vector2D.add(i.origin, vec);
+        return p;
+    }
+
     protected getCircle(context: CanvasRenderingContext2D): Circle {
         context.save();
         StyleManager.setEdgeStandardStyle(context);

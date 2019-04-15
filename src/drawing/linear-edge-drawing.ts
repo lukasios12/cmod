@@ -44,6 +44,11 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
         return result;
     }
 
+    public getLabelPosition(context: CanvasRenderingContext2D) {
+        let arrow = this.getArrow(context);
+        return arrow.getControlPoint();
+    }
+
     protected getArrow(context: CanvasRenderingContext2D): Arrow {
         context.save();
         StyleManager.setStateStandardStyle(context);
