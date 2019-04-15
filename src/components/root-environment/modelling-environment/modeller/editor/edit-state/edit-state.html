@@ -6,7 +6,8 @@
                    type="text"
                    v-model="record.tokens"
                    @keydown.tab.prevent.exact="next(i)"
-                   @keydown.tab.shift.prevent.exact="prev(i)"/>
+                   @keydown.tab.shift.prevent.exact="prev(i)"
+                   @keyup.enter="confirm"/>
             <div class="buttons">
                 <button @click="dec(i)">-</button>
                 <button @click="omega(i)">ω</button>
