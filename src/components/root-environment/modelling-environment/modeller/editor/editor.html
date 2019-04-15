@@ -13,17 +13,17 @@
                           @click="closeMenus"></div>
     <edit-state :editor="editor"
                 v-show="showEditState"
-                @close="closeEditStateMenu"/>
+                @close="closeMenus"/>
     <edit-edge :editor="editor"
                v-show="showEditEdge"
-               @close="closeEditEdgeMenu"/>
+               @close="closeMenus"/>
     <context-menu :editor="editor"
                   :top="contextTop"
                   :left="contextLeft"
                   :x="contextX"
                   :y="contextY"
                   v-if="showContextMenu"
-                  @close="closeContextMenu"
+                  @close="closeMenus"
                   @edit-state="openEditMenu"
                   @edit-edge="openEditMenu"/>
 </div>

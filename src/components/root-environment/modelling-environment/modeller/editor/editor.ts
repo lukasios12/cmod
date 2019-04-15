@@ -82,6 +82,10 @@ export default class EditorComponent extends Vue {
         this.closeContextMenu();
         this.closeEditStateMenu();
         this.closeEditEdgeMenu();
+        if (this.editor) {
+            let canvas = this.editor.drawer.context.canvas;
+            canvas.focus();
+        }
     }
 
     get showingMenu() {
