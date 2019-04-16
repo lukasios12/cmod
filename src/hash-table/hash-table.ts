@@ -18,13 +18,21 @@ export default class HashTable<K, V> {
     }
 
     public remove(key: K): void {
-        return this.table.delete(key);
+        this.table.delete(key);
     }
 
     public each(f: (k: K, v: V) => void): void {
         this.table.forEach((a: V, b: K) => {
             f(b, a);
         });
+    }
+
+    public get keys() {
+        return Array.from(this.table.keys());
+    }
+
+    public get values() {
+        return Array.from(this.table.values());
     }
 
     public filterKeys(f: (k: K) => boolean): HashTable<K, V> {
@@ -44,6 +52,7 @@ export default class HashTable<K, V> {
                 result.set(key, value);
             }
         });
+        return result;
     }
 
     public isEmpty() {
