@@ -1,3 +1,5 @@
+import Edge from "src/system/graph/edge";
+
 import { Vue, Component, Prop, Watch, Emit } from "vue-property-decorator";
 import WithRender from "./edit-edge.html?style=./edit-edge.scss";
 
@@ -21,8 +23,10 @@ export default class EditEdgeComponent extends Vue {
     @Emit('close')
     confirm() {
         let id = this.id;
+        let old = this.editor.graph.getEdge(id);
+        let edge = new Edge(old.from, old.to, this.label);
         if (id !== null && this.label !== null) {
-            this.editor.editEdge(id, this.label);
+            this.editor.editEdge(id, edge);
         }
     }
 

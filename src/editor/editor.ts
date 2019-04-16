@@ -98,11 +98,11 @@ export default class Editor {
         }
     }
 
-    public editEdge(id: number, label: string): void {
+    public editEdge(id: number, edge: Edge): void {
         if (this.graph.hasEdge(id)) {
             let current = this.graph.getEdge(id).label;
-            if (current !== label) {
-                let a = new EditEdge(id, label, this.graph, this.graphDrawing);
+            if (current !== edge.label) {
+                let a = new EditEdge(id, edge, this.graph, this.graphDrawing);
                 this.historyList.exec(a);
             }
         }

@@ -1,3 +1,5 @@
+import Edge from "src/system/graph/edge";
+
 import EdgeDrawing from "./edge-drawing";
 import StateDrawing from "./state-drawing";
 
@@ -14,8 +16,8 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
     protected validCache: boolean;
     protected arrowCache: Arrow | null;
 
-    public constructor(source: StateDrawing, target: StateDrawing, label: string) {
-        super(source, label);
+    public constructor(edge: Edge, source: StateDrawing, target: StateDrawing) {
+        super(edge, source);
         this.target = target;
         this.offset = 0;
 
@@ -27,18 +29,15 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
         // draw arrow
         let arrow = this.getArrow(context);
         arrow.fill(context);
-        // draw label
-        let point = arrow.getControlPoint();
-        let lwidth = context.measureText(this.label).width + 5;
+    }
+
+    public drawText(context: CanvasRenderingContext2D): void {
+        let point = this.getLabelPosition(context);
+        let lwidth = context.measureText(this.edge.label).width + 5;
         let lheight = CanvasRenderingContext2DUtils.getFontSize(context) * 1.5;
-        context.save();
-        StyleManager.setEdgeTextStyle(context);
         context.clearRect(point.x - lwidth / 2, point.y - lheight / 2,
                           lwidth, lheight);
-        // context.strokeRect(point.x - lwidth / 2, point.y - lheight / 2,
-        //                   lwidth, lheight);
-        context.fillText(this.label, point.x, point.y);
-        context.restore();
+        context.fillText(this.edge.label, point.x, point.y);
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {

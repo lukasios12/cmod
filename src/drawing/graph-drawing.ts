@@ -39,22 +39,22 @@ export default class GraphDrawing implements Drawing, Snappable {
         let drawn = new HashTable<number, boolean>(hashNumber, eqNumbers);
         
         let selected = this.options.selected;
-        let feedback = this.options.feedback;
+        // let feedback = this.options.feedback;
         
         // draw feedback borders for states
-        for(let i = 0; i < stateIds.length; i++) {
-            let sdrawing = this.states.get(stateIds[i]);
-            if (feedback !== null) {
-                let codes = feedback.get(stateIds[i]);
-                if (codes !== null && !codes.isEmpty()) {
-                    context.save();
-                    let code = codes.toArray().sort()[codes.length() - 1];
-                    StyleManager.setStyle(code, context);
-                    sdrawing!.draw(context);
-                    context.restore();
-                }
-            }
-        }
+        // for(let i = 0; i < stateIds.length; i++) {
+        //     let sdrawing = this.states.get(stateIds[i]);
+            // if (feedback !== null) {
+            //     let codes = feedback.get(stateIds[i]);
+            //     if (codes !== null && !codes.isEmpty()) {
+            //         context.save();
+            //         let code = codes.toArray().sort()[codes.length() - 1];
+            //         StyleManager.setStyle(code, context);
+            //         sdrawing!.draw(context);
+            //         context.restore();
+            //     }
+            // }
+        // }
         // draw edges
         context.save();
         StyleManager.setEdgeStandardStyle(context);
@@ -80,16 +80,16 @@ export default class GraphDrawing implements Drawing, Snappable {
                             c = -c;
                         }
                         edge.offset = c;
-                        if(feedback) {
-                            let codes = feedback.get(shared[k]);
-                            if (codes !== null && !codes.isEmpty()) {
-                                context.save();
-                                let code = codes.toArray().sort()[codes.length() - 1];
-                                StyleManager.setStyle(code, context);
-                                edge.draw(context);
-                                context.restore();
-                            }
-                        }
+                        // if(feedback) {
+                        //     let codes = feedback.get(shared[k]);
+                        //     if (codes !== null && !codes.isEmpty()) {
+                        //         context.save();
+                        //         let code = codes.toArray().sort()[codes.length() - 1];
+                        //         StyleManager.setStyle(code, context);
+                        //         edge.draw(context);
+                        //         context.restore();
+                        //     }
+                        // }
                         if (selected == shared[k]) {
                             context.save();
                             StyleManager.setEdgeSelectedStyle(context);
@@ -113,16 +113,16 @@ export default class GraphDrawing implements Drawing, Snappable {
             });
             for (let i = 0; i < loops.length; i++) {
                 let edrawing = this.edges.get(loops[i]);
-                if (feedback) {
-                    let codes = feedback.get(loops[i]);
-                    if (codes !== null && !codes.isEmpty()) {
-                        context.save();
-                        let code = codes.toArray().sort()[codes.length() - 1];
-                        StyleManager.setStyle(code, context);
-                        edrawing!.draw(context);
-                        context.restore();
-                    } 
-                }
+                // if (feedback) {
+                //     let codes = feedback.get(loops[i]);
+                //     if (codes !== null && !codes.isEmpty()) {
+                //         context.save();
+                //         let code = codes.toArray().sort()[codes.length() - 1];
+                //         StyleManager.setStyle(code, context);
+                //         edrawing!.draw(context);
+                //         context.restore();
+                //     } 
+                // }
                 if (selected == loops[i]) {
                     context.save();
                     StyleManager.setEdgeSelectedStyle(context);
@@ -143,6 +143,10 @@ export default class GraphDrawing implements Drawing, Snappable {
                 context.restore();
             }
             sdrawing!.draw(context);
+        }
+        StyleManager.setEdgeTextStyle(context);
+        for(let i = 0; i < edgeIds.length; i++) {
+            this.getEdge(edgeIds[i]).drawText(context);
         }
         context.restore();
         // draw initial state pointer

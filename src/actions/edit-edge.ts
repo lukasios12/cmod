@@ -1,21 +1,22 @@
 import Graph from "src/system/graph/graph";
+import Edge from "src/system/graph/edge";
 import GraphDrawing from "src/drawing/graph-drawing";
 
 import { UndoableAction } from "lib/action/undoable-action";
 
 export default class EditEdge implements UndoableAction {
     protected id: number;
-    protected oldLabel: string | null;
-    protected newLabel: string;
+    protected oldEdge: Edge | null;
+    protected newEdge: Edge;
     protected graph: Graph;
     protected graphDrawing: GraphDrawing;
 
-    public constructor(id: number, label: string, graph: Graph, drawing: GraphDrawing) {
+    public constructor(id: number, edge: Edge, graph: Graph, drawing: GraphDrawing) {
         this.id = id;
-        this.newLabel = label;
+        this.newEdge = edge;
         this.graph = graph;
         this.graphDrawing = drawing;
-        this.oldLabel = null;
+        this.oldEdge = null;
     }
 
     public exec(): void {
@@ -23,20 +24,18 @@ export default class EditEdge implements UndoableAction {
         if (edge === null) {
             throw new Error(`Could not edit edge: invalid id: ${this.id}`);
         }
-        this.oldLabel = edge.label;
-        edge.label = this.newLabel;
+        this.oldEdge = edge;
+        this.graph.delEdge(this.id);
+        this.graph.addEdge(this.newEdge, this.id);
         let edgeDrawing = this.graphDrawing.getEdge(this.id);
-        edgeDrawing.label = this.newLabel;
+        edgeDrawing.edge = this.newEdge;
     }
 
     public undo(): void {
-        let edge = this.graph.getEdge(this.id);
-        if (edge === null) {
-            throw new Error(`Could not edit edge: invalid id: ${this.id}`);
-        }
-        edge.label = this.oldLabel!;
-        let edgeDrawing = this.graphDrawing.getEdge(this.id);
-        edgeDrawing.label = this.oldLabel!;
+        this.graph.delEdge(this.id);
+        this.graph.addEdge(this.oldEdge, this.id);
+        let drawing = this.graphDrawing.getEdge(this.id);
+        drawing.edge = this.oldEdge;
     }
 
     public redo(): void {
