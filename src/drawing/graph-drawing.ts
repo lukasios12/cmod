@@ -16,15 +16,16 @@ import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
 export default class GraphDrawing implements Drawing, Snappable {
-    public states: HashTable<number, StateDrawing>;
-    public edges: HashTable<number, EdgeDrawing>;
+    public states: Map<number, StateDrawing>;
+    public edges: Map<number, EdgeDrawing>;
     public initial: number | null;
 
     public options: GraphDrawingOptions;
 
     public constructor(options: GraphDrawingOptions | null = null) {
-        this.states = new HashTable<number, StateDrawing>(hashNumber, eqNumbers);
-        this.edges = new HashTable<number, EdgeDrawing>(hashNumber, eqNumbers);
+        // this.states = new HashTable<number, StateDrawing>(hashNumber, eqNumbers);
+        this.states = new Map<number, StateDrawing>();
+        this.edges = new Map<number, EdgeDrawing>();
         this.initial = null;
         if(options) { 
             this.options = options;
@@ -34,40 +35,38 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        let stateIds = this.states.keys();
         let edgeIds = this.edges.keys();
         let drawn = new HashTable<number, boolean>(hashNumber, eqNumbers);
         
         let selected = this.options.selected;
-        // let feedback = this.options.feedback;
+        let feedback = this.options.feedback;
         
         // draw feedback borders for states
         // for(let i = 0; i < stateIds.length; i++) {
         //     let sdrawing = this.states.get(stateIds[i]);
-            // if (feedback !== null) {
-            //     let codes = feedback.get(stateIds[i]);
-            //     if (codes !== null && !codes.isEmpty()) {
-            //         context.save();
-            //         let code = codes.toArray().sort()[codes.length() - 1];
-            //         StyleManager.setStyle(code, context);
-            //         sdrawing!.draw(context);
-            //         context.restore();
-            //     }
-            // }
-        // }
+        this.states.forEach((state, id) => {
+            if (feedback !== null) {
+                let record = feedback.get(id);
+                if (record !== null && record.codes.size > 0) {
+                    let code = record.highest;
+                    StyleManager.setStyle(code, context);
+                    state!.draw(context);
+                }
+            }
+        });
         // draw edges
         context.save();
         StyleManager.setEdgeStandardStyle(context);
         let seperation = 80;
-        for (let i = 0; i < stateIds.length; i++) {
-            let sdrawing = this.states.get(stateIds[i]);
-            for (let j = 0; j < stateIds.length; j++) {
-                let osdrawing = this.states.get(stateIds[j]);
-                let shared = this.edges.keys().filter( (edgeId) => {
-                    let edge = this.edges.get(edgeId);
-                    return edge instanceof LinearEdgeDrawing && (
+        this.states.forEach((sdrawing, id) => {
+            this.states.forEach((osdrawing, id) => {
+                let shared = new Array<number>();
+                this.edges.forEach((edge, id) => {
+                    if (edge instanceof LinearEdgeDrawing && (
                         edge.source == sdrawing && edge.target == osdrawing ||
-                        edge.source == osdrawing && edge.target == sdrawing);
+                        edge.source == osdrawing && edge.target == sdrawing)) {
+                        shared.push(id);
+                    }
                 });
                 for (let k = 0; k < shared.length; k++) {
                     if(!drawn.get(shared[k])) {
@@ -80,16 +79,16 @@ export default class GraphDrawing implements Drawing, Snappable {
                             c = -c;
                         }
                         edge.offset = c;
-                        // if(feedback) {
-                        //     let codes = feedback.get(shared[k]);
-                        //     if (codes !== null && !codes.isEmpty()) {
-                        //         context.save();
-                        //         let code = codes.toArray().sort()[codes.length() - 1];
-                        //         StyleManager.setStyle(code, context);
-                        //         edge.draw(context);
-                        //         context.restore();
-                        //     }
-                        // }
+                        if(feedback) {
+                            let record = feedback.get(shared[k]);
+                            if (record !== null && !record.isEmpty()) {
+                                context.save();
+                                let code = record.highest;
+                                StyleManager.setStyle(code, context);
+                                edge.draw(context);
+                                context.restore();
+                            }
+                        }
                         if (selected == shared[k]) {
                             context.save();
                             StyleManager.setEdgeSelectedStyle(context);
@@ -105,24 +104,25 @@ export default class GraphDrawing implements Drawing, Snappable {
                         drawn.put(shared[k], true);
                     }
                 }
-            }
-            let loops = edgeIds.filter( (edgeId) => {
-                let edge = this.edges.get(edgeId);
-                return edge instanceof SelfLoopDrawing &&
-                            edge.source == sdrawing;
+            });
+            let loops = new Array<number>();
+            this.edges.forEach((edge, id) => {
+                if (edge instanceof SelfLoopDrawing && edge.source == sdrawing) {
+                    loops.push(id);
+                }
             });
             for (let i = 0; i < loops.length; i++) {
                 let edrawing = this.edges.get(loops[i]);
-                // if (feedback) {
-                //     let codes = feedback.get(loops[i]);
-                //     if (codes !== null && !codes.isEmpty()) {
-                //         context.save();
-                //         let code = codes.toArray().sort()[codes.length() - 1];
-                //         StyleManager.setStyle(code, context);
-                //         edrawing!.draw(context);
-                //         context.restore();
-                //     } 
-                // }
+                if (feedback) {
+                    let record = feedback.get(loops[i]);
+                    if (record !== null && !record.isEmpty()) {
+                        context.save();
+                        let code = record.highest;
+                        StyleManager.setStyle(code, context);
+                        edrawing!.draw(context);
+                        context.restore();
+                    } 
+                }
                 if (selected == loops[i]) {
                     context.save();
                     StyleManager.setEdgeSelectedStyle(context);
@@ -131,23 +131,22 @@ export default class GraphDrawing implements Drawing, Snappable {
                 }
                 edrawing!.draw(context);
             }
-        }
+        });
         // draw states
         StyleManager.setStateStandardStyle(context);
-        for(let i = 0; i < stateIds.length; i++) {
-            let sdrawing = this.states.get(stateIds[i]);
-            if (selected == stateIds[i]) {
+        this.states.forEach((state, id) => {
+            if (selected == id) {
                 context.save();
                 StyleManager.setStateSelectedStyle(context);
-                sdrawing!.draw(context);
+                state!.draw(context);
                 context.restore();
             }
-            sdrawing!.draw(context);
-        }
+            state!.draw(context);
+        });
         StyleManager.setEdgeTextStyle(context);
-        for(let i = 0; i < edgeIds.length; i++) {
-            this.getEdge(edgeIds[i]).drawText(context);
-        }
+        this.edges.forEach((edge, id) => {
+            edge.drawText(context);
+        });
         context.restore();
         // draw initial state pointer
         if (this.initial != null) {
@@ -164,12 +163,12 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public addState(id: number, drawing: StateDrawing): StateDrawing {
-        this.states.put(id, drawing);
+        this.states.set(id, drawing);
         return drawing;
     }
 
     public addEdge(id: number, edge: EdgeDrawing): EdgeDrawing {
-        this.edges.put(id, edge);
+        this.edges.set(id, edge);
         let e = edge.edge;
         let source = this.getState(e.from);
         source.postset.push(edge);
@@ -181,58 +180,58 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public delState(id: number): void {
-        this.states.remove(id);
+        this.states.delete(id);
     }
 
     public delEdge(id: number): void {
-        this.edges.remove(id);
+        this.edges.delete(id);
     }
 
     public getDrawing(id: number): Drawing {
-        if(this.states.hasKey(id)) {
+        if(this.states.has(id)) {
             return this.getState(id);
         } 
-        if(this.edges.hasKey(id)) {
+        if(this.edges.has(id)) {
             return this.getEdge(id);
         }
         return null;
     }
 
     public getState(id: number): StateDrawing {
-        if(this.states.hasKey(id)) {
+        if(this.states.has(id)) {
             return this.states.get(id)!;
         }
         return null;
     }
 
     public getEdge(id: number): EdgeDrawing {
-        if(this.edges.hasKey(id)) {
+        if(this.edges.has(id)) {
             return this.edges.get(id)!;
         }
         return null;
     }
 
     public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D): number | null {
-        let keys = this.states.keys();
-        for(let i = 0; i < keys.length; i++) {
-            if(this.states.get(keys[i])!.hit(pos, context)) {
-                return keys[i];
+        let result = null;
+        this.states.forEach((state: StateDrawing, id: number) => {
+            if (state.hit(pos, context)) {
+                result = id;
+                return;
             }
-        }
-        keys = this.edges.keys();
-        for(let i = 0; i < keys.length; i++) {
-            if(this.edges.get(keys[i])!.hit(pos, context)) {
-                return keys[i];
+        });
+        if (result !== null) return result;
+        this.edges.forEach((edge: EdgeDrawing, id: number) => {
+            if (edge.hit(pos, context)) {
+                result = id;
+                return;
             }
-        }
-        return null;
+        });
+        return result;
     }
 
     public snap(hgrid: number, vgrid: number): void {
-        let keys = this.states.keys();
-        for(let i = 0; i < keys.length; i++) {
-            let state = this.states.get(keys[i]);
-            state!.snap(hgrid, vgrid);
-        }
+        this.states.forEach((state: StateDrawing, id: number) => {
+            state.snap(hgrid, vgrid);
+        });
     }
 }

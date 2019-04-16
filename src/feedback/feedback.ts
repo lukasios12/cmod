@@ -1,32 +1,32 @@
 import FeedbackCode from "./feedback-code";
+import FeedbackRecord from "./feedback-record.ts";
 
 import { HashTable } from "lib/collections/hashtable/hash-table";
 import { HashSet } from "lib/collections/hashset/hash-set";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
 export default class Feedback {
-    public general: HashSet<FeedbackCode>;
-    public specific: HashTable<number, HashSet<FeedbackCode>>;
+    public general: FeedbackRecord;
+    public specific: Map<number, FeedbackRecord>;
 
     public constructor() {
-        this.general = new HashSet<FeedbackCode>(hashNumber, eqNumbers);
-        this.specific = new HashTable<number, HashSet<FeedbackCode>>(hashNumber, eqNumbers);
+        this.general = new FeedbackRecord();
+        this.specific = new Map<number, FeedbackRecord>();
     }
 
-    public get(id: number): HashSet<FeedbackCode> {
-        if(this.specific.hasKey(id)) {
+    public get(id: number): FeedbackRecord {
+        if(this.specific.has(id)) {
             return this.specific.get(id)!;
         }
-        return new HashSet<FeedbackCode>(hashNumber, eqNumbers);
+        return new FeedbackRecord();
     }
-
 
     public add(code: FeedbackCode, id: number | null = null): void {
         if(id === null) {
             this.general.add(code);
         } else {
-            if(!this.specific.hasKey(id)) {
-                this.specific.put(id, new HashSet<FeedbackCode>(hashNumber, eqNumbers));
+            if(!this.specific.has(id)) {
+                this.specific.set(id, new FeedbackRecord());
             }
             this.specific.get(id)!.add(code);
         }
@@ -34,10 +34,10 @@ export default class Feedback {
 
     public del(code: FeedbackCode, id: number | null = null): void {
         if(id === null) {
-            this.general.remove(code);
+            this.general.delete(code);
         } else {
-            if(this.specific.hasKey(id)) {
-                this.specific.get(id)!.remove(code);
+            if(this.specific.has(id)) {
+                this.specific.get(id)!.delete(code);
             }
         }
     }

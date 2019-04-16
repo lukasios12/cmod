@@ -13,13 +13,13 @@ import { HashTable } from "lib/collections/hashtable/hash-table";
 import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
 
 export default class StyleManager {
-    protected static callbacks: HashTable<FeedbackCode, StyleManagerAction> | null = null;
+    protected static callbacks: Map<FeedbackCode, StyleManagerAction> = null;
 
     public static setStyle(code: FeedbackCode, context: CanvasRenderingContext2D): void {
         if(StyleManager.callbacks === null) {
             StyleManager.fillCallbacks();
         }
-        let action = StyleManager.callbacks!.get(code);
+        let action = StyleManager.callbacks.get(code);
         if(action) {
             action.exec(context);
         } else {
@@ -69,7 +69,7 @@ export default class StyleManager {
         if (c !== null) {
             return;
         }
-        c = new HashTable<FeedbackCode, StyleManagerAction>(hashNumber, eqNumbers);
+        c = new Map();
         for(let code in FeedbackCode) {
             let fcode = Number(code) as FeedbackCode;
             let h = Math.floor(fcode / 100);
@@ -78,23 +78,23 @@ export default class StyleManager {
                 switch(h) {
                     case 2:
                         if (t == 2 || t == 3) {
-                            c.add(fcode, new CorrectStateStyle());
+                            c.set(fcode, new CorrectStateStyle());
                         } else if (t == 4 || t == 5) {
-                            c.add(fcode, new CorrectEdgeStyle());
+                            c.set(fcode, new CorrectEdgeStyle());
                         }
                         break;
                     case 3:
                         if (t == 2 || t == 3) {
-                            c.add(fcode, new WarningStateStyle());
+                            c.set(fcode, new WarningStateStyle());
                         } else if (t == 4 || t == 5) {
-                            c.add(fcode, new WarningEdgeStyle());
+                            c.set(fcode, new WarningEdgeStyle());
                         }
                         break;
                     case 4:
                         if (t == 2 || t == 3) {
-                            c.add(fcode, new IncorrectStateStyle());
+                            c.set(fcode, new IncorrectStateStyle());
                         } else if (t == 4 || t == 5) {
-                            c.add(fcode, new IncorrectEdgeStyle());
+                            c.set(fcode, new IncorrectEdgeStyle());
                         }
                         break;
                 }

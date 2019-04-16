@@ -19,7 +19,7 @@ export default class MessengerComponent extends Vue {
 
     get showGeneral() {
         return !this.feedback.general.isEmpty() &&
-               !this.feedback.general.contains(FeedbackCode.CORRECT_INITIAL_STATE);
+               !this.feedback.general.codes.has(FeedbackCode.CORRECT_INITIAL_STATE);
     }
 
     get showSpecific() {
@@ -27,21 +27,20 @@ export default class MessengerComponent extends Vue {
     }
 
     get general(): Array<string> {
-        let codes = this.feedback.general.toArray();
         let messages = new Array<string>();
-        for(let i = 0; i < codes.length; i++) {
-            messages.push(FeedbackTranslator.translate(codes[i]));
-        }
+        this.feedback.general.codes.forEach((code) => {
+            messages.push(FeedbackTranslator.translate(code));
+        });
         return messages;
     }
 
     get specific(): Array<string> {
         if (this.id !== null) {
-            let codes = this.feedback.get(this.id).toArray();
+            let codes = this.feedback.get(this.id).codes;
             let messages = new Array<string>();
-            for(let i = 0; i < codes.length; i++) {
-                messages.push(FeedbackTranslator.translate(codes[i]));
-            }
+            codes.forEach((code) => {
+                messages.push(FeedbackTranslator.translate(code));
+            });
             return messages;
         }
         return null;
