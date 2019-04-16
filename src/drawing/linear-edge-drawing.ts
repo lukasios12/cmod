@@ -9,12 +9,18 @@ import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-contex
 
 export default class LinearEdgeDrawing extends EdgeDrawing {
     public target: StateDrawing;
-    public offset: number;
+    protected _offset: number;
+
+    protected validCache: boolean;
+    protected arrowCache: Arrow | null;
 
     public constructor(source: StateDrawing, target: StateDrawing, label: string) {
         super(source, label);
         this.target = target;
         this.offset = 0;
+
+        this.validCache = false;
+        this.arrowCache = null;
     }
 
     public draw(context: CanvasRenderingContext2D): void {
@@ -50,19 +56,36 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
     }
 
     protected getArrow(context: CanvasRenderingContext2D): Arrow {
-        context.save();
-        StyleManager.setStateStandardStyle(context);
-        let c1 = this.source.center(context);
-        let c2 = this.target.center(context);
-        // determine start (source) point
-        let intersection = this.source.getIntersection(c2, context);
-        let p1 = Vector2D.add(c1,Vector2D.scale(intersection.vector, intersection.length));
-        // determine end (target) point
-        intersection = this.target.getIntersection(c1, context);
-        let vec = Vector2D.scale(intersection.vector, intersection.length);
-        let p2 = Vector2D.add(c2, vec);
-        context.restore();
-        let arrow = new Arrow(p1.x, p1.y, p2.x, p2.y, this.offset);
+        let arrow;
+        if (!this.validCache || !this.arrowCache || !this.connectionsValid) {
+            context.save();
+            StyleManager.setStateStandardStyle(context);
+            let c1 = this.source.center(context);
+            let c2 = this.target.center(context);
+            // determine start (source) point
+            let intersection = this.source.getIntersection(c2, context);
+            let p1 = Vector2D.add(c1,Vector2D.scale(intersection.vector, intersection.length));
+            // determine end (target) point
+            intersection = this.target.getIntersection(c1, context);
+            let vec = Vector2D.scale(intersection.vector, intersection.length);
+            let p2 = Vector2D.add(c2, vec);
+            context.restore();
+            arrow = new Arrow(p1.x, p1.y, p2.x, p2.y, this.offset);
+            this.arrowCache = arrow;
+            this.validCache = true;
+            this.connectionsValid = true;
+        } else {
+            arrow = this.arrowCache;
+        }
         return arrow;
+    }
+
+    public get offset() {
+        return this._offset;
+    }
+
+    public set offset(o: number) {
+        this._offset = o;
+        this.validCache = false;
     }
 }

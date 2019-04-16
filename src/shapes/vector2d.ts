@@ -17,6 +17,10 @@ export default class Vector2D {
         return this.vec.get(1);
     }
 
+    public static equal(lhs: Vector2D, rhs: Vector2D) {
+        return lhs.x === rhs.x && lhs.y === rhs.y;
+    }
+
     public static add(lhs: Vector2D, rhs: Vector2D): Vector2D {
         let vec = Vector.add(lhs.vec, rhs.vec);
         return new Vector2D(vec.get(0), vec.get(1));

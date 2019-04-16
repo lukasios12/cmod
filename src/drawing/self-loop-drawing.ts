@@ -9,8 +9,11 @@ import StyleManager from "src/stylemanager/style-manager";
 import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
 export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
-    public angle: number;
-    public radius: number;
+    protected _angle: number;
+    protected _radius: number;
+
+    protected validCache: boolean;
+    protected circleCache: Circle | null;
 
     public constructor(
         state: StateDrawing,
@@ -21,26 +24,22 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         super(state, label);
         this.angle = angle;
         this.radius = radius;
+
+        this.validCache = false;
+        this.circleCache = null;
     }
 
     public draw(context: CanvasRenderingContext2D): void {
         context.save();
-        // draw circle
-        context.beginPath();
-        let state = this.source;
-        let i = state.getIntersectionAt(this.angle, context);
-        let vec = Vector2D.scale(i.vector, i.length + this.radius / 2);
-        let p = Vector2D.add(i.origin, vec);
-        context.arc(p.x, p.y, this.radius, 0, 2 * Math.PI);
-        context.stroke();
-        context.closePath();
+        let circle = this.getCircle(context);
+        circle.stroke(context);
         StyleManager.setEdgeTextStyle(context);
         // draw text
         let fh = CanvasRenderingContext2DUtils.getFontSize(context) + 5;
         let fw = context.measureText(this.label).width + 5;
         let a = this.angle < Math.PI ? -1 : 1;
-        vec = Vector2D.scale(new Vector2D(0, a), this.radius / 2 + fh / 2);
-        p = Vector2D.add(p, vec);
+        let vec = Vector2D.scale(new Vector2D(0, a), this.radius / 2 + fh / 2);
+        let p = Vector2D.add(circle.center, vec);
         context.clearRect(p.x - fw / 2, p.y - fh / 2, fw, fh);
         context.fillText(this.label, p.x, p.y);
         context.restore();
@@ -69,15 +68,41 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     }
 
     protected getCircle(context: CanvasRenderingContext2D): Circle {
-        context.save();
-        StyleManager.setEdgeStandardStyle(context);
-        let state = this.source;
-        let i = state.getIntersectionAt(this.angle, context);
-        let vec = Vector2D.scale(i.vector, i.length + this.radius);
-        let p = Vector2D.add(i.origin, vec);
-        let circle = new Circle(p.x, p.y, this.radius);
-        context.restore();
+        let circle;
+        if(!this.validCache  || !this.circleCache || !this.connectionsValid) {
+            context.save();
+            StyleManager.setEdgeStandardStyle(context);
+            let state = this.source;
+            let i = state.getIntersectionAt(this.angle, context);
+            let vec = Vector2D.scale(i.vector, i.length + this.radius / 2);
+            let p = Vector2D.add(i.origin, vec);
+            circle = new Circle(p.x, p.y, this.radius);
+            this.circleCache = circle;
+            this.validCache = true;
+            this.connectionsValid = true;
+            context.restore();
+        } else {
+            circle = this.circleCache;
+        }
         return circle;
+    }
+
+    get angle() {
+        return this._angle;
+    }
+
+    set angle(a: number) {
+        this._angle = a;
+        this.validCache = false;
+    }
+
+    get radius() {
+        return this._radius;
+    }
+
+    set radius(r: number) {
+        this._radius = r;
+        this.validCache = false;
     }
 }
 

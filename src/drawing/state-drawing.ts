@@ -2,6 +2,8 @@ import Hittable from "./hittable-drawing";
 import Snappable from "./snappable-drawing";
 import Draggable from "./draggable-drawing";
 
+import EdgeDrawing from "./edge-drawing";
+
 import State from "src/system/graph/state";
 
 import Vector2D from "src/shapes/vector2d";
@@ -14,13 +16,21 @@ import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-contex
 export default class StateDrawing implements Hittable, Draggable, Snappable {
     protected _state: State;
     protected _position: Vector2D;
+    public preset: Array<EdgeDrawing>;
+    public postset: Array<EdgeDrawing>;
 
     protected validCache: boolean;
     protected boxCache: Rectangle | null;
     protected widthCache: number  | null;
     protected heightCache: number | null;
 
-    public constructor(state: State, position: Vector2D | null = null) {
+    public constructor(
+        state: State,
+        position: Vector2D | null = null
+    ) {
+        this.preset = new Array<EdgeDrawing>();
+        this.postset = new Array<EdgeDrawing>();
+
         this.state = state;
         if(position) {
             this.position = position;
@@ -186,6 +196,15 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         return `[${this.state.toString()}]`;
     }
 
+    protected notifyNeighbours() {
+        for(let i = 0; i < this.preset.length; i++) {
+            this.preset[i].connectionsValid = false;
+        }
+        for(let i = 0; i < this.postset.length; i++) {
+            this.postset[i].connectionsValid = false;
+        }
+    }
+
     public get state() {
         return this._state;
     }
@@ -193,6 +212,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     public set state(ns: State) {
         this._state = ns;
         this.validCache = false;
+        this.notifyNeighbours();
     }
 
     public get position() {
@@ -202,6 +222,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     public set position(pos: Vector2D) {
         this._position = pos;
         this.validCache = false;
+        this.notifyNeighbours();
     }
 }
 
