@@ -42,8 +42,6 @@ export default class GraphDrawing implements Drawing, Snappable {
         let feedback = this.options.feedback;
         
         // draw feedback borders for states
-        // for(let i = 0; i < stateIds.length; i++) {
-        //     let sdrawing = this.states.get(stateIds[i]);
         this.states.forEach((state, id) => {
             if (feedback !== null) {
                 let record = feedback.get(id);
@@ -61,6 +59,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         this.states.forEach((sdrawing, id) => {
             this.states.forEach((osdrawing, id) => {
                 let shared = new Array<number>();
+                context.save();
                 this.edges.forEach((edge, id) => {
                     if (edge instanceof LinearEdgeDrawing && (
                         edge.source == sdrawing && edge.target == osdrawing ||
@@ -82,21 +81,18 @@ export default class GraphDrawing implements Drawing, Snappable {
                         if(feedback) {
                             let record = feedback.get(shared[k]);
                             if (record !== null && !record.isEmpty()) {
-                                context.save();
                                 let code = record.highest;
                                 StyleManager.setStyle(code, context);
                                 edge.draw(context);
-                                context.restore();
                             }
                         }
                         if (selected == shared[k]) {
-                            context.save();
                             StyleManager.setEdgeSelectedStyle(context);
                             edge.draw(context);
-                            context.restore();
                         }
                     }
                 }
+                context.restore();
                 for (let k = 0; k < shared.length; k++) {
                     let edge = <LinearEdgeDrawing>this.edges.get(shared[k]);
                     if(!drawn.get(shared[k])) {
@@ -150,7 +146,6 @@ export default class GraphDrawing implements Drawing, Snappable {
         context.restore();
         // draw initial state pointer
         if (this.initial != null) {
-            context.save();
             context.fillStyle = "black";
             context.strokeStyle = "black";
             context.lineWidth = 2;
@@ -158,7 +153,6 @@ export default class GraphDrawing implements Drawing, Snappable {
             let pos = state!.position;
             let arrow = new Arrow(pos.x - 30, pos.y - 30, pos.x, pos.y);
             arrow.fill(context);
-            context.restore();
         }
     }
 
