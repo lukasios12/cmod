@@ -21,6 +21,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
 
     protected validCache: boolean;
     protected boxCache: Rectangle | null;
+    protected textCache: string | null;
     protected widthCache: number  | null;
     protected heightCache: number | null;
 
@@ -39,6 +40,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         }
 
         this.boxCache = null;
+        this.textCache = null;
         this.widthCache = null;
         this.heightCache = null;
         this.validCache = false;
@@ -70,13 +72,10 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     public drag(point: Vector2D, context: CanvasRenderingContext2D): void {
-        context.save();
-        StyleManager.setStateStandardStyle(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
         let newPos = new Vector2D(point.x - (width / 2), point.y - (height / 2));
         this.position = newPos;
-        context.restore();
     }
 
     public snap(hgrid: number, vgrid: number): void {
@@ -86,11 +85,8 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     public center(context:CanvasRenderingContext2D): Vector2D {
-        context.save();
-        StyleManager.setStateStandardStyle(context);
         let vector = new Vector2D(this.position.x, this.position.y);
         let wh = new Vector2D(this.getWidth(context) / 2, this.getHeight(context) / 2);
-        context.restore();
         return Vector2D.add(vector, wh);
     }
 
@@ -192,7 +188,14 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     protected getStateString() {
-        return `[${this.state.toString()}]`;
+        let text;
+        if(this.validCache && this.textCache !== null) {
+            text = this.textCache;
+        } else {
+            text = `[${this.state.toString()}]`;
+            this.textCache = text;
+        }
+        return text;
     }
 
     protected notifyNeighbours() {
