@@ -50,16 +50,18 @@ export default class EditStateComponent extends Vue {
     next(index: number) {
         if (index >= 0 && index < this.map.length) {
             let i = remainder(index + 1, this.map.length);
-            let element = document.getElementById(this.inputId(i));
+            let element = <HTMLInputElement>document.getElementById(this.inputId(i));
             element.focus();
+            element.select();
         }
     }
 
     prev(index: number) {
         if(index >= 0 && index < this.map.length) {
             let i = remainder(index - 1, this.map.length);
-            let element = document.getElementById(this.inputId(i));
+            let element = <HTMLInputElement>document.getElementById(this.inputId(i));
             element.focus();
+            element.select();
         }
     }
 
