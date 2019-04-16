@@ -45,20 +45,19 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        context.save();
-        let text = this.getStateString();
         let box = this.getBox(context);
         let width = this.getWidth(context);
         let height = this.getHeight(context);
         box.fill(context);
         box.stroke(context);
-        StyleManager.setStateTextStyle(context);
+    }
+
+    public drawText(context: CanvasRenderingContext2D): void {
         context.fillText(
-            text,
-            this.position.x + width / 2,
-            this.position.y + height / 2
+            this.getStateString(),
+            this.position.x + this.getWidth(context) / 2,
+            this.position.y + this.getHeight(context) / 2
         );
-        context.restore();
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {

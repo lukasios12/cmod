@@ -139,6 +139,11 @@ export default class GraphDrawing implements Drawing, Snappable {
             }
             state!.draw(context);
         });
+        // draw text for states and edges
+        StyleManager.setStateTextStyle(context);
+        this.states.forEach((state, id) => {
+            state.drawText(context);
+        });
         StyleManager.setEdgeTextStyle(context);
         this.edges.forEach((edge, id) => {
             edge.drawText(context);
