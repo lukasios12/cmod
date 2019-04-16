@@ -165,24 +165,17 @@ export default class GraphDrawing implements Drawing, Snappable {
 
     public addState(id: number, drawing: StateDrawing): StateDrawing {
         this.states.put(id, drawing);
-        let pre = this.preset(id);
-        let post = this.postset(id);
-        drawing.preset = pre;
-        drawing.postset = post;
         return drawing;
     }
 
     public addEdge(id: number, edge: EdgeDrawing): EdgeDrawing {
         this.edges.put(id, edge);
-        let stateKeys = this.states.keys();
-        for(let i = 0; i < stateKeys.length; i++) {
-            let state = this.states.get(stateKeys[i]);
-            if (edge.source === state) {
-                state.postset.push(edge);
-            } else if (edge instanceof LinearEdgeDrawing &&
-                       edge.target === state) {
-                state.preset.push(edge);
-            }
+        let e = edge.edge;
+        let source = this.getState(e.from);
+        source.postset.push(edge);
+        if (e.from !== e.to) {
+            let target = this.getState(e.to);
+            target.preset.push(edge);
         }
         return edge;
     }
@@ -241,37 +234,5 @@ export default class GraphDrawing implements Drawing, Snappable {
             let state = this.states.get(keys[i]);
             state!.snap(hgrid, vgrid);
         }
-    }
-
-    public preset(id: number): Array<EdgeDrawing> {
-        if (!this.states.hasKey(id)) {
-            throw new Error(`could not determine preset for state with id ${id}`);
-        }
-        let result = new Array<EdgeDrawing>();
-        let state = this.states.get(id);
-        let edgeKeys = this.edges.keys();
-        for(let i = 0; i < edgeKeys.length; i++) {
-            let edge = this.edges.get(edgeKeys[i]);
-            if (edge instanceof LinearEdgeDrawing && edge.source === state) {
-                result.push(edge);
-            }
-        }
-        return result;
-    }
-
-    public postset(id: number): Array<EdgeDrawing> {
-        if (!this.states.hasKey(id)) {
-            throw new Error(`could not determine postset for state with id ${id}`);
-        }
-        let result = new Array<EdgeDrawing>();
-        let state = this.states.get(id);
-        let edgeKeys = this.edges.keys();
-        for(let i = 0; i < edgeKeys.length; i++) {
-            let edge = this.edges.get(edgeKeys[i]);
-            if (edge.source === state) {
-                result.push(edge);
-            }
-        }
-        return result;
     }
 }
