@@ -12,20 +12,18 @@ import Vector2D from "src/shapes/vector2d";
 
 import StyleManager from "src/stylemanager/style-manager";
 
-import { HashTable } from "lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
+import HashTable from "src/hash-table/hash-table";
 
 export default class GraphDrawing implements Drawing, Snappable {
-    public states: Map<number, StateDrawing>;
-    public edges: Map<number, EdgeDrawing>;
+    public states: HashTable<number, StateDrawing>;
+    public edges: HashTable<number, EdgeDrawing>;
     public initial: number | null;
 
     public options: GraphDrawingOptions;
 
     public constructor(options: GraphDrawingOptions | null = null) {
-        // this.states = new HashTable<number, StateDrawing>(hashNumber, eqNumbers);
-        this.states = new Map<number, StateDrawing>();
-        this.edges = new Map<number, EdgeDrawing>();
+        this.states = new HashTable<number, StateDrawing>();
+        this.edges = new HashTable<number, EdgeDrawing>();
         this.initial = null;
         if(options) { 
             this.options = options;
@@ -35,14 +33,13 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        let edgeIds = this.edges.keys();
-        let drawn = new HashTable<number, boolean>(hashNumber, eqNumbers);
+        let drawn = new HashTable<number, boolean>();
         
         let selected = this.options.selected;
         let feedback = this.options.feedback;
         
         // draw feedback borders for states
-        this.states.forEach((state, id) => {
+        this.states.each((id: number, state: StateDrawing) => {
             if (feedback !== null) {
                 let record = feedback.get(id);
                 if (record !== null && record.codes.size > 0) {
@@ -56,11 +53,11 @@ export default class GraphDrawing implements Drawing, Snappable {
         context.save();
         StyleManager.setEdgeStandardStyle(context);
         let seperation = 80;
-        this.states.forEach((sdrawing, id) => {
-            this.states.forEach((osdrawing, id) => {
+        this.states.each((id: number, sdrawing: StateDrawing) => {
+            this.states.each((id: number, osdrawing: StateDrawing) => {
                 let shared = new Array<number>();
                 context.save();
-                this.edges.forEach((edge, id) => {
+                this.edges.each((id: number, edge: EdgeDrawing) => {
                     if (edge instanceof LinearEdgeDrawing && (
                         edge.source == sdrawing && edge.target == osdrawing ||
                         edge.source == osdrawing && edge.target == sdrawing)) {
@@ -97,12 +94,12 @@ export default class GraphDrawing implements Drawing, Snappable {
                     let edge = <LinearEdgeDrawing>this.edges.get(shared[k]);
                     if(!drawn.get(shared[k])) {
                         edge.draw(context);
-                        drawn.put(shared[k], true);
+                        drawn.set(shared[k], true);
                     }
                 }
             });
             let loops = new Array<number>();
-            this.edges.forEach((edge, id) => {
+            this.edges.each((id: number, edge: EdgeDrawing) => {
                 if (edge instanceof SelfLoopDrawing && edge.source == sdrawing) {
                     loops.push(id);
                 }
@@ -130,7 +127,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         });
         // draw states
         StyleManager.setStateStandardStyle(context);
-        this.states.forEach((state, id) => {
+        this.states.each((id: number, state: StateDrawing) => {
             if (selected == id) {
                 context.save();
                 StyleManager.setStateSelectedStyle(context);
@@ -141,11 +138,11 @@ export default class GraphDrawing implements Drawing, Snappable {
         });
         // draw text for states and edges
         StyleManager.setStateTextStyle(context);
-        this.states.forEach((state, id) => {
+        this.states.each((id: number, state: StateDrawing) => {
             state.drawText(context);
         });
         StyleManager.setEdgeTextStyle(context);
-        this.edges.forEach((edge, id) => {
+        this.edges.each((id: number, edge: EdgeDrawing) => {
             edge.drawText(context);
         });
         context.restore();
@@ -179,11 +176,11 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public delState(id: number): void {
-        this.states.delete(id);
+        this.states.remove(id);
     }
 
     public delEdge(id: number): void {
-        this.edges.delete(id);
+        this.edges.remove(id);
     }
 
     public getDrawing(id: number): Drawing {
@@ -212,14 +209,14 @@ export default class GraphDrawing implements Drawing, Snappable {
 
     public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D): number | null {
         let result = null;
-        this.states.forEach((state: StateDrawing, id: number) => {
+        this.states.each((id: number, state: StateDrawing) => {
             if (state.hit(pos, context)) {
                 result = id;
                 return;
             }
         });
         if (result !== null) return result;
-        this.edges.forEach((edge: EdgeDrawing, id: number) => {
+        this.edges.each((id: number, edge: EdgeDrawing) => {
             if (edge.hit(pos, context)) {
                 result = id;
                 return;
@@ -229,7 +226,7 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public snap(hgrid: number, vgrid: number): void {
-        this.states.forEach((state: StateDrawing, id: number) => {
+        this.states.each((id: number, state: StateDrawing) => {
             state.snap(hgrid, vgrid);
         });
     }
