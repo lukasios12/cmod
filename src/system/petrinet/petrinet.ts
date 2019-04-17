@@ -1,4 +1,4 @@
-import { HashSet } from "lib/collections/hashset/hash-set";
+import HashSet from "src/hash-set/hash-set";
 
 export default class Petrinet {
     protected _places: HashSet<string>;

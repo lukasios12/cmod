@@ -9,9 +9,6 @@ import IncorrectStateStyle from "./actions/incorrect-state-style";
 import WarningEdgeStyle from "./actions/warning-edge-style";
 import WarningStateStyle from "./actions/warning-state-style";
 
-import { HashTable } from "lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
-
 export default class StyleManager {
     protected static callbacks: Map<FeedbackCode, StyleManagerAction> = null;
 

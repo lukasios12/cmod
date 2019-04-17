@@ -1,13 +1,12 @@
 import Petrinet from "src/system/petrinet/petrinet";
 import { PetrinetResponse } from "src/types";
 
-import { HashSet } from "lib/collections/hashset/hash-set";
-import { hashString, eqStrings } from "lib/collections/extensions/string-extension";
+import HashSet from "src/hash-set/hash-set";
 
 export default class ResponseToPetrinet {
     public static convert(response: PetrinetResponse) {
-        let places = new HashSet<string>(hashString, eqStrings);
-        let transitions = new HashSet<string>(hashString, eqStrings);
+        let places = new HashSet<string>();
+        let transitions = new HashSet<string>();
 
         for(let i = 0; i < response.places.length; i++) {
             places.add(response.places[i]);

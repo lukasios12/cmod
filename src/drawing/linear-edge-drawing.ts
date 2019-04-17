@@ -26,7 +26,6 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        // draw arrow
         let arrow = this.getArrow(context);
         arrow.fill(context);
     }
