@@ -95,32 +95,28 @@ export default class GraphDrawing implements Drawing, Snappable {
                     }
                 });
             });
-            let loops = new Array<number>();
             this.edges.each((id: number, edge: EdgeDrawing) => {
                 if (edge instanceof SelfLoopDrawing && edge.source == sdrawing) {
-                    loops.push(id);
-                }
-            });
-            for (let i = 0; i < loops.length; i++) {
-                let edrawing = this.edges.get(loops[i]);
-                if (feedback) {
-                    let record = feedback.get(loops[i]);
-                    if (record !== null && !record.isEmpty()) {
+                    if (feedback) {
+                        let record = feedback.get(id);
+                        if (record !== null && !record.isEmpty()) {
+                            context.save();
+                            let code = record.highest;
+                            StyleManager.setStyle(code, context);
+                            edge.draw(context);
+                            context.restore();
+                        }
+                    }
+                    if (selected == id) {
                         context.save();
-                        let code = record.highest;
-                        StyleManager.setStyle(code, context);
-                        edrawing!.draw(context);
+                        StyleManager.setEdgeSelectedStyle(context);
+                        edge.draw(context);
                         context.restore();
-                    } 
+                    }
+                    edge.draw(context);
                 }
-                if (selected == loops[i]) {
-                    context.save();
-                    StyleManager.setEdgeSelectedStyle(context);
-                    edrawing!.draw(context);
-                    context.restore();
-                }
-                edrawing!.draw(context);
-            }
+
+            });
         });
         // draw states
         StyleManager.setStateStandardStyle(context);
