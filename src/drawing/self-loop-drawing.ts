@@ -32,23 +32,16 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        context.save();
         let circle = this.getCircle(context);
         circle.stroke(context);
-        StyleManager.setEdgeTextStyle(context);
-        // draw text
-        let fh = CanvasRenderingContext2DUtils.getFontSize(context) + 5;
-        let fw = context.measureText(this.edge.label).width + 5;
-        let a = this.angle < Math.PI ? -1 : 1;
-        let vec = Vector2D.scale(new Vector2D(0, a), this.radius / 2 + fh / 2);
-        let p = Vector2D.add(circle.center, vec);
-        context.clearRect(p.x - fw / 2, p.y - fh / 2, fw, fh);
-        context.fillText(this.edge.label, p.x, p.y);
-        context.restore();
     }
 
     public drawText(context: CanvasRenderingContext2D): void {
-
+        let fh = this.getLabelHeight(context);
+        let fw = this.getLabelWidth(context);
+        let p = this.getLabelPosition(context);
+        context.clearRect(p.x - fw / 2, p.y - fh / 2, fw, fh);
+        context.fillText(this.edge.label, p.x, p.y);
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {
@@ -66,18 +59,17 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     }
 
     public getLabelPosition(context: CanvasRenderingContext2D): Vector2D {
-        let state = this.source;
-        let i = state.getIntersectionAt(this.angle, context);
-        let vec = Vector2D.scale(i.vector, i.length + this.radius);
-        let p = Vector2D.add(i.origin, vec);
+        let circle = this.getCircle(context);
+        let fh = CanvasRenderingContext2DUtils.getFontSize(context) + 5;
+        let a = this.angle < Math.PI ? -1 : 1;
+        let vec = Vector2D.scale(new Vector2D(0, a), this.radius / 2 + fh / 2);
+        let p = Vector2D.add(circle.center, vec);
         return p;
     }
 
     protected getCircle(context: CanvasRenderingContext2D): Circle {
         let circle;
         if(!this.validCache  || !this.circleCache || !this.connectionsValid) {
-            context.save();
-            StyleManager.setEdgeStandardStyle(context);
             let state = this.source;
             let i = state.getIntersectionAt(this.angle, context);
             let vec = Vector2D.scale(i.vector, i.length + this.radius / 2);
@@ -86,11 +78,20 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
             this.circleCache = circle;
             this.validCache = true;
             this.connectionsValid = true;
-            context.restore();
         } else {
             circle = this.circleCache;
         }
         return circle;
+    }
+
+    protected getLabelWidth(context: CanvasRenderingContext2D) {
+        let width = context.measureText(this.edge.label).width + 5;
+        return width;
+    }
+
+    protected getLabelHeight(context: CanvasRenderingContext2D) {
+        let height = CanvasRenderingContext2DUtils.getFontSize(context) + 5;
+        return height;
     }
 
     get angle() {
