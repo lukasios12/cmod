@@ -136,7 +136,7 @@ export default class Drawer {
         if(this.drawingCache) {
             this.draw(this.drawingCache);
         }
-        this.setTransform(Matrix.identity(3));
+        this.setTransform(this.currentTransform);
     }
 
     public globalToLocal(event: MouseEvent): Vector2D {
