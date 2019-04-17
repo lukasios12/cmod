@@ -55,48 +55,45 @@ export default class GraphDrawing implements Drawing, Snappable {
         let seperation = 80;
         this.states.each((id: number, sdrawing: StateDrawing) => {
             this.states.each((id: number, osdrawing: StateDrawing) => {
-                let shared = new Array<number>();
                 context.save();
-                this.edges.each((id: number, edge: EdgeDrawing) => {
-                    if (edge instanceof LinearEdgeDrawing && (
-                        edge.source == sdrawing && edge.target == osdrawing ||
-                        edge.source == osdrawing && edge.target == sdrawing)) {
-                        shared.push(id);
-                    }
+                let shared = this.edges.filterValues((edge) => {
+                    return edge instanceof LinearEdgeDrawing && (
+                           edge.source == sdrawing && edge.target == osdrawing ||
+                           edge.source == osdrawing && edge.target == sdrawing);
                 });
-                for (let k = 0; k < shared.length; k++) {
-                    if(!drawn.get(shared[k])) {
-                        let edge = <LinearEdgeDrawing>this.edges.get(shared[k]);
+                let k = 0;
+                shared.each((id: number, edge: LinearEdgeDrawing) => {
+                    if(!drawn.get(id)) {
                         let c = 0;
-                        if (shared.length > 1) {
-                            c = (k * seperation) - ((seperation * (shared.length - 1)) / 2);
+                        if (shared.size > 1) {
+                            c = (k * seperation) - ((seperation * (shared.size - 1)) / 2);
                         }
                         if (edge.source == sdrawing) {
                             c = -c;
                         }
-                        edge.offset = c;
+                        edge.offset! = c;
                         if(feedback) {
-                            let record = feedback.get(shared[k]);
+                            let record = feedback.get(id);
                             if (record !== null && !record.isEmpty()) {
                                 let code = record.highest;
                                 StyleManager.setStyle(code, context);
                                 edge.draw(context);
                             }
                         }
-                        if (selected == shared[k]) {
+                        if (selected == id) {
                             StyleManager.setEdgeSelectedStyle(context);
                             edge.draw(context);
                         }
                     }
-                }
+                    k++;
+                });
                 context.restore();
-                for (let k = 0; k < shared.length; k++) {
-                    let edge = <LinearEdgeDrawing>this.edges.get(shared[k]);
-                    if(!drawn.get(shared[k])) {
+                shared.each((id: number, edge: LinearEdgeDrawing) => {
+                    if (!drawn.get(id)) {
                         edge.draw(context);
-                        drawn.set(shared[k], true);
+                        drawn.set(id, true);
                     }
-                }
+                });
             });
             let loops = new Array<number>();
             this.edges.each((id: number, edge: EdgeDrawing) => {
