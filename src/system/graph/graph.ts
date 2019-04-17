@@ -1,8 +1,7 @@
 import State from "./state";
 import Edge from "./edge";
 
-import { HashTable } from "lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
+import HashTable from "src/hash-table/hash-table";
 
 export default class Graph {
     protected _states: HashTable<number, State>;
@@ -12,8 +11,8 @@ export default class Graph {
     protected counter: number;
 
     public constructor() {
-        this._states = new HashTable<number, State>(hashNumber, eqNumbers);
-        this._edges = new HashTable<number, Edge>(hashNumber, eqNumbers);
+        this._states = new HashTable<number, State>();
+        this._edges = new HashTable<number, Edge>();
         this._initial = null;
 
         this.counter = 1;
@@ -21,47 +20,37 @@ export default class Graph {
 
     public addState(state: State, id: number | null = null): number {
         if(id !== null) {
-            this._states.add(id!, state);
+            this._states.set(id!, state);
             return id!;
         } else {
             let result = this.counter;
-            this._states.add(this.counter++, state);
+            this._states.set(this.counter++, state);
             return result;
         }
     }
 
     public addEdge(edge: Edge, id: number | null = null): number {
         if (id !== null) {
-            this._edges.add(id!, edge);
-            return id!;
+            this._edges.set(id, edge);
+            return id;
         } else {
             let result = this.counter;
-            this._edges.add(this.counter++, edge);
+            this._edges.set(this.counter++, edge);
             return result;
         }
     }
 
     public preset(id: number): HashTable<number, Edge> {
-        let result = new HashTable<number, Edge>(hashNumber, eqNumbers);
-        let edgeIds = this._edges.keys();
-        for(let i = 0; i < edgeIds.length; i++) {
-            let edge = this._edges.get(edgeIds[i]);
-            if(edge!.to == id) {
-                result.put(edgeIds[i], edge!);
-            }
-        }
+        let result = this.edges.filterValues((edge: Edge) => {
+            return edge.to == id;
+        });
         return result;
     }
 
     public postset(id: number): HashTable<number, Edge> {
-        let result = new HashTable<number, Edge>(hashNumber, eqNumbers);
-        let edgeIds = this._edges.keys();
-        for(let i = 0; i < edgeIds.length; i++) {
-            let edge = this._edges.get(edgeIds[i]);
-            if(edge!.from == id && edge!.to != id) {
-                result.put(edgeIds[i], edge!);
-            }
-        }
+        let result = this.edges.filterValues((edge: Edge) => {
+            return edge.from == id && edge.to != id;
+        });
         return result;
     }
 
@@ -82,11 +71,11 @@ export default class Graph {
     }
 
     public hasState(id: number): boolean {
-        return this._states.hasKey(id);
+        return this._states.has(id);
     }
 
     public hasEdge(id: number): boolean {
-        return this._edges.hasKey(id);
+        return this._edges.has(id);
     }
 
     get initial() {

@@ -1,11 +1,10 @@
 import FeedbackCode from "./feedback-code";
 
-import { HashTable } from "lib/collections/hashtable/hash-table";
-import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension"
+import HashTable from "src/hash-table/hash-table";
 
 export default class FeedbackTranslator
 {
-    protected static translations: Map<FeedbackCode, string> | null = null;
+    protected static translations: HashTable<FeedbackCode, string> | null = null;
 
     public static translate(code: FeedbackCode): string {
         if(FeedbackTranslator.translations == null) {
@@ -18,7 +17,7 @@ export default class FeedbackTranslator
     }
 
     protected static fillTranslations(): void {
-        FeedbackTranslator.translations = new Map<FeedbackCode, string>();
+        FeedbackTranslator.translations = new HashTable<FeedbackCode, string>();
 
         let t = FeedbackTranslator.translations;
         

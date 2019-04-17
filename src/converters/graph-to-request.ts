@@ -11,27 +11,23 @@ export default class GraphToRequest {
         let requestStates = new Array<StateRequest>();
         let requestEdges = new Array<EdgeRequest>();
 
-        let sids = states.keys();
-        for(let i = 0; i < sids.length; i++) {
-            let state: State = states.get(sids[i])!;
+        states.each((id: number, state: State) => {
             let r: StateRequest = {
                 state: state.toString(),
-                id: sids[i]
+                id: id
             };
             requestStates.push(r);
-        }
-        
-        let eids = edges.keys();
-        for(let i = 0; i < eids.length; i++) {
-            let edge: Edge = edges.get(eids[i])!;
+        });
+
+        edges.each((id: number, edge: Edge) => {
             let r: EdgeRequest = {
-                id: eids[i],
                 fromId: edge.from,
                 toId: edge.to,
-                transition: edge.label
+                transition: edge.label,
+                id: id
             };
             requestEdges.push(r);
-        }
+        });
 
         let initial = g.initial;
         let requestInitial: InitialRequest = {

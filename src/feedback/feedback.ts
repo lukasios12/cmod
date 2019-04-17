@@ -1,17 +1,15 @@
 import FeedbackCode from "./feedback-code";
 import FeedbackRecord from "./feedback-record.ts";
 
-import { HashTable } from "lib/collections/hashtable/hash-table";
-import { HashSet } from "lib/collections/hashset/hash-set";
-import { hashNumber, eqNumbers } from "lib/collections/extensions/number-extension";
+import HashTable from "src/hash-table/hash-table";
 
 export default class Feedback {
     public general: FeedbackRecord;
-    public specific: Map<number, FeedbackRecord>;
+    public specific: HashTable<number, FeedbackRecord>;
 
     public constructor() {
         this.general = new FeedbackRecord();
-        this.specific = new Map<number, FeedbackRecord>();
+        this.specific = new HashTable<number, FeedbackRecord>();
     }
 
     public get(id: number): FeedbackRecord {
