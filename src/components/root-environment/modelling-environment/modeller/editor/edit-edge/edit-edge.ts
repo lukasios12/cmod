@@ -43,7 +43,7 @@ export default class EditEdgeComponent extends Vue {
         return null;
     }
 
-    @Watch('id', {deep: true, immediate: true})
+    @Watch('id', {deep: false, immediate: true})
     onSelectionChange() {
         this.setLabel();
     }
@@ -53,7 +53,7 @@ export default class EditEdgeComponent extends Vue {
         return module.petrinet;
     }
 
-    @Watch('petrinet', {deep: true, immediate: true})
+    @Watch('petrinet', {deep: false, immediate: true})
     onPetrinetChange() {
         let petrinet = this.petrinet;
         let transitions = petrinet.transitions.toArray();

@@ -108,7 +108,7 @@ export default class EditorComponent extends Vue {
         return mod.petrinet;
     }
 
-    @Watch('petrinet', {deep: true, immediate: false})
+    @Watch('petrinet', {deep: false, immediate: false})
     onPetrinetChange() {
         if (this.editor) { 
             this.editor.petrinet = this.petrinet;
@@ -120,7 +120,7 @@ export default class EditorComponent extends Vue {
         return mod.feedback;
     }
 
-    @Watch('feedback', {deep: true, immediate: false})
+    @Watch('feedback', {deep: false, immediate: false})
     onFeedbackChange() {
         if (this.editor) {
             this.editor.feedback = this.feedback;
@@ -132,7 +132,7 @@ export default class EditorComponent extends Vue {
         return mod.settings;
     }
 
-    @Watch('settings', {deep:true, immediate: false})
+    @Watch('settings', {deep: true, immediate: false})
     onSettingsChange() {
         if (this.editor) {
             this.editor.drawerOptions = this.settings;
@@ -144,7 +144,7 @@ export default class EditorComponent extends Vue {
         return mod.resizing;
     }
 
-    @Watch('isResizing', {deep: true, immediate: false})
+    @Watch('isResizing', {deep: false, immediate: false})
     onResizeChange() {
         if (this.editor) {
             this.editor.resize();

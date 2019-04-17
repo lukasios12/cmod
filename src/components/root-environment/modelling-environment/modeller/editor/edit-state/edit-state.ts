@@ -101,7 +101,7 @@ export default class EditStateComponent extends Vue {
         return null;
     }
 
-    @Watch('id', {deep: true, immediate: true})
+    @Watch('id', {deep: false, immediate: false})
     onSelectionChange() {
         this.setMap();
     }

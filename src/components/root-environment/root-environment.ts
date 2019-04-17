@@ -1,4 +1,4 @@
-import { Watch, Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import WithRender from "./root-environment.html?style=./root-environment.scss";
 
 import InitEnvironment from "./init-environment/init-environment";
