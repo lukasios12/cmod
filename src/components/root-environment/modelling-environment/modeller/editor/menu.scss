@@ -6,6 +6,21 @@
     border: 1px solid grey;
     box-shadow: 4px 4px 2px 0 rgba(0, 0, 0, .3);
 
+    & input {
+        &[type="text"] {
+            display: block;
+            width: 100%;
+            margin: .5em 0;
+            padding: .25em;
+        }
+    }
+
+    & select {
+        display: block;
+        width: 100%;
+        padding: .25em .5em;
+    }
+
     & > .input {
         border-bottom: 1px solid grey;
     }
