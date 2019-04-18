@@ -6,7 +6,6 @@ import SessionModule from "./session";
 import PetrinetModule from "./petrinet";
 
 import Graph from "src/system/graph/graph";
-import GraphToRequest from "src/converters/graph-to-request";
 import ResponseToFeedback from "src/converters/response-to-feedback";
 
 import FeedbackService from "src/services/feedback";
@@ -42,13 +41,12 @@ export default class FeedbackModule extends VuexModule {
 
     @Action
     get(graph: Graph): Promise<any> {
-        let data = GraphToRequest.convert(graph);
         let umod = getModule(UserModule);
         let smod = getModule(SessionModule);
         let pmod = getModule(PetrinetModule);
         this.setLoading(true);
         return new Promise((resolve, reject) => {
-            FeedbackService.get(umod.id, pmod.id, smod.id, data)
+            FeedbackService.get(umod.id, pmod.id, smod.id, graph)
             .then((response:AxiosResponse<FeedbackResponse>) => {
                 let fr = response.data;
                 let feedback = ResponseToFeedback.convert(fr);
