@@ -14,8 +14,7 @@ import UserModule from "src/store/user";
     }
 })
 export default class WelcomeDialogComponent extends Vue {
-    title: string = "Welcome"
-    username: string = ""
+    username: string = "";
     hide: boolean = false;
 
     get error(): string {
