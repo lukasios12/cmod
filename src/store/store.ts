@@ -10,7 +10,7 @@ import FeedbackModule from "./feedback";
 import ModellerModule from "./modeller";
 import DrawerSettingsModule from "./drawer-settings";
 
-export const Store = new Vuex.Store({
+const Store = new Vuex.Store({
     modules: {
         UserModule,
         PetrinetModule,
@@ -20,3 +20,5 @@ export const Store = new Vuex.Store({
         DrawerSettingsModule
     }
 });
+
+export default Store;
