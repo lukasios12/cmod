@@ -10,7 +10,7 @@ import Vector2D from "src/shapes/vector2d";
 import Rectangle from "src/shapes/rectangle";
 import Intersection from "src/shapes/intersection";
 
-import StyleManager from "src/stylemanager/style-manager";
+import StyleManager from "src/style-manager/style-manager";
 import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
 
 export default class StateDrawing implements Hittable, Draggable, Snappable {

@@ -8,7 +8,7 @@ import Editor from "src/editor/editor";
 import Marking from "src/system/marking";
 import OmegaTokenCount from "src/system/tokens/omega-token-count";
 import IntegerTokenCount from "src/system/tokens/integer-token-count";
-import StyleManager from "src/stylemanager/style-manager";
+import StyleManager from "src/style-manager/style-manager";
 
 import { remainder } from "lib/math/math";
 

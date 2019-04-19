@@ -10,7 +10,7 @@ import SelfLoopDrawing from "./self-loop-drawing";
 import Arrow from "src/shapes/arrow";
 import Vector2D from "src/shapes/vector2d";
 
-import StyleManager from "src/stylemanager/style-manager";
+import StyleManager from "src/style-manager/style-manager";
 
 import HashTable from "src/hash-table/hash-table";
 
