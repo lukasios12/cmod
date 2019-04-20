@@ -66,6 +66,27 @@ export default class Drawer {
             this.drawingCache = drawing;
         }
         context!.restore();
+
+        context.save();
+        let w = canvas.width;
+        let h = canvas.height;
+        let width = w;
+        let height = h;
+        context.fillRect(w / 2 - 10, h / 2 - 10, 20, 20);
+        context.restore();
+
+        context.save();
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.strokeStyle = "red";
+        context.beginPath();
+        context.lineWidth = 2;
+        context.moveTo(width / 2, 0);
+        context.lineTo(width / 2, height);
+        context.moveTo(0, height / 2);
+        context.lineTo(width, height / 2);
+        context.closePath();
+        context.stroke();
+        context.restore();
     }
 
     public clear(): void {
@@ -119,10 +140,19 @@ export default class Drawer {
     }
 
     public zoom(amount: number): void {
+        let width = this.context.canvas.width / this.currentTransform.get(0, 0);
+        let height = this.context.canvas.height / this.currentTransform.get(1, 1);
         let mat = Matrix.identity(3);
-        mat.set(0,0, amount);
-        mat.set(1,1, amount);
-        this.transform(mat);
+        mat.set(0, 0, amount);
+        mat.set(1, 1, amount);
+        let t = Matrix.mult(mat, this.currentTransform);
+        let vwidth = this.context.canvas.width / t.get(0, 0);
+        let vheight = this.context.canvas.height / t.get(1, 1);
+        let shift = new Matrix(3, 3);
+        shift.set(0, 2, -(width - vwidth) / 2 * t.get(0, 0));
+        shift.set(1, 2, (height - vheight) / 2 * t.get(1, 1));
+        t = Matrix.add(t, shift);
+        this.setTransform(t);
     }
 
     public resize(): void {
@@ -188,7 +218,6 @@ export default class Drawer {
         context.save();
         context.strokeStyle = "rgb(220, 220, 220)";
         context.lineWidth = 1; // px
-        context.beginPath();
         for(let x = xmin; x <= xmax; x += hdist) {
             context.moveTo(x, ymin);
             context.lineTo(x, ymax);
@@ -198,7 +227,6 @@ export default class Drawer {
             context.lineTo(xmax, y);
         }
         context.stroke();
-        context.closePath();
         context.restore();
     }
 
