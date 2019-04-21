@@ -106,29 +106,12 @@ export default class Drawer {
     }
 
     public setTransform(mat: Matrix): void {
-        let context = this.context;
-        let options = this.options;
-
-        let hscale = mat.get(0, 0);
-        let vscale = mat.get(1, 1);
-        let htrans = mat.get(0, 2);
-        let vtrans = mat.get(1, 2);
-
-        mat.set(0, 0, clamp(hscale, options.minZoom, options.maxZoom));
-        mat.set(1, 1, clamp(vscale, options.minZoom, options.maxZoom));
-        hscale = mat.get(0, 0);
-        vscale = mat.get(1, 1);
-        // let minx = options.minX - ((this.initialWidth - this.canvas.width) / 2);
-        // let maxx = options.maxX + ((this.initialWidth - this.canvas.width) / 2);
-        mat.set(0, 2, htrans);
-        mat.set(1, 2, vtrans);
-
+        mat = this.clampTransform(mat)
         this._currentTransform = mat;
-        context!.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
-                             mat.get(1,1), mat.get(0,2), -mat.get(1,2));
-
-        // console.log(this.initialWidth, this.canvas.width, mat);
-        this.draw(this.drawingCache);
+        this.context.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
+                                  mat.get(1,1), mat.get(0,2), -mat.get(1,2));
+        this.draw();
+        console.log(this.currentTransform);
     }
 
     public shift(h: number = 0, v: number = 0): void {
@@ -140,18 +123,24 @@ export default class Drawer {
     }
 
     public zoom(amount: number): void {
-        let width = this.context.canvas.width / this.currentTransform.get(0, 0);
-        let height = this.context.canvas.height / this.currentTransform.get(1, 1);
-        let mat = Matrix.identity(3);
-        mat.set(0, 0, amount);
-        mat.set(1, 1, amount);
-        let t = Matrix.mult(mat, this.currentTransform);
-        let vwidth = this.context.canvas.width / t.get(0, 0);
-        let vheight = this.context.canvas.height / t.get(1, 1);
+        let zoom = Matrix.identity(3);
+        zoom.set(0, 0, amount);
+        zoom.set(1, 1, amount);
+        let t = this.clampTransform(Matrix.mult(zoom, this.currentTransform));
+        if (t.get(0, 0) == this.currentTransform.get(0, 0) &&
+            t.get(1, 1) == this.currentTransform.get(1, 1)) {
+            return;
+        }
+
+        let w  = this.context.canvas.width  / this.currentTransform.get(0, 0);
+        let h  = this.context.canvas.height / this.currentTransform.get(1, 1);
+        let vw = this.context.canvas.width  / t.get(0, 0);
+        let vh = this.context.canvas.height / t.get(1, 1);
         let shift = new Matrix(3, 3);
-        shift.set(0, 2, -(width - vwidth) / 2 * t.get(0, 0));
-        shift.set(1, 2, (height - vheight) / 2 * t.get(1, 1));
+        shift.set(0, 2,  (vw - w) / 2 * t.get(0, 0));
+        shift.set(1, 2, -(vh - h) / 2 * t.get(1, 1));
         t = Matrix.add(t, shift);
+
         this.setTransform(t);
     }
 
@@ -192,6 +181,16 @@ export default class Drawer {
         x = (x * t.get(0, 0)) + t.get(0, 2);
         y = (y * t.get(1, 1)) - t.get(1, 2);
         return new Vector2D(x, y);
+    }
+
+    protected clampTransform(mat: Matrix) {
+        let options = this.options;
+        let hscale = mat.get(0, 0);
+        let vscale = mat.get(1, 1);
+        mat.set(0, 0, clamp(hscale, options.minZoom, options.maxZoom));
+        mat.set(1, 1, clamp(vscale, options.minZoom, options.maxZoom));
+
+        return mat;
     }
 
     protected drawGrid(): void {
@@ -258,6 +257,10 @@ export default class Drawer {
                     break;
                 case 173: // -
                     this.zoom(1 / zoomAmount);
+                    break;
+                case 66:
+                    this._currentTransform = Matrix.identity(3);
+                    this.draw();
                     break;
             }
         });
