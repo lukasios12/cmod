@@ -66,27 +66,6 @@ export default class Drawer {
             this.drawingCache = drawing;
         }
         context!.restore();
-
-        context.save();
-        let w = canvas.width;
-        let h = canvas.height;
-        let width = w;
-        let height = h;
-        context.fillRect(w / 2 - 10, h / 2 - 10, 20, 20);
-        context.restore();
-
-        context.save();
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.strokeStyle = "red";
-        context.beginPath();
-        context.lineWidth = 2;
-        context.moveTo(width / 2, 0);
-        context.lineTo(width / 2, height);
-        context.moveTo(0, height / 2);
-        context.lineTo(width, height / 2);
-        context.closePath();
-        context.stroke();
-        context.restore();
     }
 
     public clear(): void {
@@ -111,7 +90,6 @@ export default class Drawer {
         this.context.setTransform(mat.get(0,0), mat.get(1,0), mat.get(0,1),
                                   mat.get(1,1), mat.get(0,2), -mat.get(1,2));
         this.draw();
-        console.log(this.currentTransform);
     }
 
     public shift(h: number = 0, v: number = 0): void {
@@ -155,6 +133,7 @@ export default class Drawer {
         if(this.drawingCache) {
             this.draw(this.drawingCache);
         }
+
         this.setTransform(this.currentTransform);
     }
 
@@ -189,7 +168,6 @@ export default class Drawer {
         let vscale = mat.get(1, 1);
         mat.set(0, 0, clamp(hscale, options.minZoom, options.maxZoom));
         mat.set(1, 1, clamp(vscale, options.minZoom, options.maxZoom));
-
         return mat;
     }
 
@@ -215,6 +193,7 @@ export default class Drawer {
                    vdist + ymin + vdist;
 
         context.save();
+        context.beginPath();
         context.strokeStyle = "rgb(220, 220, 220)";
         context.lineWidth = 1; // px
         for(let x = xmin; x <= xmax; x += hdist) {
@@ -225,6 +204,7 @@ export default class Drawer {
             context.moveTo(xmin, y);
             context.lineTo(xmax, y);
         }
+        context.closePath();
         context.stroke();
         context.restore();
     }
@@ -257,10 +237,6 @@ export default class Drawer {
                     break;
                 case 173: // -
                     this.zoom(1 / zoomAmount);
-                    break;
-                case 66:
-                    this._currentTransform = Matrix.identity(3);
-                    this.draw();
                     break;
             }
         });
