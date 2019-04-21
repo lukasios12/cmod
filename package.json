@@ -7,7 +7,6 @@
     "lib": "lib"
   },
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "webpack-dev-server --mode development --progress --color --hot",
     "build": "webpack --mode production"
   },
