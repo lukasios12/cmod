@@ -16,14 +16,14 @@ import DrawerOptions from "src/drawer/drawer-options";
 import Feedback from "src/feedback/feedback";
 import FeedbackDispatch from "src/feedback/feedback-dispatch";
 
-import AddState from "src/actions/add-state";
-import AddEdge from "src/actions/add-edge";
-import AddInitial from "src/actions/add-initial";
-import DeleteState from "src/actions/del-state";
-import DeleteEdge from "src/actions/del-edge";
-import DeleteInitial from "src/actions/del-initial";
-import EditState from "src/actions/edit-state";
-import EditEdge from "src/actions/edit-edge";
+import AddState from "./actions/add-state";
+import AddEdge from "./actions/add-edge";
+import AddInitial from "./actions/add-initial";
+import DeleteState from "./actions/del-state";
+import DeleteEdge from "./actions/del-edge";
+import DeleteInitial from "./actions/del-initial";
+import EditState from "./actions/edit-state";
+import EditEdge from "./actions/edit-edge";
 
 import HistoryList from "src/history-list/history-list";
 
