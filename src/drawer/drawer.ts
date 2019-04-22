@@ -266,6 +266,10 @@ export default class Drawer {
         canvas.addEventListener("mouseup", (event) => {
             mouseDownMiddle = false;
         });
+
+        canvas.addEventListener("wheel", (event) => {
+            event.preventDefault();
+        });
     }
 
     // getters and setters
