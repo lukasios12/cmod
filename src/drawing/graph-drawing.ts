@@ -13,6 +13,7 @@ import Vector2D from "src/shapes/vector2d";
 import StyleManager from "src/style-manager/style-manager";
 
 import HashTable from "src/hash-table/hash-table";
+import HashSet from "src/hash-set/hash-set";
 
 export default class GraphDrawing implements Drawing, Snappable {
     public states: HashTable<number, StateDrawing>;
@@ -33,7 +34,7 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        let drawn = new HashTable<number, boolean>();
+        let drawn = new HashSet<number>();
         
         let selected = this.options.selected;
         let feedback = this.options.feedback;
@@ -63,7 +64,7 @@ export default class GraphDrawing implements Drawing, Snappable {
                 });
                 let k = 0;
                 shared.each((id: number, edge: LinearEdgeDrawing) => {
-                    if(!drawn.get(id)) {
+                    if(!drawn.contains(id)) {
                         let c = 0;
                         if (shared.size > 1) {
                             c = (k * seperation) - ((seperation * (shared.size - 1)) / 2);
@@ -89,9 +90,9 @@ export default class GraphDrawing implements Drawing, Snappable {
                 });
                 context.restore();
                 shared.each((id: number, edge: LinearEdgeDrawing) => {
-                    if (!drawn.get(id)) {
+                    if (!drawn.contains(id)) {
                         edge.draw(context);
-                        drawn.set(id, true);
+                        drawn.add(id);
                     }
                 });
             });
