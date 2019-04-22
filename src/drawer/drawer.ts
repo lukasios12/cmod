@@ -60,7 +60,8 @@ export default class Drawer {
         if (drawing) {
             if(this.options.gridOptions.snapGrid && isSnappable(drawing)) {
                 drawing.snap(this.options.gridOptions.horizontalGridSeperation,
-                            this.options.gridOptions.verticalGridSeperation);
+                             this.options.gridOptions.verticalGridSeperation,
+                             context);
             }
             drawing.draw(context!);
             this.drawingCache = drawing;

@@ -218,9 +218,12 @@ export default class GraphDrawing implements Drawing, Snappable {
         return result;
     }
 
-    public snap(hgrid: number, vgrid: number): void {
+    public snap(hgrid: number, vgrid: number, context: CanvasRenderingContext2D): void {
+        context.save();
+        StyleManager.setStateStandardStyle(context);
         this.states.each((id: number, state: StateDrawing) => {
-            state.snap(hgrid, vgrid);
+            state.snap(hgrid, vgrid, context);
         });
+        context.restore();
     }
 }
