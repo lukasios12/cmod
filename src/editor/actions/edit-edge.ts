@@ -2,7 +2,7 @@ import Graph from "src/system/graph/graph";
 import Edge from "src/system/graph/edge";
 import GraphDrawing from "src/drawing/graph-drawing";
 
-import { UndoableAction } from "lib/action/undoable-action";
+import UndoableAction from "src/action/undoable-action";
 
 export default class EditEdge implements UndoableAction {
     protected id: number;

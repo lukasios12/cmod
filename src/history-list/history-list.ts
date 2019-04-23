@@ -1,4 +1,4 @@
-import { UndoableAction } from "lib/action/undoable-action";
+import UndoableAction from "src/action/undoable-action";
 
 export default class HistoryList {
     protected history: Array<UndoableAction>;

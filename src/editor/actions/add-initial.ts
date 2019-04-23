@@ -1,7 +1,7 @@
 import Graph from "src/system/graph/graph";
 import GraphDrawing from "src/drawing/graph-drawing";
 
-import { UndoableAction } from "lib/action/undoable-action";
+import UndoableAction from "src/action/undoable-action";
 
 export default class AddInitial implements UndoableAction {
     protected id: number;

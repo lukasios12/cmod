@@ -6,7 +6,7 @@ import StateDrawing from "src/drawing/state-drawing";
 
 import Vector2D from "src/shapes/vector2d";
 
-import { UndoableAction } from "lib/action/undoable-action";
+import UndoableAction from "src/action/undoable-action";
 
 export default class AddState implements UndoableAction {
     protected id: number | null;

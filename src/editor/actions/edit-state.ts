@@ -3,7 +3,7 @@ import State from "src/system/graph/state";
 
 import GraphDrawing from "src/drawing/graph-drawing";
 
-import { UndoableAction } from "lib/action/undoable-action";
+import UndoableAction from "src/action/undoable-action";
 
 export default class EditState implements UndoableAction {
 

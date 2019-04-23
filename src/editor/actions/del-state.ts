@@ -6,7 +6,7 @@ import GraphDrawing from "src/drawing/graph-drawing";
 import StateDrawing from "src/drawing/state-drawing";
 import EdgeDrawing from "src/drawing/edge-drawing";
 
-import { UndoableAction } from "lib/action/undoable-action";
+import UndoableAction from "src/action/undoable-action";
 import HashTable from "src/hash-table/hash-table";
 
 export default class DeleteState implements UndoableAction {

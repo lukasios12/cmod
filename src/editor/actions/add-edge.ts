@@ -6,7 +6,7 @@ import GraphDrawing from "src/drawing/graph-drawing";
 import LinearEdgeDrawing from "src/drawing/linear-edge-drawing";
 import SelfLoopDrawing from "src/drawing/self-loop-drawing";
 
-import { UndoableAction } from "lib/action/undoable-action";
+import UndoableAction from "src/action/undoable-action";
 
 export default class AddEdge implements UndoableAction {
     protected id: number | null;
