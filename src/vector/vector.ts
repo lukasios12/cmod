@@ -16,14 +16,14 @@ export default class Vector {
         this.data[i] = val;
     }
 
-    public dimensions(): number {
+    public get dimensions(): number {
         return this.data.length;
     }
 
     public static add(lhs: Vector, rhs: Vector): Vector {
-        if(lhs.dimensions() == rhs.dimensions()) {
-            let v = new Vector(lhs.dimensions());
-            for(let i = 0; i < lhs.dimensions(); i++) {
+        if(lhs.dimensions == rhs.dimensions) {
+            let v = new Vector(lhs.dimensions);
+            for(let i = 0; i < lhs.dimensions; i++) {
                 v.set(i, lhs.get(i) + rhs.get(i));
             }
             return v;
@@ -36,8 +36,8 @@ export default class Vector {
     }
 
     public static scale(v: Vector, n: number): Vector {
-        let result = new Vector(v.dimensions());
-        for(let i = 0; i < v.dimensions(); i++) {
+        let result = new Vector(v.dimensions);
+        for(let i = 0; i < v.dimensions; i++) {
             result.set(i,v.get(i) * n);
         }
         return result;
@@ -45,7 +45,7 @@ export default class Vector {
 
     public static norm(v: Vector): number {
         let sum = 0;
-        for(let i = 0; i < v.dimensions(); i++) {
+        for(let i = 0; i < v.dimensions; i++) {
             sum += v.get(i) * v.get(i);
         }
         return Math.sqrt(sum);
