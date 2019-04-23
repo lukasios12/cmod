@@ -8,7 +8,7 @@ import LinearEdgeDrawing from "./linear-edge-drawing";
 import SelfLoopDrawing from "./self-loop-drawing";
 
 import Arrow from "src/shapes/arrow";
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 
 import StyleManager from "src/style-manager/style-manager";
 

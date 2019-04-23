@@ -2,7 +2,7 @@ import DrawerOptions from "./drawer-options";
 
 import Drawing from "src/drawing/drawing";
 import { isSnappable } from "src/drawing/snappable-drawing";
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 
 import { Matrix } from "lib/matrix/matrix";
 import { clamp } from "lib/math/math";

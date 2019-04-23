@@ -1,4 +1,4 @@
-import Vector2D from "./vector2d";
+import Vector2D from "src/vector/vector2d";
 
 export default interface Shape2D {
     stroke(ctx: CanvasRenderingContext2D): void;

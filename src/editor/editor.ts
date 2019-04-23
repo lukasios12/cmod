@@ -9,7 +9,7 @@ import GraphDrawing from "src/drawing/graph-drawing";
 import GraphDrawingOptions from "src/drawing/graph-drawing-options";
 import { isDraggable } from "src/drawing/draggable-drawing";
 
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 
 import Drawer from "src/drawer/drawer";
 import DrawerOptions from "src/drawer/drawer-options";

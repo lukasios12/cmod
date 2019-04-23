@@ -1,4 +1,4 @@
-import { Vector } from "lib/vector/vector";
+import Vector from "./vector";
 
 export default class Vector2D {
     public vec: Vector;

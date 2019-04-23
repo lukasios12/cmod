@@ -1,4 +1,4 @@
-import Vector2D from "./vector2d";
+import Vector2D from "src/vector/vector2d";
 import Line from "./line";
 import Triangle from "./triangle";
 

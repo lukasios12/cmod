@@ -1,4 +1,4 @@
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 
 export default interface Draggable {
     drag(point: Vector2D, context: CanvasRenderingContext2D): void;

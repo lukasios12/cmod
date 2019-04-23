@@ -3,7 +3,7 @@ import Edge from "src/system/graph/edge";
 import EdgeDrawing from "./edge-drawing";
 import StateDrawing from "./state-drawing";
 
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 import Arrow from "src/shapes/arrow";
 
 import StyleManager from "src/style-manager/style-manager";

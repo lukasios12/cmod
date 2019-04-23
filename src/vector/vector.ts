@@ -1,4 +1,4 @@
-class Vector {
+export default class Vector {
     protected data: Array<number>;
 
     public constructor(d: number = 1) {
@@ -56,5 +56,3 @@ class Vector {
         return Vector.scale(v, 1 / norm);
     }
 }
-
-export { Vector };

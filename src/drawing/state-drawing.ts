@@ -6,7 +6,7 @@ import EdgeDrawing from "./edge-drawing";
 
 import State from "src/system/graph/state";
 
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 import Rectangle from "src/shapes/rectangle";
 import Intersection from "src/shapes/intersection";
 

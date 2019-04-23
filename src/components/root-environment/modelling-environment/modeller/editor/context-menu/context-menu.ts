@@ -3,7 +3,7 @@ import WithRender from "./context-menu.html?style=./context-menu.scss";
 
 import Editor from "src/editor/editor";
 import Marking from "src/system/marking";
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 
 @WithRender
 @Component({

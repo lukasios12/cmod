@@ -4,7 +4,7 @@ import State from "src/system/graph/state";
 import GraphDrawing from "src/drawing/graph-drawing"
 import StateDrawing from "src/drawing/state-drawing";
 
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 
 import UndoableAction from "src/action/undoable-action";
 

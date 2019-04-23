@@ -3,7 +3,7 @@ import Hittable from "./hittable-drawing";
 
 import Edge from "src/system/graph/edge";
 
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 
 export default abstract class EdgeDrawing implements Hittable {
     public source: StateDrawing;

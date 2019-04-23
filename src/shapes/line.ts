@@ -1,5 +1,5 @@
 import Shape2D from "./shape2d";
-import Vector2D from "./vector2d";
+import Vector2D from "src/vector/vector2d";
 
 export default class Line implements Shape2D {
     public source: Vector2D;

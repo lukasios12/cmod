@@ -4,7 +4,7 @@ import EdgeDrawing from "./edge-drawing";
 import StateDrawing from "./state-drawing";
 import Draggable from "./draggable-drawing";
 
-import Vector2D from "src/shapes/vector2d";
+import Vector2D from "src/vector/vector2d";
 import Circle from "src/shapes/circle";
 
 import StyleManager from "src/style-manager/style-manager";
