@@ -8,7 +8,7 @@ import Vector2D from "src/vector/vector2d";
 import Circle from "src/shapes/circle";
 
 import StyleManager from "src/style-manager/style-manager";
-import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
+import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-context-2d";
 
 export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
     protected _angle: number;

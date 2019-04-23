@@ -8,7 +8,8 @@ import PetrinetModule from "src/store/petrinet";
 
 import Editor from "src/editor/editor";
 import StyleManager from "src/style-manager/style-manager";
-import {CanvasRenderingContext2DUtils} from "lib/utils/canvas-rendering-context-2d-utils";
+
+import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-context-2d";
 
 @WithRender
 @Component({

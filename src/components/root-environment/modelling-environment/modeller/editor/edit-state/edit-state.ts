@@ -10,7 +10,7 @@ import OmegaTokenCount from "src/system/tokens/omega-token-count";
 import IntegerTokenCount from "src/system/tokens/integer-token-count";
 import StyleManager from "src/style-manager/style-manager";
 
-import { remainder } from "lib/math/math";
+import { remainder } from "src/utils/math";
 
 @WithRender
 @Component({

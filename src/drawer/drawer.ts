@@ -5,7 +5,7 @@ import { isSnappable } from "src/drawing/snappable-drawing";
 import Vector2D from "src/vector/vector2d";
 
 import Matrix from "src/matrix/matrix";
-import { clamp } from "lib/math/math";
+import { clamp } from "src/utils/math";
 
 export default class Drawer {
     public context: CanvasRenderingContext2D;

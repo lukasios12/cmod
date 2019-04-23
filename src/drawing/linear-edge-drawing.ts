@@ -7,7 +7,8 @@ import Vector2D from "src/vector/vector2d";
 import Arrow from "src/shapes/arrow";
 
 import StyleManager from "src/style-manager/style-manager";
-import { CanvasRenderingContext2DUtils } from "lib/utils/canvas-rendering-context-2d-utils";
+
+import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-context-2d";
 
 export default class LinearEdgeDrawing extends EdgeDrawing {
     public target: StateDrawing;
