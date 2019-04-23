@@ -5,6 +5,7 @@ import Draggable from "./draggable-drawing";
 import EdgeDrawing from "./edge-drawing";
 
 import State from "src/system/graph/state";
+import { MarkingStringType } from "src/system/marking";
 
 import Vector2D from "src/vector/vector2d";
 import Rectangle from "src/shapes/rectangle";
@@ -20,11 +21,12 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     public preset: Array<EdgeDrawing>;
     public postset: Array<EdgeDrawing>;
 
-    protected validCache: boolean;
-    protected boxCache: Rectangle | null;
-    protected textCache: string | null;
-    protected widthCache: number  | null;
-    protected heightCache: number | null;
+    protected validCache:     boolean;
+    protected boxCache:       Rectangle         | null;
+    protected textCache:      string            | null;
+    protected textStyleCache: MarkingStringType | null;
+    protected widthCache:     number            | null;
+    protected heightCache:    number            | null;
 
     public constructor(
         state: State,
@@ -40,11 +42,12 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
             this.position = new Vector2D(0, 0);
         }
 
-        this.boxCache = null;
-        this.textCache = null;
-        this.widthCache = null;
-        this.heightCache = null;
-        this.validCache = false;
+        this.boxCache       = null;
+        this.textCache      = null;
+        this.textStyleCache = null;
+        this.widthCache     = null;
+        this.heightCache    = null;
+        this.validCache     = false;
     }
 
     public draw(context: CanvasRenderingContext2D): void {
@@ -55,7 +58,14 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         box.stroke(context);
     }
 
-    public drawText(context: CanvasRenderingContext2D): void {
+    public drawText(
+        context: CanvasRenderingContext2D,
+        style: MarkingStringType = MarkingStringType.FULL
+    ): void {
+        if (style !== this.textStyleCache) {
+            this.textCache = null;
+        }
+        this.textStyleCache = style;
         context.fillText(
             this.getStateString(),
             this.position.x + this.getWidth(context) / 2,
@@ -191,12 +201,12 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         return width;
     }
 
-    protected getStateString() {
+    protected getStateString(style: MarkingStringType = MarkingStringType.FULL) {
         let text;
-        if(this.validCache && this.textCache !== null) {
+        if (this.validCache && this.textCache !== null) {
             text = this.textCache;
         } else {
-            text = `[${this.state.toString()}]`;
+            text = `[${this.state.toString(style)}]`;
             this.textCache = text;
         }
         return text;
@@ -226,9 +236,11 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     public set position(pos: Vector2D) {
-        this._position = pos;
-        this.validCache = false;
-        this.notifyNeighbours();
+        if (!this.position || !Vector2D.equal(this.position, pos)) {
+            this._position = pos;
+            this.validCache = false;
+            this.notifyNeighbours();
+        }
     }
 }
 

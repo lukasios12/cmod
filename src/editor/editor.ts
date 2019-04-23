@@ -8,6 +8,7 @@ import Drawing from "src/drawing/drawing";
 import GraphDrawing from "src/drawing/graph-drawing";
 import GraphDrawingOptions from "src/drawing/graph-drawing-options";
 import { isDraggable } from "src/drawing/draggable-drawing";
+import { MarkingStringType } from "src/system/marking";
 
 import Vector2D from "src/vector/vector2d";
 
@@ -61,6 +62,7 @@ export default class Editor {
         this.graphDrawingOptions = {
             selected: null,
             feedback: null,
+            markingStyle: MarkingStringType.FULL,
         };
         this.graphDrawing = new GraphDrawing(this.graphDrawingOptions);
         this.feedback = null;

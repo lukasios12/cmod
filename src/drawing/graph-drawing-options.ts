@@ -1,11 +1,8 @@
 import Feedback from "src/feedback/feedback";
+import { MarkingStringType } from "src/system/marking";
 
-export default class GraphDrawingOptions {
-    public selected: number | null;
-    public feedback: Feedback | null;
-
-    public constructor(feedback: Feedback | null = null, selected: number | null = null) {
-        this.feedback = feedback;
-        this.selected = selected;
-    }
+export default interface GraphDrawingOptions {
+    selected: number | null;
+    feedback: Feedback | null;
+    markingStyle: MarkingStringType | null;
 }

@@ -10,6 +10,7 @@ import SelfLoopDrawing from "./self-loop-drawing";
 import Arrow from "src/shapes/arrow";
 import Vector2D from "src/vector/vector2d";
 
+import { MarkingStringType } from "src/system/marking";
 import StyleManager from "src/style-manager/style-manager";
 
 import HashTable from "src/hash-table/hash-table";
@@ -29,13 +30,16 @@ export default class GraphDrawing implements Drawing, Snappable {
         if(options) { 
             this.options = options;
         } else {
-            this.options = new GraphDrawingOptions(null, null);
+            this.options = {
+                selected: null,
+                feedback: null,
+                markingStyle: MarkingStringType.FULL,
+            };
         }
     }
 
     public draw(context: CanvasRenderingContext2D): void {
         let drawn = new HashSet<number>();
-        
         let selected = this.options.selected;
         let feedback = this.options.feedback;
         
@@ -133,7 +137,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         // draw text for states and edges
         StyleManager.setStateTextStyle(context);
         this.states.each((id: number, state: StateDrawing) => {
-            state.drawText(context);
+            state.drawText(context, this.options.markingStyle);
         });
         StyleManager.setEdgeTextStyle(context);
         this.edges.each((id: number, edge: EdgeDrawing) => {
