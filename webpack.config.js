@@ -16,7 +16,6 @@ let config = {
     resolve: {
         alias: {
             "src": path.resolve(__dirname, "src"),
-            "lib": path.resolve(__dirname, "lib"),
         },
         extensions: [ '.ts', '.js' ]
     },
