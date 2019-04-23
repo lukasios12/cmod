@@ -1,4 +1,4 @@
-class Matrix {
+export default class Matrix {
     protected data: Array<Array<number>>;
 
     public constructor(r: number, c: number) {
@@ -143,5 +143,3 @@ class Matrix {
         return res;
     }
 }
-
-export { Matrix };
