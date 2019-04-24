@@ -1,27 +1,27 @@
 import GraphDrawingOptions from "./graph-drawing-options";
 
-import Drawing from "./drawing";
-import Snappable from "./snappable-drawing";
-import EdgeDrawing from "./edge-drawing";
-import StateDrawing from "./state-drawing";
+import Drawing           from "./drawing";
+import Snappable         from "./snappable-drawing";
+import EdgeDrawing       from "./edge-drawing";
+import StateDrawing      from "./state-drawing";
 import LinearEdgeDrawing from "./linear-edge-drawing";
-import SelfLoopDrawing from "./self-loop-drawing";
+import SelfLoopDrawing   from "./self-loop-drawing";
 
-import Arrow from "src/shapes/arrow";
+import Arrow    from "src/shapes/arrow";
 import Vector2D from "src/vector/vector2d";
 
 import { MarkingStringType } from "src/system/marking";
-import StyleManager from "src/style-manager/style-manager";
+import StyleManager          from "src/style-manager/style-manager";
 
 import HashTable from "src/hash-table/hash-table";
-import HashSet from "src/hash-set/hash-set";
+import HashSet   from "src/hash-set/hash-set";
 
 export default class GraphDrawing implements Drawing, Snappable {
     public states: HashTable<number, StateDrawing>;
     public edges: HashTable<number, EdgeDrawing>;
     public initial: number | null;
 
-    public options: GraphDrawingOptions;
+    public _options: GraphDrawingOptions;
 
     public constructor(options: GraphDrawingOptions | null = null) {
         this.states = new HashTable<number, StateDrawing>();
@@ -39,6 +39,7 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
+        console.log("graph drawing", this.options);
         let drawn = new HashSet<number>();
         let selected = this.options.selected;
         let feedback = this.options.feedback;
@@ -126,6 +127,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         // draw states
         StyleManager.setStateStandardStyle(context);
         this.states.each((id: number, state: StateDrawing) => {
+            state.markingStyle = this.options.markingStyle;
             if (selected == id) {
                 context.save();
                 StyleManager.setStateSelectedStyle(context);
@@ -137,7 +139,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         // draw text for states and edges
         StyleManager.setStateTextStyle(context);
         this.states.each((id: number, state: StateDrawing) => {
-            state.drawText(context, this.options.markingStyle);
+            state.drawText(context);
         });
         StyleManager.setEdgeTextStyle(context);
         this.edges.each((id: number, edge: EdgeDrawing) => {
@@ -230,5 +232,13 @@ export default class GraphDrawing implements Drawing, Snappable {
             state.snap(hgrid, vgrid, context);
         });
         context.restore();
+    }
+
+    public get options() {
+        return this._options;
+    }
+
+    public set options(opts: GraphDrawingOptions) {
+        this._options = opts;
     }
 }

@@ -1,16 +1,19 @@
 import { Vue, Component, Watch } from "vue-property-decorator";
 import WithRender from "./editor.html?style=./editor.scss";
 
-import { getModule } from "vuex-module-decorators";
-import DrawerSettingsModule from "src/store/drawer-settings";
-import ModellerModule from"src/store/modeller"
-import PetrinetModule from "src/store/petrinet";
-import FeedbackModule from "src/store/feedback";
+import { getModule }              from "vuex-module-decorators";
+import DrawerSettingsModule       from "src/store/drawer-settings";
+import GraphDrawingSettingsModule from "src/store/graph-drawing-settings";
+import ModellerModule             from "src/store/modeller";
+import PetrinetModule             from "src/store/petrinet";
+import FeedbackModule             from "src/store/feedback";
 
 import ContextMenuComponent from "./context-menu/context-menu";
-import MessengerComponent from "./messenger/messenger";
-import EditStateComponent from "./edit-state/edit-state";
-import EditEdgeComponent from "./edit-edge/edit-edge";
+import MessengerComponent   from "./messenger/messenger";
+import EditStateComponent   from "./edit-state/edit-state";
+import EditEdgeComponent    from "./edit-edge/edit-edge";
+
+import { MarkingStringType } from "src/system/marking";
 
 import Editor from "src/editor/editor";
 
@@ -39,6 +42,7 @@ export default class EditorComponent extends Vue {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
         this.editor = new Editor(canvas, this.petrinet);
         this.editor.drawerOptions = this.settings;
+        this.editor.markingStyle = this.stringType;
     }
 
     openContextMenu(event) {
@@ -96,6 +100,15 @@ export default class EditorComponent extends Vue {
         this.showContextMenu = !this.showContextMenu;
     }
 
+    toggleStyle() {
+        let mod = getModule(GraphDrawingSettingsModule, this.$store);
+        if (this.stringType == MarkingStringType.FULL) {
+            mod.setType(MarkingStringType.MINIMAL);
+        } else {
+            mod.setType(MarkingStringType.FULL);
+        }
+    }
+
     get hoverId() {
         if (this.editor) {
             return this.editor.hoverId;
@@ -136,6 +149,20 @@ export default class EditorComponent extends Vue {
     onSettingsChange() {
         if (this.editor) {
             this.editor.drawerOptions = this.settings;
+        }
+    }
+
+    get stringType() {
+        let mod = getModule(GraphDrawingSettingsModule, this.$store);
+        return mod.stringType;
+    }
+
+    @Watch('stringType', {deep: false, immediate: true})
+    onStringTypeChange() {
+        if (this.editor) {
+            let type = this.stringType;
+            console.log("setting string type", type);
+            this.editor.markingStyle = type;
         }
     }
 

@@ -1,30 +1,30 @@
 import Petrinet from "src/system/petrinet/petrinet";
-import Graph from "src/system/graph/graph";
-import State from "src/system/graph/state";
-import Edge from "src/system/graph/edge";
-import Marking from "src/system/marking";
+import Graph    from "src/system/graph/graph";
+import State    from "src/system/graph/state";
+import Edge     from "src/system/graph/edge";
+import Marking  from "src/system/marking";
 
-import Drawing from "src/drawing/drawing";
-import GraphDrawing from "src/drawing/graph-drawing";
-import GraphDrawingOptions from "src/drawing/graph-drawing-options";
-import { isDraggable } from "src/drawing/draggable-drawing";
+import Drawing               from "src/drawing/drawing";
+import GraphDrawing          from "src/drawing/graph-drawing";
+import GraphDrawingOptions   from "src/drawing/graph-drawing-options";
+import { isDraggable }       from "src/drawing/draggable-drawing";
 import { MarkingStringType } from "src/system/marking";
 
 import Vector2D from "src/vector/vector2d";
 
-import Drawer from "src/drawer/drawer";
-import DrawerOptions from "src/drawer/drawer-options";
-import Feedback from "src/feedback/feedback";
+import Drawer           from "src/drawer/drawer";
+import DrawerOptions    from "src/drawer/drawer-options";
+import Feedback         from "src/feedback/feedback";
 import FeedbackDispatch from "src/feedback/feedback-dispatch";
 
-import AddState from "./actions/add-state";
-import AddEdge from "./actions/add-edge";
-import AddInitial from "./actions/add-initial";
-import DeleteState from "./actions/del-state";
-import DeleteEdge from "./actions/del-edge";
+import AddState      from "./actions/add-state";
+import AddEdge       from "./actions/add-edge";
+import AddInitial    from "./actions/add-initial";
+import DeleteState   from "./actions/del-state";
+import DeleteEdge    from "./actions/del-edge";
 import DeleteInitial from "./actions/del-initial";
-import EditState from "./actions/edit-state";
-import EditEdge from "./actions/edit-edge";
+import EditState     from "./actions/edit-state";
+import EditEdge      from "./actions/edit-edge";
 
 import HistoryList from "src/history-list/history-list";
 
@@ -36,7 +36,7 @@ export default class Editor {
     public petrinet: Petrinet;
     public graph: Graph;
     public graphDrawing: GraphDrawing;
-    protected _graphDrawingOptions: GraphDrawingOptions;
+    protected graphDrawingOptions: GraphDrawingOptions;
 
     public selection: Drawing | null;
     public selectionId: number | null;
@@ -132,27 +132,24 @@ export default class Editor {
         this.drawer.draw();
     }
 
-    get feedback() {
+    public get feedback() {
         return this._feedback;
     }
 
-    set feedback(f: Feedback) {
+    public set feedback(f: Feedback) {
         this._feedback = f;
         this.graphDrawingOptions.feedback = f;
         this.graphDrawing.options = this.graphDrawingOptions;
         this.drawer.draw(this.graphDrawing);
     }
 
-    set drawerOptions(opts: DrawerOptions) {
+    public set drawerOptions(opts: DrawerOptions) {
         this.drawer.options = opts;
     }
 
-    get graphDrawingOptions() {
-        return this._graphDrawingOptions;
-    }
-
-    set graphDrawingOptions(opts: GraphDrawingOptions) {
-        this._graphDrawingOptions = opts;
+    public set markingStyle(style: MarkingStringType) {
+        this.graphDrawingOptions.markingStyle = style;
+        this.graphDrawing.options = this.graphDrawingOptions;
         this.drawer.draw();
     }
 

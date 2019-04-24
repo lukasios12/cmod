@@ -1,14 +1,14 @@
-import Hittable from "./hittable-drawing";
+import Hittable  from "./hittable-drawing";
 import Snappable from "./snappable-drawing";
 import Draggable from "./draggable-drawing";
 
 import EdgeDrawing from "./edge-drawing";
 
-import State from "src/system/graph/state";
+import State                 from "src/system/graph/state";
 import { MarkingStringType } from "src/system/marking";
 
-import Vector2D from "src/vector/vector2d";
-import Rectangle from "src/shapes/rectangle";
+import Vector2D     from "src/vector/vector2d";
+import Rectangle    from "src/shapes/rectangle";
 import Intersection from "src/shapes/intersection";
 
 import StyleManager from "src/style-manager/style-manager";
@@ -18,13 +18,13 @@ import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-contex
 export default class StateDrawing implements Hittable, Draggable, Snappable {
     protected _state: State;
     protected _position: Vector2D;
+    protected _style: MarkingStringType;
     public preset: Array<EdgeDrawing>;
     public postset: Array<EdgeDrawing>;
 
     protected validCache:     boolean;
     protected boxCache:       Rectangle         | null;
     protected textCache:      string            | null;
-    protected textStyleCache: MarkingStringType | null;
     protected widthCache:     number            | null;
     protected heightCache:    number            | null;
 
@@ -44,7 +44,6 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
 
         this.boxCache       = null;
         this.textCache      = null;
-        this.textStyleCache = null;
         this.widthCache     = null;
         this.heightCache    = null;
         this.validCache     = false;
@@ -60,17 +59,13 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
 
     public drawText(
         context: CanvasRenderingContext2D,
-        style: MarkingStringType = MarkingStringType.FULL
     ): void {
-        if (style !== this.textStyleCache) {
-            this.textCache = null;
-        }
-        this.textStyleCache = style;
         context.fillText(
             this.getStateString(),
             this.position.x + this.getWidth(context) / 2,
             this.position.y + this.getHeight(context) / 2
         );
+        this.validCache = true;
     }
 
     public hit(point: Vector2D, context: CanvasRenderingContext2D): boolean {
@@ -117,7 +112,6 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
                                 height);
             context.restore();
             this.boxCache = box;
-            this.validCache = true;
         } else {
             box = this.boxCache;
         }
@@ -201,12 +195,12 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         return width;
     }
 
-    protected getStateString(style: MarkingStringType = MarkingStringType.FULL) {
+    protected getStateString() {
         let text;
         if (this.validCache && this.textCache !== null) {
             text = this.textCache;
         } else {
-            text = `[${this.state.toString(style)}]`;
+            text = `[${this.state.toString(this.markingStyle)}]`;
             this.textCache = text;
         }
         return text;
@@ -240,6 +234,17 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
             this._position = pos;
             this.validCache = false;
             this.notifyNeighbours();
+        }
+    }
+
+    public get markingStyle() {
+        return this._style;
+    }
+
+    public set markingStyle(style: MarkingStringType) {
+        if (style !== this.markingStyle) {
+            this._style = style;
+            this.validCache = false;
         }
     }
 }

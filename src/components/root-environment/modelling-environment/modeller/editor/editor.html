@@ -3,7 +3,8 @@
             tabindex="1"
             @dblclick="openEditMenu($event)"
             @contextmenu="openContextMenu($event)"
-            @keyup.e="openEditMenu($event)">
+            @keyup.e="openEditMenu($event)"
+            @keyup.p="toggleStyle($event)">
         Your browser does not support the HTML 5 Canvas API
     </canvas>
 

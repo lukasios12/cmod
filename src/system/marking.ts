@@ -68,8 +68,8 @@ export default class Marking {
 }
 
 enum MarkingStringType {
-    MINIMAL,
-    FULL
+    MINIMAL = 1,
+    FULL    = 2,
 }
 
 export { Marking, MarkingStringType };
