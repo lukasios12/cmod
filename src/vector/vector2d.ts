@@ -13,8 +13,16 @@ export default class Vector2D {
         return this.vec.get(0);
     }
 
+    set x(val: number) {
+        this.vec.set(0, val);
+    }
+
     get y(): number {
         return this.vec.get(1);
+    }
+
+    set y(val: number) {
+        this.vec.set(1,val);
     }
 
     public static equal(lhs: Vector2D, rhs: Vector2D) {
