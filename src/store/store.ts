@@ -9,6 +9,7 @@ import SessionModule from "./session";
 import FeedbackModule from "./feedback";
 import ModellerModule from "./modeller";
 import DrawerSettingsModule from "./drawer-settings";
+import GraphDrawingSettingsModule from "./graph-drawing-settings";
 
 const Store = new Vuex.Store({
     modules: {
@@ -17,7 +18,8 @@ const Store = new Vuex.Store({
         SessionModule,
         FeedbackModule,
         ModellerModule,
-        DrawerSettingsModule
+        DrawerSettingsModule,
+        GraphDrawingSettingsModule,
     }
 });
 
