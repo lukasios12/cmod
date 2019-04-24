@@ -44,6 +44,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         let feedback = this.options.feedback;
         
         // draw feedback borders for states
+        StyleManager.setStateStandardStyle(context);
         this.states.each((id: number, state: StateDrawing) => {
             state.markingStyle = this.options.markingStyle;
             if (feedback !== null) {

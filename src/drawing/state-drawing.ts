@@ -23,10 +23,10 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     public postset: Array<EdgeDrawing>;
 
     protected validCache:     boolean;
-    protected boxCache:       Rectangle         | null;
-    protected textCache:      string            | null;
-    protected widthCache:     number            | null;
-    protected heightCache:    number            | null;
+    protected boxCache:       Rectangle | null;
+    protected textCache:      string    | null;
+    protected widthCache:     number    | null;
+    protected heightCache:    number    | null;
 
     public constructor(
         state: State,
@@ -102,6 +102,13 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     protected getBox(context: CanvasRenderingContext2D): Rectangle {
         let box;
         if (!this.boxCache || !this.validCache) {
+            if (this.widthCache) {
+                let w = this.widthCache;
+                let nw = this.getWidth(context);
+                let x = this.position.x - ((nw - w) / 2);
+                let y = this.position.y;
+                this.position = new Vector2D(x, y);
+            }
             context.save();
             StyleManager.setStateStandardStyle(context);
             let width = this.getWidth(context);
@@ -231,8 +238,8 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
 
     public set position(pos: Vector2D) {
         if (!this.position || !Vector2D.equal(this.position, pos)) {
-            this._position = pos;
             this.validCache = false;
+            this._position = pos;
             this.notifyNeighbours();
         }
     }
@@ -243,8 +250,8 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
 
     public set markingStyle(style: MarkingStringType) {
         if (style !== this.markingStyle) {
-            this._style = style;
             this.validCache = false;
+            this._style = style;
             this.notifyNeighbours();
         }
     }
