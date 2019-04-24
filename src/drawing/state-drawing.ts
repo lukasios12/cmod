@@ -30,10 +30,12 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
 
     public constructor(
         state: State,
+        style: MarkingStringType,
         position: Vector2D | null = null
     ) {
         this.preset = new Array<EdgeDrawing>();
         this.postset = new Array<EdgeDrawing>();
+        this._style = style;
 
         this.state = state;
         if(position) {
@@ -51,8 +53,6 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
 
     public draw(context: CanvasRenderingContext2D): void {
         let box = this.getBox(context);
-        let width = this.getWidth(context);
-        let height = this.getHeight(context);
         box.fill(context);
         box.stroke(context);
     }
@@ -245,6 +245,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         if (style !== this.markingStyle) {
             this._style = style;
             this.validCache = false;
+            this.notifyNeighbours();
         }
     }
 }

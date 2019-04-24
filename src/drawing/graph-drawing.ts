@@ -39,13 +39,13 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public draw(context: CanvasRenderingContext2D): void {
-        console.log("graph drawing", this.options);
         let drawn = new HashSet<number>();
         let selected = this.options.selected;
         let feedback = this.options.feedback;
         
         // draw feedback borders for states
         this.states.each((id: number, state: StateDrawing) => {
+            state.markingStyle = this.options.markingStyle;
             if (feedback !== null) {
                 let record = feedback.get(id);
                 if (record !== null && record.codes.size > 0) {
@@ -127,7 +127,6 @@ export default class GraphDrawing implements Drawing, Snappable {
         // draw states
         StyleManager.setStateStandardStyle(context);
         this.states.each((id: number, state: StateDrawing) => {
-            state.markingStyle = this.options.markingStyle;
             if (selected == id) {
                 context.save();
                 StyleManager.setStateSelectedStyle(context);

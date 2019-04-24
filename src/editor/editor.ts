@@ -149,8 +149,7 @@ export default class Editor {
 
     public set markingStyle(style: MarkingStringType) {
         this.graphDrawingOptions.markingStyle = style;
-        this.graphDrawing.options = this.graphDrawingOptions;
-        this.drawer.draw();
+        this.drawer.draw(this.graphDrawing);
     }
 
     protected registerEvents(): void {
@@ -243,7 +242,7 @@ export default class Editor {
         });
         canvas.addEventListener("mouseup", (event) => {
             mouseDownLeft = false;
-            this.drawer.draw();
+            this.drawer.draw(this.graphDrawing);
         });
         
         canvas.addEventListener("contextmenu", (event) => {

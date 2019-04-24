@@ -161,7 +161,6 @@ export default class EditorComponent extends Vue {
     onStringTypeChange() {
         if (this.editor) {
             let type = this.stringType;
-            console.log("setting string type", type);
             this.editor.markingStyle = type;
         }
     }
