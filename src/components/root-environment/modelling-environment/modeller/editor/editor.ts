@@ -2,6 +2,7 @@ import { Vue, Component, Watch } from "vue-property-decorator";
 import WithRender from "./editor.html?style=./editor.scss";
 
 import { getModule }              from "vuex-module-decorators";
+import EditorSettingsModule       from "src/store/editor-settings";
 import DrawerSettingsModule       from "src/store/drawer-settings";
 import GraphDrawingSettingsModule from "src/store/graph-drawing-settings";
 import ModellerModule             from "src/store/modeller";
@@ -40,8 +41,8 @@ export default class EditorComponent extends Vue {
 
     mounted() {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
-        this.editor = new Editor(canvas, this.petrinet);
-        this.editor.drawerOptions = this.settings;
+        this.editor = new Editor(canvas, this.petrinet, this.editorSettings);
+        this.editor.drawerOptions = this.drawerSettings;
         this.editor.markingStyle = this.stringType;
     }
 
@@ -140,15 +141,27 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    get settings() {
+    get editorSettings() {
+        let mod = getModule(EditorSettingsModule, this.$store);
+        return mod.settings;
+    }
+
+    @Watch('editorSettings', {deep: true, immediate: false})
+    onEditorSettingsChange() {
+        if (this.editor) {
+            this.editor.options = this.editorSettings;
+        }
+    }
+
+    get drawerSettings() {
         let mod = getModule(DrawerSettingsModule, this.$store);
         return mod.settings;
     }
 
-    @Watch('settings', {deep: true, immediate: false})
-    onSettingsChange() {
+    @Watch('drawerSettings', {deep: true, immediate: false})
+    onDrawerSettingsChange() {
         if (this.editor) {
-            this.editor.drawerOptions = this.settings;
+            this.editor.drawerOptions = this.drawerSettings;
         }
     }
 

@@ -39,6 +39,12 @@ export default class FeedbackModule extends VuexModule {
         this._loading = val;
     }
 
+    @Mutation
+    clear() {
+        this._loading = false;
+        this._feedback = new Feedback();
+    }
+
     @Action
     get(graph: Graph): Promise<any> {
         let umod = getModule(UserModule);

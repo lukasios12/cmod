@@ -1,4 +1,5 @@
 import { Module, VuexModule, Mutation } from "vuex-module-decorators";
+import EditorOptions from "src/editor/editor-options";
 import Difficulty from "src/difficulty/difficulty";
 
 @Module({
@@ -6,14 +7,16 @@ import Difficulty from "src/difficulty/difficulty";
     namespaced: true
 })
 export default class EditorSettingsModule extends VuexModule {
-    protected diff: Difficulty;
+    protected _settings: EditorOptions = {
+        difficulty: Difficulty.EASY
+    }
 
-    get difficulty() {
-        return this.diff;
+    get settings() {
+        return this._settings;
     }
 
     @Mutation
     setDifficulty(d: Difficulty) {
-        this.diff = d;
+        this.settings.difficulty = d;
     }
 }

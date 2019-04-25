@@ -8,4 +8,9 @@ export default class FeedbackDispatch {
         let mod = getModule(FeedbackModule);
         mod.get(graph);
     }
+
+    public static clear(): void {
+        let mod = getModule(FeedbackModule);
+        mod.clear();
+    }
 }

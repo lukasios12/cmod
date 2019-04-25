@@ -1,4 +1,5 @@
 import EditorOptions from "./editor-options";
+import Difficulty    from "src/difficulty/difficulty";
 
 import Petrinet from "src/system/petrinet/petrinet";
 import Graph    from "src/system/graph/graph";
@@ -17,6 +18,9 @@ import DrawerOptions    from "src/drawer/drawer-options";
 import Feedback         from "src/feedback/feedback";
 import FeedbackDispatch from "src/feedback/feedback-dispatch";
 
+import HistoryList from "src/history-list/history-list"
+import Vector2D    from "src/vector/vector2d";
+
 import AddState      from "./actions/add-state";
 import AddEdge       from "./actions/add-edge";
 import AddInitial    from "./actions/add-initial";
@@ -26,10 +30,9 @@ import DeleteInitial from "./actions/del-initial";
 import EditState     from "./actions/edit-state";
 import EditEdge      from "./actions/edit-edge";
 
-import HistoryList from "src/history-list/history-list"
-import Vector2D    from "src/vector/vector2d";
-
 export default class Editor {
+    protected _options: EditorOptions;
+
     public readonly drawer: Drawer;
     protected historyList: HistoryList;
     protected _feedback: Feedback | null;
@@ -44,13 +47,16 @@ export default class Editor {
 
     public hoverId: number | null;
 
-    public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
+    public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet, options: EditorOptions) {
+        this._options = options;
         this.petrinet = petrinet;
         this.drawer = new Drawer(canvas);
         this.historyList = new HistoryList();
         this.historyList.addHook(() => {
             this.drawer.draw();
-            FeedbackDispatch.get(this.graph);
+            if (this.options.difficulty === Difficulty.EASY) {
+                FeedbackDispatch.get(this.graph);
+            }
         });
 
         this.selection = null;
@@ -131,6 +137,19 @@ export default class Editor {
             null;
         this.graphDrawingOptions.selected = this.selectionId;
         this.drawer.draw();
+    }
+
+    public get options() {
+        return this._options;
+    }
+
+    public set options(opts: EditorOptions) {
+        this._options = opts;
+        if (opts.difficulty === Difficulty.EASY) {
+            FeedbackDispatch.get(this.graph);
+        } else {
+            FeedbackDispatch.clear();
+        }
     }
 
     public get feedback() {
