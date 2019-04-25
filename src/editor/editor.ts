@@ -1,5 +1,5 @@
 import EditorOptions from "./editor-options";
-import Difficulty    from "src/difficulty/difficulty";
+import Difficulty    from "./difficulty";
 
 import Petrinet from "src/system/petrinet/petrinet";
 import Graph    from "src/system/graph/graph";

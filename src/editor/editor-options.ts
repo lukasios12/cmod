@@ -1,4 +1,4 @@
-import Difficulty from "src/difficulty/difficulty";
+import Difficulty from "./difficulty";
 
 export default interface EditorOptions {
     difficulty: Difficulty;

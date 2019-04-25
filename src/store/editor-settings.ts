@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation } from "vuex-module-decorators";
 import EditorOptions from "src/editor/editor-options";
-import Difficulty from "src/difficulty/difficulty";
+import Difficulty from "src/editor/difficulty";
 
 @Module({
     name: "EditorSettingsModule",
