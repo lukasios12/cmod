@@ -1,3 +1,5 @@
+import EditorOptions from "./editor-options";
+
 import Petrinet from "src/system/petrinet/petrinet";
 import Graph    from "src/system/graph/graph";
 import State    from "src/system/graph/state";
