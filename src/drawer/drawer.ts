@@ -273,15 +273,15 @@ export default class Drawer {
     }
 
     // getters and setters
-    get canvas() {
+    get canvas(): HTMLCanvasElement {
         return this.context.canvas;
     }
 
-    get currentTransform() {
+    get currentTransform(): Matrix {
         return this._currentTransform;
     }
 
-    get options() {
+    get options(): DrawerOptions {
         return this._options;
     }
 

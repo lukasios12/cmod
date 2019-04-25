@@ -139,7 +139,7 @@ export default class Editor {
         this.drawer.draw();
     }
 
-    public get options() {
+    public get options(): EditorOptions {
         return this._options;
     }
 
@@ -152,7 +152,7 @@ export default class Editor {
         }
     }
 
-    public get feedback() {
+    public get feedback(): Feedback {
         return this._feedback;
     }
 
@@ -161,10 +161,6 @@ export default class Editor {
         this.graphDrawingOptions.feedback = f;
         this.graphDrawing.options = this.graphDrawingOptions;
         this.drawer.draw(this.graphDrawing);
-    }
-
-    public set drawerOptions(opts: DrawerOptions) {
-        this.drawer.options = opts;
     }
 
     public set markingStyle(style: MarkingStringType) {

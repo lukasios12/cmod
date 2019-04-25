@@ -14,9 +14,12 @@ import MessengerComponent   from "./messenger/messenger";
 import EditStateComponent   from "./edit-state/edit-state";
 import EditEdgeComponent    from "./edit-edge/edit-edge";
 
+import Editor                from "src/editor/editor";
+import EditorOptions         from "src/editor/editor-options";
+import DrawerOptions         from "src/drawer/drawer-options";
+import Petrinet              from "src/system/petrinet/petrinet";
+import Feedback              from "src/feedback/feedback";
 import { MarkingStringType } from "src/system/marking";
-
-import Editor from "src/editor/editor";
 
 @WithRender
 @Component({
@@ -39,14 +42,14 @@ export default class EditorComponent extends Vue {
     contextX: number = 0;
     contextY: number = 0;
 
-    mounted() {
+    mounted(): void {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
         this.editor = new Editor(canvas, this.petrinet, this.editorSettings);
-        this.editor.drawerOptions = this.drawerSettings;
+        this.editor.drawer.options = this.drawerSettings;
         this.editor.markingStyle = this.stringType;
     }
 
-    openContextMenu(event) {
+    openContextMenu(event): void {
         if (this.editor) {
             let box = this.editor.drawer.context.canvas.getBoundingClientRect();
             let drawer = this.editor.drawer;
@@ -59,7 +62,7 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    openEditMenu(event) {
+    openEditMenu(event): void {
         if (this.editor && !event.ctrlKey) {
             let id = this.editor.selectionId;
             let graph = this.editor.graph;
@@ -71,19 +74,19 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    closeContextMenu() {
+    closeContextMenu(): void {
         this.showContextMenu = false;
     }
 
-    closeEditStateMenu() {
+    closeEditStateMenu(): void {
         this.showEditState = false;
     }
 
-    closeEditEdgeMenu() {
+    closeEditEdgeMenu(): void {
         this.showEditEdge = false;
     }
 
-    closeMenus() {
+    closeMenus(): void {
         this.closeContextMenu();
         this.closeEditStateMenu();
         this.closeEditEdgeMenu();
@@ -93,15 +96,15 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    get showingMenu() {
+    get showingMenu(): boolean {
         return this.showEditState || this.showEditEdge || this.showContextMenu;
     }
 
-    toggleContext() {
+    toggleContext(): void {
         this.showContextMenu = !this.showContextMenu;
     }
 
-    toggleStyle() {
+    toggleStyle(): void {
         let mod = getModule(GraphDrawingSettingsModule, this.$store);
         if (this.stringType == MarkingStringType.FULL) {
             mod.setType(MarkingStringType.MINIMAL);
@@ -110,81 +113,81 @@ export default class EditorComponent extends Vue {
         }
     }
 
-    get hoverId() {
+    get hoverId(): number | null {
         if (this.editor) {
             return this.editor.hoverId;
         }
         return null;
     }
 
-    get petrinet() {
+    get petrinet(): Petrinet {
         let mod = getModule(PetrinetModule, this.$store);
         return mod.petrinet;
     }
 
     @Watch('petrinet', {deep: false, immediate: false})
-    onPetrinetChange() {
+    onPetrinetChange(): void {
         if (this.editor) { 
             this.editor.petrinet = this.petrinet;
         }
     }
 
-    get feedback() {
+    get feedback(): Feedback {
         let mod = getModule(FeedbackModule, this.$store);
         return mod.feedback;
     }
 
     @Watch('feedback', {deep: false, immediate: false})
-    onFeedbackChange() {
+    onFeedbackChange(): void {
         if (this.editor) {
             this.editor.feedback = this.feedback;
         }
     }
 
-    get editorSettings() {
+    get editorSettings(): EditorOptions {
         let mod = getModule(EditorSettingsModule, this.$store);
         return mod.settings;
     }
 
     @Watch('editorSettings', {deep: true, immediate: false})
-    onEditorSettingsChange() {
+    onEditorSettingsChange(): void {
         if (this.editor) {
             this.editor.options = this.editorSettings;
         }
     }
 
-    get drawerSettings() {
+    get drawerSettings(): DrawerOptions {
         let mod = getModule(DrawerSettingsModule, this.$store);
         return mod.settings;
     }
 
     @Watch('drawerSettings', {deep: true, immediate: false})
-    onDrawerSettingsChange() {
+    onDrawerSettingsChange(): void {
         if (this.editor) {
-            this.editor.drawerOptions = this.drawerSettings;
+            this.editor.drawer.options = this.drawerSettings;
         }
     }
 
-    get stringType() {
+    get stringType(): MarkingStringType {
         let mod = getModule(GraphDrawingSettingsModule, this.$store);
         return mod.stringType;
     }
 
     @Watch('stringType', {deep: false, immediate: true})
-    onStringTypeChange() {
+    onStringTypeChange(): void {
         if (this.editor) {
             let type = this.stringType;
             this.editor.markingStyle = type;
         }
     }
 
-    get isResizing() {
+    get isResizing(): boolean {
         let mod = getModule(ModellerModule, this.$store);
         return mod.resizing;
     }
 
     @Watch('isResizing', {deep: false, immediate: false})
-    onResizeChange() {
+    onResizeChange(): void {
         if (this.editor) {
             this.editor.drawer.resize();
         }
