@@ -10,8 +10,6 @@ import GraphDrawingOptions   from "src/drawing/graph-drawing-options";
 import { isDraggable }       from "src/drawing/draggable-drawing";
 import { MarkingStringType } from "src/system/marking";
 
-import Vector2D from "src/vector/vector2d";
-
 import Drawer           from "src/drawer/drawer";
 import DrawerOptions    from "src/drawer/drawer-options";
 import Feedback         from "src/feedback/feedback";
@@ -26,10 +24,11 @@ import DeleteInitial from "./actions/del-initial";
 import EditState     from "./actions/edit-state";
 import EditEdge      from "./actions/edit-edge";
 
-import HistoryList from "src/history-list/history-list";
+import HistoryList from "src/history-list/history-list"
+import Vector2D    from "src/vector/vector2d";
 
 export default class Editor {
-    protected _drawer: Drawer;
+    public readonly drawer: Drawer;
     protected historyList: HistoryList;
     protected _feedback: Feedback | null;
 
@@ -45,7 +44,7 @@ export default class Editor {
 
     public constructor(canvas: HTMLCanvasElement, petrinet: Petrinet | null = null) {
         this.petrinet = petrinet;
-        this._drawer = new Drawer(canvas);
+        this.drawer = new Drawer(canvas);
         this.historyList = new HistoryList();
         this.historyList.addHook(() => {
             this.drawer.draw();
@@ -249,21 +248,4 @@ export default class Editor {
             event.preventDefault();
         });
     }
-
-    public resize() {
-        if (this.drawer) {
-            this.drawer.resize();
-        }
-    }
-
-    get drawer() {
-        return this._drawer;
-    }
-
-    get clientRect() {
-        if (this.drawer) {
-            return this.drawer.context.canvas.getBoundingClientRect();
-        }
-        return null;
-    }    
 }

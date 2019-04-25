@@ -48,12 +48,12 @@ export default class ContextMenuComponent extends Vue {
         }
     }
 
-    @Emit('close')
     editElement() {
+        this.$emit("close");
         if (this.stateSelected) {
-            this.$emit('edit-state');
+            this.$emit('edit-state', event);
         } else if (this.edgeSelected) {
-            this.$emit('edit-edge');
+            this.$emit('edit-edge', event);
         }
     }
 

@@ -47,7 +47,7 @@ export default class EditorComponent extends Vue {
 
     openContextMenu(event) {
         if (this.editor) {
-            let box = this.editor.clientRect;
+            let box = this.editor.drawer.context.canvas.getBoundingClientRect();
             let drawer = this.editor.drawer;
             let point = drawer.globalToLocal(event);
             this.contextLeft = event.clientX - Math.round(box.left);
@@ -173,7 +173,7 @@ export default class EditorComponent extends Vue {
     @Watch('isResizing', {deep: false, immediate: false})
     onResizeChange() {
         if (this.editor) {
-            this.editor.resize();
+            this.editor.drawer.resize();
         }
     }
 }

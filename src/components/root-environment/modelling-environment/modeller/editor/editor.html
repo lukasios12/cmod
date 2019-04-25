@@ -25,6 +25,6 @@
                   :y="contextY"
                   v-if="showContextMenu"
                   @close="closeMenus"
-                  @edit-state="openEditMenu"
-                  @edit-edge="openEditMenu"/>
+                  @edit-state="openEditMenu($event)"
+                  @edit-edge="openEditMenu($event)"/>
 </div>
