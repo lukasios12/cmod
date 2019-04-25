@@ -8,6 +8,7 @@ import PetrinetModule from "./petrinet";
 import SessionModule from "./session";
 import FeedbackModule from "./feedback";
 import ModellerModule from "./modeller";
+import EditorSettingsModule from "./editor-settings";
 import DrawerSettingsModule from "./drawer-settings";
 import GraphDrawingSettingsModule from "./graph-drawing-settings";
 
@@ -18,6 +19,7 @@ const Store = new Vuex.Store({
         SessionModule,
         FeedbackModule,
         ModellerModule,
+        EditorSettingsModule,
         DrawerSettingsModule,
         GraphDrawingSettingsModule,
     }
