@@ -85,18 +85,15 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     }
 
     public snap(hgrid: number, vgrid: number, context: CanvasRenderingContext2D): void {
-        let center = this.center(context);
-        let width = this.getWidth(context);
-        let height = this.getHeight(context);
-        let x = Math.round(center.x / hgrid) * hgrid - width / 2;
-        let y = Math.round(center.y / vgrid) * vgrid - height / 2;
+        let box = this.getBox(context);
+        let center = box.center;
+        let x = Math.round(center.x / hgrid) * hgrid - box.width / 2;
+        let y = Math.round(center.y / vgrid) * vgrid - box.height / 2;
         this.position = new Vector2D(x, y);
     }
 
     public center(context:CanvasRenderingContext2D): Vector2D {
-        let vector = new Vector2D(this.position.x, this.position.y);
-        let wh = new Vector2D(this.getWidth(context) / 2, this.getHeight(context) / 2);
-        return Vector2D.add(vector, wh);
+        return this.getBox(context).center;
     }
 
     protected getBox(context: CanvasRenderingContext2D): Rectangle {

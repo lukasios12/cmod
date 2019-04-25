@@ -33,4 +33,9 @@ export default class Rectangle implements Shape2D {
         context.beginPath();
         context.rect(this.source.x, this.source.y, this.width, this.height);
     }
+
+    public get center() {
+        let s = this.source;
+        return new Vector2D(s.x + this.width / 2, s.y + this.height / 2);
+    }
 }
