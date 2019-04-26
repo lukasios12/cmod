@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosPromise } from "axios";
 import Config from "./config";
 import { FeedbackResponse, GraphRequest } from "src/types";
 
@@ -6,7 +6,7 @@ import Graph from "src/system/graph/graph";
 import GraphToRequest from "src/converters/graph-to-request";
 
 export default class FeedbackService {
-    public static get(uid: number, pid: number, sid: number, graph: Graph) {
+    public static get(uid: number, pid: number, sid: number, graph: Graph): AxiosPromise<FeedbackResponse> {
         let conf = Config.getInstance();
         let base = conf.baseUrl;
         let petrinetUrl = conf.petrinetUrl;

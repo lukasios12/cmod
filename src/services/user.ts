@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
 import Config from "./config";
-import { UserResponse, UserCreatedResponse } from "src/types";
+import { UserResponse, UserCreatedResponse, UserListResponse } from "src/types";
 
 export default class UserService {
-    public static getUser(id: number) {
+    public static getUser(id: number): AxiosPromise<UserResponse> {
         let conf = Config.getInstance();
         let baseUrl: string = conf.baseUrl;
         let userUrl: string = conf.userUrl;
@@ -14,7 +14,7 @@ export default class UserService {
         });
     }
 
-    public static setUser(un: string) {
+    public static setUser(un: string): AxiosPromise<UserCreatedResponse> {
         let conf = Config.getInstance();
         let baseUrl: string = conf.baseUrl;
         let userUrl: string = conf.userUrl;
@@ -32,7 +32,7 @@ export default class UserService {
         });
     }
 
-    public static getUsers(limit: number, page: number) {
+    public static getUsers(limit: number, page: number): AxiosPromise<UserListResponse> {
         let conf = Config.getInstance();
         let baseUrl: string = conf.baseUrl;
         let userUrl: string = conf.userUrl;

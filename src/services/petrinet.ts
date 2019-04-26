@@ -1,9 +1,10 @@
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
+import { PetrinetResponse, PetrinetCreatedResponse } from "src/types";
 
 import Config from "src/services/config";
 
 export default class PetrinetService {
-    public static get(id: number) {
+    public static get(id: number): AxiosPromise<PetrinetResponse> {
         let conf = Config.getInstance();
         return axios.request({
             baseURL: conf.baseUrl,
@@ -12,7 +13,7 @@ export default class PetrinetService {
         });
     }
 
-    public static set(uid: number, file: File) {
+    public static set(uid: number, file: File): AxiosPromise<PetrinetCreatedResponse> {
         let conf = Config.getInstance();
         let fd = new FormData();
         fd.append("petrinet", file);
@@ -36,7 +37,7 @@ export default class PetrinetService {
         });
     }
 
-    public static image(id: number) {
+    public static image(id: number): AxiosPromise<string> {
         let conf = Config.getInstance();
         return axios.request({
             baseURL: conf.baseUrl,

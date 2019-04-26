@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
 
 import Config from "src/services/config";
 import { SessionCreatedResponse } from "src/types";
 
 export default class SessionService {
-    public static get(id: number) {
+    public static get(id: number): AxiosPromise {
         let conf = Config.getInstance();
         return axios.request({
             baseURL: conf.baseUrl,
@@ -13,7 +13,7 @@ export default class SessionService {
         });
     }
 
-    public static set(uid: number, pid: number) {
+    public static set(uid: number, pid: number): AxiosPromise<SessionCreatedResponse> {
         let conf = Config.getInstance();
         return axios.request<SessionCreatedResponse>({
             baseURL: conf.baseUrl,
