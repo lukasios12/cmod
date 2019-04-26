@@ -3,7 +3,7 @@ import Config from "./config";
 import { UserResponse, UserCreatedResponse, UserListResponse } from "src/types";
 
 export default class UserService {
-    public static getUser(id: number): AxiosPromise<UserResponse> {
+    public static get(id: number): AxiosPromise<UserResponse> {
         let conf = Config.getInstance();
         let baseUrl: string = conf.baseUrl;
         let userUrl: string = conf.userUrl;
@@ -14,7 +14,7 @@ export default class UserService {
         });
     }
 
-    public static setUser(un: string): AxiosPromise<UserCreatedResponse> {
+    public static set(un: string): AxiosPromise<UserCreatedResponse> {
         let conf = Config.getInstance();
         let baseUrl: string = conf.baseUrl;
         let userUrl: string = conf.userUrl;
@@ -32,11 +32,11 @@ export default class UserService {
         });
     }
 
-    public static getUsers(limit: number, page: number): AxiosPromise<UserListResponse> {
+    public static gets(limit: number, page: number): AxiosPromise<UserListResponse> {
         let conf = Config.getInstance();
         let baseUrl: string = conf.baseUrl;
         let userUrl: string = conf.userUrl;
-        return axios.request({
+        return axios.request<UserListResponse>({
             baseURL: baseUrl,
             url: userUrl + `/${limit}/${page}`,
             method: "get"

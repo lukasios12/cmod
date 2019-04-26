@@ -46,7 +46,7 @@ export default class UserModule extends VuexModule {
         let fd = new FormData();
         fd.set("name", username);
         return new Promise((resolve, reject) => {
-            UserService.setUser(username)
+            UserService.set(username)
             .then((response: AxiosResponse<UserCreatedResponse>) => {
                 let id = Number(response.data.id);
                 this.setId(id);
