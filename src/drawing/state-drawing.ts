@@ -171,7 +171,11 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         let l = Math.sqrt(w * w + h * h);
         let origin = center;
         let vector = Vector2D.unit(new Vector2D(w, -h));
-        let result = new Intersection(origin, vector, l);
+        let result: Intersection = {
+            origin: origin,
+            vector: vector,
+            length: l,
+        }
         context.restore();
         return result;
     }
