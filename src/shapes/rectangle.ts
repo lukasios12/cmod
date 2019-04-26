@@ -2,9 +2,9 @@ import Shape2D from "./shape2d";
 import Vector2D from "src/vector/vector2d";
 
 export default class Rectangle implements Shape2D {
-    public source: Vector2D;
-    public width: number;
-    public height: number;
+    public readonly source: Vector2D;
+    public readonly width: number;
+    public readonly height: number;
 
     public constructor(x: number, y: number, w: number, h: number) {
         this.source = new Vector2D(x, y);
@@ -34,7 +34,7 @@ export default class Rectangle implements Shape2D {
         context.rect(this.source.x, this.source.y, this.width, this.height);
     }
 
-    public get center() {
+    public get center(): Vector2D {
         let s = this.source;
         return new Vector2D(s.x + this.width / 2, s.y + this.height / 2);
     }

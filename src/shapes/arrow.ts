@@ -3,8 +3,8 @@ import Line from "./line";
 import Triangle from "./triangle";
 
 export default class Arrow extends Line {
-    public width: number;
-    public height: number;
+    public readonly width: number;
+    public readonly height: number;
 
     public constructor(
         x1: number, 

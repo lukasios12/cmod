@@ -2,9 +2,9 @@ import Shape2D from "./shape2d";
 import Vector2D from "src/vector/vector2d";
 
 export default class Line implements Shape2D {
-    public source: Vector2D;
-    public target: Vector2D;
-    public bend: number;
+    public readonly source: Vector2D;
+    public readonly target: Vector2D;
+    public readonly bend: number;
 
     public constructor(x1: number, y1: number, x2: number, y2: number, bend: number = 0) {
         this.source = new Vector2D(x1, y1);

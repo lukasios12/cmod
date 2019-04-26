@@ -2,9 +2,9 @@ import Shape2D from "./shape2d";
 import Vector2D from "src/vector/vector2d";
 
 export default class Triangle implements Shape2D {
-    public alpha: Vector2D;
-    public beta: Vector2D;
-    public gamma: Vector2D;
+    public readonly alpha: Vector2D;
+    public readonly beta: Vector2D;
+    public readonly gamma: Vector2D;
 
     public constructor(
         x1: number, y1: number,

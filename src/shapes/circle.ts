@@ -2,9 +2,9 @@ import Shape2D from "./shape2d";
 import Vector2D from "src/vector/vector2d";
 
 export default class Circle implements Shape2D {
-    public center: Vector2D;
-    public radius: number;
-    public rotation: number;
+    public readonly center: Vector2D;
+    public readonly radius: number;
+    public readonly rotation: number;
 
     public constructor(x: number, y:number, r: number, rot: number = 2 * Math.PI) {
         this.center = new Vector2D(x, y);
