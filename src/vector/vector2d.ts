@@ -25,7 +25,7 @@ export default class Vector2D {
         this.vec.set(1,val);
     }
 
-    public static equal(lhs: Vector2D, rhs: Vector2D) {
+    public static equal(lhs: Vector2D, rhs: Vector2D): boolean {
         return lhs.x === rhs.x && lhs.y === rhs.y;
     }
 
