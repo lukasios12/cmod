@@ -19,39 +19,39 @@ export default class PetrinetModule extends VuexModule {
     err: string = "";
     loading: boolean = false;
 
-    get id() {
+    get id(): number | null {
         return this.pid;
     }
 
-    get petrinet() {
+    get petrinet(): Petrinet | null {
         return this.net;
     }
 
-    get error() {
+    get error(): string {
         return this.err;
     }
 
-    get isLoading() {
+    get isLoading(): boolean {
         return this.loading;
     }
 
     @Mutation
-    setId(id: number | null) {
+    setId(id: number | null): void {
         this.pid = id;
     }
 
     @Mutation
-    setPetrinet(net: Petrinet | null) {
+    setPetrinet(net: Petrinet | null): void {
         this.net = net;
     }
 
     @Mutation
-    setError(err: string) {
+    setError(err: string): void {
         this.err = err;
     }
 
     @Mutation
-    setLoading(val: boolean) {
+    setLoading(val: boolean): void {
         this.loading = val;
     }
 

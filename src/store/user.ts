@@ -13,7 +13,7 @@ export default class UserModule extends VuexModule {
     err: string = "";
     loading: boolean = false;
 
-    get id() {
+    get id(): number | null {
         return this.uid;
     }
 
@@ -26,17 +26,17 @@ export default class UserModule extends VuexModule {
     }
 
     @Mutation
-    setId(id: number | null) {
+    setId(id: number | null): void {
         this.uid = id;
     }
 
     @Mutation
-    setError(err: string) {
+    setError(err: string): void {
         this.err = err;
     }
 
     @Mutation
-    setLoading(val: boolean) {
+    setLoading(val: boolean): void {
         this.loading = val;
     }
 

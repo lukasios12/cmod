@@ -11,12 +11,12 @@ export default class EditorSettingsModule extends VuexModule {
         difficulty: Difficulty.EASY
     }
 
-    get settings() {
+    get settings(): EditorOptions {
         return this._settings;
     }
 
     @Mutation
-    setDifficulty(d: Difficulty) {
+    setDifficulty(d: Difficulty): void {
         this.settings.difficulty = d;
     }
 }

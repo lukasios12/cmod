@@ -12,12 +12,12 @@ export default class ModellerModule extends VuexModule {
     }
 
     @Mutation
-    startResize() {
+    startResize(): void {
         this._resizing = true;
     }
 
     @Mutation
-    stopResize() {
+    stopResize(): void {
         this._resizing = false;
     }
 }

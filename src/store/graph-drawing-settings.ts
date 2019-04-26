@@ -14,7 +14,7 @@ export default class GraphDrawingSettingsModule extends VuexModule {
     }
 
     @Mutation
-    setType(st: MarkingStringType) {
+    setType(st: MarkingStringType): void {
         this._style = st;
     }
 }

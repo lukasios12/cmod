@@ -21,26 +21,26 @@ export default class FeedbackModule extends VuexModule {
     _feedback: Feedback = new Feedback();
     _loading: boolean = false;
 
-    get feedback() {
+    get feedback(): Feedback {
         return this._feedback;
     }
 
-    get isLoading() {
+    get isLoading(): boolean {
         return this._loading;
     }
 
     @Mutation
-    setFeedback(fb: Feedback) {
+    setFeedback(fb: Feedback): void {
         this._feedback = fb;
     }
 
     @Mutation
-    setLoading(val: boolean) {
+    setLoading(val: boolean): void {
         this._loading = val;
     }
 
     @Mutation
-    clear() {
+    clear(): void {
         this._loading = false;
         this._feedback = new Feedback();
     }

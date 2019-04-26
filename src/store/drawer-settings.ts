@@ -26,22 +26,22 @@ export default class DrawerSettingsModule extends VuexModule {
     }
 
     @Mutation
-    setSnap(snap: boolean) {
+    setSnap(snap: boolean): void {
         this._settings.gridOptions.snapGrid = snap;
     }
 
     @Mutation
-    setDraw(draw: boolean) {
+    setDraw(draw: boolean): void{
         this._settings.gridOptions.drawGrid = draw;
     }
 
     @Mutation
-    toggleSnap() {
+    toggleSnap(): void {
         this._settings.gridOptions.snapGrid = !this._settings.gridOptions.snapGrid;
     }
 
     @Mutation
-    toggleDraw() {
+    toggleDraw(): void {
         this._settings.gridOptions.drawGrid = !this._settings.gridOptions.drawGrid;
     }
 }

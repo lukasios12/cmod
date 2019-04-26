@@ -16,30 +16,30 @@ export default class SessionModule extends VuexModule {
     err: string = "";
     loading: boolean = false;
 
-    get id() {
+    get id(): number | null {
         return this.sid;
     }
 
-    get error() {
+    get error(): string {
         return this.err;
     }
 
-    get isLoading() {
+    get isLoading(): boolean {
         return this.loading
     }
 
     @Mutation
-    setId(id: number | null) {
+    setId(id: number | null): void {
         this.sid = id;
     }
 
     @Mutation
-    setError(message: string) {
+    setError(message: string): void {
         this.err = message;
     }
 
     @Mutation
-    setLoading(val: boolean) {
+    setLoading(val: boolean): void {
         this.loading = val;
     }
 
