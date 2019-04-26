@@ -78,7 +78,7 @@ export default class Graph {
         return this._edges.has(id);
     }
 
-    get initial() {
+    get initial(): number {
         return this._initial;
     }
 

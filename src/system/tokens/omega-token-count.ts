@@ -1,10 +1,6 @@
 import TokenCount from "./token-count";
 
 export default class OmegaTokenCount extends TokenCount {
-    public constructor() {
-        super();
-    }
-
     public add(rhs: number | TokenCount): TokenCount {
         return new OmegaTokenCount();
     }

@@ -30,11 +30,11 @@ export default class Marking {
         throw new Error(`Could not get tokens for place ${place}`);
     }
 
-    public get places() {
+    public get places(): string[] {
         return this.map.keys;
     }
 
-    public static equals(lhs: Marking, rhs: Marking) {
+    public static equals(lhs: Marking, rhs: Marking): boolean {
         let lplaces = lhs.places.sort();
         let rplaces = rhs.places.sort();
         if (lplaces.length === rplaces.length) {
