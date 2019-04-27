@@ -234,7 +234,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         context.restore();
     }
 
-    public get options() {
+    public get options(): GraphDrawingOptions {
         return this._options;
     }
 

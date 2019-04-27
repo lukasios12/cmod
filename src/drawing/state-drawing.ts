@@ -57,9 +57,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         box.stroke(context);
     }
 
-    public drawText(
-        context: CanvasRenderingContext2D,
-    ): void {
+    public drawText(context: CanvasRenderingContext2D): void {
         context.fillText(
             this.getStateString(),
             this.position.x + this.getWidth(context) / 2,
@@ -203,7 +201,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         return width;
     }
 
-    protected getStateString() {
+    protected getStateString(): string {
         let text;
         if (this.validCache && this.textCache !== null) {
             text = this.textCache;
@@ -214,7 +212,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         return text;
     }
 
-    protected notifyNeighbours() {
+    protected notifyNeighbours(): void {
         for(let i = 0; i < this.preset.length; i++) {
             this.preset[i].connectionsValid = false;
         }
@@ -223,7 +221,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         }
     }
 
-    public get state() {
+    public get state(): State {
         return this._state;
     }
 
@@ -233,7 +231,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         this.notifyNeighbours();
     }
 
-    public get position() {
+    public get position(): Vector2D {
         return this._position;
     }
 
@@ -245,7 +243,7 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
         }
     }
 
-    public get markingStyle() {
+    public get markingStyle(): MarkingStringType {
         return this._style;
     }
 

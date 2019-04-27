@@ -23,5 +23,5 @@ export default abstract class EdgeDrawing implements Hittable {
 
     public abstract hit(point: Vector2D, context: CanvasRenderingContext2D): boolean;
 
-    public abstract getLabelPosition(context: CanvasRenderingContext2D);
+    public abstract getLabelPosition(context: CanvasRenderingContext2D): Vector2D;
 }

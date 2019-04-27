@@ -11,7 +11,7 @@ import StyleManager from "src/style-manager/style-manager";
 import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-context-2d";
 
 export default class LinearEdgeDrawing extends EdgeDrawing {
-    public target: StateDrawing;
+    public readonly target: StateDrawing;
     protected _offset: number;
 
     protected validCache: boolean;
@@ -49,7 +49,7 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
         return result;
     }
 
-    public getLabelPosition(context: CanvasRenderingContext2D) {
+    public getLabelPosition(context: CanvasRenderingContext2D): Vector2D {
         let arrow = this.getArrow(context);
         return arrow.getControlPoint();
     }
@@ -79,7 +79,7 @@ export default class LinearEdgeDrawing extends EdgeDrawing {
         return arrow;
     }
 
-    public get offset() {
+    public get offset(): number {
         return this._offset;
     }
 

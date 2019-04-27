@@ -84,17 +84,17 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         return circle;
     }
 
-    protected getLabelWidth(context: CanvasRenderingContext2D) {
+    protected getLabelWidth(context: CanvasRenderingContext2D): number {
         let width = context.measureText(this.edge.label).width + 5;
         return width;
     }
 
-    protected getLabelHeight(context: CanvasRenderingContext2D) {
+    protected getLabelHeight(context: CanvasRenderingContext2D): number {
         let height = CanvasRenderingContext2DUtils.getFontSize(context) + 5;
         return height;
     }
 
-    get angle() {
+    get angle(): number {
         return this._angle;
     }
 
@@ -103,7 +103,7 @@ export default class SelfLoopDrawing extends EdgeDrawing implements Draggable {
         this.validCache = false;
     }
 
-    get radius() {
+    get radius(): number {
         return this._radius;
     }
 
