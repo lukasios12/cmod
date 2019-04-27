@@ -163,7 +163,7 @@ export default class Drawer {
         return new Vector2D(x, y);
     }
 
-    protected clampTransform(mat: Matrix) {
+    protected clampTransform(mat: Matrix): Matrix {
         let options = this.options;
         let hscale = mat.get(0, 0);
         let vscale = mat.get(1, 1);
