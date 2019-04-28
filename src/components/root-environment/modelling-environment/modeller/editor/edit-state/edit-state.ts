@@ -11,6 +11,7 @@ import IntegerTokenCount from "src/system/tokens/integer-token-count";
 import StyleManager from "src/style-manager/style-manager";
 
 import { remainder } from "src/utils/math";
+import isNumber from "src/utils/is-number";
 
 @WithRender
 @Component({
@@ -24,7 +25,7 @@ export default class EditStateComponent extends Vue {
     dec(index: number) {
         if (index >= 0 && index < this.map.length) {
             let val = this.map[index].tokens;
-            if (this.isNum(val)) {
+            if (isNumber(val)) {
                 let num = Math.max(0, Number(val) - 1);
                 this.map[index].tokens = num.toString();
             }
@@ -34,7 +35,7 @@ export default class EditStateComponent extends Vue {
     inc(index: number) {
         if (index >= 0 && index < this.map.length) {
             let val = this.map[index].tokens;
-            if (this.isNum(val)) {
+            if (isNumber(val)) {
                 let num = Math.max(0, Number(val) + 1);
                 this.map[index].tokens = num.toString();
             }
@@ -76,7 +77,7 @@ export default class EditStateComponent extends Vue {
                 let record = this.map[i];
                 let place  = record.place;
                 let tokens = record.tokens;
-                if (this.isNum(tokens)) {
+                if (isNumber(tokens)) {
                     let num = Math.max(0, Number(tokens));
                     tokens = new IntegerTokenCount(num);
                 } else {
@@ -109,10 +110,6 @@ export default class EditStateComponent extends Vue {
     get petrinet() {
         let module = getModule(PetrinetModule, this.$store);
         return module.petrinet;
-    }
-
-    protected isNum(val: string) {
-        return /^-?[0-9]*$/.test(val);
     }
 
     protected createRecord(place: string, tokens: string) {
