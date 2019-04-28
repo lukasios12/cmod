@@ -23,4 +23,8 @@ export default class ToggleComponent<T> extends Vue {
         this.val = val;
         this.$emit('change', val);
     }
+
+    isActive(val: T): boolean {
+        return this.value == val;
+    }
 }

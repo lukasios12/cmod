@@ -1,5 +1,5 @@
 <div class="toggle">
-    <label v-for="item in values">
+    <label v-for="item in values" :key="item.value" :class="{ active: isActive(item.value) }">
         <input type="radio" v-model="value" :value="item.value"/>
         {{ item.label }}
     </label>
