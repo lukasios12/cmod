@@ -27,6 +27,14 @@
                 </switcher>
             </div>
         </div>
+        <div class="option">
+            <div class="description">
+                Marking Style
+            </div>
+            <div class="input">
+                <toggler v-model="markingStringType" :values="markingStringTypes" class="bar"/>
+            </div>
+        </div>
     </div>
     <div class="category">
         <h1>
@@ -37,7 +45,7 @@
                 Feedback Level
             </div>
             <div class="input">
-
+                <toggler v-model="difficulty" :values="difficulties"/>
             </div>
         </div>
     </div>
