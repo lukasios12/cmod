@@ -1,0 +1,7 @@
+<div class="toggle">
+    <div v-for="item in values">
+        <input type="radio" v-model="value" :value="item.value"/>
+        <label>{{ item.label }}</label>
+    </div>
+    <span>{{ selected }}</span>
+</div>
