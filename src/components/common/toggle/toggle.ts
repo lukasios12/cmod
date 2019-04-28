@@ -1,4 +1,4 @@
-import { Vue, Component, Prop, Model, Emit } from "vue-property-decorator";
+import { Vue, Component, Prop, Model, Emit, Watch } from "vue-property-decorator";
 import WithRender from "./toggle.html?style=./toggle.scss";
 
 import ToggleItem from "./toggle-item";
@@ -26,5 +26,10 @@ export default class ToggleComponent<T> extends Vue {
 
     isActive(val: T): boolean {
         return this.value == val;
+    }
+
+    @Watch('selected')
+    onSelectedChange() {
+        this.value = this.selected;
     }
 }
