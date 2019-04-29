@@ -192,8 +192,9 @@ export default class Editor {
                     }
                     break;
                 case 65: // a
+                    let position = this.drawer.localCenter;
                     let state = new Marking(this.petrinet);
-                    this.addState(state);
+                    this.addState(state, position);
                     break;
                 case 73: // i
                     if (this.selectionId !== null) {

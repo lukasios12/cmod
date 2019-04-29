@@ -32,7 +32,11 @@ export default class AddState implements UndoableAction {
 
     public exec(): void {
         this.id = this.graph.addState(this.state);
-        this.stateDrawing = new StateDrawing(this.state, this.graphDrawing.options.markingStyle, this.position);
+        this.stateDrawing = new StateDrawing(
+            this.state,
+            this.graphDrawing.options.markingStyle,
+            this.position
+        );
         this.graphDrawing.addState(this.id, this.stateDrawing);
     }
 
