@@ -9,6 +9,11 @@
         Your browser does not support the HTML 5 Canvas API
     </canvas>
 
+    <div id="feedbackButtons" v-show="showFeedbackButtons">
+        <button class="editorButton" @click="clearFeedback">Clear feedback</button>
+        <button class="editorButton" @click="requestFeedback">Request feedback</button>
+    </div>
+
     <messenger v-bind:feedback="feedback" v-bind:id="hoverId"/>
 
     <div class="backdrop" v-show="showingMenu"

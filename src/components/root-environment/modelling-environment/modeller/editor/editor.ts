@@ -16,6 +16,7 @@ import EditEdgeComponent    from "./edit-edge/edit-edge";
 
 import Editor                from "src/editor/editor";
 import EditorOptions         from "src/editor/editor-options";
+import Difficulty            from "src/editor/difficulty";
 import DrawerOptions         from "src/drawer/drawer-options";
 import Petrinet              from "src/system/petrinet/petrinet";
 import Feedback              from "src/feedback/feedback";
@@ -26,9 +27,9 @@ import { MarkingStringType } from "src/system/marking";
     name: "editor",
     components: {
         "context-menu": ContextMenuComponent,
-        "messenger": MessengerComponent,
-        "edit-state": EditStateComponent,
-        "edit-edge": EditEdgeComponent,
+        "messenger":    MessengerComponent,
+        "edit-state":   EditStateComponent,
+        "edit-edge":    EditEdgeComponent,
     }
 })
 export default class EditorComponent extends Vue {
@@ -38,9 +39,21 @@ export default class EditorComponent extends Vue {
     showEditEdge: boolean = false;
 
     contextLeft: number = 0;
-    contextTop: number = 0;
-    contextX: number = 0;
-    contextY: number = 0;
+    contextTop:  number = 0;
+    contextX:    number = 0;
+    contextY:    number = 0;
+
+    clearFeedback() {
+        let mod = getModule(FeedbackModule, this.$store);
+        mod.clear();
+    }
+
+    requestFeedback() {
+        if (this.editor) {
+            let mod = getModule(FeedbackModule, this.$store);
+            mod.get(this.editor.graph);
+        }
+    }
 
     mounted(): void {
         let canvas = <HTMLCanvasElement><unknown>document.getElementById("editorCanvas");
@@ -48,6 +61,7 @@ export default class EditorComponent extends Vue {
         this.editor.drawer.options = this.drawerSettings;
         this.editor.markingStyle = this.stringType;
     }
+
 
     openContextMenu(event): void {
         if (this.editor) {
@@ -118,6 +132,12 @@ export default class EditorComponent extends Vue {
             return this.editor.hoverId;
         }
         return null;
+    }
+
+    get showFeedbackButtons(): boolean {
+        let mod = getModule(EditorSettingsModule, this.$store);
+        console.log(mod.settings.difficulty, mod.settings.difficulty === Difficulty.HARD);
+        return mod.settings.difficulty === Difficulty.HARD;
     }
 
     get petrinet(): Petrinet {
