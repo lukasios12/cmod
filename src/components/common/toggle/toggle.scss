@@ -22,6 +22,7 @@ $inActiveBackgroundColor: $white;
             border-color: $borderColor;
             font-weight: bold;
             text-align: center;
+            cursor: pointer;
 
             & > input[type="radio"] {
                 display: none;
