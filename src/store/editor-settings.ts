@@ -1,4 +1,7 @@
-import { Module, VuexModule, Mutation } from "vuex-module-decorators";
+import { Module, VuexModule, Mutation, getModule } from "vuex-module-decorators";
+
+import FeedbackModule from "./feedback";
+
 import EditorOptions from "src/editor/editor-options";
 import Difficulty from "src/editor/difficulty";
 
@@ -18,5 +21,7 @@ export default class EditorSettingsModule extends VuexModule {
     @Mutation
     setDifficulty(d: Difficulty): void {
         this._settings.difficulty = d;
+        let fmod = getModule(FeedbackModule);
+        fmod.clear();
     }
 }

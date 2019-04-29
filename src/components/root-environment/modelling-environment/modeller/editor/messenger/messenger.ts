@@ -23,7 +23,7 @@ export default class MessengerComponent extends Vue {
     }
 
     get showSpecific() {
-        return this.id !== null && this.specific !== null;
+        return this.specific.length > 0;
     }
 
     get general(): Array<string> {
@@ -35,14 +35,13 @@ export default class MessengerComponent extends Vue {
     }
 
     get specific(): Array<string> {
+        let messages = new Array<string>();
         if (this.id !== null) {
             let codes = this.feedback.get(this.id).codes;
-            let messages = new Array<string>();
             codes.forEach((code) => {
                 messages.push(FeedbackTranslator.translate(code));
             });
-            return messages;
         }
-        return null;
+        return messages;
     }
 }
