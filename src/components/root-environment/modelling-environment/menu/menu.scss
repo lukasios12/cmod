@@ -6,12 +6,13 @@
     position: fixed;
     top: 0;
     left: 0;
-    color: $white;
+    color: $black;
     padding: $menuPaddingT $menuPaddingR $menuPaddingB $menuPaddingL;
     width: $menuWidth;
     max-width: $menuMaxWidth;
     height: calc(#{$headerHeight} + #{$modellerHeight});
-    background: $orange;
+    background: $lightGrey;
+    border-right: 1px solid $darkGrey;
     z-index: 3;
     transition: all $menuTransitionDuration ease;
 
@@ -21,6 +22,7 @@
 
     & .category {
         display: block;
+        margin: 1rem 0;
         border-bottom: 1px solid black;
 
         &:last-child {

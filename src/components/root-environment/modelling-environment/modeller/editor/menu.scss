@@ -1,9 +1,11 @@
+@import "src/components/colors.scss";
+
 .editorMenu {
     position: absolute;
     margin: 0;
     padding: 0;
-    background: white;
-    border: 1px solid grey;
+    background: $white;
+    border: 1px solid $darkGrey;
     box-shadow: 4px 4px 2px 0 rgba(0, 0, 0, .3);
 
     & input {
@@ -22,7 +24,7 @@
     }
 
     & > .input {
-        border-bottom: 1px solid grey;
+        border-bottom: 1px solid $darkGrey;
     }
 
     & > .buttons {
@@ -33,20 +35,22 @@
             flex: 1;
             margin: 0 1em;
             padding: .5em;
+            color: $black;
+            font-weight: bold;
             border: 0;
             border-radius: 10px;
             cursor: pointer;
 
             &.confirm {
-                background: orange;
+                background: $orange;
 
                 &:hover {
-                    background: darkOrange;
+                    background: $darkOrange;
                 }
             }
 
             &.cancel {
-                color: blue;
+                color: $darkBlue;
                 background: transparent;
 
                 &:hover {
