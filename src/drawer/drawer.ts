@@ -66,6 +66,7 @@ export default class Drawer {
             drawing.draw(context!);
             this.drawingCache = drawing;
         }
+
         context!.restore();
     }
 
@@ -160,6 +161,17 @@ export default class Drawer {
         let t = this.currentTransform;
         x = (x * t.get(0, 0)) + t.get(0, 2);
         y = (y * t.get(1, 1)) - t.get(1, 2);
+        return new Vector2D(x, y);
+    }
+
+    public get localCenter(): Vector2D {
+        let canvas = this.context.canvas;
+        let box = canvas.getBoundingClientRect();
+        let width = box.width;
+        let height = box.height;
+        let t = this.currentTransform.inverse();
+        let x = (width / 2) * t.get(0, 0) + t.get(0, 2);
+        let y = (height / 2) * t.get(1, 1) + t.get(1, 2);
         return new Vector2D(x, y);
     }
 
