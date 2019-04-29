@@ -4,7 +4,8 @@
             @dblclick="openEditMenu($event)"
             @contextmenu="openContextMenu($event)"
             @keyup.e="openEditMenu($event)"
-            @keyup.p="toggleStyle($event)">
+            @keyup.p="toggleStyle($event)"
+            @keyup.esc="closeMenus">
         Your browser does not support the HTML 5 Canvas API
     </canvas>
 
