@@ -3,6 +3,8 @@ import Edge from "src/system/graph/edge";
 import { Vue, Component, Prop, Watch, Emit } from "vue-property-decorator";
 import WithRender from "./edit-edge.html?style=./edit-edge.scss";
 
+import { focus } from "vue-focus";
+
 import { getModule } from "vuex-module-decorators";
 import PetrinetModule from "src/store/petrinet";
 
@@ -13,7 +15,10 @@ import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-contex
 
 @WithRender
 @Component({
-    name: "edit-edge"
+    name: "edit-edge",
+    directives: {
+        "focus": focus
+    }
 })
 export default class EditEdgeComponent extends Vue {
     @Prop(Editor) editor!: Editor;
