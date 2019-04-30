@@ -21,14 +21,13 @@ import FeedbackDispatch from "src/feedback/feedback-dispatch";
 import HistoryList from "src/history-list/history-list"
 import Vector2D    from "src/vector/vector2d";
 
-import AddState      from "./actions/add-state";
-import AddEdge       from "./actions/add-edge";
-import AddInitial    from "./actions/add-initial";
-import DeleteState   from "./actions/del-state";
-import DeleteEdge    from "./actions/del-edge";
-import DeleteInitial from "./actions/del-initial";
-import EditState     from "./actions/edit-state";
-import EditEdge      from "./actions/edit-edge";
+import AddState    from "./actions/add-state";
+import AddEdge     from "./actions/add-edge";
+import DeleteState from "./actions/del-state";
+import DeleteEdge  from "./actions/del-edge";
+import EditState   from "./actions/edit-state";
+import EditEdge    from "./actions/edit-edge";
+import SetInitial  from "./actions/set-initial";
 
 export default class Editor {
     protected _options: EditorOptions;
@@ -117,17 +116,9 @@ export default class Editor {
         }
     }
 
-    public setInitial(id: number): void {
-        let a = new AddInitial(id, this.graph, this.graphDrawing);
+    public setInitial(id: number | null): void {
+        let a = new SetInitial(id, this.graph, this.graphDrawing);
         this.historyList.exec(a);
-    }
-
-    public unsetInitial(): void {
-        let id = this.graph.initial;
-        if (id !== null) {
-            let a = new DeleteInitial(id, this.graph, this.graphDrawing);
-            this.historyList.exec(a);
-        }
     }
 
     public select(pos: Vector2D, context: CanvasRenderingContext2D): void {
@@ -197,11 +188,7 @@ export default class Editor {
                     this.addState(state, position);
                     break;
                 case 73: // i
-                    if (this.selectionId !== null) {
-                        this.setInitial(this.selectionId);
-                    } else {
-                        this.unsetInitial();
-                    }
+                    this.setInitial(this.selectionId);
                     break;
                 case 89: // y
                     if(event.ctrlKey) {
