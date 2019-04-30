@@ -59,6 +59,9 @@ export default class EditStateComponent extends Vue {
     @Watch('show', {deep: false, immediate: false})
     onShowChange() {
         this.focusIndex = 0;
+        if (!this.show) {
+            this.cancel();
+        }
     }
 
     next() {

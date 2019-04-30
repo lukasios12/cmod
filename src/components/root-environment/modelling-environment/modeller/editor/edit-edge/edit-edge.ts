@@ -42,6 +42,13 @@ export default class EditEdgeComponent extends Vue {
         this.setLabel();
     }
 
+    @Watch('show', { deep: false, immediate: false})
+    onShowChange() {
+        if (!this.show) {
+            this.cancel();
+        }
+    }
+
     get id() {
         if (this.editor && this.editor.selectionId &&
             this.editor.graph.hasEdge(this.editor.selectionId)) {
