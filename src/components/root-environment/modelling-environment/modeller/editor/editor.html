@@ -14,6 +14,10 @@
         <button class="editorButton" @click="requestFeedback">Request feedback</button>
     </div>
 
+    <div id="editorButtons">
+        <button class="editorButton" @click="addState">Add State</button>
+    </div>
+
     <messenger v-bind:feedback="feedback" v-bind:id="hoverId"/>
 
     <div class="backdrop" v-show="showingMenu"

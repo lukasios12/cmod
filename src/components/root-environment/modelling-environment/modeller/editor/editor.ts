@@ -19,6 +19,7 @@ import EditorOptions         from "src/editor/editor-options";
 import Difficulty            from "src/editor/difficulty";
 import DrawerOptions         from "src/drawer/drawer-options";
 import Petrinet              from "src/system/petrinet/petrinet";
+import Marking               from "src/system/marking";
 import Feedback              from "src/feedback/feedback";
 import { MarkingStringType } from "src/system/marking";
 
@@ -33,15 +34,23 @@ import { MarkingStringType } from "src/system/marking";
     }
 })
 export default class EditorComponent extends Vue {
-    editor: Editor | null = null;
+    editor: Editor | null    = null;
     showContextMenu: boolean = false;
-    showEditState: boolean = false;
-    showEditEdge: boolean = false;
+    showEditState: boolean   = false;
+    showEditEdge: boolean    = false;
 
     contextLeft: number = 0;
     contextTop:  number = 0;
     contextX:    number = 0;
     contextY:    number = 0;
+
+    addState() {
+        if (this.editor) {
+            let pos = this.editor.drawer.localCenter;
+            let s = new Marking(this.editor.petrinet);
+            this.editor.addState(s, pos);
+        }
+    }
 
     clearFeedback() {
         let mod = getModule(FeedbackModule, this.$store);
@@ -61,7 +70,6 @@ export default class EditorComponent extends Vue {
         this.editor.drawer.options = this.drawerSettings;
         this.editor.markingStyle = this.stringType;
     }
-
 
     openContextMenu(event): void {
         if (this.editor) {
