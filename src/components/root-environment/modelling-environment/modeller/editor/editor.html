@@ -10,7 +10,7 @@
 
     <div id="feedbackButtons" v-show="showFeedbackButtons">
         <button class="editorButton" @click="clearFeedback">Clear feedback</button>
-        <button class="editorButton" @click="requestFeedback">Request feedback</button>
+        <button class="editorButton" @click="requestFeedback">{{ feedbackButtonText }}</button>
     </div>
 
     <div id="editorButtons">

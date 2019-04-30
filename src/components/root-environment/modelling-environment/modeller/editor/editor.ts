@@ -52,6 +52,14 @@ export default class EditorComponent extends Vue {
         }
     }
 
+    get feedbackButtonText() {
+        let mod = getModule(FeedbackModule, this.$store);
+        if (mod.isLoading) {
+            return "Getting feedback...";
+        }
+        return "Request feedback";
+    }
+
     clearFeedback() {
         let mod = getModule(FeedbackModule, this.$store);
         mod.clear();
