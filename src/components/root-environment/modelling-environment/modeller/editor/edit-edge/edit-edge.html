@@ -1,6 +1,6 @@
 <div class="editorMenu editEdge" :style="styleObject" v-show="show">
     <div class="input">
-        <select v-model="label" v-focus="true" @keyup.enter="confirm">
+        <select v-model="label" v-focus="true" @keydown.enter.prevent="confirm">
             <option v-for="lab in labels">{{ lab }}</option>
         </select>
     </div>
