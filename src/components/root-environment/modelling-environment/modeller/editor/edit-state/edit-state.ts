@@ -4,6 +4,8 @@ import WithRender from "./edit-state.html?style=./edit-state.scss";
 import { getModule } from "vuex-module-decorators";
 import PetrinetModule from "src/store/petrinet";
 
+import { focus } from "vue-focus";
+
 import Editor from "src/editor/editor";
 import Marking from "src/system/marking";
 import OmegaTokenCount from "src/system/tokens/omega-token-count";
@@ -15,10 +17,14 @@ import isNumber from "src/utils/is-number";
 
 @WithRender
 @Component({
-    name: "edit-state"
+    name: "edit-state",
+    directives: {
+        "focus": focus
+    }
 })
 export default class EditStateComponent extends Vue {
     @Prop(Editor) editor!: Editor;
+    @Prop(Boolean) show!: boolean;
 
     map = [];
 
@@ -48,22 +54,23 @@ export default class EditStateComponent extends Vue {
         }
     }
 
-    next(index: number) {
-        if (index >= 0 && index < this.map.length) {
-            let i = remainder(index + 1, this.map.length);
-            let element = <HTMLInputElement>document.getElementById(this.inputId(i));
-            element.focus();
-            element.select();
-        }
+    focusIndex: number = 0;
+
+    @Watch('show', {deep: false, immediate: false})
+    onShowChange() {
+        this.focusIndex = 0;
     }
 
-    prev(index: number) {
-        if(index >= 0 && index < this.map.length) {
-            let i = remainder(index - 1, this.map.length);
-            let element = <HTMLInputElement>document.getElementById(this.inputId(i));
-            element.focus();
-            element.select();
-        }
+    next() {
+        this.focusIndex = (this.focusIndex + 1) % this.map.length;
+    }
+
+    prev() {
+        this.focusIndex = remainder(this.focusIndex - 1, this.map.length);
+    }
+
+    select(event) {
+        event.target.select();
     }
 
     @Emit('close')

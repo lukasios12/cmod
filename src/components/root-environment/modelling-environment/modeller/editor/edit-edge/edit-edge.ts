@@ -17,6 +17,7 @@ import { CanvasRenderingContext2DUtils } from "src/utils/canvas-rendering-contex
 })
 export default class EditEdgeComponent extends Vue {
     @Prop(Editor) editor!: Editor;
+    @Prop(Boolean) show!: boolean;
 
     label: string | null = null;
     labels: string[] | null = null;

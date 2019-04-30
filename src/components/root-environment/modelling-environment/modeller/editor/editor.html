@@ -23,10 +23,10 @@
     <div class="backdrop" v-show="showingMenu"
                           @click="closeMenus"></div>
     <edit-state :editor="editor"
-                v-show="showEditState"
+                :show="showEditState"
                 @close="closeMenus"/>
     <edit-edge :editor="editor"
-               v-show="showEditEdge"
+               :show="showEditEdge"
                @close="closeMenus"/>
     <context-menu :editor="editor"
                   :top="contextTop"

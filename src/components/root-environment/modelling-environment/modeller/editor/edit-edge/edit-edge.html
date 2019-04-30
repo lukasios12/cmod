@@ -1,4 +1,4 @@
-<div class="editorMenu editEdge" :style="styleObject">
+<div class="editorMenu editEdge" :style="styleObject" v-show="show">
     <div class="input">
         <select v-model="label">
             <option v-for="lab in labels">{{ lab }}</option>
