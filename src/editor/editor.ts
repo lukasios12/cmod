@@ -117,8 +117,11 @@ export default class Editor {
     }
 
     public setInitial(id: number | null): void {
-        let a = new SetInitial(id, this.graph, this.graphDrawing);
-        this.historyList.exec(a);
+        if (((id !== null && this.graph.hasState(id) || id === null)) &&
+            id !== this.graph.initial) {
+            let a = new SetInitial(id, this.graph, this.graphDrawing);
+            this.historyList.exec(a);
+        }
     }
 
     public select(pos: Vector2D, context: CanvasRenderingContext2D): void {
