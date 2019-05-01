@@ -1,3 +1,5 @@
+import Editor from "src/editor/editor";
+
 import Graph from "src/system/graph/graph";
 import State from "src/system/graph/state";
 
@@ -10,44 +12,41 @@ import UndoableAction from "src/action/undoable-action";
 
 export default class AddState implements UndoableAction {
     protected id: number | null;
+    protected editor: Editor;
     protected state: State;
     protected stateDrawing: StateDrawing | null;
-    protected graph: Graph;
-    protected graphDrawing: GraphDrawing;
     protected position: Vector2D | null;
 
     public constructor(
+        editor: Editor,
         state: State,
-        graph: Graph,
-        graphDrawing: GraphDrawing,
         pos: Vector2D | null
     ) {
         this.id           = null;
         this.state        = state;
         this.stateDrawing = null;
-        this.graph        = graph;
-        this.graphDrawing = graphDrawing;
+        this.editor       = editor;
         this.position     = pos;
     }
 
     public exec(): void {
-        this.id = this.graph.addState(this.state);
+        this.id = this.editor.graph.addState(this.state);
         this.stateDrawing = new StateDrawing(
             this.state,
-            this.graphDrawing.options.markingStyle,
+            this.editor.graphDrawing.options.markingStyle,
             this.position
         );
-        this.graphDrawing.addState(this.id, this.stateDrawing);
+        this.editor.graphDrawing.addState(this.id, this.stateDrawing);
     }
 
     public undo(): void {
-        this.graph.delState(this.id!);
-        this.graphDrawing.delState(this.id!);
+        this.editor.graph.delState(this.id!);
+        this.editor.graphDrawing.delState(this.id!);
     }
 
     public redo(): void {
-        this.graph.addState(this.state, this.id);
-        this.graphDrawing.addState(
+        this.editor.graph.addState(this.state, this.id);
+        this.editor.graphDrawing.addState(
             this.id!,
             this.stateDrawing!
         );

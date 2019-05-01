@@ -77,22 +77,22 @@ export default class Editor {
     }
 
     public addState(state: State, position: Vector2D | null = null): void {
-        let a = new AddState(state, this.graph, this.graphDrawing, position);
+        let a = new AddState(this, state, position);
         this.historyList.exec(a);
     }
 
     public addEdge(edge: Edge): void {
-        let a = new AddEdge(edge, this.graph, this.graphDrawing);
+        let a = new AddEdge(this, edge);
         this.historyList.exec(a);
     }
 
     public delState(id: number): void {
-        let a = new DeleteState(id, this.graph, this.graphDrawing);
+        let a = new DeleteState(this, id);
         this.historyList.exec(a);
     }
 
     public delEdge(id: number): void {
-        let a = new DeleteEdge(id, this.graph, this.graphDrawing);
+        let a = new DeleteEdge(this, id);
         this.historyList.exec(a);
     }
 
@@ -100,7 +100,7 @@ export default class Editor {
         if (this.graph.hasState(id)) {
             let current = this.graph.getState(id);
             if (!Marking.equals(current, state)) {
-                let a = new EditState(id, state, this.graph, this.graphDrawing);
+                let a = new EditState(this, id, state);
                 this.historyList.exec(a);
             }
         }
@@ -110,7 +110,7 @@ export default class Editor {
         if (this.graph.hasEdge(id)) {
             let current = this.graph.getEdge(id).label;
             if (current !== edge.label) {
-                let a = new EditEdge(id, edge, this.graph, this.graphDrawing);
+                let a = new EditEdge(this, id, edge);
                 this.historyList.exec(a);
             }
         }
@@ -119,7 +119,7 @@ export default class Editor {
     public setInitial(id: number | null): void {
         if (((id !== null && this.graph.hasState(id) || id === null)) &&
             id !== this.graph.initial) {
-            let a = new SetInitial(id, this.graph, this.graphDrawing);
+            let a = new SetInitial(this, id);
             this.historyList.exec(a);
         }
     }

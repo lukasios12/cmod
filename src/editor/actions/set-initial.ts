@@ -1,3 +1,5 @@
+import Editor from "src/editor/editor";
+
 import Graph from "src/system/graph/graph";
 import GraphDrawing from "src/drawing/graph-drawing";
 
@@ -5,26 +7,24 @@ import UndoableAction from "src/action/undoable-action";
 
 export default class SetInitial implements UndoableAction {
     protected id: number | null;
-    protected graph: Graph;
-    protected graphDrawing: GraphDrawing;
+    protected editor: Editor;
 
     protected oldId = null;
 
-    public constructor(stateId: number | null, graph: Graph, drawing: GraphDrawing) {
+    public constructor(editor: Editor, stateId: number | null) {
         this.id = stateId;
-        this.graph = graph;
-        this.graphDrawing = drawing;
+        this.editor = editor;
     }
 
     public exec(): void {
-        this.oldId = this.graph.initial;
-        this.graph.initial = this.id;
-        this.graphDrawing.initial = this.id;
+        this.oldId = this.editor.graph.initial;
+        this.editor.graph.initial = this.id;
+        this.editor.graphDrawing.initial = this.id;
     }
 
     public undo(): void {
-        this.graph.initial = this.oldId;
-        this.graphDrawing.initial = this.oldId;
+        this.editor.graph.initial = this.oldId;
+        this.editor.graphDrawing.initial = this.oldId;
     }
 
     public redo(): void {
