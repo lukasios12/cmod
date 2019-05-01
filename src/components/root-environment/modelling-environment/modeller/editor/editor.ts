@@ -152,7 +152,6 @@ export default class EditorComponent extends Vue {
 
     get showFeedbackButtons(): boolean {
         let mod = getModule(EditorSettingsModule, this.$store);
-        console.log(mod.settings.difficulty, mod.settings.difficulty === Difficulty.HARD);
         return mod.settings.difficulty === Difficulty.HARD;
     }
 

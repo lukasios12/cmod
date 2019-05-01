@@ -9,7 +9,5 @@ export default class TutorialComponent extends Vue {
     @Prop(Boolean) show!: boolean;
 
     @Emit('close')
-    close() {
-        console.log("closing tutorial");
-    }
+    close() { }
 }
