@@ -238,6 +238,7 @@ export default class Editor {
         canvas.addEventListener("mousemove", (event) => {
             if (mouseDownLeft && !event.ctrlKey &&
                 this.selection && isDraggable(this.selection)) {
+                document.body.style.cursor = "grabbing";
                 let point = this.drawer.globalToLocal(event);
                 this.selection.drag(point, context!);
                 this.hoverId = null;
@@ -245,6 +246,11 @@ export default class Editor {
             } else if (!mouseDownLeft) {
                 let point = this.drawer.globalToLocal(event);
                 this.hoverId = this.graphDrawing.getDrawingAt(point, context);
+                if (this.hoverId !== null) {
+                    document.body.style.cursor = "pointer";
+                } else {
+                    document.body.style.cursor = "default";
+                }
             }
         });
         canvas.addEventListener("mouseup", (event) => {
