@@ -7,7 +7,8 @@ export default class Config {
     public readonly sessionUrl: string;
 
     public constructor() {
-        this.baseUrl = "http://localhost/~lucas/cora-server/api";
+        // this.baseUrl = "http://localhost/~lucas/cora-server/api";
+        this.baseUrl = API_URL;
         this.userUrl = "users";
         this.petrinetUrl = "petrinet";
         this.sessionUrl = "session";

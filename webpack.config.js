@@ -1,4 +1,7 @@
 const path = require('path');
+const webpack = require("webpack");
+const conf = require("./config.json");
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -57,6 +60,9 @@ let config = {
         ]
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'API_URL': JSON.stringify(conf.API_URL)
+        }),
         new HtmlWebpackPlugin({
             template: "./src/index.html"
         }),
