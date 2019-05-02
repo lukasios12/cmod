@@ -190,6 +190,9 @@ export default class Editor {
                     let state = new Marking(this.petrinet);
                     this.addState(state, position);
                     break;
+                case 67: // c
+                    this.drawer.center();
+                    break;
                 case 73: // i
                     this.setInitial(this.selectionId);
                     break;

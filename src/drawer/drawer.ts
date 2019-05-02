@@ -13,9 +13,6 @@ export default class Drawer {
     protected drawingCache: Drawing | null;
     protected _options: DrawerOptions;
 
-    protected initialWidth: number;
-    protected initialHeight: number;
-
     public constructor(canvas: HTMLCanvasElement, options?: DrawerOptions) {
         this.context = canvas.getContext("2d");
         this.drawingCache = null;
@@ -27,10 +24,8 @@ export default class Drawer {
             this.options = {
                 minZoom: 1,
                 maxZoom: 1 / 10,
-                minX: -500,
-                maxX:  500,
-                minY: -500,
-                maxY:  500,
+                width: 1500,
+                height: 1500,
                 gridOptions: {
                     drawGrid: true,
                     snapGrid: true,
@@ -41,8 +36,7 @@ export default class Drawer {
         }
 
         this.resize();
-        this.initialWidth = canvas.width;
-        this.initialHeight = canvas.height;
+        this.center();
     }
 
     public draw(drawing: Drawing | null = null): void {
@@ -130,6 +124,12 @@ export default class Drawer {
         if (parent) {
             canvas.width = parent.offsetWidth;
             canvas.height = parent.offsetHeight;
+            if (canvas.width > this.options.width) {
+                this.options.width = canvas.width;
+            }
+            if (canvas.height > this.options.height) {
+                this.options.height = canvas.height;
+            }
         }
 
         if(this.drawingCache) {
@@ -175,12 +175,39 @@ export default class Drawer {
         return new Vector2D(x, y);
     }
 
+    public center(): void {
+        let t = this.currentTransform;
+        let w = this.context.canvas.width;
+        let h = this.context.canvas.height;
+        t.set(0, 2,  w / 2);
+        t.set(1, 2, -h / 2);
+        this.setTransform(t);
+    }
+
     protected clampTransform(mat: Matrix): Matrix {
         let options = this.options;
         let hscale = mat.get(0, 0);
         let vscale = mat.get(1, 1);
         mat.set(0, 0, clamp(hscale, options.minZoom, options.maxZoom));
         mat.set(1, 1, clamp(vscale, options.minZoom, options.maxZoom));
+
+        hscale = mat.get(0, 0);
+        vscale = mat.get(1, 1);
+
+        let w = this.context.canvas.width;
+        let h = this.context.canvas.height;
+
+        let lhtrans = -(options.width / 2 - w / mat.get(0, 0)) * mat.get(0, 0); // right
+        let hhtrans =  (options.width / 2) * mat.get(0, 0); // left
+
+        let lvtrans = -(options.height / 2) * mat.get(1, 1); // top
+        let hvtrans =  (options.height / 2 - h / mat.get(1, 1)) * mat.get(1, 1); // bottom
+
+        let htrans = clamp(mat.get(0, 2), lhtrans, hhtrans);
+        let vtrans = clamp(mat.get(1, 2), lvtrans, hvtrans);
+
+        mat.set(0, 2, htrans);
+        mat.set(1, 2, vtrans);
         return mat;
     }
 

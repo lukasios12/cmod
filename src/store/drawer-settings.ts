@@ -7,10 +7,8 @@ import DrawerOptions, { GridOptions } from "src/drawer/drawer-options";
 })
 export default class DrawerSettingsModule extends VuexModule {
     _settings: DrawerOptions = {
-        minX: -200,
-        maxX: 200,
-        minY: -200,
-        maxY: 200,
+        width: 1500,
+        height: 1500,
         minZoom: 1,
         maxZoom: 10,
         gridOptions: {
