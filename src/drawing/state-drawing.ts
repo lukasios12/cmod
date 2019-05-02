@@ -19,8 +19,8 @@ export default class StateDrawing implements Hittable, Draggable, Snappable {
     protected _state: State;
     protected _position: Vector2D;
     protected _style: MarkingStringType;
-    public preset: Array<EdgeDrawing>;
-    public postset: Array<EdgeDrawing>;
+    public readonly preset: Array<EdgeDrawing>;
+    public readonly postset: Array<EdgeDrawing>;
 
     protected validCache:     boolean;
     protected boxCache:       Rectangle | null;

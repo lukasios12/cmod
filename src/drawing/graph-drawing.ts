@@ -42,35 +42,20 @@ export default class GraphDrawing implements Drawing, Snappable {
         let drawn = new HashSet<number>();
         let selected = this.options.selected;
         let feedback = this.options.feedback;
-        
-        // draw feedback borders for states
-        StyleManager.setStateStandardStyle(context);
-        this.states.each((id: number, state: StateDrawing) => {
-            state.markingStyle = this.options.markingStyle;
-            if (feedback !== null) {
-                let record = feedback.get(id);
-                if (record !== null && record.codes.size > 0) {
-                    let code = record.highest;
-                    StyleManager.setStyle(code, context);
-                    state!.draw(context);
-                }
-            }
-        });
-        // draw edges
-        context.save();
-        StyleManager.setEdgeStandardStyle(context);
+
+        // calculate bend for each edge
         let seperation = 80;
-        this.states.each((id: number, sdrawing: StateDrawing) => {
-            this.states.each((id: number, osdrawing: StateDrawing) => {
-                context.save();
-                let shared = this.edges.filterValues((edge) => {
+        let calc = new HashSet<number>(); // calculation cache
+        this.states.each((sid: number, sdrawing: StateDrawing) => {
+            this.states.each((osid: number, osdrawing: StateDrawing) => {
+                let shared = this.edges.filterValues((edge: EdgeDrawing) => {
                     return edge instanceof LinearEdgeDrawing && (
                            edge.source == sdrawing && edge.target == osdrawing ||
-                           edge.source == osdrawing && edge.target == sdrawing);
+                           edge.target == sdrawing && edge.source == osdrawing);
                 });
                 let k = 0;
-                shared.each((id: number, edge: LinearEdgeDrawing) => {
-                    if(!drawn.contains(id)) {
+                shared.each((eid: number, edge: LinearEdgeDrawing) => {
+                    if (!calc.member(eid)) {
                         let c = 0;
                         if (shared.size > 1) {
                             c = (k * seperation) - ((seperation * (shared.size - 1)) / 2);
@@ -79,51 +64,79 @@ export default class GraphDrawing implements Drawing, Snappable {
                             c = -c;
                         }
                         edge.offset! = c;
-                        if(feedback) {
-                            let record = feedback.get(id);
-                            if (record !== null && !record.isEmpty()) {
-                                let code = record.highest;
-                                StyleManager.setStyle(code, context);
-                                edge.draw(context);
-                            }
-                        }
-                        if (selected == id) {
-                            StyleManager.setEdgeSelectedStyle(context);
-                            edge.draw(context);
-                        }
-                    }
-                    k++;
-                });
-                context.restore();
-                shared.each((id: number, edge: LinearEdgeDrawing) => {
-                    if (!drawn.contains(id)) {
-                        edge.draw(context);
-                        drawn.add(id);
+                        k++;
+                        calc.add(eid);
                     }
                 });
             });
-            this.edges.each((id: number, edge: EdgeDrawing) => {
-                if (edge instanceof SelfLoopDrawing && edge.source == sdrawing) {
-                    if (feedback) {
-                        let record = feedback.get(id);
-                        if (record !== null && !record.isEmpty()) {
-                            context.save();
-                            let code = record.highest;
-                            StyleManager.setStyle(code, context);
-                            edge.draw(context);
-                            context.restore();
-                        }
-                    }
-                    if (selected == id) {
-                        context.save();
-                        StyleManager.setEdgeSelectedStyle(context);
-                        edge.draw(context);
-                        context.restore();
-                    }
-                    edge.draw(context);
-                }
+        });
 
+        if (feedback !== null) {
+            StyleManager.setStateStandardStyle(context);
+            let cs, ws, is: Array<StateDrawing>;
+            cs = new Array<StateDrawing>();
+            ws = new Array<StateDrawing>();
+            is = new Array<StateDrawing>();
+
+            this.states.each((id: number, state: StateDrawing) => {
+                let record = feedback.get(id);
+                if (record !== null) {
+                    if      (record.highest >= 400) is.push(state);
+                    else if (record.highest >= 300) ws.push(state);
+                    else if (record.highest >= 200) cs.push(state);
+                }
             });
+
+            StyleManager.setStyle(220, context);
+            for (let i = 0; i < cs.length; i++) {
+                cs[i].draw(context);
+            }
+            StyleManager.setStyle(320, context);
+            for (let i = 0; i < ws.length; i++) {
+                ws[i].draw(context);
+            }
+            StyleManager.setStyle(420, context);
+            for (let i = 0; i < is.length; i++) {
+                is[i].draw(context);
+            }
+
+            let ce, we, ie: Array<EdgeDrawing>;
+            ce = new Array<EdgeDrawing>();
+            we = new Array<EdgeDrawing>();
+            ie = new Array<EdgeDrawing>();
+            this.edges.each((id: number, edge: EdgeDrawing) => {
+                let record = feedback.get(id);
+                if (record !== null) {
+                    if      (record.highest >= 400) ie.push(edge);
+                    else if (record.highest >= 300) we.push(edge);
+                    else if (record.highest >= 200) ce.push(edge);
+                }
+            });
+
+            StyleManager.setStyle(240, context);
+            for (let i = 0; i < ce.length; i++) {
+                ce[i].draw(context);
+            }
+            StyleManager.setStyle(340, context);
+            for (let i = 0; i < we.length; i++) {
+                we[i].draw(context);
+            }
+            StyleManager.setStyle(440, context);
+            for (let i = 0; i < ie.length; i++) {
+                ie[i].draw(context);
+            }
+        }
+
+        // draw edges
+        StyleManager.setEdgeStandardStyle(context);
+        this.edges.each((id: number, edge: EdgeDrawing) => {
+            if (selected == id) {
+                context.save();
+                StyleManager.setEdgeSelectedStyle(context);
+                edge.draw(context);
+                context.restore();
+            }
+            edge.draw(context);
         });
         // draw states
         StyleManager.setStateStandardStyle(context);
@@ -145,7 +158,6 @@ export default class GraphDrawing implements Drawing, Snappable {
         this.edges.each((id: number, edge: EdgeDrawing) => {
             edge.drawText(context);
         });
-        context.restore();
         // draw initial state pointer
         if (this.initial != null) {
             context.fillStyle = "black";
@@ -180,6 +192,14 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public delEdge(id: number): void {
+        let edge = this.edges.get(id);
+        if (edge instanceof LinearEdgeDrawing) {
+            let index: number;
+            index = edge.source.postset.indexOf(edge);
+            edge.source.postset.splice(index, 1);
+            index = edge.target.preset.indexOf(edge);
+            edge.target.preset.splice(index, 1);
+        }
         this.edges.remove(id);
     }
 
