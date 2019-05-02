@@ -259,6 +259,7 @@ export default class Drawer {
         let movementSpeed = 40;
         let zoomAmount = 1.2;
         canvas.addEventListener("keydown", (event) => {
+            event.preventDefault();
             switch(event.keyCode) {
                 case 38: // up
                     this.shift(0, -movementSpeed);
@@ -309,11 +310,6 @@ export default class Drawer {
         canvas.addEventListener("wheel", (event) => {
             event.preventDefault();
         });
-    }
-
-    // getters and setters
-    get canvas(): HTMLCanvasElement {
-        return this.context.canvas;
     }
 
     get currentTransform(): Matrix {
