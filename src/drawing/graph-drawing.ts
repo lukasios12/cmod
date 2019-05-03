@@ -47,6 +47,7 @@ export default class GraphDrawing implements Drawing, Snappable {
         let seperation = 80;
         let calc = new HashSet<number>(); // calculation cache
         this.states.each((sid: number, sdrawing: StateDrawing) => {
+            sdrawing.markingStyle = this.options.markingStyle;
             this.states.each((osid: number, osdrawing: StateDrawing) => {
                 let shared = this.edges.filterValues((edge: EdgeDrawing) => {
                     return edge instanceof LinearEdgeDrawing && (
