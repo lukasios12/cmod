@@ -61,7 +61,9 @@ let config = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'API_URL': JSON.stringify(conf.API_URL)
+            'API_URL': JSON.stringify(conf.API_URL),
+            'DEVELOPMENT': JSON.stringify(process.env.NODE_ENV == 'development'),
+            'PRODUCTION': JSON.stringify(process.env.NODE_ENV == 'production'),
         }),
         new HtmlWebpackPlugin({
             template: "./src/index.html"
