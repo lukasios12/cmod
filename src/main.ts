@@ -12,7 +12,6 @@ class Main {
             Vue.config.productionTip = false;
         }
 
-        console.log(API_URL, PRODUCTION, DEVELOPMENT, SHOW_SUCCESS_MESSAGE, QUESTIONNAIRE_URL, SHOW_QUESTIONNAIRE_MESSAGE);
         new RootEnvironment({
             el: "#app",
             store: Store,

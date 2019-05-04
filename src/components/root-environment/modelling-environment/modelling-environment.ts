@@ -25,7 +25,7 @@ import SuccessComponent from "./success/success";
 export default class ModellingEnvironment extends Vue {
     menuOpen: boolean = false;
     showTutorial: boolean = true;
-    hideSuccess: boolean = false;
+    hideSuccess: boolean = !SHOW_SUCCESS_MESSAGE;
 
     created() {
         window.addEventListener('keyup', (event) => {

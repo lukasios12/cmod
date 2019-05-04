@@ -7,6 +7,8 @@ import WithRender from "./success.html";
 })
 export default class SuccessComponent extends Vue {
     @Prop(Boolean) show!: boolean;
+    showQuestionnaireMessage: boolean = SHOW_QUESTIONNAIRE_MESSAGE;
+    questionnaireUrl: string = QUESTIONNAIRE_URL.length <= 0 ? '#' : QUESTIONNAIRE_URL;
 
     @Emit('close')
     close() {}

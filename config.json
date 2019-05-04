@@ -1,3 +1,6 @@
 {
-    "API_URL": "http://localhost/~lucas/cora-server/api"
+    "API_URL": "http://localhost/~lucas/cora-server/api", // NO TRAILING SLASH. URL for the cora API
+    "SHOW_SUCCESS_MESSAGE": true,                         // Whether to show a success message when the graph is correct
+    "SHOW_QUESTIONNAIRE_MESSAGE": true,                   // Whether to show a message within the success message asking to fill in a questionnaire
+    "QUESTIONNAIRE_URL": ""                               // URL for the questionnaire
 }

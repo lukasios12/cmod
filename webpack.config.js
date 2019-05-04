@@ -64,6 +64,9 @@ let config = {
             'API_URL': JSON.stringify(conf.API_URL),
             'DEVELOPMENT': JSON.stringify(process.env.NODE_ENV == 'development'),
             'PRODUCTION': JSON.stringify(process.env.NODE_ENV == 'production'),
+            'SHOW_SUCCESS_MESSAGE': JSON.stringify(conf.SHOW_SUCCESS_MESSAGE),
+            'SHOW_QUESTIONNAIRE_MESSAGE': JSON.stringify(conf.SHOW_QUESTIONNAIRE_MESSAGE),
+            'QUESTIONNAIRE_URL': JSON.stringify(conf.QUESTIONNAIRE_URL)
         }),
         new HtmlWebpackPlugin({
             template: "./src/index.html"
