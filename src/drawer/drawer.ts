@@ -256,27 +256,34 @@ export default class Drawer {
         // register key events
         let context = this.context;
         let canvas = context.canvas;
-        let movementSpeed = 40;
+        let movementSpeed = 30;
         let zoomAmount = 1.2;
         canvas.addEventListener("keydown", (event) => {
             event.preventDefault();
-            switch(event.keyCode) {
-                case 38: // up
+
+            switch(event.key) {
+                case "ArrowUp":
                     this.shift(0, -movementSpeed);
                     break;
-                case 39: // right
+                case "ArrowRight": 
                     this.shift(movementSpeed);
                     break;
-                case 40: // down
+                case "ArrowDown": 
                     this.shift(0, movementSpeed);
                     break;
-                case 37: // left
+                case "ArrowLeft":
                     this.shift(-movementSpeed);
                     break;
-                case 61: // +
+                case "+": 
                     this.zoom(zoomAmount);
                     break;
-                case 173: // -
+                case "=": 
+                    this.zoom(zoomAmount);
+                    break;
+                case "-": 
+                    this.zoom(1 / zoomAmount);
+                    break;
+                case "_": 
                     this.zoom(1 / zoomAmount);
                     break;
             }
