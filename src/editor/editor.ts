@@ -174,8 +174,8 @@ export default class Editor {
 
         // key events
         canvas.addEventListener("keydown", (event) => {
-            switch(event.keyCode) {
-                case 46: // delete
+            switch(event.key.toLowerCase()) {
+                case "delete":
                     let graph = this.graph;
                     if (this.selectionId != null) {
                         if (graph.hasState(this.selectionId)) {
@@ -185,23 +185,23 @@ export default class Editor {
                         }
                     }
                     break;
-                case 65: // a
+                case "a": 
                     let position = this.drawer.localCenter;
                     let state = new Marking(this.petrinet);
                     this.addState(state, position);
                     break;
-                case 67: // c
+                case "c": 
                     this.drawer.center();
                     break;
-                case 73: // i
+                case "i": 
                     this.setInitial(this.selectionId);
                     break;
-                case 89: // y
+                case "y": 
                     if(event.ctrlKey) {
                         this.historyList.redo();
                     }
                     break;
-                case 90: // z
+                case "z": 
                     if(event.ctrlKey && !event.shiftKey) {
                         this.historyList.undo();
                     } else if(event.ctrlKey && event.shiftKey) {
