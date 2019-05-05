@@ -4,6 +4,7 @@ import { AxiosResponse, AxiosError } from "axios";
 import UserModule from "./user";
 import PetrinetModule from "./petrinet";
 
+import Config from "src/services/config";
 import SessionService from "src/services/session";
 import { SessionCreatedResponse } from "src/types";
 
@@ -61,7 +62,14 @@ export default class SessionModule extends VuexModule {
                 }).catch((error: AxiosError) => {
                     let message: string;
                     if (error.response) {
-                        message = error.response.data.error;
+                        if (error.response.status === 404) {
+                            let config = Config.getInstance();
+                            message = `Server not found at: "${config.baseUrl}"`;
+                        } else if (error.response.data.error) {
+                            message = error.response.data.error;
+                        } else {
+                            message = "Unkown error";
+                        }
                     } else {
                         message = "Could not connect to server";
                     }
