@@ -1,6 +1,8 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { AxiosResponse, AxiosError } from "axios";
 
+import Config from "src/services/config";
+
 import UserService from "src/services/user";
 import { UserCreatedResponse } from "src/types";
 
@@ -55,7 +57,14 @@ export default class UserModule extends VuexModule {
             }).catch((error: AxiosError) => {
                 let message: string;
                 if (error.response) {
-                    message = error.response.data.error;
+                    if (error.response.status === 404) {
+                        let config = Config.getInstance();
+                        message = `Server not found at URL: "${config.baseUrl}"`;
+                    } else if (error.response.data.error) {
+                        message = error.response.data.error;
+                    } else {
+                        message = "Unknown error";
+                    }
                 } else {
                     message = "Could not connect to server";
                 }
