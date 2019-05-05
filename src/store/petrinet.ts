@@ -5,6 +5,7 @@ import Petrinet from "src/system/petrinet/petrinet";
 import ResponseToPetrinet from "src/converters/response-to-petrinet";
 import UserModule from "./user";
 
+import Config from "src/services/config";
 import PetrinetService from "src/services/petrinet";
 import { PetrinetResponse,
          PetrinetCreatedResponse } from "src/types";
@@ -76,7 +77,14 @@ export default class PetrinetModule extends VuexModule {
                 }).catch((error: AxiosError) => {
                     let message: string;
                     if (error.response) {
-                        message = error.response.data.error;
+                        if (error.response.status === 404) {
+                            let config = Config.getInstance();
+                            message = `Server not found at URL: "${config.baseUrl}"`;
+                        } else if (error.response.data.error) {
+                            message = error.response.data.error;
+                        } else {
+                            message = "Unkown error";
+                        }
                     } else {
                         message = "Could not connect to server";
                     }
@@ -108,7 +116,14 @@ export default class PetrinetModule extends VuexModule {
                 }).catch((error: AxiosError) => {
                     let message: string;
                     if (error.response) {
-                        message = error.response.data.error;
+                        if (error.response.status === 404) {
+                            let config = Config.getInstance();
+                            message = `Server not found at URL: "${config.baseUrl}"`;
+                        } else if (error.response.data.error) {
+                            message = error.response.data.error;
+                        } else {
+                            message = "Unkown error";
+                        }
                     } else {
                         message = "Could not connect to server";
                     }
