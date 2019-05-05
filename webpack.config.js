@@ -64,6 +64,9 @@ let config = {
             'API_URL': JSON.stringify(conf.API_URL),
             'DEVELOPMENT': JSON.stringify(process.env.NODE_ENV == 'development'),
             'PRODUCTION': JSON.stringify(process.env.NODE_ENV == 'production'),
+            'SOURCE_URL': JSON.stringify("https://github.com/lukasios12/cmod"),
+            'BUG_URL': JSON.stringify("https://github.com/lukasios12/cmod/issues"),
+            'INSTITUTION': JSON.stringify("Utrecht University"),
             'SHOW_SUCCESS_MESSAGE': JSON.stringify(conf.SHOW_SUCCESS_MESSAGE),
             'SHOW_QUESTIONNAIRE_MESSAGE': JSON.stringify(conf.SHOW_QUESTIONNAIRE_MESSAGE),
             'QUESTIONNAIRE_URL': JSON.stringify(conf.QUESTIONNAIRE_URL)
