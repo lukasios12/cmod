@@ -8,6 +8,7 @@ import PetrinetModule from "./petrinet";
 import Graph from "src/system/graph/graph";
 import ResponseToFeedback from "src/converters/response-to-feedback";
 
+import Config from "src/services/config";
 import FeedbackService from "src/services/feedback";
 import Feedback from "src/feedback/feedback";
 
@@ -61,7 +62,14 @@ export default class FeedbackModule extends VuexModule {
             }).catch((error: AxiosError) => {
                 let message: string;
                 if (error.response) {
-                    message = error.response.data.error;
+                    if (error.response.status === 404) {
+                        let config = Config.getInstance();
+                        message = `Server not found at: "${config.baseUrl}"`;
+                    } else if (error.response.data.error) {
+                        message = error.response.data.error;
+                    } else {
+                        message = "Unkown error";
+                    }
                 } else {
                     message = "Could not connect to server";
                 }
