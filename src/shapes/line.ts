@@ -38,7 +38,7 @@ export default class Line implements Shape2D {
         let middle = Vector2D.add(this.source, Vector2D.scale(unit, len / 2));
         let result = Vector2D.add(
             middle,
-            Vector2D.scale(perp, this.bend / (0.5 * Math.PI))
+            Vector2D.scale(perp, this.bend / (.66 * Math.PI))
         );
         return result;
     }
