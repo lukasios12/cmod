@@ -17,17 +17,17 @@ import HashTable from "src/hash-table/hash-table";
 import HashSet   from "src/hash-set/hash-set";
 
 export default class GraphDrawing implements Drawing, Snappable {
-    public states: HashTable<number, StateDrawing>;
-    public edges: HashTable<number, EdgeDrawing>;
+    public readonly states: HashTable<number, StateDrawing>;
+    public readonly edges: HashTable<number, EdgeDrawing>;
     public initial: number | null;
 
-    public _options: GraphDrawingOptions;
+    public options: GraphDrawingOptions;
 
     public constructor(options: GraphDrawingOptions | null = null) {
         this.states = new HashTable<number, StateDrawing>();
         this.edges = new HashTable<number, EdgeDrawing>();
         this.initial = null;
-        if(options) { 
+        if (options) {
             this.options = options;
         } else {
             this.options = {
@@ -127,27 +127,36 @@ export default class GraphDrawing implements Drawing, Snappable {
                 ie[i].draw(context);
             }
         }
-
+        // draw selected element
+        if (selected !== null) {
+            if (this.hasState(selected)) {
+                let drawing = this.getState(selected);
+                StyleManager.setStateSelectedStyle(context);
+                drawing.draw(context);
+            } else if (this.hasEdge(selected)) {
+                let drawing = this.getEdge(selected);
+                StyleManager.setEdgeSelectedStyle(context);
+                drawing.draw(context);
+            }
+        }
+        // draw initial state pointer
+        if (this.initial != null) {
+            context.fillStyle = "black";
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            let state = this.getState(this.initial);
+            let pos = state!.position;
+            let arrow = new Arrow(pos.x - 30, pos.y - 30, pos.x, pos.y);
+            arrow.fill(context);
+        }
         // draw edges
         StyleManager.setEdgeStandardStyle(context);
         this.edges.each((id: number, edge: EdgeDrawing) => {
-            if (selected == id) {
-                context.save();
-                StyleManager.setEdgeSelectedStyle(context);
-                edge.draw(context);
-                context.restore();
-            }
             edge.draw(context);
         });
         // draw states
         StyleManager.setStateStandardStyle(context);
         this.states.each((id: number, state: StateDrawing) => {
-            if (selected == id) {
-                context.save();
-                StyleManager.setStateSelectedStyle(context);
-                state!.draw(context);
-                context.restore();
-            }
             state!.draw(context);
         });
         // draw text for states and edges
@@ -159,16 +168,6 @@ export default class GraphDrawing implements Drawing, Snappable {
         this.edges.each((id: number, edge: EdgeDrawing) => {
             edge.drawText(context);
         });
-        // draw initial state pointer
-        if (this.initial != null) {
-            context.fillStyle = "black";
-            context.strokeStyle = "black";
-            context.lineWidth = 2;
-            let state = this.getState(this.initial);
-            let pos = state!.position;
-            let arrow = new Arrow(pos.x - 30, pos.y - 30, pos.x, pos.y);
-            arrow.fill(context);
-        }
     }
 
     public addState(id: number, drawing: StateDrawing): StateDrawing {
@@ -205,27 +204,35 @@ export default class GraphDrawing implements Drawing, Snappable {
     }
 
     public getDrawing(id: number): Drawing {
-        if(this.states.has(id)) {
+        if(this.hasState(id)) {
             return this.getState(id);
         } 
-        if(this.edges.has(id)) {
+        if(this.hasEdge(id)) {
             return this.getEdge(id);
         }
         return null;
     }
 
     public getState(id: number): StateDrawing {
-        if(this.states.has(id)) {
+        if(this.hasState(id)) {
             return this.states.get(id)!;
         }
         return null;
     }
 
     public getEdge(id: number): EdgeDrawing {
-        if(this.edges.has(id)) {
+        if (this.hasEdge(id)) {
             return this.edges.get(id)!;
         }
         return null;
+    }
+
+    public hasState(id: number): boolean {
+        return this.states.has(id);
+    }
+
+    public hasEdge(id: number): boolean {
+        return this.edges.has(id);
     }
 
     public getDrawingAt(pos: Vector2D, context: CanvasRenderingContext2D): number | null {
@@ -253,13 +260,5 @@ export default class GraphDrawing implements Drawing, Snappable {
             state.snap(hgrid, vgrid, context);
         });
         context.restore();
-    }
-
-    public get options(): GraphDrawingOptions {
-        return this._options;
-    }
-
-    public set options(opts: GraphDrawingOptions) {
-        this._options = opts;
     }
 }
