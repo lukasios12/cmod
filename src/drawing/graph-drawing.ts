@@ -170,12 +170,11 @@ export default class GraphDrawing implements Drawing, Snappable {
         });
     }
 
-    public addState(id: number, drawing: StateDrawing): StateDrawing {
+    public addState(id: number, drawing: StateDrawing): void {
         this.states.set(id, drawing);
-        return drawing;
     }
 
-    public addEdge(id: number, edge: EdgeDrawing): EdgeDrawing {
+    public addEdge(id: number, edge: EdgeDrawing): void {
         this.edges.set(id, edge);
         let e = edge.edge;
         let source = this.getState(e.from);
@@ -184,7 +183,6 @@ export default class GraphDrawing implements Drawing, Snappable {
             let target = this.getState(e.to);
             target.preset.push(edge);
         }
-        return edge;
     }
 
     public delState(id: number): void {
