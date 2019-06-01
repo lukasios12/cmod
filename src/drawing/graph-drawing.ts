@@ -139,16 +139,6 @@ export default class GraphDrawing implements Drawing, Snappable {
                 drawing.draw(context);
             }
         }
-        // draw initial state pointer
-        if (this.initial != null) {
-            context.fillStyle = "black";
-            context.strokeStyle = "black";
-            context.lineWidth = 2;
-            let state = this.getState(this.initial);
-            let pos = state!.position;
-            let arrow = new Arrow(pos.x - 30, pos.y - 30, pos.x, pos.y);
-            arrow.fill(context);
-        }
         // draw edges
         StyleManager.setEdgeStandardStyle(context);
         this.edges.each((id: number, edge: EdgeDrawing) => {
@@ -168,6 +158,16 @@ export default class GraphDrawing implements Drawing, Snappable {
         this.edges.each((id: number, edge: EdgeDrawing) => {
             edge.drawText(context);
         });
+        // draw initial state pointer
+        if (this.initial != null) {
+            context.fillStyle = "black";
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            let state = this.getState(this.initial);
+            let pos = state!.position;
+            let arrow = new Arrow(pos.x - 30, pos.y - 30, pos.x, pos.y);
+            arrow.fill(context);
+        }
     }
 
     public addState(id: number, drawing: StateDrawing): void {
