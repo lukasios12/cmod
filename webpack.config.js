@@ -72,7 +72,9 @@ let config = {
             'QUESTIONNAIRE_URL': JSON.stringify(conf.QUESTIONNAIRE_URL)
         }),
         new HtmlWebpackPlugin({
-            template: "./src/index.html"
+            filename: "index.html",
+            template: "./src/index.html",
+            inject: "head",
         }),
         new MiniCssExtractPlugin({
             filename: "style.css"
