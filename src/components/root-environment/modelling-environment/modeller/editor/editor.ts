@@ -13,6 +13,7 @@ import ContextMenuComponent from "./context-menu/context-menu";
 import MessengerComponent from "./messenger/messenger";
 import EditStateComponent from "./edit-state/edit-state";
 import EditEdgeComponent from "./edit-edge/edit-edge";
+import LoaderComponent from "src/components/common/loader/loader";
 
 import Editor from "src/editor/editor";
 import EditorOptions from "src/editor/editor-options";
@@ -31,6 +32,7 @@ import { MarkingStringType } from "src/system/marking";
         "messenger": MessengerComponent,
         "edit-state": EditStateComponent,
         "edit-edge": EditEdgeComponent,
+        "loader": LoaderComponent,
     }
 })
 export default class EditorComponent extends Vue {
@@ -61,6 +63,10 @@ export default class EditorComponent extends Vue {
     }
 
     get feedbackButtonDisabled() {
+        return this.loadingFeedback;
+    }
+
+    get loadingFeedback() {
         let mod = getModule(FeedbackModule, this.$store);
         return mod.isLoading;
     }
@@ -160,6 +166,21 @@ export default class EditorComponent extends Vue {
         return mod.settings.difficulty === Difficulty.HARD;
     }
 
+    get feedbackLoaderStyle() {
+        let a = {
+            "position": "absolute",
+            "top": ".25rem",
+            "left": ".25rem",
+            "margin": "0",
+            "padding": "0",
+            "height": "1.5rem",
+            "width": "1.5rem",
+            "border-width": ".25rem",
+        };
+        return a;
+    }
+
+    // catch and get settings for the underlying Editor class
     get petrinet(): Petrinet {
         let mod = getModule(PetrinetModule, this.$store);
         return mod.petrinet;

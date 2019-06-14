@@ -1,4 +1,4 @@
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import WithRender from "./loader.html?style=./loader.scss";
 
 @WithRender

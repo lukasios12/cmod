@@ -8,6 +8,8 @@
     Your browser does not support the HTML 5 Canvas API
   </canvas>
 
+  <loader :style="feedbackLoaderStyle" v-show="loadingFeedback"/>
+
   <div id="feedbackButtons" v-show="showFeedbackButtons">
     <button class="editorButton"
             @click="clearFeedback">Clear feedback</button>
