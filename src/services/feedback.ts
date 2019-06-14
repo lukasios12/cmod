@@ -1,4 +1,4 @@
-import axios, { AxiosPromise } from "axios";
+import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
 import Config from "./config";
 import { FeedbackResponse, GraphRequest } from "src/types";
 
@@ -6,12 +6,12 @@ import Graph from "src/system/graph/graph";
 import GraphToRequest from "src/converters/graph-to-request";
 
 export default class FeedbackService {
-    public static get(uid: number, pid: number, sid: number, graph: Graph): AxiosPromise<FeedbackResponse> {
+    public static get(uid: number, pid: number, sid: number, graph: Graph): AxiosRequestConfig {
         let conf = Config.getInstance();
         let base = conf.baseUrl;
         let petrinetUrl = conf.petrinetUrl;
         let g = GraphToRequest.convert(graph);
-        return axios.request<FeedbackResponse>({
+        let config: AxiosRequestConfig = {
             baseURL: base,
             url: petrinetUrl + `/${uid}/${pid}/${sid}/feedback`,
             data: g,
@@ -19,7 +19,8 @@ export default class FeedbackService {
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
             }
-        });
+        };
+        return config;
     }
 }
 

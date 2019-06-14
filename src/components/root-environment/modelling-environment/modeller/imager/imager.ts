@@ -1,4 +1,4 @@
-import { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { Vue, Component } from "vue-property-decorator";
 import WithRender from "./imager.html?style=./imager.scss";
 
@@ -24,17 +24,19 @@ export default class Imager extends Vue {
         let mod = getModule(PetrinetModule, this.$store);
         if (mod.id !== null) {
             this.loading = true;
-            PetrinetService.image(mod.id).then((response: AxiosResponse<string>) => {
-                let parser = new DOMParser();
-                let el = parser.parseFromString(response.data, "image/svg+xml");
-                let svg = <SVGElement><unknown>el.documentElement;
-                svg.classList.add("image");
-                this.image = svg;
-            }).catch((response: AxiosError) => {
-                this.error = response.message;
-            }).finally(() => {
-                this.loading = false;
-            });
+            let conf = PetrinetService.image(mod.id);
+            axios.request(conf)
+                .then((response: AxiosResponse<string>) => {
+                    let parser = new DOMParser();
+                    let el = parser.parseFromString(response.data, "image/svg+xml");
+                    let svg = <SVGElement><unknown>el.documentElement;
+                    svg.classList.add("image");
+                    this.image = svg;
+                }).catch((response: AxiosError) => {
+                    this.error = response.message;
+                }).finally(() => {
+                    this.loading = false;
+                });
         } else {
             this.error = "Not enough information to retrieve image";
         }

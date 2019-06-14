@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-decorators";
-import { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 import Petrinet from "src/system/petrinet/petrinet";
 import ResponseToPetrinet from "src/converters/response-to-petrinet";
@@ -7,8 +7,10 @@ import UserModule from "./user";
 
 import Config from "src/services/config";
 import PetrinetService from "src/services/petrinet";
-import { PetrinetResponse,
-         PetrinetCreatedResponse } from "src/types";
+import {
+    PetrinetResponse,
+    PetrinetCreatedResponse
+} from "src/types";
 
 @Module({
     name: "PetrinetModule",
@@ -68,32 +70,33 @@ export default class PetrinetModule extends VuexModule {
                 reject();
             } else {
                 this.setLoading(true);
-                PetrinetService.set(umod.id, file)
-                .then((response: AxiosResponse<PetrinetCreatedResponse>) => {
-                    let id = Number(response.data.petrinetId);
-                    this.setError("");
-                    this.setId(id);
-                    resolve();
-                }).catch((error: AxiosError) => {
-                    let message: string;
-                    if (error.response) {
-                        if (error.response.status === 404) {
-                            let config = Config.getInstance();
-                            message = `Server not found at URL: "${config.baseUrl}"`;
-                        } else if (error.response.data.error) {
-                            message = error.response.data.error;
+                let conf = PetrinetService.set(umod.id, file);
+                axios.request(conf)
+                    .then((response: AxiosResponse<PetrinetCreatedResponse>) => {
+                        let id = Number(response.data.petrinetId);
+                        this.setError("");
+                        this.setId(id);
+                        resolve();
+                    }).catch((error: AxiosError) => {
+                        let message: string;
+                        if (error.response) {
+                            if (error.response.status === 404) {
+                                let config = Config.getInstance();
+                                message = `Server not found at URL: "${config.baseUrl}"`;
+                            } else if (error.response.data.error) {
+                                message = error.response.data.error;
+                            } else {
+                                message = "Unkown error";
+                            }
                         } else {
-                            message = "Unkown error";
+                            message = "Could not connect to server";
                         }
-                    } else {
-                        message = "Could not connect to server";
-                    }
-                    this.setId(null);
-                    this.setError(message);
-                    reject();
-                }).finally(() => {
-                    this.setLoading(false);
-                });
+                        this.setId(null);
+                        this.setError(message);
+                        reject();
+                    }).finally(() => {
+                        this.setLoading(false);
+                    });
             }
         });
     }
@@ -106,33 +109,34 @@ export default class PetrinetModule extends VuexModule {
                 reject();
             } else {
                 this.setLoading(true);
-                PetrinetService.get(this.id)
-                .then((response: AxiosResponse<PetrinetResponse>) => {
-                    let net = response.data;
-                    let cnet = ResponseToPetrinet.convert(net);
-                    this.setPetrinet(cnet);
-                    this.setError("");
-                    resolve();
-                }).catch((error: AxiosError) => {
-                    let message: string;
-                    if (error.response) {
-                        if (error.response.status === 404) {
-                            let config = Config.getInstance();
-                            message = `Server not found at URL: "${config.baseUrl}"`;
-                        } else if (error.response.data.error) {
-                            message = error.response.data.error;
+                let conf = PetrinetService.get(this.id);
+                axios.request(conf)
+                    .then((response: AxiosResponse<PetrinetResponse>) => {
+                        let net = response.data;
+                        let cnet = ResponseToPetrinet.convert(net);
+                        this.setPetrinet(cnet);
+                        this.setError("");
+                        resolve();
+                    }).catch((error: AxiosError) => {
+                        let message: string;
+                        if (error.response) {
+                            if (error.response.status === 404) {
+                                let config = Config.getInstance();
+                                message = `Server not found at URL: "${config.baseUrl}"`;
+                            } else if (error.response.data.error) {
+                                message = error.response.data.error;
+                            } else {
+                                message = "Unkown error";
+                            }
                         } else {
-                            message = "Unkown error";
+                            message = "Could not connect to server";
                         }
-                    } else {
-                        message = "Could not connect to server";
-                    }
-                    this.setError(message);
-                    reject();
-                }).finally(() => {
-                    this.setLoading(false);
-                });
-           }
+                        this.setError(message);
+                        reject();
+                    }).finally(() => {
+                        this.setLoading(false);
+                    });
+            }
         });
     }
 }

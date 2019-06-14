@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 import Config from "src/services/config";
 
@@ -48,32 +48,33 @@ export default class UserModule extends VuexModule {
         let fd = new FormData();
         fd.set("name", username);
         return new Promise((resolve, reject) => {
-            UserService.set(username)
-            .then((response: AxiosResponse<UserCreatedResponse>) => {
-                let id = Number(response.data.id);
-                this.setId(id);
-                this.setError("");
-                resolve();
-            }).catch((error: AxiosError) => {
-                let message: string;
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        let config = Config.getInstance();
-                        message = `Server not found at URL: "${config.baseUrl}"`;
-                    } else if (error.response.data.error) {
-                        message = error.response.data.error;
+            let conf = UserService.set(username);
+            axios.request(conf)
+                .then((response: AxiosResponse<UserCreatedResponse>) => {
+                    let id = Number(response.data.id);
+                    this.setId(id);
+                    this.setError("");
+                    resolve();
+                }).catch((error: AxiosError) => {
+                    let message: string;
+                    if (error.response) {
+                        if (error.response.status === 404) {
+                            let config = Config.getInstance();
+                            message = `Server not found at URL: "${config.baseUrl}"`;
+                        } else if (error.response.data.error) {
+                            message = error.response.data.error;
+                        } else {
+                            message = "Unknown error";
+                        }
                     } else {
-                        message = "Unknown error";
+                        message = "Could not connect to server";
                     }
-                } else {
-                    message = "Could not connect to server";
-                }
-                this.setId(null);
-                this.setError(message);
-                reject();
-            }).finally(() => {
-                this.setLoading(false);
-            });
+                    this.setId(null);
+                    this.setError(message);
+                    reject();
+                }).finally(() => {
+                    this.setLoading(false);
+                });
         });
     }
 }

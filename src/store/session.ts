@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action, getModule } from "vuex-module-decorators";
-import { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 import UserModule from "./user";
 import PetrinetModule from "./petrinet";
@@ -54,30 +54,31 @@ export default class SessionModule extends VuexModule {
                 this.setError("Not enough information to start the session");
             } else {
                 this.setLoading(true);
-                SessionService.set(umod.id, pmod.id)
-                .then((response: AxiosResponse<SessionCreatedResponse>) => {
-                    let sid = response.data.session_id;
-                    this.setId(sid);
-                    return resolve();
-                }).catch((error: AxiosError) => {
-                    let message: string;
-                    if (error.response) {
-                        if (error.response.status === 404) {
-                            let config = Config.getInstance();
-                            message = `Server not found at: "${config.baseUrl}"`;
-                        } else if (error.response.data.error) {
-                            message = error.response.data.error;
+                let conf = SessionService.set(umod.id, pmod.id);
+                axios.request(conf)
+                    .then((response: AxiosResponse<SessionCreatedResponse>) => {
+                        let sid = response.data.session_id;
+                        this.setId(sid);
+                        return resolve();
+                    }).catch((error: AxiosError) => {
+                        let message: string;
+                        if (error.response) {
+                            if (error.response.status === 404) {
+                                let config = Config.getInstance();
+                                message = `Server not found at: "${config.baseUrl}"`;
+                            } else if (error.response.data.error) {
+                                message = error.response.data.error;
+                            } else {
+                                message = "Unkown error";
+                            }
                         } else {
-                            message = "Unkown error";
+                            message = "Could not connect to server";
                         }
-                    } else {
-                        message = "Could not connect to server";
-                    }
-                    this.setId(null);
-                    this.setError(message);
-                }).finally(() => {
-                    this.setLoading(false);
-                });
+                        this.setId(null);
+                        this.setError(message);
+                    }).finally(() => {
+                        this.setLoading(false);
+                    });
             }
         });
     }

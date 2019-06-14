@@ -1,23 +1,23 @@
-import axios, { AxiosPromise } from "axios";
+import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
 import { PetrinetResponse, PetrinetCreatedResponse } from "src/types";
 
 import Config from "src/services/config";
 
 export default class PetrinetService {
-    public static get(id: number): AxiosPromise<PetrinetResponse> {
+    public static get(id: number): AxiosRequestConfig {
         let conf = Config.getInstance();
-        return axios.request({
+        return {
             baseURL: conf.baseUrl,
             url: conf.petrinetUrl + `/${id}`,
             method: "get",
-        });
+        };
     }
 
-    public static set(uid: number, file: File): AxiosPromise<PetrinetCreatedResponse> {
+    public static set(uid: number, file: File): AxiosRequestConfig {
         let conf = Config.getInstance();
         let fd = new FormData();
         fd.append("petrinet", file);
-        return axios.request({
+        return {
             baseURL: conf.baseUrl,
             url: conf.petrinetUrl + `/${uid}/new`,
             method: "post",
@@ -25,24 +25,24 @@ export default class PetrinetService {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
-        });
+        };
     }
 
-    public static gets(limit: number, page: number) {
+    public static gets(limit: number, page: number): AxiosRequestConfig {
         let conf = Config.getInstance();
-        return axios.request({
+        return {
             baseURL: conf.baseUrl,
             url: conf.petrinetUrl + `/${limit}/${page}/`,
             method: "get"
-        });
+        };
     }
 
-    public static image(id: number): AxiosPromise<string> {
+    public static image(id: number): AxiosRequestConfig {
         let conf = Config.getInstance();
-        return axios.request({
+        return {
             baseURL: conf.baseUrl,
             url: conf.petrinetUrl + `/${id}/image`,
             method: "get"
-        });
+        };
     }
 }
