@@ -1,26 +1,26 @@
 import { Vue, Component, Watch } from "vue-property-decorator";
 import WithRender from "./editor.html?style=./editor.scss";
 
-import { getModule }              from "vuex-module-decorators";
-import EditorSettingsModule       from "src/store/editor-settings";
-import DrawerSettingsModule       from "src/store/drawer-settings";
+import { getModule } from "vuex-module-decorators";
+import EditorSettingsModule from "src/store/editor-settings";
+import DrawerSettingsModule from "src/store/drawer-settings";
 import GraphDrawingSettingsModule from "src/store/graph-drawing-settings";
-import ModellerModule             from "src/store/modeller";
-import PetrinetModule             from "src/store/petrinet";
-import FeedbackModule             from "src/store/feedback";
+import ModellerModule from "src/store/modeller";
+import PetrinetModule from "src/store/petrinet";
+import FeedbackModule from "src/store/feedback";
 
 import ContextMenuComponent from "./context-menu/context-menu";
-import MessengerComponent   from "./messenger/messenger";
-import EditStateComponent   from "./edit-state/edit-state";
-import EditEdgeComponent    from "./edit-edge/edit-edge";
+import MessengerComponent from "./messenger/messenger";
+import EditStateComponent from "./edit-state/edit-state";
+import EditEdgeComponent from "./edit-edge/edit-edge";
 
-import Editor                from "src/editor/editor";
-import EditorOptions         from "src/editor/editor-options";
-import Difficulty            from "src/editor/difficulty";
-import DrawerOptions         from "src/drawer/drawer-options";
-import Petrinet              from "src/system/petrinet/petrinet";
-import Marking               from "src/system/marking";
-import Feedback              from "src/feedback/feedback";
+import Editor from "src/editor/editor";
+import EditorOptions from "src/editor/editor-options";
+import Difficulty from "src/editor/difficulty";
+import DrawerOptions from "src/drawer/drawer-options";
+import Petrinet from "src/system/petrinet/petrinet";
+import Marking from "src/system/marking";
+import Feedback from "src/feedback/feedback";
 import { MarkingStringType } from "src/system/marking";
 
 @WithRender
@@ -28,21 +28,21 @@ import { MarkingStringType } from "src/system/marking";
     name: "editor",
     components: {
         "context-menu": ContextMenuComponent,
-        "messenger":    MessengerComponent,
-        "edit-state":   EditStateComponent,
-        "edit-edge":    EditEdgeComponent,
+        "messenger": MessengerComponent,
+        "edit-state": EditStateComponent,
+        "edit-edge": EditEdgeComponent,
     }
 })
 export default class EditorComponent extends Vue {
-    editor: Editor | null    = null;
+    editor: Editor | null = null;
     showContextMenu: boolean = false;
-    showEditState: boolean   = false;
-    showEditEdge: boolean    = false;
+    showEditState: boolean = false;
+    showEditEdge: boolean = false;
 
     contextLeft: number = 0;
-    contextTop:  number = 0;
-    contextX:    number = 0;
-    contextY:    number = 0;
+    contextTop: number = 0;
+    contextX: number = 0;
+    contextY: number = 0;
 
     addState() {
         if (this.editor) {
@@ -58,6 +58,11 @@ export default class EditorComponent extends Vue {
             return "Getting feedback...";
         }
         return "Request feedback";
+    }
+
+    get feedbackButtonDisabled() {
+        let mod = getModule(FeedbackModule, this.$store);
+        return mod.isLoading;
     }
 
     clearFeedback() {
@@ -160,9 +165,9 @@ export default class EditorComponent extends Vue {
         return mod.petrinet;
     }
 
-    @Watch('petrinet', {deep: false, immediate: false})
+    @Watch('petrinet', { deep: false, immediate: false })
     onPetrinetChange(): void {
-        if (this.editor) { 
+        if (this.editor) {
             this.editor.petrinet = this.petrinet;
         }
     }
@@ -172,7 +177,7 @@ export default class EditorComponent extends Vue {
         return mod.feedback;
     }
 
-    @Watch('feedback', {deep: false, immediate: false})
+    @Watch('feedback', { deep: false, immediate: false })
     onFeedbackChange(): void {
         if (this.editor) {
             this.editor.feedback = this.feedback;
@@ -184,7 +189,7 @@ export default class EditorComponent extends Vue {
         return mod.settings;
     }
 
-    @Watch('editorSettings', {deep: true, immediate: false})
+    @Watch('editorSettings', { deep: true, immediate: false })
     onEditorSettingsChange(): void {
         if (this.editor) {
             this.editor.options = this.editorSettings;
@@ -196,7 +201,7 @@ export default class EditorComponent extends Vue {
         return mod.settings;
     }
 
-    @Watch('drawerSettings', {deep: true, immediate: false})
+    @Watch('drawerSettings', { deep: true, immediate: false })
     onDrawerSettingsChange(): void {
         if (this.editor) {
             this.editor.drawer.options = this.drawerSettings;
@@ -208,7 +213,7 @@ export default class EditorComponent extends Vue {
         return mod.stringType;
     }
 
-    @Watch('stringType', {deep: false, immediate: true})
+    @Watch('stringType', { deep: false, immediate: true })
     onStringTypeChange(): void {
         if (this.editor) {
             let type = this.stringType;
@@ -221,7 +226,7 @@ export default class EditorComponent extends Vue {
         return mod.resizing;
     }
 
-    @Watch('isResizing', {deep: false, immediate: false})
+    @Watch('isResizing', { deep: false, immediate: false })
     onResizeChange(): void {
         if (this.editor) {
             this.editor.drawer.resize();

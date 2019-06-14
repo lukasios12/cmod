@@ -32,6 +32,11 @@
         &:hover {
             background: $grey;
         }
+
+        &:disabled {
+            background: $darkGrey;
+            color: $grey;
+        }
     }
 }
 
