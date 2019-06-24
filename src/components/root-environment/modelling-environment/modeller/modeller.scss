@@ -8,7 +8,7 @@
 
     & > .pane {
         background: white;
-        overflow: hidden;
+        overflow: visible;
 
         &.right {
             flex-grow: 1;
@@ -20,7 +20,7 @@
         left: 0 !important; 
         margin-left: 0 !important;
         width: $dividerWidth !important;
-        z-index: 2;
+        z-index: 1;
 
         &:before {
             content: "";
@@ -38,6 +38,10 @@
     }
 
     &.is-resizing {
+        & > .pane {
+            overflow: hidden;
+        }
+        
         & > .resizer {
             background: darkgrey;
 
