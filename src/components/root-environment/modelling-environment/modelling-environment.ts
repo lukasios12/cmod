@@ -14,12 +14,12 @@ import SuccessComponent from "./success/success";
 @WithRender
 @Component({
     components: {
-        "modeller-environment": ModellerComponent,
-        "modeller-header":      HeaderComponent,
-        "modeller-menu":        MenuComponent,
+        "modeller": ModellerComponent,
+        "modeller-header": HeaderComponent,
+        "modeller-menu": MenuComponent,
         "modeller-menu-toggle": MenuToggleComponent,
-        "modeller-tutorial":    TutorialComponent,
-        "modeller-success":     SuccessComponent,
+        "modeller-tutorial": TutorialComponent,
+        "modeller-success": SuccessComponent,
     },
 })
 export default class ModellingEnvironment extends Vue {
@@ -29,10 +29,10 @@ export default class ModellingEnvironment extends Vue {
 
     created() {
         window.addEventListener('keyup', (event) => {
-            switch(event.keyCode) {
+            switch (event.keyCode) {
                 case 72:
                     this.toggleTutorial();
-                break;
+                    break;
             }
         });
     }
