@@ -1,4 +1,8 @@
 <div>
-    <component :is="current"></component>
-    <footer-component></footer-component>
+  <connection-status
+    @online="online"
+    @offline="offline"
+    v-show="showConnectionStatus"/>
+  <component :is="current"/>
+  <footer-component/>
 </div>

@@ -4,6 +4,7 @@ import WithRender from "./root-environment.html?style=./root-environment.scss";
 import InitEnvironment from "./init-environment/init-environment";
 import ModellingEnvironment from "./modelling-environment/modelling-environment";
 import FooterComponent from "./footer/footer";
+import ConnectionStatusComponent from "./connection-status";
 
 import { getModule } from "vuex-module-decorators";
 import UserModule from "src/store/user";
@@ -16,16 +17,11 @@ import SessionModule from "src/store/session";
     components: {
         "init-environment": InitEnvironment,
         "modelling-environment": ModellingEnvironment,
-        "footer-component": FooterComponent
+        "footer-component": FooterComponent,
+        "connection-status": ConnectionStatusComponent
     }
 })
 export default class RootEnvironment extends Vue {
-    components = [
-        InitEnvironment,
-        ModellingEnvironment,
-        FooterComponent
-    ];
-
     get current() {
         let umod = getModule(UserModule, this.$store);
         let pmod = getModule(PetrinetModule, this.$store);
@@ -38,5 +34,17 @@ export default class RootEnvironment extends Vue {
         } else {
             return ModellingEnvironment;
         }
+    }
+
+    showConnectionStatus = false;
+
+    online() {
+        window.setTimeout(() => {
+            this.showConnectionStatus = false;
+        }, 1000);
+    }
+
+    offline() {
+        this.showConnectionStatus = true;
     }
 }
