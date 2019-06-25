@@ -1,33 +1,33 @@
 import EditorOptions from "./editor-options";
-import Difficulty    from "./difficulty";
+import Difficulty from "./difficulty";
 
 import Petrinet from "src/system/petrinet/petrinet";
-import Graph    from "src/system/graph/graph";
-import State    from "src/system/graph/state";
-import Edge     from "src/system/graph/edge";
-import Marking  from "src/system/marking";
+import Graph from "src/system/graph/graph";
+import State from "src/system/graph/state";
+import Edge from "src/system/graph/edge";
+import Marking from "src/system/marking";
 
-import Drawing               from "src/drawing/drawing";
-import GraphDrawing          from "src/drawing/graph-drawing";
-import GraphDrawingOptions   from "src/drawing/graph-drawing-options";
-import { isDraggable }       from "src/drawing/draggable-drawing";
+import Drawing from "src/drawing/drawing";
+import GraphDrawing from "src/drawing/graph-drawing";
+import GraphDrawingOptions from "src/drawing/graph-drawing-options";
+import { isDraggable } from "src/drawing/draggable-drawing";
 import { MarkingStringType } from "src/system/marking";
 
-import Drawer           from "src/drawer/drawer";
-import DrawerOptions    from "src/drawer/drawer-options";
-import Feedback         from "src/feedback/feedback";
+import Drawer from "src/drawer/drawer";
+import DrawerOptions from "src/drawer/drawer-options";
+import Feedback from "src/feedback/feedback";
 import FeedbackDispatch from "src/feedback/feedback-dispatch";
 
 import HistoryList from "src/history-list/history-list"
-import Vector2D    from "src/vector/vector2d";
+import Vector2D from "src/vector/vector2d";
 
-import AddState    from "./actions/add-state";
-import AddEdge     from "./actions/add-edge";
+import AddState from "./actions/add-state";
+import AddEdge from "./actions/add-edge";
 import DeleteState from "./actions/del-state";
-import DeleteEdge  from "./actions/del-edge";
-import EditState   from "./actions/edit-state";
-import EditEdge    from "./actions/edit-edge";
-import SetInitial  from "./actions/set-initial";
+import DeleteEdge from "./actions/del-edge";
+import EditState from "./actions/edit-state";
+import EditEdge from "./actions/edit-edge";
+import SetInitial from "./actions/set-initial";
 
 export default class Editor {
     protected _options: EditorOptions;
@@ -125,7 +125,7 @@ export default class Editor {
     }
 
     public select(pos: Vector2D, context: CanvasRenderingContext2D): void {
-        this.selectionId  = this.graphDrawing.getDrawingAt(pos, context);
+        this.selectionId = this.graphDrawing.getDrawingAt(pos, context);
         this.selection = this.selectionId !== null ?
             this.graphDrawing.getDrawing(this.selectionId) :
             null;
@@ -165,16 +165,12 @@ export default class Editor {
     protected registerEvents(): void {
         this.drawer.registerEvents();
 
-        window.addEventListener("offline", (event) => {
-            alert("You seem to be offline, you cannot receive feedback while offline");
-        });
-
         let canvas = this.drawer.context.canvas;
         let context = canvas.getContext("2d");
 
         // key events
         canvas.addEventListener("keydown", (event) => {
-            switch(event.key.toLowerCase()) {
+            switch (event.key.toLowerCase()) {
                 case "delete":
                     let graph = this.graph;
                     if (this.selectionId != null) {
@@ -185,26 +181,26 @@ export default class Editor {
                         }
                     }
                     break;
-                case "a": 
+                case "a":
                     let position = this.drawer.localCenter;
                     let state = new Marking(this.petrinet);
                     this.addState(state, position);
                     break;
-                case "c": 
+                case "c":
                     this.drawer.center();
                     break;
-                case "i": 
+                case "i":
                     this.setInitial(this.selectionId);
                     break;
-                case "y": 
-                    if(event.ctrlKey) {
+                case "y":
+                    if (event.ctrlKey) {
                         this.historyList.redo();
                     }
                     break;
-                case "z": 
-                    if(event.ctrlKey && !event.shiftKey) {
+                case "z":
+                    if (event.ctrlKey && !event.shiftKey) {
                         this.historyList.undo();
-                    } else if(event.ctrlKey && event.shiftKey) {
+                    } else if (event.ctrlKey && event.shiftKey) {
                         this.historyList.redo();
                     }
                     break;
@@ -215,7 +211,7 @@ export default class Editor {
         let mouseDownLeft = false;
         canvas.addEventListener("mousedown", (event) => {
             event.preventDefault();
-            switch(event.buttons) {
+            switch (event.buttons) {
                 case 1: // left click
                     let point = this.drawer.globalToLocal(event);
                     if (this.selectionId !== null && event.ctrlKey) {
@@ -260,7 +256,7 @@ export default class Editor {
             mouseDownLeft = false;
             this.drawer.draw(this.graphDrawing);
         });
-        
+
         canvas.addEventListener("contextmenu", (event) => {
             event.preventDefault();
         });
