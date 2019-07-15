@@ -1,5 +1,5 @@
 {
-    "API_URL": "",
+    "API_URL": "http://localhost/~lucas/cora-server/api",
     "SHOW_SUCCESS_MESSAGE": true,
     "SHOW_QUESTIONNAIRE_MESSAGE": true,
     "QUESTIONNAIRE_URL": ""
