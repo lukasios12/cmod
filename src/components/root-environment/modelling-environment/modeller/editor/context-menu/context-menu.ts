@@ -57,6 +57,13 @@ export default class ContextMenuComponent extends Vue {
         }
     }
 
+    @Emit('close')
+    flipEdge() {
+        if (this.linearEdge) {
+            this.editor.flipEdge(this.id);
+        }
+    }
+
     get id() {
         if (this.editor && this.editor.selectionId) {
             return this.editor.selectionId;
@@ -70,5 +77,15 @@ export default class ContextMenuComponent extends Vue {
 
     get edgeSelected() {
         return this.id && this.editor.graph.hasEdge(this.id);
+    }
+
+    get linearEdge() {
+        if (this.edgeSelected) {
+            let edge = this.editor.graph.getEdge(this.id);
+            if (edge !== null) {
+                return edge.from !== edge.to;
+            }
+        }
+        return false;
     }
 }

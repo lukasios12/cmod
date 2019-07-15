@@ -27,6 +27,7 @@ import DeleteState from "./actions/del-state";
 import DeleteEdge from "./actions/del-edge";
 import EditState from "./actions/edit-state";
 import EditEdge from "./actions/edit-edge";
+import FlipEdge from "./actions/flip-edge";
 import SetInitial from "./actions/set-initial";
 
 export default class Editor {
@@ -121,6 +122,16 @@ export default class Editor {
             id !== this.graph.initial) {
             let a = new SetInitial(this, id);
             this.historyList.exec(a);
+        }
+    }
+
+    public flipEdge(id: number): void {
+        if (this.graph.hasEdge(id)) {
+            let edge = this.graph.getEdge(id);
+            if (edge.from !== edge.to) {
+                let a = new FlipEdge(this, id);
+                this.historyList.exec(a);
+            }
         }
     }
 
