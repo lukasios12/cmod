@@ -13,7 +13,7 @@ export default class HistoryList {
 
     public exec(action: UndoableAction): void {
         action.exec();
-        if(this.pointer == this.history.length - 1) {
+        if (this.pointer == this.history.length - 1) {
             this.history.push(action);
         } else {
             this.history[this.pointer + 1] = action;
@@ -24,21 +24,29 @@ export default class HistoryList {
     }
 
     public undo(): void {
-        if(this.pointer >= 0) {
+        if (this.pointer >= 0) {
             let action = this.history[this.pointer];
             action.undo();
         }
+        let oldPointer = this.pointer;
         this.pointer = Math.max(-1, this.pointer - 1);
-        this.execHooks();
+        let newPointer = this.pointer;
+        if (oldPointer !== newPointer) {
+            this.execHooks();
+        }
     }
 
     public redo(): void {
-        if(this.pointer < this.history.length - 1) {
+        let oldPointer = this.pointer;
+        if (this.pointer < this.history.length - 1) {
             this.pointer = Math.min(this.pointer + 1, this.history.length - 1);
             let action = this.history[this.pointer];
             action.redo()
         }
-        this.execHooks();
+        let newPointer = this.pointer;
+        if (oldPointer !== newPointer) {
+            this.execHooks();
+        }
     }
 
     public addHook(f: () => any): void {
@@ -46,7 +54,7 @@ export default class HistoryList {
     }
 
     protected execHooks(): void {
-        for(let i = 0; i < this.hooks.length; i++) {
+        for (let i = 0; i < this.hooks.length; i++) {
             this.hooks[i]();
         }
     }
