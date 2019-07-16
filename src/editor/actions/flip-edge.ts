@@ -20,22 +20,6 @@ export default class FlipEdge implements UndoableAction {
     }
 
     public exec(): void {
-        //     let edge = this.editor.graph.getEdge(this.id);
-        //     if (edge === null) {
-        //         throw new Error(`Could not flip edge: invalid id: ${this.id}`);
-        //     }
-        //     this.edge = edge;
-        //     if (edge.from !== edge.to) {
-        //         let newEdge = new Edge(edge.to, edge.from, edge.label);
-        //         let sDrawing = this.editor.graphDrawing.getState(edge.from);
-        //         let tDrawing = this.editor.graphDrawing.getState(edge.to);
-        //         let drawing = new LinearEdgeDrawing(newEdge, tDrawing, sDrawing);
-        //         this.editor.graph.delEdge(this.id);
-        //         this.editor.graph.addEdge(newEdge, this.id);
-        //         this.editor.graphDrawing.delEdge(this.id);
-        //         this.editor.graphDrawing.addEdge(this.id, drawing);
-        //         this.newEdge = newEdge;
-        //     }
         if (!this.edge) {
             let edge = this.editor.graph.getEdge(this.id);
             this.edge = edge;
@@ -62,16 +46,12 @@ export default class FlipEdge implements UndoableAction {
         let tDrawing = this.editor.graphDrawing.getState(this.edge.to);
         let drawing = new LinearEdgeDrawing(this.edge, sDrawing, tDrawing);
         this.editor.graph.delEdge(this.id);
-        this.editor.graph.addEdge(this.edge);
+        this.editor.graph.addEdge(this.edge, this.id);
         this.editor.graphDrawing.delEdge(this.id);
         this.editor.graphDrawing.addEdge(this.id, drawing);
     }
 
     public redo(): void {
         this.exec();
-    }
-
-    protected flip(edge: Edge) {
-        let newEdge = new Edge(edge.to, edge.from, edge.label);
     }
 }
