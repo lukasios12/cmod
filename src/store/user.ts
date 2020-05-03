@@ -51,21 +51,20 @@ export default class UserModule extends VuexModule {
             let conf = UserService.set(username);
             axios.request(conf)
                 .then((response: AxiosResponse<UserCreatedResponse>) => {
-                    let id = Number(response.data.id);
+                    let id = Number(response.data.user_id);
                     this.setId(id);
                     this.setError("");
                     resolve();
                 }).catch((error: AxiosError) => {
                     let message: string;
                     if (error.response) {
-                        if (error.response.status === 404) {
-                            let config = Config.getInstance();
-                            message = `Server not found at URL: "${config.baseUrl}"`;
-                        } else if (error.response.data.error) {
-                            message = error.response.data.error;
-                        } else {
-                            message = "Unknown error";
-                        }
+			if (!error.response.data && error.response.status === 404) {
+			    message = `Server not found at URL: '$config.baseUrl}"`;
+			} else if (error.response.data) {
+			    message = error.response.data;
+			} else {
+			    message = "Unkown error";
+			}
                     } else {
                         message = "Could not connect to server";
                     }

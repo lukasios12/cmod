@@ -4,11 +4,11 @@ import { PetrinetResponse, PetrinetCreatedResponse } from "src/types";
 import Config from "src/services/config";
 
 export default class PetrinetService {
-    public static get(id: number): AxiosRequestConfig {
+    public static get(id: number, mid: number): AxiosRequestConfig {
         let conf = Config.getInstance();
         return {
             baseURL: conf.baseUrl,
-            url: conf.petrinetUrl + `/${id}`,
+            url: conf.petrinetUrl + `/${id}?marking_id=${mid}`,
             method: "get",
         };
     }
@@ -16,10 +16,11 @@ export default class PetrinetService {
     public static set(uid: number, file: File): AxiosRequestConfig {
         let conf = Config.getInstance();
         let fd = new FormData();
-        fd.append("petrinet", file);
+        fd.set("petrinet", file);
+	fd.set("user_id", uid.toString());
         return {
             baseURL: conf.baseUrl,
-            url: conf.petrinetUrl + `/${uid}/new`,
+	    url: conf.petrinetUrl + "/new",
             method: "post",
             data: fd,
             headers: {
@@ -37,11 +38,11 @@ export default class PetrinetService {
         };
     }
 
-    public static image(id: number): AxiosRequestConfig {
+    public static image(id: number, mid: number): AxiosRequestConfig {
         let conf = Config.getInstance();
         return {
             baseURL: conf.baseUrl,
-            url: conf.petrinetUrl + `/${id}/image`,
+            url: conf.petrinetUrl + `/${id}/image?&marking_id=${mid}`,
             method: "get"
         };
     }

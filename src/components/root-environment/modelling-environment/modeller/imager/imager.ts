@@ -22,9 +22,9 @@ export default class Imager extends Vue {
 
     mounted() {
         let mod = getModule(PetrinetModule, this.$store);
-        if (mod.id !== null) {
+        if (mod.id !== null && mod.mid) {
             this.loading = true;
-            let conf = PetrinetService.image(mod.id);
+            let conf = PetrinetService.image(mod.id, mod.mid);
             axios.request(conf)
                 .then((response: AxiosResponse<string>) => {
                     let parser = new DOMParser();

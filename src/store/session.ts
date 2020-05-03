@@ -50,11 +50,11 @@ export default class SessionModule extends VuexModule {
         let pmod = getModule(PetrinetModule);
 
         return new Promise((resolve, reject) => {
-            if (umod.id === null || pmod.id === null) {
+            if (umod.id === null || pmod.id === null || pmod.mid === null) {
                 this.setError("Not enough information to start the session");
             } else {
                 this.setLoading(true);
-                let conf = SessionService.set(umod.id, pmod.id);
+                let conf = SessionService.set(umod.id, pmod.id, pmod.mid);
                 axios.request(conf)
                     .then((response: AxiosResponse<SessionCreatedResponse>) => {
                         let sid = response.data.session_id;
@@ -63,14 +63,14 @@ export default class SessionModule extends VuexModule {
                     }).catch((error: AxiosError) => {
                         let message: string;
                         if (error.response) {
-                            if (error.response.status === 404) {
-                                let config = Config.getInstance();
-                                message = `Server not found at: "${config.baseUrl}"`;
-                            } else if (error.response.data.error) {
-                                message = error.response.data.error;
-                            } else {
-                                message = "Unkown error";
-                            }
+			    if (!error.response.data && error.response.status === 404) {
+				let config = Config.getInstance();
+                                 message = `Server not found at: "${config.baseUrl}"`;
+			    } else if (error.response.data) {
+				message = error.response.data;
+			    } else {
+				message = "Unkown error";
+			    }
                         } else {
                             message = "Could not connect to server";
                         }

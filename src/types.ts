@@ -35,25 +35,31 @@ interface UserListResponse {
 }
 
 interface UserCreatedResponse {
-    id: string;
-    selfUrl: string;
+    user_id: string;
+}
+
+interface MarkedPetrinetResponse {
+    petrinet: PetrinetResponse;
+    marking: Object;
 }
 
 interface PetrinetResponse {
     places: Array<string>;
     transitions: Array<string>;
-    flows: Array<EdgeResponse>;
+    flows: Array<FlowResponse>;
 }
 
-interface EdgeResponse {
+interface FlowResponse {
     from: string;
     to: string;
     weight: number;
 }
 
+type MarkingResponse = Object;
+
 interface PetrinetCreatedResponse {
-    petrinetId: string;
-    petrinetUrl: string;
+    petrinet_id: number;
+    marking_id: number;
 }
 
 interface SessionCreatedResponse {
@@ -65,9 +71,7 @@ interface FeedbackResponse {
     specific: Array<number>;
 }
 
-interface ErrorResponse {
-    error: string;
-}
+type ErrorResponse = string;
 
 export {
     InitialRequest,
@@ -77,7 +81,9 @@ export {
     UserResponse,
     UserListResponse,
     UserCreatedResponse,
+    MarkedPetrinetResponse,
     PetrinetResponse,
+    MarkingResponse,
     PetrinetCreatedResponse,
     SessionCreatedResponse,
     FeedbackResponse,

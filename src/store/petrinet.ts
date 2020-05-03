@@ -8,7 +8,7 @@ import UserModule from "./user";
 import Config from "src/services/config";
 import PetrinetService from "src/services/petrinet";
 import {
-    PetrinetResponse,
+    MarkedPetrinetResponse,
     PetrinetCreatedResponse
 } from "src/types";
 
@@ -18,12 +18,17 @@ import {
 })
 export default class PetrinetModule extends VuexModule {
     pid: number | null = null;
+    mid: number | null = null;
     net: Petrinet | null = null;
     err: string = "";
     loading: boolean = false;
 
     get id(): number | null {
         return this.pid;
+    }
+
+    get markingId(): number | null {
+	return this.mid;
     }
 
     get petrinet(): Petrinet | null {
@@ -41,6 +46,11 @@ export default class PetrinetModule extends VuexModule {
     @Mutation
     setId(id: number | null): void {
         this.pid = id;
+    }
+
+    @Mutation
+    setMarkingId(id: number | null): void {
+	this.mid = id;
     }
 
     @Mutation
@@ -73,21 +83,23 @@ export default class PetrinetModule extends VuexModule {
                 let conf = PetrinetService.set(umod.id, file);
                 axios.request(conf)
                     .then((response: AxiosResponse<PetrinetCreatedResponse>) => {
-                        let id = Number(response.data.petrinetId);
+                        let id = Number(response.data.petrinet_id);
+			let mid = Number(response.data.marking_id);
                         this.setError("");
                         this.setId(id);
+			this.setMarkingId(mid);
                         resolve();
                     }).catch((error: AxiosError) => {
                         let message: string;
                         if (error.response) {
-                            if (error.response.status === 404) {
-                                let config = Config.getInstance();
-                                message = `Server not found at URL: "${config.baseUrl}"`;
-                            } else if (error.response.data.error) {
-                                message = error.response.data.error;
-                            } else {
-                                message = "Unkown error";
-                            }
+			    if (!error.response.data && error.response.status === 404) {
+				let config = Config.getInstance();
+				message = `Server not found at URL: "${config.baseUrl}"`;
+			    } else if (error.response.data) {
+				message = error.response.data;
+			    } else {
+				message = "Unknown error";
+			    }
                         } else {
                             message = "Could not connect to server";
                         }
@@ -109,10 +121,10 @@ export default class PetrinetModule extends VuexModule {
                 reject();
             } else {
                 this.setLoading(true);
-                let conf = PetrinetService.get(this.id);
+                let conf = PetrinetService.get(this.id, this.mid);
                 axios.request(conf)
-                    .then((response: AxiosResponse<PetrinetResponse>) => {
-                        let net = response.data;
+                    .then((response: AxiosResponse<MarkedPetrinetResponse>) => {
+                        let net = response.data.petrinet;
                         let cnet = ResponseToPetrinet.convert(net);
                         this.setPetrinet(cnet);
                         this.setError("");
@@ -123,8 +135,8 @@ export default class PetrinetModule extends VuexModule {
                             if (error.response.status === 404) {
                                 let config = Config.getInstance();
                                 message = `Server not found at URL: "${config.baseUrl}"`;
-                            } else if (error.response.data.error) {
-                                message = error.response.data.error;
+                            } else if (error.response.data) {
+                                message = error.response.data;
                             } else {
                                 message = "Unkown error";
                             }

@@ -8,7 +8,7 @@ export default class Config {
 
     public constructor() {
         this.baseUrl = API_URL;
-        this.userUrl = "users";
+        this.userUrl = "user";
         this.petrinetUrl = "petrinet";
         this.sessionUrl = "session";
     }
